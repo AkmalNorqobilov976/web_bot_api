@@ -8,10 +8,13 @@
 </template>
 
 <script>
+import telegramMixin from "./mixins/telegramMixin.js";
+
 export default {
     mounted() {
-        console.log(this.$telegram);
-    }
+        console.log(this.$tg);
+    },
+    mixins: [ telegramMixin ]
 }
 </script>
 <style lang="scss">
