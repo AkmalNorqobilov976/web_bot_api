@@ -12,10 +12,6 @@
 import telegramMixin from "./mixins/telegramMixin.js";
 
 export default {
-    mounted() {
-        this.$tg.expand();
-        console.log(this.$tg);
-    },
     mixins: [ telegramMixin ]
 }
 </script>
