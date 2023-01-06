@@ -1,6 +1,7 @@
 <template>
   <nav>
     Juda sozz
+    <i class="ri-home-line" @click="onToggleButton"></i>
     <router-link to="/">Home</router-link> |
     <router-link to="/about">About</router-link>
   </nav>
