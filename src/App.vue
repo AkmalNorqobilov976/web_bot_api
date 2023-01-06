@@ -1,6 +1,10 @@
 <template>
   <nav>
     Juda sozz
+    <form>
+        <input type="text" v-model="justData.userName">
+        <button type="button" @click="sendDataJust"></button>
+    </form>
     <i class="ri-home-line" @click="onToggleButton()"></i>
     <router-link to="/">Home</router-link> |
     <router-link to="/about">About</router-link>
@@ -12,7 +16,27 @@
 import telegramMixin from "./mixins/telegramMixin.js";
 
 export default {
-    mixins: [ telegramMixin ]
+    data: () => ({
+        justData: {
+            userName: ""
+        }
+    }),
+    mixins: [ telegramMixin ],
+    watch: {
+        'justData.userName'(newOne) {
+            
+            if(newOne.userName) {
+                this.setParamsToMenuBtn({
+                    text: "Jo'natsangiz bo'lovradi"
+                })
+            }
+        }
+    },
+    methods: {
+        sendDataJust() {
+            this.onSendDataTg('wellDone', this.justData);
+        }
+    }
 }
 </script>
 <style lang="scss">

@@ -1,20 +1,45 @@
-const tg = window.Telegram.WebApp;
 export default {
+    data: () => {
+        return {
+            tg: window.Telegram.WebApp
+        }
+    },
     created() {
-        // if (Object.keys(this.$tg.initDataUnsafe).length === 0) {
+        // if (Object.keys(this.tg.initDataUnsafe).length === 0) {
         //     // throw new Error("Ketaaa")
         // }
-        tg.expand();
+        this.tg.ready();
+        this.tg.expand();
     },
     methods: {
-        onToggleButton: () => {
-            // console.log("good");
-            // console.log("233", this.$tg);
-            if (tg.MainButton.isVisible) {
-                tg.MainButton.hide();
+        setParamsToMenuBtn: (params) => {
+            this.tg.MainButton.setParams({
+                ...params
+            })
+        },
+
+        onToggleMenuBtn: (params) => {
+            this.setParamsToMenuBtn(params);
+            if (this.tg.MainButton.isVisible) {
+                this.tg.MainButton.hide();
             } else {
-                tg.MainButton.show();
+                this.tg.MainButton.show();
             }
+        },
+        onHideMenuBtn: () => {
+            this.tg.MainButton.hide();
+        },
+        onShowMenuBtn: () => {
+            this.tg.MainButton.show();
+        },
+        onSendDataTg(eventType, data) {
+            if(eventType && data) {
+                this.tg.onEvent(eventType, this.sendDataTg(data));
+                this.tg.offEvent(eventType, this.sendDataTg(data));
+            }
+        },
+        sendDataTg(data) {
+            this.tg.sendData(data);
         }
     }
 }
