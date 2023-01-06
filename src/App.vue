@@ -1,7 +1,7 @@
 <template>
   <nav>
     Juda sozz
-    <i class="ri-home-line" @click="onToggleButton"></i>
+    <i class="ri-home-line" @click="onToggleButton()"></i>
     <router-link to="/">Home</router-link> |
     <router-link to="/about">About</router-link>
   </nav>
@@ -13,6 +13,7 @@ import telegramMixin from "./mixins/telegramMixin.js";
 
 export default {
     mounted() {
+        this.$tg.expand();
         console.log(this.$tg);
     },
     mixins: [ telegramMixin ]

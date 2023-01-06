@@ -6,11 +6,13 @@ export default  {
     },
     methods: {
         onToggleButton: () => {
-            if(this.$tg.MainButton.isVisible) {
-                this.$tg.MainButton.hide();
-            } else {
-                this.$tg.MainButton.show();
-            }
+            console.log("good");
+            console.log("233", this.$tg);
+            // if(this.$tg.MainButton.isVisible) {
+            //     this.$tg.MainButton.hide();
+            // } else {
+            //     this.$tg.MainButton.show();
+            // }
         }
     }
 }
