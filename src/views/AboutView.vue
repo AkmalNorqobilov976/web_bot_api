@@ -69,7 +69,10 @@ export default {
 
 
         const sendDatas = () => {
-            tg.sendData(JSON.stringify(userInfo));
+            tg.sendData(JSON.stringify({
+                hi: "kimbor",
+                bye: "nimabor"
+            }));
         }
         return {
             tg,
