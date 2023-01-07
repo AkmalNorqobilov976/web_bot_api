@@ -2,8 +2,8 @@
   <nav>
     Juda sozz
     <form>
-        <input type="text" v-model="justData.userName">
-        <button type="button" @click="sendDataJust"></button>
+        <input type="text" v-model="justData.userName" placeholder="Enter name"/>
+        <!-- <button type="button" @click="sendDataJust"></button> -->
     </form>
     <i class="ri-home-line" @click="onToggleButton()"></i>
     <router-link to="/">Home</router-link> |
