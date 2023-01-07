@@ -1,6 +1,6 @@
 const tg = window.Telegram.WebApp
 
-sendDataTg = (data) => {
+const sendDataTg = (data) => {
     tg.sendData(data);
 }
 export default {
