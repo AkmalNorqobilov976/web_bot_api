@@ -20,11 +20,15 @@ import {useTelegram} from '@/composables/useTelegram';
 // import { service } from '@/utils/request';
 export default {
     setup() {
+        const {tg} = useTelegram()
         const userInfo = ref({
             firstname: "",
             lastname: ""
         })
-        const {tg} = useTelegram()
+        const sendDataCallback = () => {
+            alert("well")
+            window.Telegram.WebApp.sendData("Soqqa");
+        }
         watchEffect(() => {
             if (userInfo.value.firstname && userInfo.value.lastname) {
                 tg.MainButton.show();
@@ -33,56 +37,39 @@ export default {
             }
         }, {
         });
-
-        const sendDataCallback = () => {
-            alert("well")
-            window.Telegram.WebApp.sendData("Soqqa");
-        }
-        watchEffect(() => {
-            tg.MainButton.onEvent('mainButtonClicked', sendDataCallback)
-        })
         const sendData = () => {
-
-            tg.sendData(userInfo.value)
+            alert("alert de")
+            window.Telegram.WebApp.sendData(userInfo.value)
         }
         watchEffect(() => {
           
-          tg.onEvent('mainButtonClicked', sendData);
+          window.Telegram.WebApp.onEvent('mainButtonClicked', sendData);
             return () => {
-                tg.offEvent('mainButtonClicked', sendData);
+                window.Telegram.WebApp.offEvent('mainButtonClicked', sendData);
             }
         })
 
         onBeforeMount(() => {
             console.log(window.Telegram.WebApp);
             console.log("here");
-            // const data = {
-            //     telegram: "beauty is beauty",
-            //     yana: "nimadir bor",
-            //     endi: "ketamizmi?"
-            // };
-            // tg.sendData(data);
-            // service.get('?text=well')
-            // .then(() => {
-            //     console.log("well");
-            // })
             tg.MainButton.onClick(() => {
                 alert("hi")
                 tg.onEvent('mainButtonClicked', sendData);
-                    // tg.offEvent('mainButtonClicked', sendData);
                 tg.sendData({
                     hi: "kimbor",
                     bye: "nimabor"
                 })
             })
+            tg.MainButton.onEvent('mainButtonClicked', sendDataCallback)
         })
 
 
         const sendDatas = () => {
-            tg.sendData(JSON.stringify({
-                hi: "kimbor",
-                bye: "nimabor"
-            }));
+            // tg.sendData(JSON.stringify({
+            //     hi: "kimbor",
+            //     bye: "nimabor"
+            // }));
+            window.Telegram.WebApp.sendData("ketdikuu");
         }
         return {
             tg,
