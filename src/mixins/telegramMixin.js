@@ -31,6 +31,7 @@ export default {
         },
         onSendDataTg(data) {
             const cbFunc = (data) => {
+                alert(data)
                 tg.sendData(data)
             }
             if(data) {
