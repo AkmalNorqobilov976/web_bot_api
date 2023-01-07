@@ -20,6 +20,7 @@ import { tg } from './mixins/mixinData.js';
 export default {
     setup() {
         watchEffect(() => {
+            console.log("good");
             tg.onEvent('mainButtonClicked', () => {
                 tg.sendData({
                     good: "Goodness"
