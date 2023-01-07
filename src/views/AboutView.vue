@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import { ref, watchEffect } from 'vue';
+import { computed, onBeforeMount, ref, watchEffect } from 'vue';
 import {useTelegram} from '@/composables/useTelegram';
 export default {
     setup() {
@@ -39,9 +39,15 @@ export default {
                 tg.offEvent('mainButtonClicked', sendData);
             }
         })
+
+        onBeforeMount(() => {
+            tg.MainButton.onClick(() => {
+                alert("hi")
+            })
+        })
         return {
             userInfo
         }
-    },
+    }
 }
 </script>
