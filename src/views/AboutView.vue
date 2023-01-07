@@ -69,6 +69,7 @@ export default {
             //     hi: "kimbor",
             //     bye: "nimabor"
             // }));
+            alert("jayida", window.Telegram.WebApp.sendData);
             window.Telegram.WebApp.sendData("ketdikuu");
         }
         return {
