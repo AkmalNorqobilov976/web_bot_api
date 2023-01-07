@@ -25,6 +25,8 @@ export default {
         watchEffect(() => {
             if (userInfo.value.firstname && userInfo.value.firstname) {
                 tg.MainButton.show();
+            } else {
+                tg.MainButton.hide();
             }
         })
         return {
