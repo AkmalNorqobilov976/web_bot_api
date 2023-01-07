@@ -10,23 +10,22 @@ export default {
     methods: {
         setParamsToMenuBtn: (params) => {
             tg.MainButton.setParams({
-                ...params
+                text: params.text
             })
         },
 
-        onToggleMenuBtn: (params) => {
+        onToggleMenuBtn: () => {
             if (tg.MainButton.isVisible) {
-                tg.MainButton.hide(params);
+                tg.MainButton.hide();
             } else {
-                tg.MainButton.show(params);
+                tg.MainButton.show();
             }
         },
-        onHideMenuBtn: (params) => {
-            this.setParamsToMenuBtn(params)
+        onHideMenuBtn: () => {
+            // this.setParamsToMenuBtn(params)
             tg.MainButton.hide();
         },
-        onShowMenuBtn: (params) => {
-            this.setParamsToMenuBtn(params);
+        onShowMenuBtn: () => {
             tg.MainButton.show();
         },
         onSendDataTg(eventType, data) {

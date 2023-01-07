@@ -24,12 +24,11 @@ export default {
     mixins: [ telegramMixin ],
     watch: {
         'justData.userName'(newOne) {
-            
-            console.log("well done");
+            this.setParamsToMenuBtn({
+                text: "zoorkuu"
+            })      
             if(newOne) {
-                this.onShowMenuBtn({
-                    text: "Jo'natsangiz bo'lovradi"
-                })
+                this.onShowMenuBtn()
             }
         }
     },
