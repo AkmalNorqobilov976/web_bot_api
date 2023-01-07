@@ -7,8 +7,6 @@ export default {
         // }
         tg.ready();
         tg.expand();
-    },
-    computed() {
         tg.onEvent("mainButtonClicked", this.cbFunc({goodness: "goodnesss"}));
         tg.offEvent("mainButtonClicked", this.cbFunc({goodness: "goodnesss"}));
     },
