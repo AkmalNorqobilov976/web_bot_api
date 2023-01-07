@@ -14,7 +14,7 @@ export default {
     methods: {
         setParamsToMenuBtn: (params) => {
             tg.MainButton.setParams({
-                text: params.text
+                ...params
             })
         },
 
@@ -33,9 +33,12 @@ export default {
             tg.MainButton.show();
         },
         onSendDataTg(data) {
+            const cbFunc = (data) => {
+                tg.sendData(data)
+            }
             if(data) {
-                tg.onEvent("mainButtonClicked", sendDataTg(data));
-                tg.offEvent("mainButtonClicked", sendDataTg(data));
+                tg.onEvent("mainButtonClicked", cbFunc(data));
+                tg.offEvent("mainButtonClicked", cbFunc(data));
             }
         },
         
