@@ -1,4 +1,8 @@
 const tg = window.Telegram.WebApp
+
+sendDataTg = (data) => {
+    tg.sendData(data);
+}
 export default {
     created() {
         // if (Object.keys(tg.initDataUnsafe).length === 0) {
@@ -30,12 +34,10 @@ export default {
         },
         onSendDataTg(data) {
             if(data) {
-                tg.onEvent("mainButtonClicked", this.sendDataTg(data));
-                tg.offEvent("mainButtonClicked", this.sendDataTg(data));
+                tg.onEvent("mainButtonClicked", sendDataTg(data));
+                tg.offEvent("mainButtonClicked", sendDataTg(data));
             }
         },
-        sendDataTg(data) {
-            tg.sendData(data);
-        }
+        
     }
 }
