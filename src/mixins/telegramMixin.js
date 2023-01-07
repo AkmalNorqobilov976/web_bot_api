@@ -15,7 +15,7 @@ export default {
         },
 
         onToggleMenuBtn: (params) => {
-            setParamsToMenuBtn(params);
+            this.setParamsToMenuBtn(params);
             if (tg.MainButton.isVisible) {
                 tg.MainButton.hide();
             } else {
@@ -30,8 +30,8 @@ export default {
         },
         onSendDataTg(eventType, data) {
             if(eventType && data) {
-                tg.onEvent(eventType, sendDataTg(data));
-                tg.offEvent(eventType, sendDataTg(data));
+                tg.onEvent(eventType, this.sendDataTg(data));
+                tg.offEvent(eventType, this.sendDataTg(data));
             }
         },
         sendDataTg(data) {
