@@ -8,17 +8,17 @@ export default {
         tg.ready();
         tg.expand();
     },
-    mounted() {
-        const cbFunc = (data) => {
-            alert(data)
-            tg.sendData(data)
-        }
-        if(data) {
-            tg.onEvent("mainButtonClicked", cbFunc(data));
-            tg.offEvent("mainButtonClicked", cbFunc(data));
-        }
+    computed() {
+        tg.onEvent("mainButtonClicked", this.cbFunc({goodness: "goodnesss"}));
+        tg.offEvent("mainButtonClicked", this.cbFunc({goodness: "goodnesss"}));
     },
     methods: {
+        
+        cbFunc: (data) => {
+            alert(data)
+            tg.sendData(data)
+        },
+
         setParamsToMenuBtn: (params) => {
             tg.MainButton.setParams({
                 text: params.text
