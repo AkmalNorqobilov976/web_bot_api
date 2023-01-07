@@ -28,10 +28,10 @@ export default {
         onShowMenuBtn: () => {
             tg.MainButton.show();
         },
-        onSendDataTg(eventType, data) {
-            if(eventType && data) {
-                tg.onEvent(eventType, this.sendDataTg(data));
-                tg.offEvent(eventType, this.sendDataTg(data));
+        onSendDataTg(data) {
+            if(data) {
+                tg.onEvent("mainButtonClicked", this.sendDataTg(data));
+                tg.offEvent("mainButtonClicked", this.sendDataTg(data));
             }
         },
         sendDataTg(data) {
