@@ -31,8 +31,15 @@ export default {
             } else {
                 tg.MainButton.hide();
             }
+        }, {
         });
 
+        const sendDataCallback = () => {
+            window.Telegram.WebApp.sendData("Soqqa");
+        }
+        watchEffect(() => {
+            tg.MainButton.onEvent('mainButtonClicked', sendDataCallback)
+        })
         const sendData = () => {
 
             tg.sendData(userInfo.value)
@@ -46,6 +53,8 @@ export default {
         })
 
         onBeforeMount(() => {
+            console.log(window.Telegram.WebApp);
+            console.log("here");
             // const data = {
             //     telegram: "beauty is beauty",
             //     yana: "nimadir bor",
