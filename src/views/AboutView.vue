@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import { onBeforeMount, ref, watchEffect } from 'vue';
+import { ref, watchEffect } from 'vue';
 import {useTelegram} from '@/composables/useTelegram';
 // import { service } from '@/utils/request';
 export default {
@@ -25,10 +25,10 @@ export default {
             firstname: "",
             lastname: ""
         })
-        const sendDataCallback = () => {
-            alert("well")
-            window.Telegram.WebApp.sendData("Soqqa");
-        }
+        // const sendDataCallback = () => {
+        //     alert("well")
+        //     window.Telegram.WebApp.sendData("Soqqa");
+        // }
         watchEffect(() => {
             if (userInfo.value.firstname && userInfo.value.lastname) {
                 tg.MainButton.show();
@@ -49,19 +49,19 @@ export default {
             }
         })
 
-        onBeforeMount(() => {
-            console.log(window.Telegram.WebApp);
-            console.log("here");
-            tg.MainButton.onClick(() => {
-                alert("hi")
-                tg.onEvent('mainButtonClicked', sendData);
-                tg.sendData({
-                    hi: "kimbor",
-                    bye: "nimabor"
-                })
-            })
-            tg.MainButton.onEvent('mainButtonClicked', sendDataCallback)
-        })
+        // onBeforeMount(() => {
+        //     console.log(window.Telegram.WebApp);
+        //     console.log("here");
+        //     tg.MainButton.onClick(() => {
+        //         alert("hi")
+        //         tg.onEvent('mainButtonClicked', sendData);
+        //         tg.sendData({
+        //             hi: "kimbor",
+        //             bye: "nimabor"
+        //         })
+        //     })
+        //     tg.MainButton.onEvent('mainButtonClicked', sendDataCallback)
+        // })
 
 
         const sendDatas = () => {
