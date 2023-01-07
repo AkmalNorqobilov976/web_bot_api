@@ -8,6 +8,16 @@ export default {
         tg.ready();
         tg.expand();
     },
+    mounted() {
+        const cbFunc = (data) => {
+            alert(data)
+            tg.sendData(data)
+        }
+        if(data) {
+            tg.onEvent("mainButtonClicked", cbFunc(data));
+            tg.offEvent("mainButtonClicked", cbFunc(data));
+        }
+    },
     methods: {
         setParamsToMenuBtn: (params) => {
             tg.MainButton.setParams({
@@ -29,16 +39,9 @@ export default {
         onShowMenuBtn: () => {
             tg.MainButton.show();
         },
-        onSendDataTg(data) {
-            const cbFunc = (data) => {
-                alert(data)
-                tg.sendData(data)
-            }
-            if(data) {
-                tg.onEvent("mainButtonClicked", cbFunc(data));
-                tg.offEvent("mainButtonClicked", cbFunc(data));
-            }
-        },
+        // onSendDataTg(data) {
+            
+        // },
         
     }
 }
