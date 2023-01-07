@@ -35,6 +35,7 @@ export default {
         });
 
         const sendDataCallback = () => {
+            alert("well")
             window.Telegram.WebApp.sendData("Soqqa");
         }
         watchEffect(() => {
