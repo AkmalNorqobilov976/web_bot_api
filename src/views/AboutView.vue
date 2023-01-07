@@ -23,7 +23,7 @@ export default {
         })
         const {tg} = useTelegram()
         watchEffect(() => {
-            if (userInfo.value.firstname && userInfo.value.firstname) {
+            if (userInfo.value.firstname && userInfo.value.lastname) {
                 tg.MainButton.show();
             } else {
                 tg.MainButton.hide();
