@@ -1,11 +1,5 @@
 <template>
   <nav>
-    Juda sozz
-    <form @submit.prevent="">
-        <input type="text" v-model="justData.userName" placeholder="Enter name"/>
-        <!-- <button type="button" @click="sendDataJust"></button> -->
-    </form>
-    <i class="ri-home-line" @click="onToggleButton()"></i>
     <router-link to="/">Home</router-link> |
     <router-link to="/about">About</router-link>
   </nav>
@@ -13,43 +7,7 @@
 </template>
 
 <script>
-import { watchEffect } from '@vue/runtime-core';
-import telegramMixin from "./mixins/telegramMixin.js";
-import { tg } from './mixins/mixinData.js';
 
-export default {
-    setup() {
-        watchEffect(() => {
-            console.log("good");
-            tg.onEvent('mainButtonClicked', () => {
-                tg.sendData({
-                    good: "Goodness"
-                })
-            })      
-        })
-    },
-    data: () => ({
-        justData: {
-            userName: ""
-        }
-    }),
-    mixins: [ telegramMixin ],
-    watch: {
-        'justData.userName'(newOne) {
-            this.setParamsToMenuBtn({
-                text: "zoorkuu"
-            })      
-            if(newOne) {
-                this.onShowMenuBtn()
-            }
-        }
-    },
-    methods: {
-        sendDataJust() {
-            this.onSendDataTg('wellDone', this.justData);
-        }
-    }
-}
 </script>
 <style lang="scss">
 #app {
