@@ -27,7 +27,7 @@ export default {
             
             console.log("well done");
             if(newOne) {
-                this.setParamsToMenuBtn({
+                this.onShowMenuBtn({
                     text: "Jo'natsangiz bo'lovradi"
                 })
             }

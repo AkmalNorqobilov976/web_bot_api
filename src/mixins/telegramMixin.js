@@ -15,17 +15,18 @@ export default {
         },
 
         onToggleMenuBtn: (params) => {
-            this.setParamsToMenuBtn(params);
             if (tg.MainButton.isVisible) {
-                tg.MainButton.hide();
+                tg.MainButton.hide(params);
             } else {
-                tg.MainButton.show();
+                tg.MainButton.show(params);
             }
         },
-        onHideMenuBtn: () => {
+        onHideMenuBtn: (params) => {
+            this.setParamsToMenuBtn(params)
             tg.MainButton.hide();
         },
-        onShowMenuBtn: () => {
+        onShowMenuBtn: (params) => {
+            this.setParamsToMenuBtn(params);
             tg.MainButton.show();
         },
         onSendDataTg(eventType, data) {
