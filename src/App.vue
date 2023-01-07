@@ -1,7 +1,7 @@
 <template>
   <nav>
     Juda sozz
-    <form>
+    <form @submit.prevent="">
         <input type="text" v-model="justData.userName" placeholder="Enter name"/>
         <!-- <button type="button" @click="sendDataJust"></button> -->
     </form>
@@ -25,7 +25,8 @@ export default {
     watch: {
         'justData.userName'(newOne) {
             
-            if(newOne.userName) {
+            console.log("well done");
+            if(newOne) {
                 this.setParamsToMenuBtn({
                     text: "Jo'natsangiz bo'lovradi"
                 })
