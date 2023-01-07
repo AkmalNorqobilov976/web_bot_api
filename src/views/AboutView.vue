@@ -1,5 +1,6 @@
 <template>
   <div class="about">
+    {{tg}}
     <form action="">
         <label for="">salom</label>
         <input type="text" v-model="userInfo.firstname"/>
@@ -9,12 +10,14 @@
         <br>
         {{userInfo}}
     </form>
+    <button @click="sendDatas">send data</button>
   </div>
 </template>
 
 <script>
 import { onBeforeMount, ref, watchEffect } from 'vue';
 import {useTelegram} from '@/composables/useTelegram';
+// import { service } from '@/utils/request';
 export default {
     setup() {
         const userInfo = ref({
@@ -31,16 +34,28 @@ export default {
         });
 
         const sendData = () => {
+
             tg.sendData(userInfo.value)
         }
         watchEffect(() => {
-            tg.onEvent('mainButtonClicked', sendData);
+          
+          tg.onEvent('mainButtonClicked', sendData);
             return () => {
                 tg.offEvent('mainButtonClicked', sendData);
             }
         })
 
         onBeforeMount(() => {
+            // const data = {
+            //     telegram: "beauty is beauty",
+            //     yana: "nimadir bor",
+            //     endi: "ketamizmi?"
+            // };
+            // tg.sendData(data);
+            // service.get('?text=well')
+            // .then(() => {
+            //     console.log("well");
+            // })
             tg.MainButton.onClick(() => {
                 alert("hi")
                 tg.onEvent('mainButtonClicked', sendData);
@@ -51,8 +66,15 @@ export default {
                 })
             })
         })
+
+
+        const sendDatas = () => {
+            tg.sendData(JSON.stringify(userInfo));
+        }
         return {
-            userInfo
+            tg,
+            userInfo,
+            sendDatas
         }
     }
 }
