@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import { computed, onBeforeMount, ref, watchEffect } from 'vue';
+import { onBeforeMount, ref, watchEffect } from 'vue';
 import {useTelegram} from '@/composables/useTelegram';
 export default {
     setup() {
