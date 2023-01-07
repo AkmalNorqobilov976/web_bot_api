@@ -28,6 +28,16 @@ export default {
             } else {
                 tg.MainButton.hide();
             }
+        });
+
+        const sendData = () => {
+            tg.sendData(userInfo.value)
+        }
+        watchEffect(() => {
+            tg.onEvent('mainButtonClicked', sendData);
+            return () => {
+                tg.offEvent('mainButtonClicked', sendData);
+            }
         })
         return {
             userInfo
