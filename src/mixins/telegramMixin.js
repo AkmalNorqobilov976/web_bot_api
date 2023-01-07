@@ -1,8 +1,5 @@
 const tg = window.Telegram.WebApp
 
-const sendDataTg = (data) => {
-    tg.sendData(data);
-}
 export default {
     created() {
         // if (Object.keys(tg.initDataUnsafe).length === 0) {
@@ -14,7 +11,7 @@ export default {
     methods: {
         setParamsToMenuBtn: (params) => {
             tg.MainButton.setParams({
-                ...params
+                text: params.text
             })
         },
 
