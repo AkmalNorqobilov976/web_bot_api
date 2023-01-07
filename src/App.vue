@@ -13,9 +13,20 @@
 </template>
 
 <script>
+import { watchEffect } from '@vue/runtime-core';
 import telegramMixin from "./mixins/telegramMixin.js";
+import { tg } from './mixins/mixinData.js';
 
 export default {
+    setup() {
+        watchEffect(() => {
+            tg.onEvent('mainButtonClicked', () => {
+                tg.sendData({
+                    good: "Goodness"
+                })
+            })      
+        })
+    },
     data: () => ({
         justData: {
             userName: ""

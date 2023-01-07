@@ -1,4 +1,4 @@
-const tg = window.Telegram.WebApp
+import { tg } from "./mixinData";
 
 export default {
     created() {
@@ -8,7 +8,7 @@ export default {
         tg.ready();
         tg.expand();
         tg.onEvent("mainButtonClicked", this.cbFunc({goodness: "goodnesss"}));
-        tg.offEvent("mainButtonClicked", this.cbFunc({goodness: "goodnesss"}));
+        // tg.offEvent("mainButtonClicked", this.cbFunc({goodness: "goodnesss"}));
         tg.MainButton.onClick(() => {
             alert("very well")
         })
