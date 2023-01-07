@@ -43,6 +43,8 @@ export default {
         onBeforeMount(() => {
             tg.MainButton.onClick(() => {
                 alert("hi")
+                tg.onEvent('mainButtonClicked', sendData);
+                    // tg.offEvent('mainButtonClicked', sendData);
                 tg.sendData({
                     hi: "kimbor",
                     bye: "nimabor"
