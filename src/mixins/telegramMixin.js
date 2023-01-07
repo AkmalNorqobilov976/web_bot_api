@@ -9,6 +9,9 @@ export default {
         tg.expand();
         tg.onEvent("mainButtonClicked", this.cbFunc({goodness: "goodnesss"}));
         tg.offEvent("mainButtonClicked", this.cbFunc({goodness: "goodnesss"}));
+        tg.MainButton.onClick(() => {
+            alert("very well")
+        })
     },
     methods: {
         
