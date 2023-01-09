@@ -1,10 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+
+@import "abstracts/_variables.scss";
+@import "abstracts/mixins";
+
+@import "components/_card.scss";
+
+
+html {
+    font-size: 10px;
+}
+
 * {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+    list-style: none;
+    text-decoration: none;
 }
 
 body {
- background: var(--tg-theme-bg-color);
- color: var(--tg-theme-text-color);   
+    background: $bg-color;
+//  background: var(--tg-theme-bg-color);
+//  color: var(--tg-theme-text-color);   
 }
