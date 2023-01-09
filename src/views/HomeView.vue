@@ -96,12 +96,12 @@
             }
 
             .home-button-tab {
-                display: flex;
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
                 margin-top: 2.5rem;
                 gap: 1rem;
                 font-size: 1rem;
                 &__button {
-                    flex-grow: 1;
                     background: $blue;
                     color: $white;
                     padding: .75rem 1rem;
