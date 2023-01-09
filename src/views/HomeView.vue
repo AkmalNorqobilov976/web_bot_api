@@ -120,19 +120,23 @@
         .service {
             @include card-mixin;
             margin-top: 1.2rem;
-            padding: 1.9rem 2.1rem;
+            padding: 1.9rem 0;
             font-size: 1.5rem;
             font-weight: 1.4rem;
             &__title {
                 color: $blue;
+                padding: 0 2.1rem;
                 font-weight: 500;
             }
 
             ul {
                 margin-top: 2.45rem;
                 li {
-                    padding: 1.6rem 0;
+                    // margin: 1.6rem 0;
                     a {
+                        display: block;
+                        padding: 1.6rem 2.1rem;
+                        height: 100%;
                         i {
                             color: $gray;
                             margin-right: 2.4rem;
