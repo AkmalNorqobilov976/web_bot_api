@@ -7,6 +7,29 @@ const routes = [
     name: 'home',
     component: HomeView
   },
+
+  {
+    path: '/customers',
+    children: [
+        {
+            path: "",
+            name: "customers",
+            component: () => import('@/views/customers/index.vue'),
+        },
+        {
+            path: "generate-promocode",
+            name: "generate-promocode",
+            component: () => import('@/views/customers/generate-promocode.vue')
+        }
+    ]
+  },
+
+  {
+    path: "/queries",
+    name: "queries",
+    component: () => import('@/views/queries/index.vue')
+  },
+
   {
     path: '/about',
     name: 'about',

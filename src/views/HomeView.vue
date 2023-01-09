@@ -43,13 +43,13 @@
 
             <ul>
                 <li>
-                    <router-link to="#">
+                    <router-link to="/customers">
                         <i class="ri-parent-fill"></i>  Doimiy mijozlar
                     </router-link>
                 </li>
                 
                 <li>
-                    <router-link to="#">
+                    <router-link to="/queries">
                         <i class="ri-survey-fill"></i>  So‘ro‘vlar
                     </router-link>
                 </li>
