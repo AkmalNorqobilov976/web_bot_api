@@ -3,7 +3,10 @@
 @import "abstracts/_variables.scss";
 @import "abstracts/mixins";
 
+
+@import "base/_base.scss";
 @import "components/_card.scss";
+@import "components/_query.scss";
 
 
 html {

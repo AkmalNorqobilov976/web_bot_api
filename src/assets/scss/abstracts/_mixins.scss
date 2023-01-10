@@ -2,3 +2,10 @@
     background: $white;
     box-shadow: $block-box-shadow;
 }
+
+@mixin btn-mixin {
+    outline: none;
+    border: none;
+    border-radius: .5rem;
+    padding: .5rem .7rem;
+}

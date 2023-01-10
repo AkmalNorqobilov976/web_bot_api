@@ -27,7 +27,30 @@ const routes = [
   {
     path: "/queries",
     name: "queries",
-    component: () => import('@/views/queries/index.vue')
+    component: () => import('@/views/queries/index.vue'),
+    children: [
+        {
+            path: '',
+            component: () => import('@/views/queries/tabs/all.vue')
+        }
+    ]
+  },
+
+  {
+    path: "/markets",
+    component: () => import('@/views/markets/index.vue'),
+    children: [
+        {
+            path: "",
+            name: "markets",
+            component: () => import('@/views/markets/main.vue')
+        },
+        {
+            path: "/create-stream",
+            name: "create-stream",
+            component: () => import('@/views/markets/CreateStream.vue')
+        }
+    ]
   },
 
   {

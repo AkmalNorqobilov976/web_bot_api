@@ -21,7 +21,7 @@
                         Oqim
                     </p>
                 </div>
-                <div class="home-button-tab__button">
+                <div class="home-button-tab__button" @click="$router.push('/markets')">
                     <i class="ri-store-2-line"></i>
                     <p>
                         Market
