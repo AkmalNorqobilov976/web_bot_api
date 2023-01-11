@@ -66,6 +66,18 @@ const routes = [
   },
 
   {
+    path: "/streams",
+    component: () => import('@/views/streams/index.vue'),
+    children: [
+        {
+            path: "",
+            name: "my-streams",
+            component: () => import('@/views/streams/my-streams.vue')
+        }
+    ]
+  },
+
+  {
     path: '/about',
     name: 'about',
     // route level code-splitting

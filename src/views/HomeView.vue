@@ -15,7 +15,7 @@
                         To‘lo‘vlar
                     </p>
                 </div>
-                <div class="home-button-tab__button">
+                <div class="home-button-tab__button" @click="$router.push({name: 'my-streams'})">
                     <i class="ri-link-m"></i>
                     <p>
                         Oqim
@@ -136,6 +136,7 @@
                 margin-top: 2.45rem;
                 li {
                     // margin: 1.6rem 0;
+                    border-bottom: 0.316667px solid #E9EBEA;
                     a {
                         display: flex;
                         align-items: center;
@@ -144,10 +145,17 @@
                         i {
                             color: $gray;
                             margin-right: 2.4rem;
-                            font-size: 1.92rem;
+                            font-size: 2.1rem;
                         }
                         color: $black;
                     }
+                }
+
+                 li:first-child {
+                    border-top: 0.316667px solid #E9EBEA;
+                }
+                 li:last-child {
+                    border-bottom: none;
                 }
             }
         }
