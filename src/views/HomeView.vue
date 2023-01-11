@@ -109,8 +109,11 @@
                     box-shadow: $button-box-shadow;
                     border-radius: .8rem;
                     i {
-                        margin-bottom: .775rem;
                         font-size: 1.67rem;
+
+                    }
+                    p {
+                        margin-top: .775rem;
                     }
                 }
             }
@@ -134,7 +137,8 @@
                 li {
                     // margin: 1.6rem 0;
                     a {
-                        display: block;
+                        display: flex;
+                        align-items: center;
                         padding: 1.6rem 2.1rem;
                         height: 100%;
                         i {
