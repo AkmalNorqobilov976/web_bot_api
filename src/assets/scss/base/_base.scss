@@ -9,3 +9,15 @@
 .position-relative {
     position: relative;
 }
+
+
+
+.error-input {
+    color: $red !important;
+    position: relative;
+    background: $bg-red !important;
+    &::placeholder {
+        color: $red !important;
+    }
+}
+

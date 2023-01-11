@@ -49,6 +49,18 @@ const routes = [
             path: "/create-stream",
             name: "create-stream",
             component: () => import('@/views/markets/CreateStream.vue')
+        },
+
+        {
+            path: "/donation",
+            name: "donation",
+            component: () => import('@/views/markets/donation.vue')
+        },
+
+        {
+            path: "/define-amount",
+            name: "define-amount",
+            component: () => import('@/views/markets/define-amount.vue')
         }
     ]
   },
