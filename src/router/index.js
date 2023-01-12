@@ -73,8 +73,19 @@ const routes = [
             path: "",
             name: "my-streams",
             component: () => import('@/views/streams/my-streams.vue')
+        },
+        {
+            path: "created-stream",
+            name: "created-stream",
+            component: () => import('@/views/streams/created-stream.vue')
         }
     ]
+  },
+  
+  {
+    path: "/payments",
+    name: "payments",
+    component: () => import('@/views/payments/index.vue')
   },
 
   {

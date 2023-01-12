@@ -9,7 +9,7 @@
                 </p>
             </div>
             <div class="home-button-tab">
-                <div class="home-button-tab__button">
+                <div class="home-button-tab__button" @click="$router.push({name: 'payments'})">
                     <i class="ri-wallet-3-line"></i>
                     <p>
                         To‘lo‘vlar
