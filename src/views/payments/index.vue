@@ -1,4 +1,5 @@
 <template>
+    <custom-confirm :showConfirm="showConfirm" @onConfirm="onConfirm($event)"/>
     <div class="payment">
            <div class="payment__card-info">
             <div>
@@ -25,6 +26,15 @@
             </div>
 
         </div>
+
+         <section class="payment-debit-card-form">
+            <p class="payment-debit-card-form__title">Hisobdan pul yechish</p>
+            <form @submit.prevent class="payment-debit-card-form__form">
+                <label for="payment-debit-card-form__form--label">Karta raqami</label>
+                <input v-resizeable.size=".1" value="0000 1111 2222 3333" />
+            </form>
+        </section>
+
         <section class="payment-form">
             <p class="payment-form__title">Summani yozing</p>
             <form @submit.prevent class="payment-form__form">
@@ -33,19 +43,89 @@
             </form>
             <div class="payment-form__suggestions">
                 <span class="payment-form__suggestions-item">
-                    100 uzs
+                    100.000 uzs
                 </span>
                 <span class="payment-form__suggestions-item">
-                    300 uzs
-                </span>
-                <span class="payment-form__suggestions-item">
-                    500 uzs
+                    500.000 uzs
                 </span>
             </div>
+        </section>
+
+          <section class="payment-expected">
+            <p class="payment-expected__title">Kutilayotgan to‘lo‘vlar</p>
+            <PaymentListComponent> 
+                <template #cancel-btn>
+                    <div class="cancel-btn" @click="showConfirm = true">
+                        <i class="ri-close-line"></i>
+                        Bekor qilish
+                    </div>
+                </template>
+            </PaymentListComponent>
+        </section>
+
+        <section class="payment-history">
+            <p class="payment-history__title">O‘tkazmalar tarixi</p> 
+            <payment-list-component 
+                icon="ri-checkbox-circle-fill"
+                iconColor="#23B60B"
+            />       
+            <payment-list-component 
+                icon="ri-spam-3-fill"
+                iconColor="#ED5974"
+            />       
+            <payment-list-component 
+                icon="ri-checkbox-circle-fill"
+                iconColor="#23B60B"
+            />       
+            <payment-list-component 
+                icon="ri-spam-3-fill"
+                iconColor="#ED5974"
+            />       
+            <payment-list-component 
+                icon="ri-checkbox-circle-fill"
+                iconColor="#23B60B"
+            />       
+            <payment-list-component 
+                icon="ri-spam-3-fill"
+                iconColor="#ED5974"
+            />       
+            <payment-list-component 
+                icon="ri-checkbox-circle-fill"
+                iconColor="#23B60B"
+            />       
+            <payment-list-component 
+                icon="ri-spam-3-fill"
+                iconColor="#ED5974"
+            />       
         </section>
     </div>
 </template>
 
+<script>
+import PaymentListComponent from '@/components/payments/PaymentListComponent.vue'
+import CustomConfirm from '@/components/CustomConfirm.vue'
+import { ref } from 'vue'
+export default {
+    setup() {
+        const showConfirm = ref(false);
+        const onConfirm = (e) => {
+            console.log(e);
+            showConfirm.value = false;
+        }
+       
+        return {
+            onConfirm,
+            showConfirm
+        }
+    },
+    data: () => ({
+    }),
+    components: {
+        PaymentListComponent,
+        CustomConfirm
+    }
+}
+</script>
 <style lang="scss" scoped>
     .payment {
         &__card-info {
@@ -129,12 +209,71 @@
 
         }
 
-         &-form {
+        &-debit-card-form {
+            @include card-mixin;
+            background: #C2D9E715;
+            margin-bottom: .8rem;
+            &__title {
+                padding: 1.9rem  1.6rem .9rem;
+                color: $black;
+                font-size: 2rem;
+                font-weight: 500;
+                @include card-mixin;
+            }
+
+            &__form {
+                display: flex;
+                flex-direction: column;
+                justify-items: flex-start;
+                // gap: 1rem;
+                font-size: 1.6rem;
+                label {
+                    padding: .4rem 1.6rem;
+                    color: $black;
+                }
+                input {
+                    padding: .8rem 1.6rem;
+                    font-weight: 400;
+                    font-size: 2.4rem;
+                    width: 100%;
+                    border: none;
+                    outline: none;
+                    color: $gray;
+                    background: inherit;
+                }
+                span {
+                    color: $gray;
+                }
+
+
+            }
+            
+            &__suggestions {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                text-align: center;
+                padding: 0 1rem;
+                gap: 1rem;
+                padding-bottom: 1.6rem;
+                &-item {
+                    font-size: 1.5rem;
+                    font-weight: 500;
+                    color: $green;
+                    background: #EAF7ED;
+                    border-radius: 1.5rem;
+                    padding: .7rem 1.8rem;
+
+                }
+            }
+        }
+
+        &-form {
             @include card-mixin;
             background: #C2D9E715;
             &__title {
                 padding: 1.9rem  2.1rem .9rem;
                 color: $blue;
+                font-size: 1.5rem;
                 font-weight: 500;
                 @include card-mixin;
             }
@@ -162,7 +301,9 @@
             }
             
             &__suggestions {
-                display: flex;
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                text-align: center;
                 padding: 0 1rem;
                 gap: 1rem;
                 padding-bottom: 1.6rem;
@@ -177,5 +318,49 @@
                 }
             }
         }
+
+        &-expected {
+            @include card-mixin;
+            margin-top: .8rem;
+            padding-bottom: 1.2rem;
+            &__title {
+                padding: 1.9rem  2.1rem .9rem;
+                color: $blue;
+                font-size: 1.5rem;
+                font-weight: 500;
+                @include card-mixin;
+            }
+
+            .cancel-btn {
+                @include btn-mixin;
+                padding-top: .4rem;
+                margin: 0 1.6rem;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: .6rem;
+                border: 1px solid $red;
+                border-radius: 7px;
+                background: $white;
+                padding: 1.05rem;
+                font-size: 1.3rem;
+                font-weight: 500;
+                color: $red;
+            }
+        }
+        &-history {
+            @include card-mixin;
+            margin-top: .8rem;
+            background: #C2D9E715;
+            &__title {
+                padding: 1.9rem  2.1rem .9rem;
+                color: $blue;
+                font-size: 1.5rem;
+                font-weight: 500;
+                @include card-mixin;
+            }
+        }
+
+        
     }
 </style>

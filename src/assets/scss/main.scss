@@ -5,6 +5,7 @@
 
 
 @import "base/_base.scss";
+@import "base/_animations.scss";
 @import "components/_card.scss";
 @import "components/_query.scss";
 
@@ -24,6 +25,7 @@ html {
 
 body {
     background: $bg-color;
+    position: relative;
 //  background: var(--tg-theme-bg-color);
 //  color: var(--tg-theme-text-color);   
 }

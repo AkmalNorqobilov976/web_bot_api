@@ -30,7 +30,7 @@
                 <div class="market-card__list--item--title">Zaxirada</div>
                 <div class="market-card__list--item--in-store">4.204</div>
             </div>
-            <div v-if="isShowBtn" class="market-card__list--stream-btn">
+            <div v-if="isShowBtn" @click="$router.push({name: 'create-stream'})" class="market-card__list--stream-btn">
                 <i class="ri-link-m"></i>
                 Oqim yaratish
             </div>
