@@ -74,6 +74,19 @@
   </div>
 </template>
 
+<script>
+import { useTelegram } from '@/composables/useTelegram'
+import { watchEffect } from '@vue/runtime-core';
+export default {
+    setup() {
+        const { tg } = useTelegram();
+        
+        watchEffect(() => {
+            tg.BackButton.hide();
+        });
+    },
+}
+</script>
 <style lang="scss" scoped>
     .home {
         &__card-info {
