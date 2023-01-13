@@ -30,10 +30,12 @@
 <script>
 import MarketCard from '@/components/markets/MarketCard.vue'
 import Tooltip from '@/components/Tooltip.vue'
+import { useBackButton } from '@/composables/useBackButton'
 export default {
   components: { MarketCard, Tooltip },
     setup() {
-        
+        const { backButton } = useBackButton()
+        backButton()
     },
 }
 </script>

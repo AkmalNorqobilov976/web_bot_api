@@ -105,6 +105,7 @@
 import PaymentListComponent from '@/components/payments/PaymentListComponent.vue'
 import CustomConfirm from '@/components/CustomConfirm.vue'
 import { ref } from 'vue'
+import { useBackButton } from '@/composables/useBackButton'
 export default {
     setup() {
         const showConfirm = ref(false);
@@ -113,6 +114,8 @@ export default {
             showConfirm.value = false;
         }
        
+       const { backButton } = useBackButton()
+        backButton()
         return {
             onConfirm,
             showConfirm

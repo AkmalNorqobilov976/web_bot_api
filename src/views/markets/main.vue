@@ -17,7 +17,12 @@
 <script>
 import Tabs from '@/components/Layout/Tabs.vue'
 import MarketCard from '@/components/markets/MarketCard.vue';
+import { useBackButton } from '@/composables/useBackButton';
 export default {
+    setup() {
+        const { backButton } = useBackButton()
+        backButton()
+    },
     data: () => ({
         tabs: [
             {

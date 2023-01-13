@@ -96,9 +96,11 @@
 import MarketCard from '@/components/markets/MarketCard.vue'
 import copyIcon from "@/assets/svgs/copyIcon.vue";
 import CreatedStreamCard from '@/components/streams/CreatedStreamCard.vue'
+import { useBackButton } from '@/composables/useBackButton';
 export default {
     setup() {
-        
+        const { backButton } = useBackButton()
+        backButton()
     },
     components: {
         copyIcon,

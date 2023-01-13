@@ -8,6 +8,15 @@
     </p>
 </template>
 
+<script>
+import { useBackButton } from '@/composables/useBackButton'
+export default {
+    setup() {
+        const { backButton } = useBackButton()
+        backButton()
+    },
+}
+</script>
 <style lang="scss" scoped>
     .promocode-card {
         @include card-mixin;

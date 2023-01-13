@@ -7,7 +7,12 @@
 
 <script>
 import Tabs from '@/components/Layout/Tabs.vue'
+import { useBackButton } from '@/composables/useBackButton'
 export default {
+    setup() {
+        const { backButton } = useBackButton()
+        backButton()
+    },
     data: () => ({
         tabs: [
             {
