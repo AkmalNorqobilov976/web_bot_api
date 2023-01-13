@@ -30,6 +30,7 @@ export default {
         //     window.Telegram.WebApp.sendData("Soqqa");
         // }
         watchEffect(() => {
+            tg.BackButton.show();
             if (userInfo.value.firstname && userInfo.value.lastname) {
                 tg.MainButton.show();
             } else {
