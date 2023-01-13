@@ -33,12 +33,9 @@
 </template>
 
 <script>
-import { watchEffect } from 'vue';
-import { useTelegram } from '@/composables/useTelegram';
-import { useRouter } from 'vue-router';
+import { useBackButton } from '@/composables/useBackButton'
 export default {
     setup() {
-        const router = useRouter()
         const navbarButtons = [
             {
                 color: "#F1A30C",
@@ -53,13 +50,8 @@ export default {
                 text: "Yoqilgan"
             },
         ];
-        const { tg } = useTelegram()
-        watchEffect(() => {
-            tg.BackButton.show();
-            tg.BackButton.onClick(() => {
-                router.go(-1);
-            })
-        })
+        const { backButton } = useBackButton()
+        backButton();
         return {
             navbarButtons
         }
