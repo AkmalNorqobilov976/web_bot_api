@@ -3,7 +3,7 @@
         <article v-for="(item, i) in navbarButtons" :key="i" class="promo-cod">
             <nav class="promo-cod__navbar">
                 <div class="promo-cod__navbar--i1">
-                    <i class="ri-bar-chart-grouped-line"></i> G4OFD
+                    <i class="ri-coupon-3-fill"></i> G4OFD
                 </div>
                 <div class="promo-cod__navbar--button">
                     <button :style="{background: item.color}">{{ item.text }}</button>
@@ -33,8 +33,12 @@
 </template>
 
 <script>
+import { watchEffect } from 'vue';
+import { useTelegram } from '@/composables/useTelegram';
+import { useRouter } from 'vue-router';
 export default {
     setup() {
+        const router = useRouter()
         const navbarButtons = [
             {
                 color: "#F1A30C",
@@ -49,7 +53,13 @@ export default {
                 text: "Yoqilgan"
             },
         ];
-
+        const { tg } = useTelegram()
+        watchEffect(() => {
+            tg.BackButton.show();
+            tg.BackButton.onClick(() => {
+                router.go(-1);
+            })
+        })
         return {
             navbarButtons
         }

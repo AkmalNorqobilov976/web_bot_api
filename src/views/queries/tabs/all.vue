@@ -5,7 +5,7 @@
             <div class="query-link__header--title">
                 Ikkinchi havolam
                 <p>
-                    <i class="ri-link-m"></i> 
+                    <i class="ri-copper-coin-fill"></i>
                     94.000 UZS
                 </p>
             </div>
@@ -71,7 +71,7 @@
             <div class="query-link__header--title">
                 Ikkinchi havolam
                 <p>
-                    <i class="ri-link-m"></i> 
+                    <i class="ri-copper-coin-fill"></i>
                     94.000 UZS
                 </p>
             </div>

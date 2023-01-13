@@ -43,7 +43,7 @@
 
             <ul>
                 <li>
-                    <router-link to="/customers">
+                    <router-link :to="{name: 'customers'}">
                         <i class="ri-parent-fill"></i>  Doimiy mijozlar
                     </router-link>
                 </li>

@@ -6,10 +6,11 @@ const routes = [
     path: '/',
     name: 'home',
     component: HomeView
-  },
+},
 
-  {
+{
     path: '/customers',
+    component: () => import('@/views/markets/index.vue'),
     children: [
         {
             path: "",
