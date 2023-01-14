@@ -123,9 +123,9 @@ export default {
                     border-radius: .8rem;
                     i {
                         font-size: 1.67rem;
-
                     }
                     p {
+                        // color: $white;
                         margin-top: .775rem;
                     }
                 }
