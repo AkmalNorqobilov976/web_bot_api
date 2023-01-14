@@ -36,8 +36,10 @@
 import { useBackButton } from '@/composables/useBackButton'
 import { watchEffect } from '@vue/runtime-core';
 import { useTelegram } from '@/composables/useTelegram';
+import { useRouter } from 'vue-router';
 export default {
     setup() {
+        const router = useRouter()
         const navbarButtons = [
             {
                 color: "#F1A30C",
@@ -57,9 +59,14 @@ export default {
         backButton();
         watchEffect(() => {
             tg.MainButton.setParams({
-                text: "Promo-kod yaratish"
+                text: "Promo-kod yaratish",
+                color: "#55BE61"
             })
             tg.MainButton.show()
+
+            tg.MainButton.onClick(() => {
+                router.push({name: 'generate-promocode'})
+            })
         })
         return {
             navbarButtons

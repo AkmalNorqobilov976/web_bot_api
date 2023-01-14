@@ -14,6 +14,19 @@ export default {
     setup() {
         const { backButton } = useBackButton()
         backButton()
+
+        watchEffect(() => {
+            tg.MainButton.setParams({
+                text: "Promo-kod yaratish",
+                textColor: "#8C8C8C",
+                color: "#E4E6E4"
+            })
+            tg.MainButton.show()
+
+            tg.MainButton.onClick(() => {
+                router.push({name: 'generate-promocode'})
+            })
+        })
     },
 }
 </script>
