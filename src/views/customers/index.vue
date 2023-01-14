@@ -65,7 +65,7 @@ export default {
             tg.MainButton.show()
 
             tg.MainButton.onClick(() => {
-                alert("hi")
+                tg.MainButton.hide()
                 router.push({name: 'generate-promocode'})
             })
         })
