@@ -10,11 +10,15 @@
 
 <script>
 import { useBackButton } from '@/composables/useBackButton'
+import { watchEffect } from '@vue/runtime-core'
+import { useTelegram } from '@/composables/useTelegram'
+import { useRouter } from 'vue-router'
 export default {
     setup() {
         const { backButton } = useBackButton()
+        const router = useRouter();
         backButton()
-
+        const { tg } = useTelegram();
         watchEffect(() => {
             tg.MainButton.setParams({
                 text: "Promo-kod yaratish",
