@@ -31,7 +31,7 @@
             <p class="payment-debit-card-form__title">Hisobdan pul yechish</p>
             <form @submit.prevent class="payment-debit-card-form__form">
                 <label for="payment-debit-card-form__form--label">Karta raqami</label>
-                <input v-resizeable.size=".1" value="0000 1111 2222 3333" />
+                <input value="0000 1111 2222 3333" />
             </form>
         </section>
 

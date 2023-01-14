@@ -1,6 +1,6 @@
 <template>
    <div class="position-relative">
-        <form>
+        <form @submit.prevent="">
             <div class="market-search-form">
                 <i class="ri-search-line"></i>
                 <input class="market-search-form__input" type="search" placeholder="Search sticker sets">

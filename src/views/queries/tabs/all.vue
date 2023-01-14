@@ -1,5 +1,5 @@
 <template>
-    <article class="query-link">
+    <article v-touch:swipe.left="goTabLeft" v-touch:swipe.right="goTabRight" class="query-link">
         <header class="query-link__header">
             <i class="ri-link-m query-link__header--icon"></i> 
             <div class="query-link__header--title">
@@ -132,3 +132,17 @@
         </main>
     </article>
 </template>
+
+<script>
+export default {
+    methods: {
+        goTabRight(e) {
+            console.log(e);
+        },
+
+        goTabLeft(e) {
+            console.log(e);
+        }
+    }
+}
+</script>

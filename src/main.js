@@ -2,6 +2,7 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
+import Vue3TouchEvents  from 'vue3-touch-events'
 import 'remixicon/fonts/remixicon.css'
 import '@/assets/scss/main.scss'
 
@@ -12,4 +13,5 @@ app.directive('resizeable', (el, binding) => {
         el.style.width = `${el.value.length * binding.modifiers.size + .6 }rem`;
     }
 })
+app.use(Vue3TouchEvents)
 app.use(store).use(router).mount('#app')
