@@ -80,6 +80,11 @@ const routes = [
             path: "created-stream",
             name: "created-stream",
             component: () => import('@/views/streams/created-stream.vue')
+        },
+        {
+            path: "final-level-create-stream",
+            name: "final-level-create-stream",
+            component: () => import('@/views/streams/FinalLevelCreateStream.vue')
         }
     ]
   },

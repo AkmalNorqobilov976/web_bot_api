@@ -34,7 +34,7 @@
 
 <script>
 import { useBackButton } from '@/composables/useBackButton'
-import { watchEffect } from '@vue/runtime-core';
+import { watchEffect  } from '@vue/runtime-core';
 import { useTelegram } from '@/composables/useTelegram';
 import { useRouter } from 'vue-router';
 export default {
