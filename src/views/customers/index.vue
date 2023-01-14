@@ -34,6 +34,8 @@
 
 <script>
 import { useBackButton } from '@/composables/useBackButton'
+import { watchEffect } from '@vue/runtime-core';
+import { useTelegram } from '@/composables/useTelegram';
 export default {
     setup() {
         const navbarButtons = [
@@ -50,8 +52,15 @@ export default {
                 text: "Yoqilgan"
             },
         ];
+        const { tg } = useTelegram()
         const { backButton } = useBackButton()
         backButton();
+        watchEffect(() => {
+            tg.MainButton.setParams({
+                text: "Promo-kod yaratish"
+            })
+            tg.MainButton.show()
+        })
         return {
             navbarButtons
         }
