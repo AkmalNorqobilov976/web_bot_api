@@ -23,11 +23,13 @@
                 >Men foydalanish shartlari bilan tanishdim</label>
             </div>
             <div class="login__form--code">
+                <i class="ri-message-2-fill"></i>
                 <input 
                     class="login__form--code--input" 
                     type="text" 
                     v-model="userInfo.code"
                 />
+                <span class="login__form--code--btn">Qayta yuborish</span>
             </div>
 
             <button 
@@ -113,7 +115,8 @@ export default {
                     &::after {
                         height: 100%;
                         width: 100%;
-                        line-height: 100%;
+                        line-height: 50%;
+                        padding: .5rem 0;
                         text-align: center;
                         color: white;
                         content: "\2714";
@@ -122,7 +125,34 @@ export default {
                 }
                 label {
                     flex: 1 1 auto;
+                    font-size: 1.3rem;
+                    color: $gray;
                 }
+            }
+
+            &--code {
+                @include input-wrapper;
+
+                input {
+                    flex: 1 1 auto;
+                    background: transparent;
+                }
+
+                &--btn {
+                    color: $blue;
+                    font-size: 1.3rem;
+                    cursor: pointer;
+                }
+            }
+
+            &--submit-btn {
+                width: 100%;
+                @include btn-mixin;
+                padding: 1.6rem 0;
+                color: $white;
+                margin-top: 1.8rem;
+                background: $blue;
+
             }
         }
     }
