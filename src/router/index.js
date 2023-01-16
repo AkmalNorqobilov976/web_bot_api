@@ -158,10 +158,8 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
     const auth = useAuthStore();
-    console.log(auth);
     
     let isAuthenticated = auth.$state.isAuthenticated
-    console.log("router is working");
     if(!isAuthenticated) {
         
 

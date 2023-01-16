@@ -55,20 +55,12 @@ export default {
         });
 
         const login = () => {
-            console.log("good");
             auth.$patch({
                 isAuthenticated: true,
                 userInfo: userInfo
             })
 
-            router.push('/customers').then(() => {
-                console.log("ishladi");
-            }).catch(error => {
-                console.log(error);
-            })
-            console.log(auth.$state);
-            console.log("ishla");
-            
+            router.push('/');            
         }
         return {
             userInfo,
