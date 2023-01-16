@@ -34,6 +34,7 @@
 
             <button 
                 class="login__form--submit-btn"
+                @click="login"
             >Kirish</button>
         </form>
     </div>
@@ -41,16 +42,38 @@
 
 <script>
 import { reactive } from '@vue/reactivity'
+import { useAuthStore } from '@/store/authStore';
+import { useRouter } from 'vue-router';
 export default {
     setup() {
+        const auth = useAuthStore();
+        const router= useRouter();
         const userInfo = reactive({
             phone: "+998 94 000-23-12",
             isAgree: false,
             code: "467"
         });
 
+        const login = () => {
+            console.log("good");
+            auth.$patch({
+                isAuthenticated: true,
+                userInfo: userInfo
+            })
+
+            router.push('/customers').then(() => {
+                console.log("ishladi");
+            }).catch(error => {
+                console.log(error);
+            })
+            console.log(auth.$state);
+            console.log("ishla");
+            
+        }
         return {
-            userInfo
+            userInfo,
+            login,
+            auth
         }
     },
 }
@@ -136,6 +159,7 @@ export default {
                 input {
                     flex: 1 1 auto;
                     background: transparent;
+                    color: rgba($color: #000000, $alpha: .45);
                 }
 
                 &--btn {
