@@ -21,8 +21,44 @@ export default {
             },
             {
                 to: "/queries/new",
-                text: "Yangi"
+                text: "Yangilar"
             },
+            {
+                to: "/queries/ready",
+                text: "Yetkazishga tayyor"
+            },
+            {
+                to: "/queries/active",
+                text: "Yetkazilmoqda"
+            },
+            {
+                to: "/queries/deliveried",
+                text: "Yetkazib berildi"
+            },
+            {
+                to: "/queries/cancelled",
+                text: "Qaytib keldi"
+            },
+            {
+                to: "/queries/not-necessary",
+                text: "Keyin oladi"
+            },
+            {
+                to: "/queries/archive",
+                text: "Arxiv"
+            },
+            {
+                to: "/queries/spam",
+                text: "Spam"
+            },
+            /**
+             * Barchasi
+Yetkazib berildi
+Qaytib keldi
+Keyin oladi
+Arxiv
+Spam
+             */
             // {
             //     to: "/completed",
             //     text: "Yetkazishga tayyor"

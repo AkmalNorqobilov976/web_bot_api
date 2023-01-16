@@ -46,7 +46,71 @@ const routes = [
                 requiresAuth: true
             },
             component: () => import('@/views/queries/tabs/all.vue')
-        }
+        },
+        {
+            path: "new",
+            name: "",
+            meta: {
+                requiresAuth: true
+            },
+            component: () => import('@/views/queries/tabs/new.vue')
+        },
+        {
+            path: "ready",
+            name: "",
+            meta: {
+                requiresAuth: true
+            },
+            component: () => import('@/views/queries/tabs/ready.vue')
+        },
+        {
+            path: "active",
+            name: "",
+            meta: {
+                requiresAuth: true
+            },
+            component: () => import('@/views/queries/tabs/active.vue')
+        },
+        {
+            path: "deliveried",
+            name: "",
+            meta: {
+                requiresAuth: true
+            },
+            component: () => import('@/views/queries/tabs/deliveried.vue')
+        },
+        {
+            path: "cancelled",
+            name: "",
+            meta: {
+                requiresAuth: true
+            },
+            component: () => import('@/views/queries/tabs/cancelled.vue')
+        },
+        {
+            path: "not-necessary",
+            name: "",
+            meta: {
+                requiresAuth: true
+            },
+            component: () => import('@/views/queries/tabs/not-necessary.vue')
+        },
+        {
+            path: "archive",
+            name: "",
+            meta: {
+                requiresAuth: true
+            },
+            component: () => import('@/views/queries/tabs/archive.vue')
+        },
+        {
+            path: "spam",
+            name: "",
+            meta: {
+                requiresAuth: true
+            },
+            component: () => import('@/views/queries/tabs/spam.vue')
+        },
     ]
   },
 
@@ -55,32 +119,76 @@ const routes = [
     component: () => import('@/views/markets/index.vue'),
     children: [
         {
-            path: "",
-            name: "markets",
+            path: '',
             meta: {
                 requiresAuth: true
             },
-            component: () => import('@/views/markets/main.vue')
+            component: () => import('@/views/markets/tabs/all.vue')
         },
-        
-
         {
-            path: "/donation",
-            name: "donation",
+            path: "new",
+            name: "",
             meta: {
                 requiresAuth: true
             },
-            component: () => import('@/views/markets/donation.vue')
+            component: () => import('@/views/markets/tabs/new.vue')
         },
-
         {
-            path: "/define-amount",
-            name: "define-amount",
+            path: "ready",
+            name: "",
             meta: {
                 requiresAuth: true
             },
-            component: () => import('@/views/markets/define-amount.vue')
-        }
+            component: () => import('@/views/markets/tabs/ready.vue')
+        },
+        {
+            path: "active",
+            name: "",
+            meta: {
+                requiresAuth: true
+            },
+            component: () => import('@/views/markets/tabs/active.vue')
+        },
+        {
+            path: "deliveried",
+            name: "",
+            meta: {
+                requiresAuth: true
+            },
+            component: () => import('@/views/markets/tabs/deliveried.vue')
+        },
+        {
+            path: "cancelled",
+            name: "",
+            meta: {
+                requiresAuth: true
+            },
+            component: () => import('@/views/markets/tabs/cancelled.vue')
+        },
+        {
+            path: "not-necessary",
+            name: "",
+            meta: {
+                requiresAuth: true
+            },
+            component: () => import('@/views/markets/tabs/not-necessary.vue')
+        },
+        {
+            path: "archive",
+            name: "",
+            meta: {
+                requiresAuth: true
+            },
+            component: () => import('@/views/markets/tabs/archive.vue')
+        },
+        {
+            path: "spam",
+            name: "",
+            meta: {
+                requiresAuth: true
+            },
+            component: () => import('@/views/markets/tabs/spam.vue')
+        },
     ]
   },
 
