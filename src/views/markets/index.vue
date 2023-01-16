@@ -6,17 +6,13 @@
                 <input class="market-search-form__input" type="search" placeholder="Search sticker sets">
             </div>
         </form>
-        <tabs  :tabs="tabs"/>
-        <main>
-            <market-card/>
-            <market-card/>
-        </main>
+        <tabs class="position-sticky top-0" :tabs="tabs"/>
+        <router-view/>
    </div>
 </template>
 
 <script>
 import Tabs from '@/components/Layout/Tabs.vue'
-import MarketCard from '@/components/markets/MarketCard.vue';
 import { useBackButton } from '@/composables/useBackButton';
 export default {
     setup() {
@@ -61,23 +57,10 @@ export default {
                 to: "/markets/spam",
                 text: "Spam"
             },
-            /**
-             * Barchasi
-Yetkazib berildi
-Qaytib keldi
-Keyin oladi
-Arxiv
-Spam
-             */
-            // {
-            //     to: "/completed",
-            //     text: "Yetkazishga tayyor"
-            // }
         ]
     }),
     components: {
-        Tabs,
-        MarketCard
+        Tabs
     } 
 }
 </script>

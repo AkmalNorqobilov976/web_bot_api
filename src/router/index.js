@@ -241,6 +241,11 @@ const routes = [
   },
 
   {
+    path: "/profile",
+    name: "profile",
+    component: () => import('@/views/profile/index.vue')
+  },
+  {
     path: '/about',
     name: 'about',
     // route level code-splitting
@@ -272,7 +277,7 @@ router.beforeEach((to, from, next) => {
         
 
         if(to.path !== '/login') {
-            next('/login')
+            // next('/login')
         }
         // next()
     }

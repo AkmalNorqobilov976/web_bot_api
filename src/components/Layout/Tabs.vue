@@ -36,12 +36,11 @@
 
 <style lang="scss" scoped>
     .queries-header-wrapper {
-        position: relative;
-    }
-    .queries-header {
         @include card-mixin;
         position: sticky;
         top: 0;
+    }
+    .queries-header {
         font-weight: 500;
         font-size: 1.5rem;
         &__navbar {
@@ -57,12 +56,13 @@
                     color: #9B9B9B;
                     display: block;
                 }
+                a:active {
+                    background: none;
+                }
                 &.active {
-                    color: red;
                     position: relative;
-                    transition: opacity 2s ease;
+                    transition: all 2s ease;
                     &::after {
-                        transition: all .5s ease;
                         position: absolute;
                         content: '';
                         background: $blue;
@@ -71,6 +71,7 @@
                         bottom: 0;
                         border-radius: 6.67345px 6.67345px 0px 0px;
                         height: 4px;
+                        transition: all 5s ease;
                     }
                 }
 
