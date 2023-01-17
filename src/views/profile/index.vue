@@ -117,13 +117,13 @@ export default {
         backButton();
 
         watch(userInfo, (currentValue, oldValue) => {
-            tg.setParams({
+            tg.MainButton.setParams({
                 textColor: '#fff',
                 color: "#55BE61"
             })
         })
         const watchEffective = watchEffect(() => {
-            tg.setParams({
+            tg.MainButton.setParams({
                 text: "O‘zgarishlarni saqlash",
                 textColor: "#8C8C8C",
                 color: "#E4E6E4"
