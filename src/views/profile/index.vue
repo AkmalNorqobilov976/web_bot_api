@@ -9,9 +9,9 @@
                     accept="image/png, image/jpeg" 
                     style="display: none;"
                 />
-                <img v-if="isImage"   :src="require('@/assets/images/image.png')" alt="">
+                <img v-if="isImage" class=""   :src="isImage" alt="">
                 <i v-else class="ri-user-6-fill"></i>
-                <i class="ri-camera-fill my-profile__header--photo--image-uploader"></i>
+                <!-- <i class="ri-camera-fill my-profile__header--photo--image-uploader"></i> -->
             </div>
             <p class="my-profile__header--name">Javohir Ganiyev</p>
         </header>
@@ -143,6 +143,11 @@ export default {
                 font-size: 3.3rem;
                 color: $blue;
                 position: relative;
+                img {
+                    object-fit: cover;
+                    width: 100%;
+                    height: 100%;
+                }
                 &--image-uploader {
                     position: absolute;
                     background: rgba($color: $gray, $alpha: .2);
@@ -187,7 +192,6 @@ export default {
                     outline: none;
                     border-radius: .8rem;
                     font-size: 1.6rem;
-                    font-weight: 600;
                 }
 
                 &--1 {
