@@ -87,8 +87,10 @@
 
 
 <script>
-import { defineComponent, reactive, ref } from 'vue'
+import { defineComponent, reactive, ref, watchEffect, onUnmounted, watch } from 'vue'
 import UnderLineInput from '@/components/Form/inputs/UnderLineInput.vue'
+import { useTelegram } from '@/composables/useTelegram'
+import { useBackButton } from '@/composables/useBackButton'
 export default {
   components: { UnderLineInput },
     setup() {
@@ -109,6 +111,32 @@ export default {
                 isImage.value = URL.createObjectURL(e.target.files[0])
             }
         }
+
+        const { tg } = useTelegram()
+        const { backButton } = useBackButton()
+        backButton();
+
+        watch(userInfo, (currentValue, oldValue) => {
+            tg.setParams({
+                textColor: '#fff',
+                color: "#55BE61"
+            })
+        })
+        const watchEffective = watchEffect(() => {
+            tg.setParams({
+                text: "O‘zgarishlarni saqlash",
+                textColor: "#8C8C8C",
+                color: "#E4E6E4"
+            })
+
+            tg.MainButton.show()
+        })
+
+        onUnmounted(() => {
+            tg.MainButton.hide();
+            watchEffective.stop()
+        })
+
         defineComponent({
             components: {
                 UnderLineInput
