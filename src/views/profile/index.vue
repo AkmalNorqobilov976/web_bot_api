@@ -1,9 +1,17 @@
 <template>
     <main class="my-profile">
         <header class="my-profile__header">
-            <div class="my-profile__header--photo">
-                <img v-if="isImage" src="" alt="">
+            <div class="my-profile__header--photo" @click="this.$refs.profileImage.click()">
+                <input 
+                    type="file" 
+                    ref="profileImage" 
+                    @change="onPhotoChange($event)"
+                    accept="image/png, image/jpeg" 
+                    style="display: none;"
+                />
+                <img v-if="isImage"   :src="require('@/assets/images/image.png')" alt="">
                 <i v-else class="ri-user-6-fill"></i>
+                <i class="ri-camera-fill my-profile__header--photo--image-uploader"></i>
             </div>
             <p class="my-profile__header--name">Javohir Ganiyev</p>
         </header>
@@ -30,10 +38,48 @@
                 class="my-profile__form--title"
             >Ma’lumotlarni o‘zgartirish</p>
             <form @submit.prevent>
-                <under-line-input 
-                    label="Ismingiz" 
-                    v-model="userInfo.username"
-                />
+               <div class="my-profile__form--field">
+                    <under-line-input 
+                        label="Ismingiz" 
+                        placeholder="Kiritilmagan"
+                        v-model="userInfo.firstname"
+                    />
+               </div>
+               <div class="my-profile__form--field">
+                    <under-line-input 
+                        label="Familiyangiz" 
+                        placeholder="Kiritilmagan"
+                        v-model="userInfo.lastname"
+                    />
+               </div>
+               <div class="my-profile__form--field">
+                    <under-line-input 
+                        placeholder="Kiritilmagan"
+                        label="Telefon raqam" 
+                        v-model="userInfo.phone"
+                    />
+               </div>
+               <div class="my-profile__form--field">
+                    <under-line-input 
+                        placeholder="Kiritilmagan"
+                        label="Viloyat/shahar" 
+                        v-model="userInfo.region"
+                    />
+               </div>
+               <div class="my-profile__form--field">
+                    <under-line-input 
+                        label="Tuman" 
+                        placeholder="Kiritilmagan"
+                        v-model="userInfo.district"
+                    />
+               </div>
+               <div class="my-profile__form--field">
+                    <under-line-input 
+                        label="Manzil" 
+                        placeholder="Kiritilmagan"
+                        v-model="userInfo.address"
+                    />
+               </div>
             </form>
         </section>
     </main>
@@ -44,18 +90,34 @@
 import { defineComponent, reactive, ref } from 'vue'
 import UnderLineInput from '@/components/Form/inputs/UnderLineInput.vue'
 export default {
+  components: { UnderLineInput },
     setup() {
         const isImage = ref(false)
+        const profileImage = ref(null)
         const userInfo = reactive({
-            username: ""
+            firstname: "hammaga salom",
+            lastname: "Ganiyev",
+            phone: "+998 90 000-23-12",
+            region: "",
+            district: "",
+            address: ""
         })
+
+        const onPhotoChange = (e) => {
+            console.log(e.target.files[0]);
+            if(e.target.files[0]) {
+                isImage.value = URL.createObjectURL(e.target.files[0])
+            }
+        }
         defineComponent({
             components: {
                 UnderLineInput
             }
         })
         return {
-            isImage
+            isImage,
+            userInfo,
+            onPhotoChange
         }
     },
 }
@@ -67,6 +129,8 @@ export default {
             text-align: center;
             @include card-mixin;
             &--photo {
+                overflow: hidden;
+                cursor: pointer;
                 margin: auto;
                 width: 6.7rem;
                 height: 6.7rem;
@@ -78,13 +142,23 @@ export default {
                 background: rgba($color: $blue, $alpha: .2);
                 font-size: 3.3rem;
                 color: $blue;
+                position: relative;
+                &--image-uploader {
+                    position: absolute;
+                    background: rgba($color: $gray, $alpha: .2);
+                    left: 0;
+                    right: 0;
+                    bottom: 0;
+                    padding: .3rem 0;
+                    font-size: 1.3rem;
+                }
             }
 
             &--name {
                 margin-top: .8rem;
                 color: $black;
                 font-size: 1.5rem;
-                font-weight: 400;
+                font-weight: 500;
             }
         }
         &__btn-grp {
@@ -151,6 +225,10 @@ export default {
                 font-size: 1.5rem;
                 font-weight: 500;
                 
+            }
+
+            &--field {
+                margin-bottom: 1.3rem;
             }
         }
     }

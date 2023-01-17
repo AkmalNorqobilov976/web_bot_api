@@ -69,6 +69,11 @@
                         <i class="ri-trophy-fill"></i> Konkurslar
                     </router-link>
                 </li>
+                <li>
+                    <router-link to="/profile">
+                        <i class="ri-user-6-fill"></i> Shaxsiy sahifa
+                    </router-link>
+                </li>
             </ul>
         </div>
   </div>
