@@ -27,7 +27,7 @@
                         Market
                     </p>
                 </div>
-                <div class="home-button-tab__button">
+                <div class="home-button-tab__button" @click="$router.push('/statistics')">
                     <i class="ri-pie-chart-2-line"></i>
                     <p>
                         Statistika
@@ -55,7 +55,7 @@
                 </li>
                 
                 <li>
-                    <router-link to="#">
+                    <router-link to="/balance-history">
                         <i class="ri-refund-2-fill"></i>  Balans tarixi
                     </router-link>
                 </li>

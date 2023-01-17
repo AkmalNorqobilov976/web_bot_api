@@ -1,22 +1,14 @@
 <template>
-   <div class="position-relative">
-        <form @submit.prevent="">
-            <div>
-                <search-input 
-                    placeholder="Qidirish"
-                    v-model="good"
-                />
-            </div>
-        </form>
+    <div class="position-relative">
         <tabs class="position-sticky top-0" :tabs="tabs"/>
         <router-view/>
-   </div>
+    </div>
 </template>
+
 
 <script>
 import Tabs from '@/components/Layout/Tabs.vue'
 import { useBackButton } from '@/composables/useBackButton';
-import SearchInput from '@/components/Form/inputs/SearchInput.vue'
 import { ref } from 'vue-demi';
 export default {
     setup() {
@@ -31,46 +23,45 @@ export default {
     data: () => ({
         tabs: [
             {
-                to: "/markets",
+                to: "/statistics",
                 text: "Barchasi"
             },
             {
-                to: "/markets/new",
+                to: "/statistics/new",
                 text: "Yangilar"
             },
             {
-                to: "/markets/ready",
+                to: "/statistics/ready",
                 text: "Yetkazishga tayyor"
             },
             {
-                to: "/markets/active",
+                to: "/statistics/active",
                 text: "Yetkazilmoqda"
             },
             {
-                to: "/markets/deliveried",
+                to: "/statistics/deliveried",
                 text: "Yetkazib berildi"
             },
             {
-                to: "/markets/cancelled",
+                to: "/statistics/cancelled",
                 text: "Qaytib keldi"
             },
             {
-                to: "/markets/not-necessary",
+                to: "/statistics/not-necessary",
                 text: "Keyin oladi"
             },
             {
-                to: "/markets/archive",
+                to: "/statistics/archive",
                 text: "Arxiv"
             },
             {
-                to: "/markets/spam",
+                to: "/statistics/spam",
                 text: "Spam"
             },
         ]
     }),
     components: {
         Tabs,
-        SearchInput,
     } 
 }
 </script>

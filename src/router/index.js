@@ -246,6 +246,15 @@ const routes = [
     component: () => import('@/views/profile/index.vue')
   },
   {
+    path: "/balance-history",
+    name: "balance-history",
+    component: () => import('@/views/balance-history/index.vue')
+  },
+  {
+    path: "/statistics",
+    component: () => import('@/views/statistics/index.vue')
+  },
+  {
     path: '/about',
     name: 'about',
     // route level code-splitting

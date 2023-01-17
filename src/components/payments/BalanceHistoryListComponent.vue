@@ -22,7 +22,7 @@
 export default {
     props: {
         debitCard: {
-            default: "9860 1234 5678 9012"
+            default: "#478725 raqamli jo'natma uchun tizim komissiyasi yechib olindi."
         },
         price: {
             default: "500.000 so‘m"
@@ -73,10 +73,17 @@ export default {
 
         &__body {
             flex: 1 1 auto;
+            display: flex;
+            gap: 1rem;
+            flex-direction: column-reverse;
             &--debit-card {
-                color: $black;
-                font-size: 1.7rem;
-                font-weight: 500;
+                color: $gray;
+                font-size: 1.5rem;
+                font-weight: 400;
+                overflow: hidden;
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
                 
             }
             &--income {
@@ -85,9 +92,10 @@ export default {
                 color: $gray;
                 justify-content: space-between;
                 align-items: center;
-                margin-top: 1rem;
                 p {
                     flex: 1 1 auto;
+                    font-size: 1.7rem;
+                    color: $black;
                 }
 
                 &-time {

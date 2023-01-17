@@ -33,55 +33,54 @@
             </div>
         </div>
 
-        <section class="my-profile__form">
-            <p 
-                class="my-profile__form--title"
-            >Ma’lumotlarni o‘zgartirish</p>
-            <form @submit.prevent>
-               <div class="my-profile__form--field">
-                    <under-line-input 
-                        label="Ismingiz" 
-                        placeholder="Kiritilmagan"
-                        v-model="userInfo.firstname"
-                    />
-               </div>
-               <div class="my-profile__form--field">
-                    <under-line-input 
-                        label="Familiyangiz" 
-                        placeholder="Kiritilmagan"
-                        v-model="userInfo.lastname"
-                    />
-               </div>
-               <div class="my-profile__form--field">
-                    <under-line-input 
-                        placeholder="Kiritilmagan"
-                        label="Telefon raqam" 
-                        v-model="userInfo.phone"
-                    />
-               </div>
-               <div class="my-profile__form--field">
-                    <under-line-input 
-                        placeholder="Kiritilmagan"
-                        label="Viloyat/shahar" 
-                        v-model="userInfo.region"
-                    />
-               </div>
-               <div class="my-profile__form--field">
-                    <under-line-input 
-                        label="Tuman" 
-                        placeholder="Kiritilmagan"
-                        v-model="userInfo.district"
-                    />
-               </div>
-               <div class="my-profile__form--field">
-                    <under-line-input 
-                        label="Manzil" 
-                        placeholder="Kiritilmagan"
-                        v-model="userInfo.address"
-                    />
-               </div>
-            </form>
-        </section>
+        <info-card> 
+            <template #body>
+                <form @submit.prevent>
+                    <div class="my-profile__form--field">
+                            <under-line-input 
+                                label="Ismingiz" 
+                                placeholder="Kiritilmagan"
+                                v-model="userInfo.firstname"
+                            />
+                    </div>
+                    <div class="my-profile__form--field">
+                            <under-line-input 
+                                label="Familiyangiz" 
+                                placeholder="Kiritilmagan"
+                                v-model="userInfo.lastname"
+                            />
+                    </div>
+                    <div class="my-profile__form--field">
+                            <under-line-input 
+                                placeholder="Kiritilmagan"
+                                label="Telefon raqam" 
+                                v-model="userInfo.phone"
+                            />
+                    </div>
+                    <div class="my-profile__form--field">
+                            <under-line-input 
+                                placeholder="Kiritilmagan"
+                                label="Viloyat/shahar" 
+                                v-model="userInfo.region"
+                            />
+                    </div>
+                    <div class="my-profile__form--field">
+                            <under-line-input 
+                                label="Tuman" 
+                                placeholder="Kiritilmagan"
+                                v-model="userInfo.district"
+                            />
+                    </div>
+                    <div class="my-profile__form--field">
+                            <under-line-input 
+                                label="Manzil" 
+                                placeholder="Kiritilmagan"
+                                v-model="userInfo.address"
+                            />
+                    </div>
+                </form>
+            </template>
+        </info-card>
     </main>
 </template>
 
@@ -89,10 +88,12 @@
 <script>
 import { defineComponent, reactive, ref, watchEffect, onUnmounted, watch } from 'vue'
 import UnderLineInput from '@/components/Form/inputs/UnderLineInput.vue'
+import InfoCard from '@/components/cards/InfoCard.vue'
 import { useTelegram } from '@/composables/useTelegram'
 import { useBackButton } from '@/composables/useBackButton'
+
 export default {
-  components: { UnderLineInput },
+  components: { UnderLineInput, InfoCard },
     setup() {
         const isImage = ref(false)
         const profileImage = ref(null)
