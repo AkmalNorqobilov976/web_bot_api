@@ -29,7 +29,7 @@
                     SMS kod +998 90 000-23-13 raqamiga yuborildi
                 </p>
                 <verification-input/>
-                <p @click="auto.$patch({smsIsSent: false })" class="login__form--verification--btn">Qayta yuborish</p>
+                <p @click="backPhoneNumber" class="login__form--verification--btn">Qayta yuborish</p>
             </div>
 
             <button 
@@ -57,6 +57,12 @@ export default {
             code: "467"
         });
 
+        const backPhoneNumber = () => {
+            auth.$patch({
+                smsIsSent: false
+            });
+        }
+
         const login = () => {
             if(!auth.$state.smsIsSent) {
                 auth.$patch({smsIsSent: true})
@@ -72,7 +78,8 @@ export default {
         return {
             userInfo,
             login,
-            auth
+            auth,
+            backPhoneNumber
         }
     },
     components: {
