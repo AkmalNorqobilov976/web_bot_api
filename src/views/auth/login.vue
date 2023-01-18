@@ -2,8 +2,8 @@
     <div class="login">
         <p class="login__title">Tizimga kirish</p>
         <form @submit.prevent class="login__form">
-            <div class="login__form--phone">
-                <i class="ri-phone-fill"></i>
+            <div class="login__form--phone" v-if="!auth.smsIsSent">
+                <span>+998</span>
                 <input 
                     class="login__form--phone--input" 
                     type="text" 
@@ -11,7 +11,7 @@
                 />
             </div>
             
-            <div class="login__form--is-agree">
+            <div class="login__form--is-agree" v-if="!auth.smsIsSent">
                 <input 
                     class="login__form--is-agree--input" 
                     type="checkbox" 
@@ -22,20 +22,22 @@
                     for="isAgree"
                 >Men foydalanish shartlari bilan tanishdim</label>
             </div>
-            <div class="login__form--code">
-                <i class="ri-message-2-fill"></i>
-                <input 
-                    class="login__form--code--input" 
-                    type="text" 
-                    v-model="userInfo.code"
-                />
-                <span class="login__form--code--btn">Qayta yuborish</span>
+
+            <div v-if="auth.smsIsSent" class="login__form--verification">
+                <p class="login__form--verification--title">SMS kod yuborildi</p>
+                <p class="login__form--verification--subtitle">
+                    SMS kod +998 90 000-23-13 raqamiga yuborildi
+                </p>
+                <verification-input/>
+                <p @click="auto.$patch({smsIsSent: false })" class="login__form--verification--btn">Qayta yuborish</p>
             </div>
 
             <button 
                 class="login__form--submit-btn"
+                :class="{ disabled : !auth.smsIsSent}"
                 @click="login"
-            >Kirish</button>
+            > {{!auth.smsIsSent ? 'SMS kodni olish' : 'Kirish'}} </button>
+                <!-- :disabled="!auth.smsIsSent ? true : false" -->
         </form>
     </div>
 </template>
@@ -44,23 +46,28 @@
 import { reactive } from '@vue/reactivity'
 import { useAuthStore } from '@/store/authStore';
 import { useRouter } from 'vue-router';
+import VerificationInput from '@/components/Form/inputs/VerificationInput.vue'
 export default {
     setup() {
         const auth = useAuthStore();
         const router= useRouter();
         const userInfo = reactive({
-            phone: "+998 94 000-23-12",
+            phone: "94 000-23-12",
             isAgree: false,
             code: "467"
         });
 
         const login = () => {
-            auth.$patch({
-                isAuthenticated: true,
-                userInfo: userInfo
-            })
-
-            router.push('/');            
+            if(!auth.$state.smsIsSent) {
+                auth.$patch({smsIsSent: true})
+            } else {
+                auth.$patch({
+                    isAuthenticated: true,
+                    userInfo: userInfo
+                })
+                router.push('/');            
+            }
+            console.log("ishlasangchi");
         }
         return {
             userInfo,
@@ -68,6 +75,9 @@ export default {
             auth
         }
     },
+    components: {
+        VerificationInput
+    }
 }
 </script>
 
@@ -103,10 +113,13 @@ export default {
             }
             &--phone {
                 @include input-wrapper;
+                gap: .6rem;
                 &--input {
                     flex: 1 1 auto;
                     font-size: 1.5rem;
                     background: transparent;
+                    padding-left: .6rem;
+                    border-left: .1rem rgba($color: $blue, $alpha: .6) solid !important;
                 }
             }
 
@@ -145,6 +158,27 @@ export default {
                 }
             }
 
+            &--verification {
+                text-align: center;
+                &--title {
+                    font-size: 1.7rem;
+                    font-weight: 600;
+                    margin-bottom: .8rem;
+                }
+
+                &--subtitle {
+                    font-size: 1.5rem;
+                    color: $gray;
+                }
+                &--btn {
+                    color: $blue;
+                    text-align: center;
+                    font-size: 1.5rem;
+                    font-weight: 400;
+                    text-decoration: underline;
+                }
+            }
+
             &--code {
                 @include input-wrapper;
 
@@ -171,5 +205,9 @@ export default {
 
             }
         }
+    }
+    .disabled {
+        background: #E4E6E4 !important;
+        color: $gray !important;
     }
 </style>
