@@ -7,6 +7,7 @@
                 <input 
                     class="login__form--phone--input" 
                     type="text" 
+                    placeholder="00 000 00 00"
                     v-model="userInfo.phone"
                 />
             </div>
@@ -127,6 +128,9 @@ export default {
                     background: transparent;
                     padding-left: .6rem;
                     border-left: .1rem rgba($color: $blue, $alpha: .6) solid !important;
+                    &::placeholder {
+                        color: $gray;
+                    }
                 }
             }
 
