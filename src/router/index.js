@@ -252,7 +252,14 @@ const routes = [
   },
   {
     path: "/statistics",
-    component: () => import('@/views/statistics/index.vue')
+    component: () => import('@/views/statistics/index.vue'),
+    children: [
+        {
+            path: "preview/:tab",
+            name: "statistics-preview",
+            component: import('@/views/statistics/preview.vue')
+        }
+    ]
   },
   {
     path: '/about',
@@ -286,7 +293,7 @@ router.beforeEach((to, from, next) => {
         
 
         if(to.path !== '/login') {
-            next('/login')
+            // next('/login')
         }
         // next()
     }

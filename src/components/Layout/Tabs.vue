@@ -45,7 +45,7 @@
         font-size: 1.5rem;
         &__navbar {
             display: flex;
-            gap: 3.6rem;
+            // gap: 3.6rem;
             &--tab {
                 padding-right: 1.8rem;
                 padding-left: 1.8rem;
@@ -66,8 +66,8 @@
                         position: absolute;
                         content: '';
                         background: $blue;
-                        left: 0;
-                        right: 0;
+                        left: 1.8rem;
+                        right: 1.8rem;
                         bottom: 0;
                         border-radius: 6.67345px 6.67345px 0px 0px;
                         height: 4px;

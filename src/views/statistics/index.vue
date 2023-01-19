@@ -2,6 +2,7 @@
     <div class="position-relative">
         <tabs class="position-sticky top-0" :tabs="tabs"/>
         <router-view/>
+        
     </div>
 </template>
 
@@ -23,45 +24,42 @@ export default {
     data: () => ({
         tabs: [
             {
-                to: "/statistics",
-                text: "Barchasi"
+                to: "/statistics/preview/visited",
+                text: "Tashriflar"
             },
             {
-                to: "/statistics/new",
-                text: "Yangilar"
+                to: "/statistics/preview/new",
+                text: "Yangi"
             },
             {
-                to: "/statistics/ready",
-                text: "Yetkazishga tayyor"
+                to: "/statistics/preview/recall",
+                text: "Qayta qo‘ng’iroq"
             },
             {
-                to: "/statistics/active",
-                text: "Yetkazilmoqda"
+                to: "/statistics/preview/in-way",
+                text: "Yo‘lda"
             },
             {
-                to: "/statistics/deliveried",
-                text: "Yetkazib berildi"
+                to: "/statistics/preview/accepted",
+                text: "Qabul qilingan"
             },
             {
-                to: "/statistics/cancelled",
+                to: "/statistics/preview/spam",
+                text: "Spam"
+            },
+            {
+                to: "/statistics/preview/rejected",
                 text: "Qaytib keldi"
             },
             {
-                to: "/statistics/not-necessary",
-                text: "Keyin oladi"
-            },
-            {
-                to: "/statistics/archive",
-                text: "Arxiv"
-            },
-            {
-                to: "/statistics/spam",
-                text: "Spam"
+                to: "/statistics/preview/archived",
+                text: "Arxivlandi"
             },
         ]
     }),
     components: {
-        Tabs,
+        Tabs
     } 
 }
 </script>
+
