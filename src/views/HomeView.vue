@@ -118,7 +118,7 @@ export default {
                 grid-template-columns: repeat(4, 1fr);
                 margin-top: 2.5rem;
                 gap: 1rem;
-                font-size: 1rem;
+                font-size: 1.4rem;
                 &__button {
                     background: $blue;
                     color: $white;
@@ -126,9 +126,9 @@ export default {
                     text-align: center;
                     box-shadow: $button-box-shadow;
                     border-radius: .8rem;
-                    i {
-                        font-size: 1.67rem;
-                    }
+                    // i {
+                    //     font-size: 2.1rem;
+                    // }
                     p {
                         // color: $white;
                         margin-top: .775rem;
