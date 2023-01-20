@@ -9,9 +9,11 @@ const pinia = createPinia()
 const app = createApp(App);
 app.use(pinia);
 app.directive('resizeable', (el, binding) => {
+    // console.log(el.scrollWidth);
     el.oninput = function () {
-        console.log("zo'r", el.value.length * binding.modifiers.size);
-        el.style.width = `${el.value.length * binding.modifiers.size + .6 }rem`;
+        console.log(el.scrollWidth);
+        // console.log("zo'r", el.value.length * binding.modifiers.size);
+        el.style.width = `${el.scrollWidth / 10 }rem`;
     }
 })
 app.use(Vue3TouchEvents)
