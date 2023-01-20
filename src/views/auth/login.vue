@@ -35,7 +35,7 @@
 
             <button 
                 class="login__form--submit-btn"
-                :class="{ disabled : !auth.smsIsSent}"
+                :class="[{ disabled : !auth.smsIsSent}, {'phoneEntered': userInfo.phone}]"
                 @click="login"
             > {{!auth.smsIsSent ? 'SMS kodni olish' : 'Kirish'}} </button>
                 <!-- :disabled="!auth.smsIsSent ? true : false" -->
@@ -48,7 +48,8 @@ import { reactive } from '@vue/reactivity'
 import { useAuthStore } from '@/store/authStore';
 import { useRouter } from 'vue-router';
 import VerificationInput from '@/components/Form/inputs/VerificationInput.vue'
-export default {
+import { defineComponent } from 'vue-demi';
+export default defineComponent( {
     setup() {
         const auth = useAuthStore();
         const router= useRouter();
@@ -86,7 +87,7 @@ export default {
     components: {
         VerificationInput
     }
-}
+})
 </script>
 
 <style lang="scss" scoped>
@@ -101,7 +102,6 @@ export default {
         gap: .925rem;
         color: $soft-black;
         border-radius: 1rem;
-        background: rgba($color: $blue, $alpha: .15);
     }
     .login {
         @include card-mixin;
@@ -121,6 +121,8 @@ export default {
             }
             &--phone {
                 @include input-wrapper;
+                margin-top: 2.1rem;
+                position: relative;
                 gap: .6rem;
                 &--input {
                     flex: 1 1 auto;
@@ -128,9 +130,21 @@ export default {
                     background: transparent;
                     padding-left: .6rem;
                     border-left: .1rem rgba($color: $blue, $alpha: .6) solid !important;
+                    
                     &::placeholder {
                         color: $gray;
                     }
+                }
+
+                &::before {
+                    content: 'Telefon raqamingiz';
+                    width: max-content;
+                    position: absolute;
+                    z-index: 2;
+                    top: -1rem;
+                    color: $blue;
+                    overflow: hidden;
+                    background: $white;
                 }
             }
 
@@ -220,5 +234,10 @@ export default {
     .disabled {
         background: #E4E6E4 !important;
         color: $gray !important;
+    }
+
+    .phoneEntered {
+        background: $blue !important;
+        color: $white !important;
     }
 </style>
