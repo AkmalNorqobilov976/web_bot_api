@@ -47,6 +47,15 @@
                 </div>
                 <i class="ri-arrow-right-s-line"></i>
             </div>
+            <div class="addition-stream-info__main--list" @click="$router.push({name: 'donation'})">
+                <div>
+                   0 so‘m
+                    <p>
+                        Reklamaga ajratilgan summa
+                    </p>
+                </div>
+                <i class="ri-arrow-right-s-line"></i>
+            </div>
         </main>
     </section>
 

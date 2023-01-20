@@ -227,6 +227,11 @@ const routes = [
                 requiresAuth: true
             },
             component: () => import('@/views/streams/FinalLevelCreateStream.vue')
+        },
+        {
+            path: "preview",
+            name: "stream-preview",
+            component: () => import('@/views/streams/preview.vue')
         }
     ]
   },
@@ -252,6 +257,11 @@ const routes = [
   },
   {
     path: "/statistics",
+    redirect: to => {
+        return {
+            path: "/statistics/preview/visited"
+        }
+    },
     component: () => import('@/views/statistics/index.vue'),
     children: [
         {

@@ -100,7 +100,7 @@ export default {
             font-weight: 400;
             font-size: 1.6rem;
             &--balance {
-                font-size: 2.4rem;
+                font-size: 3.2rem;
                 font-weight: 600;
                 padding: 1rem 0;
             }
@@ -152,6 +152,7 @@ export default {
 
             ul {
                 margin-top: 2.45rem;
+                font-size: 1.7rem;
                 li {
                     // margin: 1.6rem 0;
                     border-bottom: 0.316667px solid #E9EBEA;

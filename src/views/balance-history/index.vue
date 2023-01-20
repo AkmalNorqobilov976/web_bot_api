@@ -11,7 +11,8 @@
         <info-card class="balance-history__info-card" title="To‘lovlar monitoringi">
             <template #body>
                 <div class="balance-history__info-card--body">
-                    <balans-history-bar-chart/>
+                    <bar-chart/>
+                    <balans-history-bar-chart title="xarid qilingan va bekor qilingan mahsulotlar statistikasi" xKey="name" yKey="amount" :data="barChartData"/>
                 
                     <balance-history-list-component 
                         icon="ri-arrow-left-down-line"
@@ -31,15 +32,37 @@
 import SearchInput from '@/components/Form/inputs/SearchInput.vue'
 import BalansHistoryBarChart from '@/components/charts/BalansHistoryBarChart.vue'
 import InfoCard from '@/components/cards/InfoCard.vue'
+import BarChart from '@/components/charts/BarChart.vue'
 import BalanceHistoryListComponent from '@/components/payments/BalanceHistoryListComponent.vue'
 export default {
     setup() {
     },
+     data: () => ({
+        barChartData: [
+            {
+                name: "Roses",
+                amount: 25
+            },
+            {
+                name: "Tulips",
+                amount: 40
+            },
+            {
+                name: "Daisies",
+                amount: 15
+            },
+            {
+                name: "Narcissuses",
+                amount: 9
+            }
+        ],
+    }),
     components: {
         SearchInput,
         BalansHistoryBarChart,
         InfoCard,
-        BalanceHistoryListComponent
+        BalanceHistoryListComponent,
+        BarChart
     }
 }
 </script>

@@ -1,6 +1,6 @@
 <template>
     <main class="streams">
-        <article class="streams-list">
+        <article class="streams-list" @click="$router.push({name: 'stream-preview'})">
             <div class="streams-list__image">
                 <img :src="require('@/assets/images/round.png')" alt="">
             </div>

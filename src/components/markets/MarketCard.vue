@@ -105,8 +105,14 @@ export default {
                     button {
                         @include btn-mixin;
                         color: $red;
+                        display: flex;
+                        align-items: center;
+                        gap: .45rem;
                         background: $btn-bg-red;
-                        font-weight: 900;
+                        font-weight: 600;
+                        i {
+                            font-weight: 500;
+                        }
                     }
                 }
 

@@ -130,6 +130,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+    $bg-gr-color: #F6F9FB;
     .payment {
         &__card-info {
             @include card-mixin;
@@ -147,29 +148,6 @@ export default {
                 span {
                     color: $black;
                     font-weight: 600;
-                }
-            }
-
-            .payment-button-tab {
-                display: grid;
-                grid-template-columns: repeat(4, 1fr);
-                margin-top: 2.5rem;
-                gap: 1rem;
-                font-size: 1rem;
-                &__button {
-                    background: $blue;
-                    color: $white;
-                    padding: .75rem 1rem;
-                    text-align: center;
-                    box-shadow: $button-box-shadow;
-                    border-radius: .8rem;
-                    i {
-                        font-size: 1.67rem;
-
-                    }
-                    p {
-                        margin-top: .775rem;
-                    }
                 }
             }
 
@@ -214,12 +192,13 @@ export default {
 
         &-debit-card-form {
             @include card-mixin;
-            background: #C2D9E715;
+            
+            background: $bg-gr-color;
             margin-bottom: .8rem;
             &__title {
                 padding: 1.9rem  1.6rem .9rem;
-                color: $black;
-                font-size: 2rem;
+                color: $blue;
+                font-size: 1.5rem;
                 font-weight: 500;
                 @include card-mixin;
             }
@@ -229,19 +208,20 @@ export default {
                 flex-direction: column;
                 justify-items: flex-start;
                 // gap: 1rem;
-                font-size: 1.6rem;
+                font-size: 1.5rem;
                 label {
+                    font-size: 1.6rem;
                     padding: .4rem 1.6rem;
                     color: $black;
                 }
                 input {
+                    
                     padding: .8rem 1.6rem;
                     font-weight: 400;
-                    font-size: 2.4rem;
+                    font-size: 2.6rem;
                     width: 100%;
                     border: none;
                     outline: none;
-                    color: $gray;
                     background: inherit;
                 }
                 span {
@@ -272,7 +252,8 @@ export default {
 
         &-form {
             @include card-mixin;
-            background: #C2D9E715;
+            // background: rgba($color: #C2D9E7, $alpha: .15);
+            background: $bg-gr-color;
             &__title {
                 padding: 1.9rem  2.1rem .9rem;
                 color: $blue;
