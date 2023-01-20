@@ -14,7 +14,7 @@ const routes = [
 
 {
     path: '/customers',
-    component: () => import('@/views/markets/index.vue'),
+    component: () => import('@/views/customers/index.vue'),
     children: [
         {
             path: "",
