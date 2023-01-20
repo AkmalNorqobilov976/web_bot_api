@@ -142,16 +142,17 @@ export default {
             @include card-mixin;
             margin-top: 1.2rem;
             padding: 1.9rem 0;
+            padding-bottom: 0;
             font-size: 1.5rem;
             font-weight: 1.4rem;
             &__title {
                 color: $blue;
                 padding: 0 2.1rem;
+                padding-bottom: .9rem;
                 font-weight: 500;
             }
 
             ul {
-                margin-top: 2.45rem;
                 font-size: 1.7rem;
                 li {
                     // margin: 1.6rem 0;
