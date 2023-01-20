@@ -111,7 +111,7 @@ export default {
                         background: $btn-bg-red;
                         font-weight: 600;
                         i {
-                            font-weight: 500;
+                            font-weight: 400;
                         }
                     }
                 }

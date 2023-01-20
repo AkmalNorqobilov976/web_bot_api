@@ -7,16 +7,15 @@
             <!-- error-input class -->
             <div class="stream-name__input">
                 <input class="" placeholder="Misol uchun: 1-oqim linki" />
-                <i class="ri-more-2-fill"></i>
             </div>
             <tooltip style="bottom: -2.2rem;" label="Bu nomdagi Oqim linki mavjud"/>
             <div class="stream-name__button-grp">
                 <button class="stream-name__button-grp--btn">
-                    <copyIcon class="stream-name__button-grp--btn--icon"/> Copy
+                    <copyIcon class="stream-name__button-grp--btn--icon"/> Nusxalash
                 </button>
                 <button class="stream-name__button-grp--btn">
-                    <i class="ri-link-m stream-name__button-grp--btn--icon"></i>
-                    Share
+                    <i class="ri-external-link-line stream-name__button-grp--btn--icon"></i>
+                    Reklama posti
                 </button>
             </div>
         </form>
@@ -58,7 +57,7 @@
             Tashriflar
         </p>
         <p class="stream-visit__number">
-            56.482
+            56,482
         </p>
     </section>
 
@@ -149,22 +148,28 @@ export default {
                 border: none;
                 outline: none;
             }
+
+
+
         }
 
         &__button-grp {
-            display: flex;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
             gap: 1rem;
             justify-content: center;
             margin: 1.5rem 0 .8rem 0 ;
             button {
+                flex: 1 0 auto;
                 display: flex;
                 align-items: center;
+                justify-content: center;
                 gap: 1.356rem;
                 border: none;
                 outline: none;
                 background: $blue;
                 color: $white;
-                padding: 1.1rem 4.45rem;
+                padding: 1.1rem 0;
                 border-radius: .7rem;
                 font-size: 1.3rem;
 
@@ -205,17 +210,18 @@ export default {
                 font-weight: 500;
                 & div {
                     font-size: 1.5rem;
+                    font-weight: 600;
                     p {
                         font-weight: 400;
                         font-size: 1.2rem;
-                        color: $gray-variant;
+                        color: $gray;
                         margin-top: .6rem;
                     }
 
                 }
                 i {
                     color: $gray-variant;
-                    font-size: 1.5rem;
+                    font-size: 1.7rem;
                 }
             }
         }

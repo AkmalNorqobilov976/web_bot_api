@@ -115,10 +115,6 @@ export default {
                 outline: none;
             }
 
-
-            &:focus {
-                
-            }
         }
     }
 

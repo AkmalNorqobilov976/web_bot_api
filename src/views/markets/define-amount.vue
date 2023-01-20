@@ -13,7 +13,7 @@
         <section class="donation-form">
             <p class="donation-form__title">Summani yozing</p>
             <form @submit.prevent class="donation-form__form">
-                <input v-resizeable.size=".1" value="1.000.000" />
+                <span class="donation-form__form--input" @input="inputForm($event, 'sum')" contenteditable>{{defineAmountForm.sum}}</span>
                 <span> uzs</span>
             </form>
         </section>
@@ -35,12 +35,24 @@
 
 <script>
 import { useBackButton } from '@/composables/useBackButton'
-export default {
+import { defineComponent, reactive } from 'vue'
+export default defineComponent ({
     setup() {
+        const defineAmountForm = reactive({
+            sum: "1.000.000"
+        })
         const { backButton } = useBackButton()
+        const inputForm = (e, key) => {
+            defineAmountForm[key] = e.target.innerText
+        }
         backButton()
+
+        return {
+            inputForm,
+            defineAmountForm
+        }
     },
-}
+})
 </script>
 <style lang="scss" scoped>
 .donation {
@@ -92,16 +104,18 @@ export default {
             // gap: 1rem;
             font-size: 3.6rem;
             padding: .8rem 1.6rem;
-            input {
+            &--input {
                 font-weight: 600;
+                flex: 1 1 auto;
                 color: $red;
                 font-size: inherit;
-                width: 16.5rem;
+                padding: .3rem;
+                // width: 16.5rem;
                 border: none;
                 outline: none;
                 background: inherit;
             }
-            span {
+            & span:last-child {
                 color: rgba($red, .5);
             }
 

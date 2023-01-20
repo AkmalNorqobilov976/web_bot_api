@@ -192,6 +192,16 @@ const routes = [
     ]
   },
 
+    {
+        path: "/donation",
+        name: "donation",
+        component: () => import('@/views/markets/donation.vue')
+    },
+    {
+        path: "/define-amount",
+        name: "define-amount",
+        component: () => import('@/views/markets/define-amount.vue')
+    },
   {
     path: "/streams",
     component: () => import('@/views/streams/index.vue'),
@@ -303,7 +313,7 @@ router.beforeEach((to, from, next) => {
         
 
         if(to.path !== '/login') {
-            next('/login')
+            // next('/login')
         }
         next()
     }

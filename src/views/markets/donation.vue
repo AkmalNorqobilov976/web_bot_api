@@ -13,17 +13,17 @@
         <section class="donation-form">
             <p class="donation-form__title">Summani yozing</p>
             <form @submit.prevent class="donation-form__form">
-                <input v-resizeable.size=".1" type="number" value="100" />
+                <span class="donation-form__form--input" @input="inputForm($event, 'sum')" contenteditable>{{donationForm.sum}}</span>
                 <span> uzs</span>
             </form>
             <div class="donation-form__suggestions">
-                <span class="donation-form__suggestions-item">
+                <span @click="donationForm.sum = 100" class="donation-form__suggestions-item">
                     100 uzs
                 </span>
-                <span class="donation-form__suggestions-item">
+                <span @click="donationForm.sum = 300" class="donation-form__suggestions-item">
                     300 uzs
                 </span>
-                <span class="donation-form__suggestions-item">
+                <span @click="donationForm.sum = 500" class="donation-form__suggestions-item">
                     500 uzs
                 </span>
             </div>
@@ -36,12 +36,27 @@
 </template>
 <script>
 import { useBackButton } from '@/composables/useBackButton'
-export default {
+import { defineComponent, reactive } from 'vue'
+export default defineComponent ({
+    props: {
+
+    },
     setup() {
+        const donationForm = reactive({
+            sum: "100"
+        })
         const { backButton } = useBackButton()
         backButton()
+
+        const inputForm = (e, key) => {
+            donationForm[key] = e.target.innerText
+        }
+        return {
+            donationForm,
+            inputForm
+        }
     },
-}
+})
 </script>
 <style lang="scss" scoped>
 .donation {
@@ -91,15 +106,14 @@ export default {
             // gap: 1rem;
             font-size: 3.6rem;
             padding: .8rem 1.6rem;
-            input {
+            &--input {
                 font-weight: 600;
                 font-size: inherit;
-                width: 2*3rem;
                 border: none;
                 outline: none;
                 background: inherit;
             }
-            span {
+            & span:last-child {
                 color: $gray;
             }
 
