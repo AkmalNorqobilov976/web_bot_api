@@ -6,17 +6,16 @@
             <label class="stream-name__title">Oqim nomi</label>
             <!-- error-input class -->
             <div class="stream-name__input">
-                <input class="" placeholder="Misol uchun: 1-oqim linki" />
-                <i class="ri-more-2-fill"></i>
+                <input v-model="streamForm.link" placeholder="Misol uchun: 1-oqim linki" />
             </div>
             <tooltip style="bottom: -2.2rem;" label="Bu nomdagi Oqim linki mavjud"/>
             <div class="stream-name__button-grp">
-                <button class="stream-name__button-grp--btn">
-                    <copyIcon class="stream-name__button-grp--btn--icon"/> Copy
+                <button @click="copyToClipboard($event)" class="stream-name__button-grp--btn">
+                    <copyIcon class="stream-name__button-grp--btn--icon"/> Nusxalash
                 </button>
                 <button class="stream-name__button-grp--btn">
-                    <i class="ri-link-m stream-name__button-grp--btn--icon"></i>
-                    Share
+                    <i class="ri-external-link-line stream-name__button-grp--btn--icon"></i>
+                    Reklama posti
                 </button>
             </div>
         </form>
@@ -47,7 +46,7 @@
                 </div>
                 <i class="ri-arrow-right-s-line"></i>
             </div>
-            <div class="addition-stream-info__main--list" @click="$router.push({name: 'donation'})">
+            <div class="addition-stream-info__main--list" @click="$router.push({name: 'advertesiment'})">
                 <div>
                    0 so‘m
                     <p>
@@ -71,7 +70,7 @@
         </p>
     </section>
 
-    <created-stream-card/>
+    <created-stream-card title="Aktiv"/>
     <created-stream-card 
         :title="'Buyurtma'" 
         :bgCircleColor="'#23B60B'"
@@ -115,10 +114,22 @@ import MarketCard from '@/components/markets/MarketCard.vue'
 import copyIcon from "@/assets/svgs/copyIcon.vue";
 import CreatedStreamCard from '@/components/streams/CreatedStreamCard.vue'
 import { useBackButton } from '@/composables/useBackButton';
+import { reactive } from 'vue-demi';
 export default {
     setup() {
         const { backButton } = useBackButton()
         backButton()
+        const streamForm = reactive({
+            link: ""
+        })
+        const copyToClipboard = () => {
+            navigator.clipboard.writeText(streamForm.link)
+        }
+
+        return {
+            streamForm,
+            copyToClipboard
+        }
     },
     components: {
         copyIcon,
@@ -161,19 +172,22 @@ export default {
         }
 
         &__button-grp {
-            display: flex;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
             gap: 1rem;
             justify-content: center;
             margin: 1.5rem 0 .8rem 0 ;
             button {
+                flex: 1 1 auto;
                 display: flex;
                 align-items: center;
+                justify-content: center;
                 gap: 1.356rem;
                 border: none;
                 outline: none;
                 background: $blue;
                 color: $white;
-                padding: 1.1rem 4.45rem;
+                padding: 1.1rem 0;
                 border-radius: .7rem;
                 font-size: 1.3rem;
 

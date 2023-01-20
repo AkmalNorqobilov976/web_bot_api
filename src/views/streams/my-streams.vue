@@ -115,7 +115,7 @@ export default {
                     }
                     i {
                         color: $white;
-                        font-size: 1.5rem;
+                        font-size: 2.1rem;
                     }
                 }
                 border-radius: 50%;
@@ -127,6 +127,7 @@ export default {
             }
 
             &__info {
+                flex: 1 1 auto;
                 &--header {
                     display: flex;
                     justify-content: space-between;
@@ -151,6 +152,7 @@ export default {
                     gap: 1.4rem;
                     font-size: 1.5rem;
                     &--context {
+                        flex: 1 1 auto;
                         overflow: hidden;
                         display: -webkit-box;
                         -webkit-line-clamp: 1;

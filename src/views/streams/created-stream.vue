@@ -10,7 +10,7 @@
             </div>
             <tooltip style="bottom: -2.2rem;" label="Bu nomdagi Oqim linki mavjud"/>
             <div class="stream-name__button-grp">
-                <button class="stream-name__button-grp--btn">
+                <button class="stream-name__button-grp--btn" >
                     <copyIcon class="stream-name__button-grp--btn--icon"/> Nusxalash
                 </button>
                 <button class="stream-name__button-grp--btn">
@@ -105,10 +105,20 @@ import MarketCard from '@/components/markets/MarketCard.vue'
 import copyIcon from "@/assets/svgs/copyIcon.vue";
 import CreatedStreamCard from '@/components/streams/CreatedStreamCard.vue'
 import { useBackButton } from '@/composables/useBackButton';
+import { reactive } from 'vue-demi';
 export default {
     setup() {
         const { backButton } = useBackButton()
         backButton()
+        const streamForm = reactive({
+            link: ""
+        })
+        const copyToClipboard = () => {
+            navigator.clipboard.writeText(streamForm.link)
+        }
+        return {
+            copyToClipboard
+        }
     },
     components: {
         copyIcon,

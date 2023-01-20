@@ -202,6 +202,11 @@ const routes = [
         name: "define-amount",
         component: () => import('@/views/markets/define-amount.vue')
     },
+    {
+        path: "/advertesiment",
+        name: "advertesiment",
+        component: () => import('@/views/markets/advertesiment.vue')
+    },
   {
     path: "/streams",
     component: () => import('@/views/streams/index.vue'),
