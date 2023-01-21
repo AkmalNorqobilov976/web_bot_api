@@ -5,10 +5,14 @@ import { useTelegram } from "./useTelegram";
 export function useBackButton() {
     const { tg } = useTelegram()
     const router = useRouter()
-    const backButton = () => watchEffect(() => {
+    const backButton = (route) => watchEffect(() => {
         tg.BackButton.show();
         tg.BackButton.onClick(() => {
-            router.go(-1);
+            if(route) {
+                router.push(route)
+            } else {
+                router.go(-1);
+            }
         })
     })
 

@@ -4,7 +4,7 @@
             <div>
                 <search-input 
                     placeholder="Qidirish"
-                    v-model="good"
+                    v-model.number="good"
                 />
             </div>
         </form>
@@ -22,7 +22,7 @@ export default {
     setup() {
         const good = ref("")
         const { backButton } = useBackButton()
-        backButton()
+        backButton('/')
 
         return {
             good
