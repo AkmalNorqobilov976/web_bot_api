@@ -115,6 +115,7 @@ import copyIcon from "@/assets/svgs/copyIcon.vue";
 import CreatedStreamCard from '@/components/streams/CreatedStreamCard.vue'
 import { useBackButton } from '@/composables/useBackButton';
 import { reactive } from 'vue-demi';
+import { useToastStore } from '@/store/useToastStore';
 export default {
     setup() {
         const { backButton } = useBackButton()
@@ -122,8 +123,21 @@ export default {
         const streamForm = reactive({
             link: ""
         })
-        const copyToClipboard = () => {
-            navigator.clipboard.writeText(streamForm.link)
+        const toastStore = useToastStore();
+        const copyToClipboard = (e) => {
+            navigator.clipboard.writeText(streamForm.link).then(() => {
+                toastStore.$patch({
+                    x: `${e.clientX}px`,
+                    y: `${e.clientY}px`,
+                    isShownToast: true
+                });
+    
+                setTimeout(() => {
+                    toastStore.$patch({
+                        isShownToast: false
+                    });
+                }, 600) 
+            }) 
         }
 
         return {
