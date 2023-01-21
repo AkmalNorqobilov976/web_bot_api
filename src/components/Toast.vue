@@ -3,7 +3,6 @@
         <teleport to="body" v-if="toastStore.isShownToast">
             <div class="toast-component">
                 <copy-icon/>
-                <!-- {{toastStore.isShownToast}} -->
                 Manzil nusxalandi
             </div>
         </teleport>

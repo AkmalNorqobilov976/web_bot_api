@@ -38,7 +38,11 @@
         <section class="payment-form">
             <p class="payment-form__title">Summani yozing</p>
             <form @submit.prevent class="payment-form__form">
-                <input v-resizeable.size=".1" type="number" value="100" />
+                
+                <span 
+                    class="payment-form__form--input" 
+                    @input="inputForm($event, 'sum')" 
+                    contenteditable>{{paymentForm.sum}}</span>
                 <span> uzs</span>
             </form>
             <div class="payment-form__suggestions">
@@ -104,11 +108,14 @@
 <script>
 import PaymentListComponent from '@/components/payments/PaymentListComponent.vue'
 import CustomConfirm from '@/components/CustomConfirm.vue'
-import { ref } from 'vue'
+import { reactive, ref } from 'vue'
 import { useBackButton } from '@/composables/useBackButton'
 export default {
     setup() {
         const showConfirm = ref(false);
+        const paymentForm = reactive({
+            sum: "100"
+        })
         const onConfirm = (e) => {
             console.log(e);
             showConfirm.value = false;
@@ -116,9 +123,14 @@ export default {
        
        const { backButton } = useBackButton()
         backButton()
+        const inputForm = (e, key) => {
+            paymentForm[key] = e.target.innerText
+        }
         return {
             onConfirm,
-            showConfirm
+            showConfirm,
+            inputForm,
+            paymentForm
         }
     },
     data: () => ({
@@ -269,15 +281,15 @@ export default {
                 // gap: 1rem;
                 font-size: 3.6rem;
                 padding: .8rem 1.6rem;
-                input {
+                &--input {
+                    color: $black;
                     font-weight: 600;
                     font-size: inherit;
-                    width: 2*3rem;
                     border: none;
                     outline: none;
                     background: inherit;
                 }
-                span {
+                & span:last-child {
                     color: $gray;
                 }
 
