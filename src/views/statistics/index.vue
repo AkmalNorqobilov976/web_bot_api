@@ -1,8 +1,7 @@
 <template>
     <div class="position-relative">
         <tabs class="position-sticky top-0" :tabs="tabs"/>
-        <router-view/>
-        
+        <preview/>
     </div>
 </template>
 
@@ -11,6 +10,7 @@
 import Tabs from '@/components/Layout/Tabs.vue'
 import { useBackButton } from '@/composables/useBackButton';
 import { ref } from 'vue-demi';
+import Preview from './preview.vue'
 export default {
     setup() {
         const good = ref("good")
@@ -58,7 +58,8 @@ export default {
         ]
     }),
     components: {
-        Tabs
+        Tabs,
+        Preview
     } 
 }
 </script>

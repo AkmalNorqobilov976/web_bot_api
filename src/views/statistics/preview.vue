@@ -25,14 +25,15 @@
 <script>
 
 import StatisticsList from '@/components/statistics/StatisticsList.vue';
-export default {
+import { defineComponent } from 'vue';
+export default defineComponent({
     setup() {
         
     },
     components: {
         StatisticsList
     }
-}
+})
 </script>
 
 
