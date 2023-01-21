@@ -27,7 +27,7 @@
                         Market
                     </p>
                 </div>
-                <div class="home-button-tab__button" @click="$router.push('/statistics')">
+                <div class="home-button-tab__button" @click="$router.push('/statistics/preview/')">
                     <i class="ri-pie-chart-2-line"></i>
                     <p>
                         Statistika
