@@ -1,5 +1,7 @@
 <script setup>
-let code = Array(5);
+const { ref }=require("vue-demi");
+
+let code = ref(Array(5));
 let dataFromPaste;
 const keysAllowed = [
   "0",
@@ -75,6 +77,7 @@ function onPaste(event) {
           @keypress="isNumber"
           @keydown.delete="handleDelete"
           @paste="onPaste"
+          :class="{'filled-input': code[index]}"
         />
       </form>
     </div>
@@ -113,9 +116,12 @@ input[type="number"] {
   text-align: center;
   font-weight: 500;
   border-radius: .8rem;
-  border: .1rem solid $blue;
+  border: .1rem solid rgba($color: $blue, $alpha: .5);
   caret-color: transparent !important;
   outline: none;
+    &.filled-input {
+        border: .1rem solid rgba($color: $blue, $alpha: 1) !important;
+    }
 }
 /* Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
@@ -123,6 +129,7 @@ input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+
 /* Firefox */
 input[type="number"] {
   -moz-appearance: textfield;

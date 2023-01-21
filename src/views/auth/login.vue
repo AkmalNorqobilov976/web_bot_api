@@ -1,6 +1,6 @@
 <template>
     <div class="login">
-        <p class="login__title">Tizimga kirish</p>
+        <p class="login__title" v-if="!auth.smsIsSent">Tizimga kirish</p>
         <form @submit.prevent class="login__form">
             <div class="login__form--phone" v-if="!auth.smsIsSent">
                 <span>+998</span>
@@ -32,14 +32,14 @@
                 <verification-input/>
                 <p @click="backPhoneNumber" class="login__form--verification--btn">Qayta yuborish</p>
             </div>
+                <!-- :disabled="!auth.smsIsSent ? true : false" -->
+        </form>
 
             <button 
                 class="login__form--submit-btn"
                 :class="[{ disabled : !auth.smsIsSent}, {'phoneEntered': userInfo.phone}]"
                 @click="login"
             > {{!auth.smsIsSent ? 'SMS kodni olish' : 'Kirish'}} </button>
-                <!-- :disabled="!auth.smsIsSent ? true : false" -->
-        </form>
     </div>
 </template>
 
@@ -105,8 +105,10 @@ export default defineComponent( {
     }
     .login {
         @include card-mixin;
+        position: relative;
         padding: 2rem 1.6rem;
         font-weight: 500;
+        height: 100vh;
 
         &__title {
             margin: 1.3rem .5rem;
@@ -221,7 +223,10 @@ export default defineComponent( {
             }
 
             &--submit-btn {
-                width: 100%;
+                position: absolute;
+                bottom: 0;
+                left: 5%;
+                width: 90%;
                 @include btn-mixin;
                 padding: 1.6rem 0;
                 color: $white;
