@@ -20,7 +20,9 @@
 </template>
 
 <script>
-export default {
+import { defineComponent } from "vue-demi";
+
+export default defineComponent({
     emits: ['onConfirm'],
     props: {
         showConfirm: {
@@ -36,7 +38,7 @@ export default {
             default: "Hisobingizga pul 10 daqiqa ichida qayta tushirib beriladi"
         }
     }
-}
+})
 </script>
 
 <style lang="scss" scoped>
@@ -80,15 +82,18 @@ export default {
                     gap: 2.2rem;
                     flex-direction: column;
                     margin-top: 2.7rem;
+                    text-transform: uppercase;
                     button {
                         border: none;
                         outline: none;
                         background: transparent;
                         font-size: 1.3rem;
+                        text-transform: uppercase;
                     }
 
                     &--cancel {
                         color: $blue;
+                        text-transform: uppercase;
                     }
 
                     &--agree {

@@ -1,7 +1,7 @@
 <template>
     <custom-confirm :showConfirm="showConfirm" @onConfirm="onConfirm($event)"/>
     <div class="payment">
-           <div class="payment__card-info">
+        <div class="payment__card-info">
             <div>
                 <p class="payment__card-info--title">Hisobingizda</p>
                 <p class="payment__card-info--balance">12.000.000 uzs</p>
@@ -31,12 +31,12 @@
             <p class="payment-debit-card-form__title">Hisobdan pul yechish</p>
             <form @submit.prevent class="payment-debit-card-form__form">
                 <label for="payment-debit-card-form__form--label">Karta raqami</label>
-                <input value="0000 1111 2222 3333" />
+                <input value="0000 1111 2222 3333" placeholder="0000 1111 2222 3333" />
             </form>
         </section>
 
         <section class="payment-form">
-            <p class="payment-form__title">Summani yozing</p>
+            <p class="payment-form__title">Summa</p>
             <form @submit.prevent class="payment-form__form">
                 
                 <span 
@@ -108,8 +108,9 @@
 <script>
 import PaymentListComponent from '@/components/payments/PaymentListComponent.vue'
 import CustomConfirm from '@/components/CustomConfirm.vue'
-import { reactive, ref } from 'vue'
+import { reactive, ref, watchEffect } from 'vue'
 import { useBackButton } from '@/composables/useBackButton'
+import { useTelegram } from '@/composables/useTelegram'
 export default {
     setup() {
         const showConfirm = ref(false);
@@ -122,10 +123,18 @@ export default {
         }
        
        const { backButton } = useBackButton()
+        const { tg } = useTelegram()
         backButton()
         const inputForm = (e, key) => {
             paymentForm[key] = e.target.innerText
         }
+        watchEffect(() => {
+            tg.MainButton.setParams({
+                text: "Hisobni to‘ldirish",
+                color: "#E4E6E4",
+                textColor: "#8C8C8C"
+            })
+        })
         return {
             onConfirm,
             showConfirm,
@@ -149,8 +158,9 @@ export default {
             padding: 2.5rem 1.6rem;
             font-weight: 400;
             font-size: 1.6rem;
+            margin-bottom: .8rem;
             &--balance {
-                font-size: 2.4rem;
+                font-size: 3.2rem;
                 font-weight: 600;
                 padding: 1rem 0;
             }
@@ -204,7 +214,6 @@ export default {
 
         &-debit-card-form {
             @include card-mixin;
-            
             background: $bg-gr-color;
             margin-bottom: .8rem;
             &__title {
@@ -212,7 +221,8 @@ export default {
                 color: $blue;
                 font-size: 1.5rem;
                 font-weight: 500;
-                @include card-mixin;
+                // @include card-mixin;
+                background: $white;
             }
 
             &__form {
@@ -235,6 +245,9 @@ export default {
                     border: none;
                     outline: none;
                     background: inherit;
+                    &::placeholder {
+                        color: $gray-placeholder;
+                    }
                 }
                 span {
                     color: $gray;
@@ -271,7 +284,8 @@ export default {
                 color: $blue;
                 font-size: 1.5rem;
                 font-weight: 500;
-                @include card-mixin;
+                // @include card-mixin;
+                background: $white;
             }
 
             &__form {
@@ -340,7 +354,7 @@ export default {
                 border-radius: 7px;
                 background: $white;
                 padding: 1.05rem;
-                font-size: 1.3rem;
+                font-size: 1.6rem;
                 font-weight: 500;
                 color: $red;
             }

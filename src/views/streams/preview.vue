@@ -131,7 +131,6 @@ export default {
                     y: `${e.clientY}px`,
                     isShownToast: true
                 });
-                alert(toastStore.$state)
     
                 setTimeout(() => {
                     toastStore.$patch({

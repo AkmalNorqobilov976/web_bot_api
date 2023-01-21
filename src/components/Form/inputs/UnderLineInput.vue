@@ -22,7 +22,7 @@
     .under-line-input {
         &--label {
             display: block;
-            font-size: 1.1rem;
+            font-size: 1.3rem;
             font-weight: 400;
             color: $blue;
         }
