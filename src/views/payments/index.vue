@@ -199,14 +199,21 @@ export default {
                     border-radius: .8rem;
                     font-size: 1.6rem;
                     font-weight: 600;
+                    // a
                 }
 
                 &--1 {
                     color: $black;
+                    i {
+                        font-size: 2.5rem;
+                    }
                 }
 
                 &--2 {
                     color: $blue;
+                    i {
+                        font-size: 2.2rem;
+                    }
                 }
             }
 

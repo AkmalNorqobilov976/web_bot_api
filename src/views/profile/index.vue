@@ -232,12 +232,12 @@ export default {
                         display: flex;
                         align-items: center;
                         justify-content: center;
-                        padding: .64rem;
+                        padding: .54rem;
                         border-radius: 50%;
                         background: $black;
                         i {
                             color: $white;
-                            font-size: 1.6rem !important;
+                            font-size: 1.5rem !important;
                         }
                     }
                 }
