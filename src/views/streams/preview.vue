@@ -136,7 +136,7 @@ export default {
                     toastStore.$patch({
                         isShownToast: false
                     });
-                }, 600) 
+                }, 800) 
             }) 
         }
 

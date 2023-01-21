@@ -1,11 +1,13 @@
 <template>
-   <teleport to="body">
-        <div class="toast-component" v-if="toastStore.isShownToast">
-            <copy-icon/>
-            <!-- {{toastStore.isShownToast}} -->
-            Manzil nusxalandi
-        </div>
-   </teleport>
+    <transition name="slide-fade">
+        <teleport to="body" v-if="toastStore.isShownToast">
+            <div class="toast-component">
+                <copy-icon/>
+                <!-- {{toastStore.isShownToast}} -->
+                Manzil nusxalandi
+            </div>
+        </teleport>
+    </transition>
 </template>
 
 <script>
@@ -48,5 +50,19 @@ export default defineComponent({
         left: v-bind('toastStore.x');
         font-size: 1.6rem;
         transition: all .3s ease;
+    }
+
+    .slide-fade-enter-active {
+        transition: all 0.3s ease-out;
+    }
+
+    .slide-fade-leave-active {
+    transition: all 0.3s cubic-bezier(1, 0.5, 0.8, 1);
+    }
+
+    .slide-fade-enter-from,
+    .slide-fade-leave-to {
+    transform: translateX(20px);
+    opacity: 0;
     }
 </style>
