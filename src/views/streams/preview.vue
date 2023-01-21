@@ -10,7 +10,7 @@
             </div>
             <tooltip style="bottom: -2.2rem;" label="Bu nomdagi Oqim linki mavjud"/>
             <div class="stream-name__button-grp">
-                <button @click="copyToClipboard($event)" class="stream-name__button-grp--btn">
+                <button @click="copyToClipboard($event)"  class="stream-name__button-grp--btn">
                     <copyIcon class="stream-name__button-grp--btn--icon"/> Nusxalash
                 </button>
                 <button class="stream-name__button-grp--btn">
@@ -131,6 +131,7 @@ export default {
                     y: `${e.clientY}px`,
                     isShownToast: true
                 });
+                alert(toastStore.$state)
     
                 setTimeout(() => {
                     toastStore.$patch({
