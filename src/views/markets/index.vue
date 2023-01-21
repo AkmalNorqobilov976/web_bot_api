@@ -20,7 +20,7 @@ import SearchInput from '@/components/Form/inputs/SearchInput.vue'
 import { ref } from 'vue-demi';
 export default {
     setup() {
-        const good = ref("good")
+        const good = ref("")
         const { backButton } = useBackButton()
         backButton()
 

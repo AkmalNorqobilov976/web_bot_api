@@ -13,7 +13,7 @@
                 <i v-else class="ri-user-6-fill"></i>
                 <!-- <i class="ri-camera-fill my-profile__header--photo--image-uploader"></i> -->
             </div>
-            <p class="my-profile__header--name">Javohir Ganiyev</p>
+            <p class="my-profile__header--name">{{ userInfo.firstname }} {{userInfo.lastname}}</p>
         </header>
 
          <div class="my-profile__btn-grp">

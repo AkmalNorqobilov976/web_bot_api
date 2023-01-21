@@ -13,7 +13,7 @@ import { ref } from 'vue-demi';
 import Preview from './preview.vue'
 export default {
     setup() {
-        const good = ref("good")
+        const good = ref("")
         const { backButton } = useBackButton()
         backButton()
 
