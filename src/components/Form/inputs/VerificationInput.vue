@@ -148,9 +148,9 @@ input[type="number"] {
   form {
     gap: .8rem;
   }
-  input[type="number"] {
+//   input[type="number"] {
     // width: 12vw;
     // font-size: 40px;
-  }
+//   }
 }
 </style>

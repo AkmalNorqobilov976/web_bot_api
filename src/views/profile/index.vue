@@ -194,8 +194,8 @@ export default {
             &--name {
                 margin-top: .8rem;
                 color: $black;
-                font-size: 1.5rem;
-                font-weight: 500;
+                font-size: 2rem;
+                font-weight: 550;
             }
         }
         &__btn-grp {

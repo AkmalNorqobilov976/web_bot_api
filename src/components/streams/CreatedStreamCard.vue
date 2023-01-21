@@ -70,12 +70,16 @@ export default {
             align-self: center;
             text-align: center;
             padding: 0 2rem;
-            border-left: 1px solid #E9EBEA;;
+            border-left: 1px solid #E9EBEA;
+            align-self: center;
+            justify-self: center;
             &--title {
+                flex: 1 1 auto;
                 position: relative;
                 font-size: 1.2rem;
                 font-weight: 400;
                 color: #838C95;
+                text-align: center;
                 margin-bottom: 1rem;
                 display: flex;
                 align-items: center;
