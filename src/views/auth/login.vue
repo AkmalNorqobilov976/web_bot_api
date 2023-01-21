@@ -224,7 +224,7 @@ export default defineComponent( {
 
             &--submit-btn {
                 position: absolute;
-                bottom: 0;
+                bottom: 3rem;
                 left: 5%;
                 width: 90%;
                 @include btn-mixin;

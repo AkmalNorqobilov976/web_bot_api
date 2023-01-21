@@ -237,6 +237,7 @@ export default {
                         background: $black;
                         i {
                             color: $white;
+                            font-size: 1.6rem !important;
                         }
                     }
                 }
