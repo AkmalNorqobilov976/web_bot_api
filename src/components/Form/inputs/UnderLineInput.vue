@@ -1,7 +1,9 @@
 <template>
     <div class="under-line-input">
         <label class="under-line-input--label" for="">{{ label }}</label>
-        <input class="under-line-input--field" type="text" v-bind="$attrs" :value="modelValue" @input="updateModel">
+        <div class="">
+            <input class="under-line-input--field" type="text" v-bind="$attrs" :value="modelValue" @input="updateModel">
+        </div>
     </div>
 </template>
 
@@ -13,7 +15,10 @@
     }
     defineProps({
         label: {},
-        modelValue: {}
+        modelValue: {},
+        phone: {
+            default: ""
+        }
     })
 </script>
 
@@ -28,6 +33,7 @@
         }
 
         &--field {
+            position: relative;
             border: none;
             outline: none;
             width: 100%;
@@ -36,11 +42,15 @@
             font-weight: 500;
             border-bottom: .1rem solid $input-border-bottom;
             transition: border .3s ease;
+            &::before {
+                position: absolute;
+                content: v-bind('phone');
+            }
         }
         input:focus {
             border-bottom: .1rem solid $blue;
         }
-
+        
 
     }
 </style>

@@ -54,7 +54,9 @@
                             <under-line-input 
                                 placeholder="Kiritilmagan"
                                 label="Telefon raqam" 
+                                phone="+998 "
                                 v-model="userInfo.phone"
+                                @input="onPhoneInput($event)"
                             />
                     </div>
                     <div class="my-profile__form--field">
@@ -91,8 +93,9 @@ import UnderLineInput from '@/components/Form/inputs/UnderLineInput.vue'
 import InfoCard from '@/components/cards/InfoCard.vue'
 import { useTelegram } from '@/composables/useTelegram'
 import { useBackButton } from '@/composables/useBackButton'
+import { usePhoneNumberPatternMatch } from '@/composables/usePhoneNumberPatternMatch'
 
-export default {
+export default defineComponent({
   components: { UnderLineInput, InfoCard },
     setup() {
         const isImage = ref(false)
@@ -143,13 +146,18 @@ export default {
                 UnderLineInput
             }
         })
+
+        const onPhoneInput = ($event) => {
+            $event.target.value = usePhoneNumberPatternMatch($event.target.value);
+        }
         return {
             isImage,
             userInfo,
-            onPhotoChange
+            onPhotoChange,
+            onPhoneInput
         }
     },
-}
+})
 </script>
 <style lang="scss" scoped>
     .my-profile {

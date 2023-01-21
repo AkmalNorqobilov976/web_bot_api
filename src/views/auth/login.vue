@@ -9,6 +9,7 @@
                     type="text" 
                     placeholder="00 000 00 00"
                     v-model="userInfo.phone"
+                    @input="onPhoneInput($event)"
                 />
             </div>
             
@@ -49,6 +50,7 @@ import { useAuthStore } from '@/store/authStore';
 import { useRouter } from 'vue-router';
 import VerificationInput from '@/components/Form/inputs/VerificationInput.vue'
 import { defineComponent } from 'vue-demi';
+import { usePhoneNumberPatternMatch } from '@/composables/usePhoneNumberPatternMatch'
 export default defineComponent( {
     setup() {
         const auth = useAuthStore();
@@ -77,11 +79,16 @@ export default defineComponent( {
             }
             console.log("ishlasangchi");
         }
+
+        const onPhoneInput = ($event) => {
+            $event.target.value = usePhoneNumberPatternMatch($event.target.value);
+        }
         return {
             userInfo,
             login,
             auth,
-            backPhoneNumber
+            backPhoneNumber,
+            onPhoneInput
         }
     },
     components: {

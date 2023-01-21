@@ -31,7 +31,13 @@
             <p class="payment-debit-card-form__title">Hisobdan pul yechish</p>
             <form @submit.prevent class="payment-debit-card-form__form">
                 <label for="payment-debit-card-form__form--label">Karta raqami</label>
-                <input value="0000 1111 2222 3333" placeholder="0000 1111 2222 3333" />
+                <input 
+                    pattern="[0-9]{4}"
+                    autocomplete="cc-number"
+                    value="0000 1111 2222 3333" 
+                    placeholder="0000 1111 2222 3333" 
+                    @input="onCardInput($event)"
+                />
             </form>
         </section>
 
@@ -111,6 +117,7 @@ import CustomConfirm from '@/components/CustomConfirm.vue'
 import { reactive, ref, watchEffect } from 'vue'
 import { useBackButton } from '@/composables/useBackButton'
 import { useTelegram } from '@/composables/useTelegram'
+import { useCardNumberPatternMatch } from '@/composables/useCardNumberPatternMatch'
 export default {
     setup() {
         const showConfirm = ref(false);
@@ -135,12 +142,24 @@ export default {
                 textColor: "#8C8C8C"
             })
         })
+        
+        
+        
+        const onCardInput = (e) => {
+             e.target.value = useCardNumberPatternMatch({
+                input: e.target.value,
+                template: "xxxx xxxx xxxx xxxx",
+            });
+        }
         return {
             onConfirm,
             showConfirm,
             inputForm,
-            paymentForm
+            paymentForm,
+            onCardInput
         }
+
+        
     },
     data: () => ({
     }),
