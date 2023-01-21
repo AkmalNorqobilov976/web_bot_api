@@ -1,7 +1,7 @@
 <template>
     <div class="under-line-input">
         <label class="under-line-input--label" for="">{{ label }}</label>
-        <input class="under-line-input--field" type="text" v-bind="$attrs" :value="modelValue" @input="updateModel">
+        <input class="under-line-input--field" :class="{'underline-black': modelValue}" type="text" v-bind="$attrs" :value="modelValue" @input="updateModel">
     </div>
 </template>
 
@@ -35,6 +35,16 @@
             font-size: 1.6rem;
             font-weight: 500;
             border-bottom: .1rem solid $input-border-bottom;
+            transition: border .3s ease;
         }
+        input:focus {
+            border-bottom: .1rem solid $blue;
+        }
+
+
+    }
+
+    .underline-black {
+        border-bottom: .1rem solid $black;
     }
 </style>

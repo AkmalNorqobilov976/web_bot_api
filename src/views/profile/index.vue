@@ -186,6 +186,9 @@ export default {
                     padding: .3rem 0;
                     font-size: 1.3rem;
                 }
+                i {
+                    font-size: 3.3rem;
+                }
             }
 
             &--name {
