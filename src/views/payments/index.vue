@@ -46,10 +46,10 @@
                 <span> uzs</span>
             </form>
             <div class="payment-form__suggestions">
-                <span class="payment-form__suggestions-item">
+                <span @click="paymentForm.sum = 100000" class="payment-form__suggestions-item">
                     100.000 uzs
                 </span>
-                <span class="payment-form__suggestions-item">
+                <span @click="paymentForm.sum = 500000" class="payment-form__suggestions-item">
                     500.000 uzs
                 </span>
             </div>
@@ -288,6 +288,7 @@ export default {
                     border: none;
                     outline: none;
                     background: inherit;
+                    margin-right: .5rem;
                 }
                 & span:last-child {
                     color: $gray;
