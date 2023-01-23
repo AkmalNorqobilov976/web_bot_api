@@ -8,6 +8,7 @@
                 <input 
                     class="login__form--phone--input" 
                     type="text" 
+                    ref="phoneInput"
                     placeholder="00 000 00 00"
                     v-model="userInfo.phone"
                     @input="onPhoneInput($event)"
@@ -46,25 +47,28 @@
 </template>
 
 <script>
-import { reactive } from '@vue/reactivity'
+import { reactive, ref } from '@vue/reactivity'
 import { useAuthStore } from '@/store/authStore';
 import { useRouter } from 'vue-router';
 import VerificationInput from '@/components/Form/inputs/VerificationInput.vue'
-import { defineComponent, onBeforeUnmount, watch, watchEffect } from 'vue-demi';
+import { defineComponent, onBeforeUnmount, onMounted, watch, watchEffect } from 'vue-demi';
 import { usePhoneNumberPatternMatch } from '@/composables/usePhoneNumberPatternMatch'
 import { useTelegram } from '@/composables/useTelegram';
 import { sendPhone, verifyCode } from '@/api/authApi'
 export default defineComponent( {
+    mounted() {
+        this.$refs.phoneInput.focus();
+    },
     setup() {
         const auth = useAuthStore();
         const router = useRouter();
-        const { tg } = useTelegram();
+        const { tg, tgSetParamsToMainButton, tgButtonOnClick, hideMainButton } = useTelegram();
         const userInfo = reactive({
             phone: "",
             isAgree: false,
             code: "467"
         });
-
+        const phoneInput = ref(null)
         const backPhoneNumber = () => {
             auth.$patch({
                 smsIsSent: false
@@ -103,6 +107,21 @@ export default defineComponent( {
             }
         }
 
+
+        const sendPhoneNumber = () => {
+            alert("hi")
+            sendPhone({ phone: `+998${userInfo.phone.split(' ').join('')}` })
+            .then((response) => {
+                console.log(response);
+                auth.$patch({
+                    smsIsSent: true
+                });
+                tg.MainButton.setParams({
+                    text: "Kirish",
+                });
+                alert(JSON.parse(JSON.stringify(response)));
+            })
+        }
         watch(userInfo, (newValue) => {
             // console.log(newValue, oldValue);
             if(newValue.phone) {
@@ -112,44 +131,44 @@ export default defineComponent( {
 
         watchEffect(() => {
             if (!auth.$state.smsIsSent) {
-                tg.MainButton.setParams({
-                    text: "SMS kodni olish",
-                    textColor: "#8C8C8C",
-                    color: "#E4E6E4"
-                });
+                tgSetParamsToMainButton({
+                    'text': "SMS kodni olish",
+                    color: "#E4E6E4",
+                    textColor: "#8C8C8C"
+                })
             }
 
-            tg.MainButton.show();
+            tgButtonOnClick(sendPhoneNumber())
           
-            tg.MainButton.onClick(() => {
-                alert("hi")
-                if(!auth.$state.smsIsSent) {
-                    sendPhone({ phone: `+998${userInfo.phone.split(' ').join('')}` })
-                    .then(response => {
-                        auth.$patch({
-                            smsIsSent: true
-                        });
-                        tg.MainButton.setParams({
-                            text: "Kirish",
-                        });
-                        alert(JSON.parse(JSON.stringify(response)));
+            // tg.MainButton.onClick(() => {
+            //     alert("hi")
+            //     if(!auth.$state.smsIsSent) {
+            //         sendPhone({ phone: `+998${userInfo.phone.split(' ').join('')}` })
+            //         .then(response => {
+            //             auth.$patch({
+            //                 smsIsSent: true
+            //             });
+            //             tg.MainButton.setParams({
+            //                 text: "Kirish",
+            //             });
+            //             alert(JSON.parse(JSON.stringify(response)));
 
 
-                    })
-                } else {
-                    verifyCode({
-                        phone: userInfo.phone,
-                        code: userInfo.code
-                    }).then(response => {
-                        alert(JSON.parse(JSON.stringify(response)));
-                        router.push('/')
-                    })
-                }
-            })
+            //         })
+            //     } else {
+            //         verifyCode({
+            //             phone: userInfo.phone,
+            //             code: userInfo.code
+            //         }).then(response => {
+            //             alert(JSON.parse(JSON.stringify(response)));
+            //             router.push('/')
+            //         })
+            //     }
+            // })
         })
 
         onBeforeUnmount(() => {
-            tg.MainButton.hide();
+            hideMainButton()
         })
         return {
             userInfo,
