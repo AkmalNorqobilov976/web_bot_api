@@ -120,6 +120,10 @@ export default defineComponent( {
                     text: "Kirish",
                 });
                 alert(JSON.parse(JSON.stringify(response)));
+                
+                tg.MainButton.offClick(() => {
+                    alert('Offed')
+                });
             })
         }
         watch(userInfo, (newValue) => {
@@ -138,7 +142,13 @@ export default defineComponent( {
                 })
             }
 
-            tgButtonOnClick(sendPhoneNumber())
+            tg.MainButton.onClick(() => {
+                if(!auth.$state.smsIsSent) {
+                    sendPhoneNumber();
+                }
+
+                tg.MainButton.offClick();
+            })
           
             // tg.MainButton.onClick(() => {
             //     alert("hi")
