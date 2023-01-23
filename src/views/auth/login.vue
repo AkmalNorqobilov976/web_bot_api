@@ -82,11 +82,13 @@ export default defineComponent( {
             if(!$event.target.value) {
                 userInfo.phone = $event.target.value;
                 tg.MainButton.setParams({
+                    text: "SMS kodni olish1",
                     textColor: "#8C8C8C",
                     color: "#E4E6E4"
                 })
             } else {
                 tg.MainButton.setParams({
+                    text: "SMS kodni olish2",
                     textColor: "#fff",
                     color: "#51AEE7"
                 })
@@ -153,7 +155,7 @@ export default defineComponent( {
         watchEffect(() => {
             if (!auth.$state.smsIsSent) {
                 tgSetParamsToMainButton({
-                    'text': "SMS kodni olish",
+                    text: "SMS kodni olish",
                     color: "#E4E6E4",
                     textColor: "#8C8C8C"
                 })
