@@ -81,13 +81,13 @@ export default defineComponent( {
             console.log($event.target.value, "event");
             if(!$event.target.value) {
                 userInfo.phone = $event.target.value;
-                tg.MainButton.setParams({
+                tgSetParamsToMainButton({
                     text: "SMS kodni olish1",
                     textColor: "#8C8C8C",
                     color: "#E4E6E4"
                 })
             } else {
-                tg.MainButton.setParams({
+                tgSetParamsToMainButton({
                     text: "SMS kodni olish2",
                     textColor: "#fff",
                     color: "#51AEE7"
@@ -108,7 +108,7 @@ export default defineComponent( {
                         phone: `+998${userInfo.phone.split(' ').join('').split('-').join('')}`   
                     }
                 });
-                tg.MainButton.setParams({
+                tgSetParamsToMainButton({
                     text: "Kirish",
                     color: "#51AEE7"
                 });
