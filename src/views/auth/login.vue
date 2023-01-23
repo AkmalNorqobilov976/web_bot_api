@@ -118,11 +118,13 @@ export default defineComponent( {
             //     });
                 tg.MainButton.setParams({
                     text: "Kirish",
+                    color: "#fac"
                 });
                 // alert("ishladi");
                 
                 return tg.MainButton.offClick(() => {
                     alert('Offed')
+                    hideMainButton()
                 });
             // }).catch(() => {
             //     alert("error catch")
