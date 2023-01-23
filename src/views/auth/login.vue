@@ -60,7 +60,7 @@ export default defineComponent( {
         const router = useRouter();
         const { tg } = useTelegram();
         const userInfo = reactive({
-            phone: "94 000-23-12",
+            phone: "",
             isAgree: false,
             code: "467"
         });
