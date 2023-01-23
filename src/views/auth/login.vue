@@ -32,7 +32,7 @@
                 <p class="login__form--verification--subtitle">
                     SMS kod +998 {{userInfo.phone}} raqamiga yuborildi
                 </p>
-                <verification-input/>
+                <verification-input ref="verificationInput"/>
                 <p @click="backPhoneNumber" class="login__form--verification--btn">Qayta yuborish</p>
             </div>
                 <!-- :disabled="!auth.smsIsSent ? true : false" -->
@@ -60,6 +60,7 @@ export default defineComponent( {
         this.$refs.phoneInput.focus();
     },
     setup() {
+        const verificationInput = ref(null)
         const auth = useAuthStore();
         const router = useRouter();
         const { tg, tgSetParamsToMainButton, tgButtonOnClick, hideMainButton } = useTelegram();
@@ -74,21 +75,6 @@ export default defineComponent( {
                 smsIsSent: false
             });
         }
-
-        // const login = () => {
-        //     if(!auth.$state.smsIsSent) {
-
-        //         auth.$patch({smsIsSent: true})
-        //     } else {
-                
-        //         auth.$patch({
-        //             isAuthenticated: true,
-        //             userInfo: userInfo
-        //         })
-        //         router.push('/');            
-        //     }
-        //     console.log("ishlasangchi");
-        // }
         
         const onPhoneInput = ($event) => {
             $event.target.value = usePhoneNumberPatternMatch($event.target.value);
@@ -100,6 +86,7 @@ export default defineComponent( {
                     color: "#E4E6E4"
                 })
             } else {
+                alert("else")
                 tg.MainButton.setParams({
                     textColor: "#fff",
                     color: "#51AEE7"
@@ -114,7 +101,11 @@ export default defineComponent( {
             .then((response) => {
                 console.log(response);
                 auth.$patch({
-                    smsIsSent: true
+                    smsIsSent: true,
+                    userInfo: {
+                        ...auth.$state,
+                        phone: `+998${userInfo.phone.split(' ').join('').split('-').join('')}`   
+                    }
                 });
                 tg.MainButton.setParams({
                     text: "Kirish",
@@ -131,6 +122,20 @@ export default defineComponent( {
                 return tg.MainButton.offClick(() => {
                     alert('Offed')
                 });
+            })
+        }
+
+        const sendCode = () => {
+            verifyCode({
+                phone: auth.$state.userInfo.phone,
+                code: verificationInput.value?.code?.join('')
+            }).then((response) => {
+                auth.$patch({
+                    token: response.data.data,
+                    isAuthenticated: true
+                });
+
+                router.push('/');
             })
         }
         watch(userInfo, (newValue) => {
@@ -152,6 +157,9 @@ export default defineComponent( {
             tg.MainButton.onClick(() => {
                 if(!auth.$state.smsIsSent) {
                     sendPhoneNumber();
+                }
+                else {
+                    sendCode();
                 }
 
                 tg.MainButton.offClick();
