@@ -119,14 +119,14 @@ export default defineComponent( {
                 tg.MainButton.setParams({
                     text: "Kirish",
                 });
-                alert(JSON.parse(JSON.stringify(response)));
+                alert("ishladi");
                 
-                tg.MainButton.offClick(() => {
+                return tg.MainButton.offClick(() => {
                     alert('Offed')
                 });
             }).catch(() => {
                 alert("error catch")
-                tg.MainButton.offClick(() => {
+                return tg.MainButton.offClick(() => {
                     alert('Offed')
                 });
             })
