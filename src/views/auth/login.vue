@@ -1,5 +1,6 @@
 <template>
     <div class="login">
+        {{userInfo.phone}}
         <p class="login__title" v-if="!auth.smsIsSent">Tizimga kirish</p>
         <form @submit.prevent class="login__form">
             <div class="login__form--phone" v-if="!auth.smsIsSent">
