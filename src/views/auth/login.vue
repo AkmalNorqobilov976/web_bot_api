@@ -109,7 +109,7 @@ export default defineComponent( {
 
 
         const sendPhoneNumber = () => {
-            alert("hi")
+            alert("hi23323")
             sendPhone({ phone: `+998${userInfo.phone.split(' ').join('')}` })
             .then((response) => {
                 console.log(response);
