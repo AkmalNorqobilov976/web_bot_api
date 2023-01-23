@@ -136,6 +136,8 @@ export default defineComponent( {
                 });
 
                 router.push('/');
+            }).catch(() => {
+                alert("Sms cod xato!!!")
             })
         }
         watch(userInfo, (newValue) => {
