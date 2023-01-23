@@ -49,12 +49,15 @@ import { reactive } from '@vue/reactivity'
 import { useAuthStore } from '@/store/authStore';
 import { useRouter } from 'vue-router';
 import VerificationInput from '@/components/Form/inputs/VerificationInput.vue'
-import { defineComponent } from 'vue-demi';
+import { defineComponent, watchEffect } from 'vue-demi';
 import { usePhoneNumberPatternMatch } from '@/composables/usePhoneNumberPatternMatch'
+import { useTelegram } from '@/composables/useTelegram';
+import { sendPhone, verifyCode } from '@/api/authApi'
 export default defineComponent( {
     setup() {
         const auth = useAuthStore();
-        const router= useRouter();
+        const router = useRouter();
+        const { tg } = useTelegram();
         const userInfo = reactive({
             phone: "94 000-23-12",
             isAgree: false,
@@ -67,25 +70,66 @@ export default defineComponent( {
             });
         }
 
-        const login = () => {
-            if(!auth.$state.smsIsSent) {
-                auth.$patch({smsIsSent: true})
-            } else {
-                auth.$patch({
-                    isAuthenticated: true,
-                    userInfo: userInfo
-                })
-                router.push('/');            
-            }
-            console.log("ishlasangchi");
-        }
+        // const login = () => {
+        //     if(!auth.$state.smsIsSent) {
+
+        //         auth.$patch({smsIsSent: true})
+        //     } else {
+                
+        //         auth.$patch({
+        //             isAuthenticated: true,
+        //             userInfo: userInfo
+        //         })
+        //         router.push('/');            
+        //     }
+        //     console.log("ishlasangchi");
+        // }
         
         const onPhoneInput = ($event) => {
             $event.target.value = usePhoneNumberPatternMatch($event.target.value);
         }
+
+
+
+        watchEffect(() => {
+            if (!auth.$state.smsIsSent) {
+                tg.MainButton.setParams({
+                    text: "SMS kodni olish",
+                    textColor: "#8C8C8C",
+                    color: "#E4E6E4"
+                });
+            }
+
+            tg.MainButton.onClick(() => {
+                if(auth.$state.smsIsSent) {
+                    sendPhone({ phone: userInfo.phone })
+                    .then(response => {
+                        auth.$patch({
+                            smsIsSent: true
+                        });
+                        tg.MainButton.setParams({
+                            text: "Kirish",
+                            textColor: "#fff",
+                            color: "#51AEE7"
+                        });
+                        alert(JSON.parse(JSON.stringify(response)));
+
+
+                    })
+                } else {
+                    verifyCode({
+                        phone: userInfo.phone,
+                        code: userInfo.code
+                    }).then(response => {
+                        alert(JSON.parse(JSON.stringify(response)));
+                        router.push('/')
+                    })
+                }
+            })
+        })
         return {
             userInfo,
-            login,
+            // login,
             auth,
             backPhoneNumber,
             onPhoneInput
