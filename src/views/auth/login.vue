@@ -95,6 +95,11 @@ export default defineComponent( {
                     textColor: "#8C8C8C",
                     color: "#E4E6E4"
                 })
+            } else {
+                tg.MainButton.setParams({
+                    textColor: "#fff",
+                    color: "#51AEE7"
+                })
             }
         }
 
@@ -115,18 +120,7 @@ export default defineComponent( {
             }
 
             tg.MainButton.show();
-            if(userInfo.phone.length) {
-                tg.MainButton.setParams({
-                    textColor: "#fff",
-                    color: "#51AEE7"
-                })
-            } else {
-                tg.MainButton.setParams({
-                    textColor: "#8C8C8C",
-                    color: "#E4E6E4"
-                })
-
-            }
+          
             tg.MainButton.onClick(() => {
                 alert("hi")
                 if(!auth.$state.smsIsSent) {
