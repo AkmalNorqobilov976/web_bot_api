@@ -125,6 +125,7 @@ export default defineComponent( {
                     alert('Offed')
                 });
             }).catch(() => {
+                alert("error catch")
                 tg.MainButton.offClick(() => {
                     alert('Offed')
                 });
