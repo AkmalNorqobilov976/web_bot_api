@@ -110,7 +110,7 @@ export default defineComponent( {
 
         const sendPhoneNumber = () => {
             alert("hi23323")
-            sendPhone({ phone: `+998${userInfo.phone.split(' ').join('')}` })
+            sendPhone({ phone: `+998${userInfo.phone.split(' ').join('').split('-').join('')}` })
             .then((response) => {
                 console.log(response);
                 auth.$patch({
