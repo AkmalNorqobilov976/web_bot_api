@@ -101,6 +101,12 @@ export default defineComponent( {
             }
 
             tg.MainButton.show();
+            if(userInfo.phone) {
+                tg.MainButton.setParams({
+                    textColor: "#fff",
+                    color: "#51AEE7"
+                })
+            }
             tg.MainButton.onClick(() => {
                 if(auth.$state.smsIsSent) {
                     sendPhone({ phone: userInfo.phone })
@@ -110,8 +116,6 @@ export default defineComponent( {
                         });
                         tg.MainButton.setParams({
                             text: "Kirish",
-                            textColor: "#fff",
-                            color: "#51AEE7"
                         });
                         alert(JSON.parse(JSON.stringify(response)));
 
