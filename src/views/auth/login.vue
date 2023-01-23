@@ -106,6 +106,12 @@ export default defineComponent( {
                     textColor: "#fff",
                     color: "#51AEE7"
                 })
+            } else {
+                tg.MainButton.setParams({
+                    textColor: "#8C8C8C",
+                    color: "#E4E6E4"
+                })
+
             }
             tg.MainButton.onClick(() => {
                 if(auth.$state.smsIsSent) {
