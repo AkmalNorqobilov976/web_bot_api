@@ -115,8 +115,9 @@ export default defineComponent( {
 
             }
             tg.MainButton.onClick(() => {
-                if(auth.$state.smsIsSent) {
-                    sendPhone({ phone: userInfo.phone })
+                alert("hi")
+                if(!auth.$state.smsIsSent) {
+                    sendPhone({ phone: `+998${userInfo.phone.split(' ').join('')}` })
                     .then(response => {
                         auth.$patch({
                             smsIsSent: true
