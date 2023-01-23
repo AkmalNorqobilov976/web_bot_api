@@ -22,7 +22,7 @@ export function useTelegram() {
             text: text ? text: tg.MainButton.text,
             text_color: textColor ? textColor : tg.MainButton.textColor,
             color: color ? color : tg.MainButton.color,
-            is_active: is_active ? is_active : 
+            // is_active: is_active ? is_active : tg 
         });
         tg.MainButton.show();
     }
