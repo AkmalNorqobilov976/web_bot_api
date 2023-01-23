@@ -124,6 +124,10 @@ export default defineComponent( {
                 tg.MainButton.offClick(() => {
                     alert('Offed')
                 });
+            }).catch(() => {
+                tg.MainButton.offClick(() => {
+                    alert('Offed')
+                });
             })
         }
         watch(userInfo, (newValue) => {
