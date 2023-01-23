@@ -102,7 +102,7 @@ export default defineComponent( {
             }
 
             tg.MainButton.show();
-            if(userInfo.phone) {
+            if(userInfo.phone.length) {
                 tg.MainButton.setParams({
                     textColor: "#fff",
                     color: "#51AEE7"
