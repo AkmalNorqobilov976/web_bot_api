@@ -86,7 +86,6 @@ export default defineComponent( {
                     color: "#E4E6E4"
                 })
             } else {
-                alert("else")
                 tg.MainButton.setParams({
                     textColor: "#fff",
                     color: "#51AEE7"
@@ -111,14 +110,11 @@ export default defineComponent( {
                     text: "Kirish",
                     color: "#51AEE7"
                 });
-                // alert("ishladi");
                 
                 return tg.MainButton.offClick(() => {
-                    alert('Offed')
                     hideMainButton()
                 });
             }).catch(() => {
-                alert("error catch")
                 return tg.MainButton.offClick(() => {
                     alert('Offed')
                 });
@@ -126,6 +122,7 @@ export default defineComponent( {
         }
 
         const sendCode = () => {
+            alert(verificationInput.value?.code?.join(''))
             verifyCode({
                 phone: auth.$state.userInfo.phone,
                 code: verificationInput.value?.code?.join('')
@@ -134,10 +131,16 @@ export default defineComponent( {
                     token: response.data.data,
                     isAuthenticated: true
                 });
-
                 router.push('/');
+                return tg.MainButton.offClick(() => {
+                    alert('Offed')
+                });
+
             }).catch(() => {
                 alert("Sms cod xato!!!")
+                return tg.MainButton.offClick(() => {
+                    alert('Offed')
+                });
             })
         }
         watch(userInfo, (newValue) => {
@@ -166,32 +169,6 @@ export default defineComponent( {
 
                 tg.MainButton.offClick();
             })
-          
-            // tg.MainButton.onClick(() => {
-            //     alert("hi")
-            //     if(!auth.$state.smsIsSent) {
-            //         sendPhone({ phone: `+998${userInfo.phone.split(' ').join('')}` })
-            //         .then(response => {
-            //             auth.$patch({
-            //                 smsIsSent: true
-            //             });
-            //             tg.MainButton.setParams({
-            //                 text: "Kirish",
-            //             });
-            //             alert(JSON.parse(JSON.stringify(response)));
-
-
-            //         })
-            //     } else {
-            //         verifyCode({
-            //             phone: userInfo.phone,
-            //             code: userInfo.code
-            //         }).then(response => {
-            //             alert(JSON.parse(JSON.stringify(response)));
-            //             router.push('/')
-            //         })
-            //     }
-            // })
         })
 
         onBeforeUnmount(() => {
