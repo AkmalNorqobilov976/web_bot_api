@@ -36,11 +36,11 @@
                 <!-- :disabled="!auth.smsIsSent ? true : false" -->
         </form>
 
-            <button 
+            <!-- <button 
                 class="login__form--submit-btn"
                 :class="[{ disabled : !auth.smsIsSent}, {'phoneEntered': userInfo.phone}]"
                 @click="login"
-            > {{!auth.smsIsSent ? 'SMS kodni olish' : 'Kirish'}} </button>
+            > {{!auth.smsIsSent ? 'SMS kodni olish' : 'Kirish'}} </button> -->
     </div>
 </template>
 
@@ -79,7 +79,7 @@ export default defineComponent( {
             }
             console.log("ishlasangchi");
         }
-
+        
         const onPhoneInput = ($event) => {
             $event.target.value = usePhoneNumberPatternMatch($event.target.value);
         }

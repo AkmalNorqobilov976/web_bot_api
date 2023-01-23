@@ -1,6 +1,9 @@
 <template>
     <main class="my-profile">
         <header class="my-profile__header">
+            <div class="my-profile__header--setting">
+                <profile-setting-menu/>
+            </div>
             <div class="my-profile__header--photo" @click="this.$refs.profileImage.click()">
                 <input 
                     type="file" 
@@ -94,9 +97,13 @@ import InfoCard from '@/components/cards/InfoCard.vue'
 import { useTelegram } from '@/composables/useTelegram'
 import { useBackButton } from '@/composables/useBackButton'
 import { usePhoneNumberPatternMatch } from '@/composables/usePhoneNumberPatternMatch'
-
+import ProfileSettingMenu from '@/components/menu/ProfileSettingMenu.vue'
 export default defineComponent({
-  components: { UnderLineInput, InfoCard },
+    components: { 
+        UnderLineInput, 
+        InfoCard, 
+        ProfileSettingMenu 
+    },
     setup() {
         const isImage = ref(false)
         const profileImage = ref(null)
@@ -164,7 +171,16 @@ export default defineComponent({
         &__header {
             padding: 1.2rem 0;
             text-align: center;
+            position: relative;
             @include card-mixin;
+
+            &--setting {
+                position: absolute;
+                z-index: 6;
+                top: 1.2rem;
+                left: 1.8rem;
+                display: inline;
+            }
             &--photo {
                 overflow: hidden;
                 cursor: pointer;
