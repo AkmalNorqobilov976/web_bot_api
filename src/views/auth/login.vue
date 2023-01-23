@@ -49,7 +49,7 @@ import { reactive } from '@vue/reactivity'
 import { useAuthStore } from '@/store/authStore';
 import { useRouter } from 'vue-router';
 import VerificationInput from '@/components/Form/inputs/VerificationInput.vue'
-import { defineComponent, watchEffect } from 'vue-demi';
+import { defineComponent, onBeforeUnmount, watchEffect } from 'vue-demi';
 import { usePhoneNumberPatternMatch } from '@/composables/usePhoneNumberPatternMatch'
 import { useTelegram } from '@/composables/useTelegram';
 import { sendPhone, verifyCode } from '@/api/authApi'
@@ -100,6 +100,7 @@ export default defineComponent( {
                 });
             }
 
+            tg.MainButton.show();
             tg.MainButton.onClick(() => {
                 if(auth.$state.smsIsSent) {
                     sendPhone({ phone: userInfo.phone })
@@ -126,6 +127,10 @@ export default defineComponent( {
                     })
                 }
             })
+        })
+
+        onBeforeUnmount(() => {
+            tg.MainButton.hide();
         })
         return {
             userInfo,
