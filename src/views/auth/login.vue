@@ -50,7 +50,7 @@ import { reactive } from '@vue/reactivity'
 import { useAuthStore } from '@/store/authStore';
 import { useRouter } from 'vue-router';
 import VerificationInput from '@/components/Form/inputs/VerificationInput.vue'
-import { defineComponent, onBeforeUnmount, watchEffect } from 'vue-demi';
+import { defineComponent, onBeforeUnmount, watch, watchEffect } from 'vue-demi';
 import { usePhoneNumberPatternMatch } from '@/composables/usePhoneNumberPatternMatch'
 import { useTelegram } from '@/composables/useTelegram';
 import { sendPhone, verifyCode } from '@/api/authApi'
@@ -88,9 +88,22 @@ export default defineComponent( {
         
         const onPhoneInput = ($event) => {
             $event.target.value = usePhoneNumberPatternMatch($event.target.value);
+            console.log($event.target.value, "event");
+            if(!$event.target.value) {
+                userInfo.phone = $event.target.value;
+                tg.MainButton.setParams({
+                    textColor: "#8C8C8C",
+                    color: "#E4E6E4"
+                })
+            }
         }
 
-
+        watch(userInfo, (newValue) => {
+            // console.log(newValue, oldValue);
+            if(newValue.phone) {
+                console.log(newValue.phone);
+            }  
+        })
 
         watchEffect(() => {
             if (!auth.$state.smsIsSent) {
