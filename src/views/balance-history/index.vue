@@ -10,9 +10,13 @@
         </form>
         <info-card class="balance-history__info-card" title="To‘lovlar monitoringi">
             <template #body>
+                <p class="balance-history__info-card--barchart-title">
+                    xarid qilingan va bekor qilingan mahsulotlar statistikasi
+                </p>
                 <div class="balance-history__info-card--body">
-                    <bar-chart/>
-                    <balans-history-bar-chart title="xarid qilingan va bekor qilingan mahsulotlar statistikasi" xKey="name" yKey="amount" :data="barChartData"/>
+                    <bar-chart-example/>
+                    <!-- <bar-chart/> -->
+                    <!-- <balans-history-bar-chart title="xarid qilingan va bekor qilingan mahsulotlar statistikasi" xKey="name" yKey="amount" :data="barChartData"/> -->
                 
                     <balance-history-list-component 
                         icon="ri-arrow-left-down-line"
@@ -30,10 +34,10 @@
 
 <script>
 import SearchInput from '@/components/Form/inputs/SearchInput.vue'
-import BalansHistoryBarChart from '@/components/charts/BalansHistoryBarChart.vue'
 import InfoCard from '@/components/cards/InfoCard.vue'
-import BarChart from '@/components/charts/BarChart.vue'
+// import BarChart from '@/components/charts/BarChart.vue'
 import BalanceHistoryListComponent from '@/components/payments/BalanceHistoryListComponent.vue'
+import BarChartExample from '@/components/charts/BarChartExample.vue'
 export default {
     setup() {
     },
@@ -59,10 +63,10 @@ export default {
     }),
     components: {
         SearchInput,
-        BalansHistoryBarChart,
         InfoCard,
         BalanceHistoryListComponent,
-        BarChart
+        // BarChart,
+        BarChartExample
     }
 }
 </script>
@@ -71,9 +75,16 @@ export default {
 <style lang="scss" scoped>
     .balance-history {
         &__info-card {
+            margin-top: -.0rem;
             &--body {
                 margin: 0 -1.6rem;
             }
         }
+    }
+
+    .balance-history__info-card--barchart-title {
+        font-size: 1.2rem;
+        color: $gray-variant;
+        margin-top: .8rem;
     }
 </style>
