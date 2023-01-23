@@ -30,7 +30,7 @@
             <div v-if="auth.smsIsSent" class="login__form--verification">
                 <p class="login__form--verification--title">SMS kod yuborildi</p>
                 <p class="login__form--verification--subtitle">
-                    SMS kod +998 90 000-23-13 raqamiga yuborildi
+                    SMS kod +998 {{userInfo.phone}} raqamiga yuborildi
                 </p>
                 <verification-input/>
                 <p @click="backPhoneNumber" class="login__form--verification--btn">Qayta yuborish</p>
