@@ -84,13 +84,15 @@ export default defineComponent( {
                 tgSetParamsToMainButton({
                     text: "SMS kodni olish1",
                     textColor: "#8C8C8C",
-                    color: "#E4E6E4"
+                    color: "#E4E6E4",
+                    disabled: true
                 })
             } else {
                 tgSetParamsToMainButton({
                     text: "SMS kodni olish2",
                     textColor: "#fff",
-                    color: "#51AEE7"
+                    color: "#51AEE7",
+                    disabled: false
                 })
             }
         }
@@ -110,7 +112,8 @@ export default defineComponent( {
                 });
                 tgSetParamsToMainButton({
                     text: "Kirish",
-                    color: "#51AEE7"
+                    color: "#51AEE7",
+                    disabled: false
                 });
                 
                 return tg.MainButton.offClick(() => {
@@ -145,19 +148,14 @@ export default defineComponent( {
                 });
             })
         }
-        watch(userInfo, (newValue) => {
-            // console.log(newValue, oldValue);
-            if(newValue.phone) {
-                console.log(newValue.phone);
-            }  
-        })
 
         watchEffect(() => {
             if (!auth.$state.smsIsSent) {
                 tgSetParamsToMainButton({
                     text: "SMS kodni olish",
                     color: "#E4E6E4",
-                    textColor: "#8C8C8C"
+                    textColor: "#8C8C8C",
+                    disabled: true
                 })
             }
 
