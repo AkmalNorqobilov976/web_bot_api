@@ -109,16 +109,16 @@ export default defineComponent( {
 
 
         const sendPhoneNumber = () => {
-            // alert(`+998${userInfo.phone.split(' ').join('').split('-').join('')}`)
-            // sendPhone({ phone: `+998${userInfo.phone.split(' ').join('').split('-').join('')}` })
-            // .then((response) => {
-            //     console.log(response);
-            //     auth.$patch({
-            //         smsIsSent: true
-            //     });
+            alert(`+998${userInfo.phone.split(' ').join('').split('-').join('')}`)
+            sendPhone({ phone: `+998${userInfo.phone.split(' ').join('').split('-').join('')}` })
+            .then((response) => {
+                console.log(response);
+                auth.$patch({
+                    smsIsSent: true
+                });
                 tg.MainButton.setParams({
                     text: "Kirish",
-                    color: "#fac"
+                    color: "#51AEE7"
                 });
                 // alert("ishladi");
                 
@@ -126,12 +126,12 @@ export default defineComponent( {
                     alert('Offed')
                     hideMainButton()
                 });
-            // }).catch(() => {
-            //     alert("error catch")
-            //     return tg.MainButton.offClick(() => {
-            //         alert('Offed')
-            //     });
-            // })
+            }).catch(() => {
+                alert("error catch")
+                return tg.MainButton.offClick(() => {
+                    alert('Offed')
+                });
+            })
         }
         watch(userInfo, (newValue) => {
             // console.log(newValue, oldValue);
