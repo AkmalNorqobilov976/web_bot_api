@@ -323,7 +323,7 @@ router.beforeEach((to, from, next) => {
         }
         next()
     }
-    next(`/${getLastRouter()}`);
+    next();
 })
 
 export default router
