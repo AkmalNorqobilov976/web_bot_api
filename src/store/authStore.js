@@ -6,6 +6,7 @@ export const useAuthStore = defineStore('login', {
         isAuthenticated: false,
         token: localStorage.getItem('token') || "",
         smsIsSent: false,
+        code: "",
         userInfo: {}
     }),
     getters: {

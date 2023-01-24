@@ -130,7 +130,7 @@ export default defineComponent( {
             alert(verificationInput.value?.code?.join(''))
             verifyCode({
                 phone: auth.$state.userInfo.phone,
-                code: verificationInput.value?.code?.join('')
+                code: auth.$state.code
             }).then((response) => {
                 auth.$patch({
                     token: response.data.data,
@@ -138,7 +138,7 @@ export default defineComponent( {
                 });
                 router.push('/');
                 return tg.MainButton.offClick(() => {
-                    alert('Offed')
+                    alert('Offed');
                 });
 
             }).catch(() => {

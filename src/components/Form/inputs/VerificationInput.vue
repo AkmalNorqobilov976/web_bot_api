@@ -1,6 +1,7 @@
 <script setup>
+const { useAuthStore }=require("@/store/authStore");
 const { ref }=require("vue-demi");
-
+const authStore = useAuthStore();
 let code = ref(Array(5));
 let dataFromPaste;
 const keysAllowed = [
@@ -40,6 +41,10 @@ function handleInput(event) {
       }
     }
   }
+
+  authStore.$patch({
+    code: code.value.join('')
+  })
 }
 function handleDelete(event) {
   //keydown event = move to previous element then only delete number
