@@ -5,7 +5,6 @@ export function usePhoneNumberPatternMatch(phoneNumberString) {
       var match = cleaned.match(/^(1|)?(\d{0,2})?(\d{0,3})?(\d{0,2})?(\d{0,2})?$/);
       var intlCode = match[1] ? "+1 " : "";
       return [
-        intlCode,
         match[2] ? "" : "",
         match[2],
         match[3] ? " " : "",

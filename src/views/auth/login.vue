@@ -1,6 +1,5 @@
 <template>
     <div class="login">
-        {{userInfo.phone}}
         <p class="login__title" v-if="!auth.smsIsSent">Tizimga kirish</p>
         <form @submit.prevent class="login__form">
             <div class="login__form--phone" v-if="!auth.smsIsSent">
@@ -100,7 +99,6 @@ export default defineComponent( {
 
 
         const sendPhoneNumber = () => {
-            alert(`+998${userInfo.phone.split(' ').join('').split('-').join('')}`)
             sendPhone({ phone: `+998${userInfo.phone.split(' ').join('').split('-').join('')}` })
             .then((response) => {
                 console.log(response);
@@ -122,13 +120,11 @@ export default defineComponent( {
                 });
             }).catch(() => {
                 return tg.MainButton.offClick(() => {
-                    alert('Offed')
                 });
             })
         }
 
         const sendCode = () => {
-            alert(verificationInput.value?.code?.join(''))
             verifyCode({
                 phone: auth.$state.userInfo.phone,
                 code: auth.$state.code
@@ -143,7 +139,7 @@ export default defineComponent( {
                     .then(() => {
                         router.push('/');
                     })
-                    
+
                 return tg.MainButton.offClick(() => {
                     alert('Offed');
                 });
