@@ -317,13 +317,13 @@ router.beforeEach((to, from, next) => {
     let isAuthenticated = auth.$state.isAuthenticated
     if(!getToken()) {
         
-
+        
         if(to.path !== '/login') {
             next('/login')
         }
-        next(`/${getLastRouter()}`)
+        next()
     }
-    next();
+    next(`/${getLastRouter()}`);
 })
 
 export default router
