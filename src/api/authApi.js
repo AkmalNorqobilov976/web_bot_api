@@ -22,3 +22,10 @@ export function verifyCode({ phone, code }) {
         method: 'post'
     });
 }
+
+export function myProfile() {
+    return request({
+        url: "profile",
+        method: "get"
+    });
+}

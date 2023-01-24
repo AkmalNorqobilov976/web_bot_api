@@ -54,7 +54,8 @@ import VerificationInput from '@/components/Form/inputs/VerificationInput.vue'
 import { defineComponent, onBeforeUnmount, onMounted, watch, watchEffect } from 'vue-demi';
 import { usePhoneNumberPatternMatch } from '@/composables/usePhoneNumberPatternMatch'
 import { useTelegram } from '@/composables/useTelegram';
-import { sendPhone, verifyCode } from '@/api/authApi'
+import { myProfile, sendPhone, verifyCode } from '@/api/authApi'
+import { setToken } from '@/utils/localStorage';
 export default defineComponent( {
     mounted() {
         this.$refs.phoneInput.focus();
@@ -136,7 +137,13 @@ export default defineComponent( {
                     token: response.data.data,
                     isAuthenticated: true
                 });
-                router.push('/');
+                
+                setToken(response.data.data);
+                myProfile()
+                    .then(() => {
+                        router.push('/');
+                    })
+                    
                 return tg.MainButton.offClick(() => {
                     alert('Offed');
                 });

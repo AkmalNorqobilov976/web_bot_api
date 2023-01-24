@@ -1,4 +1,5 @@
 import { useAuthStore } from '@/store/authStore'
+import { getLastRouter, getToken } from '@/utils/localStorage'
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 
@@ -314,13 +315,13 @@ router.beforeEach((to, from, next) => {
     const auth = useAuthStore();
     
     let isAuthenticated = auth.$state.isAuthenticated
-    if(!isAuthenticated) {
+    if(!getToken()) {
         
 
         if(to.path !== '/login') {
             next('/login')
         }
-        // next()
+        next(`/${getLastRouter()}`)
     }
     next();
 })
