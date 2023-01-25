@@ -1,9 +1,10 @@
 import { request } from "@/utils/request";
 
 const URI = 'advertiser'
-export function adminOrders() {
+export function adminOrders({status}) {
+    // let query = status
     return request({
-        url: `${URI}/orders`,
+        url: `${URI}/orders?status=${status}`,
         method: "get"
     });
 }
@@ -27,6 +28,16 @@ export function adminPromoCodes() {
         url: `${URI}/promo-codes`,
         method: 'get'
     });
+}
+
+export function postPromoCode({ code }) {
+    return request({
+        url: `${URI}/promo-codes`,
+        method: 'post',
+        data: {
+            code
+        }
+    })
 }
 
 export function adminStreams() {
@@ -53,3 +64,12 @@ export function postAdminWithdraw({ card_number, amount }) {
         }
     });
 }
+
+
+export function getProfile() {
+    return request({
+        url: `${URI}/profile`,
+        method: 'get'
+    });
+}
+

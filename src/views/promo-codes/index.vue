@@ -34,9 +34,10 @@
 
 <script>
 import { useBackButton } from '@/composables/useBackButton'
-import { watchEffect  } from '@vue/runtime-core';
+import { onMounted, watchEffect  } from '@vue/runtime-core';
 import { useTelegram } from '@/composables/useTelegram';
 import { useRouter } from 'vue-router';
+import { usePromoCodesStore } from '@/store/server/usePromoCodesStore';
 export default {
     setup() {
         const router = useRouter()
@@ -56,7 +57,12 @@ export default {
         ];
         const { tg } = useTelegram()
         const { backButton } = useBackButton()
+        const promoCodesStore = usePromoCodesStore()
         backButton();
+
+        onMounted(() => {
+            promoCodesStore.getPromoCodes()
+        })
         watchEffect(() => {
             tg.MainButton.setParams({
                 text: "Promo-kod yaratish",
@@ -66,7 +72,7 @@ export default {
 
             tg.MainButton.onClick(() => {
                 tg.MainButton.hide()
-                router.push('/customers/generate-promocode')
+                router.push({name: 'generate-promocode'})
             })
             
         })

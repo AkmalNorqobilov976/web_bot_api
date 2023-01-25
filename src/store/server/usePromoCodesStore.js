@@ -2,7 +2,7 @@ import { adminPromoCodes } from "@/api/advertiserApi";
 import { defineStore } from "pinia";
 
 
-export const usePromoCodes = defineStore('promo-codes', {
+export const usePromoCodesStore = defineStore('promo-codes', {
     state: () => ({
         promoCodes: []
     }),

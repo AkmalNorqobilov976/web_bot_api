@@ -3,9 +3,9 @@
         <div class="home__card-info">
             <div>
                 <p class="home__card-info--title">Hisobingizda</p>
-                <p class="home__card-info--balance">12.000.000 uzs</p>
+                <p class="home__card-info--balance">{{authStore.userInfo.balance}} uzs</p>
                 <p class="home__card-info--guess-balance">
-                    Taxminiy balans: <span>86.005.500 uzs</span>
+                    Taxminiy balans: <span>{{authStore.userInfo.hold_balance}} uzs</span>
                 </p>
             </div>
             <div class="home-button-tab">
@@ -43,14 +43,14 @@
 
             <ul>
                 <li>
-                    <router-link :to="{name: 'customers'}">
-                        <i class="ri-parent-fill"></i>  Doimiy mijozlar
+                    <router-link :to="{name: 'promo-codes'}">
+                        <i class="ri-parent-fill"></i> Promokodlar
                     </router-link>
                 </li>
                 
                 <li>
-                    <router-link to="/queries">
-                        <i class="ri-survey-fill"></i>  So‘ro‘vlar
+                    <router-link to="/orders">
+                        <i class="ri-survey-fill"></i> So‘ro‘vlar
                     </router-link>
                 </li>
                 
@@ -81,14 +81,23 @@
 
 <script>
 import { useTelegram } from '@/composables/useTelegram'
-import { watchEffect } from '@vue/runtime-core';
+import { onMounted, watchEffect } from '@vue/runtime-core';
+import { useAuthStore } from '@/store/authStore';
 export default {
     setup() {
         const { tg } = useTelegram();
-        
+        const authStore = useAuthStore();
         watchEffect(() => {
             tg.BackButton.hide();
         });
+
+        onMounted(() => {
+            authStore.getUserInfo()
+        })
+
+        return {
+            authStore
+        }
     },
 }
 </script>

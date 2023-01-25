@@ -13,7 +13,6 @@ export function useTelegram() {
     }
     const tgMainButtonOffClick = () => {
         tg.MainButton.offClick(() => {
-
         })
     }
 

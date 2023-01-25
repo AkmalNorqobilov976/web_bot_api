@@ -1,3 +1,4 @@
+import { getProfile } from '@/api/advertiserApi';
 import { request } from '@/utils/request';
 import { defineStore } from 'pinia';
 
@@ -19,6 +20,21 @@ export const useAuthStore = defineStore('login', {
                     method: 'post'
                 })
            }) 
+        },
+
+        getUserInfo() {
+            return new Promise((resolve, reject) => {
+                getProfile()
+                    .then(response => {
+                        console.log(response);
+                        this.userInfo = response.data.data;
+                        resolve(true)
+                    })
+                    .catch(error => {
+                        reject(error);
+                    });
+
+            })
         }
     }
 })

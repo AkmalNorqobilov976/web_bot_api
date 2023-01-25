@@ -61,7 +61,7 @@
             </div>
         </section>
 
-          <section class="payment-expected">
+          <section class="payment-expected" @click="onPostAdminWithdraw">
             <p class="payment-expected__title">Kutilayotgan to‘lo‘vlar</p>
             <PaymentListComponent> 
                 <template #cancel-btn>
@@ -130,6 +130,7 @@ export default {
             amount: "100"
         })
         const onConfirm = (e) => {
+            console.log(e);
             showConfirm.value = false;
         }
 
@@ -139,12 +140,15 @@ export default {
         const toastStore = useToastStore();
         const { getErrorMessage } = useGetErrorMessage();
         backButton()
-        const inputForm = (e, key) => {            
+        const inputForm = (e, key) => {
+            console.log("ishla");
+            
             paymentForm[key] = e.target.innerText
         }
         
         watch(paymentForm, (newValue) => {
             if (newValue.card_number.length == '19' && newValue.amount) {
+                console.log("well1");
                 tgMainButtonEnable()     
                 tgSetParamsToMainButton({
                     color: "#55BE61",
@@ -152,6 +156,7 @@ export default {
                     disabled: false
                 })           
             } else {
+                console.log("well1");
                 showMainButton()
                 tgMainButtonDisable()                
                 tgSetParamsToMainButton({
@@ -167,6 +172,7 @@ export default {
         watchEffect(() => {
             
             tg.MainButton.onClick(() => {
+                console.log("clicked to main button");
                 onPostAdminWithdraw()
             })
         })

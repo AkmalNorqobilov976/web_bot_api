@@ -1,7 +1,7 @@
 <template>
     <transition name="slide-fade">
         <teleport to="body" v-if="toastStore.isShownToast">
-            <div class="toast-component">
+            <div :class="`toast-component ${toastStore.type}-toast`">
                 <copy-icon v-if="toastStore.icon"/>
                 {{toastStore.message ? toastStore.message : 'Manzil nusxalandi'}}
             </div>
@@ -63,5 +63,13 @@ export default defineComponent({
     .slide-fade-leave-to {
     transform: translateX(20px);
     opacity: 0;
+    }
+
+    .success-toast {
+        background: $green !important;
+    }
+
+    .error-toast {
+        background: $lighten-red;
     }
 </style>

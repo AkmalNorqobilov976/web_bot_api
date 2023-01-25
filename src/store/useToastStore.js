@@ -8,10 +8,18 @@ export const useToastStore = defineStore('toast-store', {
         message: "",
         icon: "",
         delayTime: 300,
-        width: '60%'
+        width: '60%',
+        type: ""
     }),
 
     actions: {
+        toastToggle({ delayTime }) {
+            
+            this.isShownToast = true;
+            setTimeout(() => {
+                this.isShownToast = false;
+            }, delayTime ? delayTime : 300);
+        },
         showToast({message, x, y, delayTime, width}) {
             console.log(message, x, y, delayTime, "show Toast");
             this.isShownToast = true;
@@ -24,6 +32,15 @@ export const useToastStore = defineStore('toast-store', {
             setTimeout(() => {
                 this.isShownToast = false
             }, this.delayTime);
+        },
+
+        showToastAsAlert({ message, type, delayTime}) {
+            this.x = "0px";
+            this.y = "0px";
+            this.width = "100%";
+            this.message = message;
+            this.type = type;
+            this.toastToggle({ delayTime });
         }
     }
 })

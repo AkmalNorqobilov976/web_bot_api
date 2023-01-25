@@ -16,39 +16,39 @@ export default {
     data: () => ({
         tabs: [
             {
-                to: "/queries",
+                to: "/orders",
                 text: "Barchasi"
             },
             {
-                to: "/queries/new",
+                to: "/orders/new",
                 text: "Yangilar"
             },
             {
-                to: "/queries/ready",
+                to: "/orders/ready",
                 text: "Yetkazishga tayyor"
             },
             {
-                to: "/queries/active",
+                to: "/orders/active",
                 text: "Yetkazilmoqda"
             },
             {
-                to: "/queries/deliveried",
+                to: "/orders/deliveried",
                 text: "Yetkazib berildi"
             },
             {
-                to: "/queries/cancelled",
+                to: "/orders/cancelled",
                 text: "Qaytib keldi"
             },
             {
-                to: "/queries/not-necessary",
+                to: "/orders/not-necessary",
                 text: "Keyin oladi"
             },
             {
-                to: "/queries/archive",
+                to: "/orders/archive",
                 text: "Arxiv"
             },
             {
-                to: "/queries/spam",
+                to: "/orders/spam",
                 text: "Spam"
             },
             /**

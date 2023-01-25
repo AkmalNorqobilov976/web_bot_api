@@ -14,16 +14,16 @@ const routes = [
 },
 
 {
-    path: '/customers',
-    component: () => import('@/views/customers/index.vue'),
+    path: '/promo-codes',
+    component: () => import('@/views/promo-codes/main.vue'),
     children: [
         {
-            path: "",
-            name: "customers",
+            path: "main",
+            name: "promo-codes",
             meta: {
                 requiresAuth: true
             },
-            component: () => import('@/views/customers/index.vue'),
+            component: () => import('@/views/promo-codes/index.vue'),
         },
         {
             path: "generate-promocode",
@@ -31,14 +31,14 @@ const routes = [
             meta: {
                 requiresAuth: true
             },
-            component: () => import('@/views/customers/generate-promocode.vue')
+            component: () => import('@/views/promo-codes/generate-promocode.vue')
         }
     ]
   },
 
   {
-    path: "/queries",
-    name: "queries",
+    path: "/orders",
+    name: "orders",
     component: () => import('@/views/queries/index.vue'),
     children: [
         {
