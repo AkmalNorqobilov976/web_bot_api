@@ -55,7 +55,7 @@ export default {
                 text: "Yoqilgan" //delivered
             },
         };
-        const { tg, tgSetParamsToMainButton, hideMainButton, showMainButton } = useTelegram()
+        const { tg, tgSetParamsToMainButton, tgMainButtonOffClick, hideMainButton, showMainButton } = useTelegram()
         const { backButton } = useBackButton()
         const promoCodesStore = usePromoCodesStore()
         backButton();
