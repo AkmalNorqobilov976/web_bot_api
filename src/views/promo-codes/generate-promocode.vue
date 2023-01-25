@@ -78,6 +78,8 @@ export default defineComponent({
         const watcher = watchEffect(() => {
             tg.MainButton.onClick(() => {
                 onPostPromoCode();
+
+                tgMainButtonOffClick()
             })
         })
         onMounted(() => {

@@ -71,8 +71,9 @@ export default {
             })
 
             tg.MainButton.onClick(() => {
-                tg.MainButton.hide()
-                router.push({name: 'generate-promocode'})
+                tgMainButtonOffClick();
+                tg.MainButton.hide();
+                router.push({name: 'generate-promocode'});
             })
             
         })
