@@ -47,6 +47,13 @@ export function adminStreams() {
     });
 }
 
+export function getAdminStream({ id }) {
+    return request({
+        url: `${URI}/streams/${id}`,
+        method: 'get'
+    });
+}
+
 export function adminWithdraws() {
     return request({
         url: `${URI}/withdraws`,

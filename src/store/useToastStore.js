@@ -18,6 +18,7 @@ export const useToastStore = defineStore('toast-store', {
             this.isShownToast = true;
             setTimeout(() => {
                 this.isShownToast = false;
+                this.message = "";
             }, delayTime ? delayTime : 300);
         },
         showToast({message, x, y, delayTime, width}) {

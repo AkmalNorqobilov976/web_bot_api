@@ -116,22 +116,29 @@ import copyIcon from "@/assets/svgs/copyIcon.vue";
 import CreatedStreamCard from '@/components/streams/CreatedStreamCard.vue'
 import ProfileSettingMenu from '@/components/menu/ProfileSettingMenu.vue'
 import { useBackButton } from '@/composables/useBackButton';
-import { defineComponent, reactive } from 'vue-demi';
+import { defineComponent, onBeforeMount, reactive } from 'vue-demi';
 import { useToastStore } from '@/store/useToastStore';
+import { getAdminStream } from '@/api/advertiserApi';
+import { useRoute } from 'vue-router';
 export default defineComponent({
     setup() {
-        const { backButton } = useBackButton()
+        const { backButton } = useBackButton();
+        const toastStore = useToastStore();
+        const route = useRoute();
         backButton()
         const streamForm = reactive({
             link: ""
         })
-        const toastStore = useToastStore();
+        const streamInfo = reactive({})
         const copyToClipboard = (e) => {
             navigator.clipboard.writeText(streamForm.link).then(() => {
                 toastStore.$patch({
                     x: `${e.clientX}px`,
                     y: `${e.clientY}px`,
-                    isShownToast: true
+                    isShownToast: true,
+                    message: "Nusxalandi",
+                    type: "",
+                    icon: true
                 });
     
                 setTimeout(() => {
@@ -142,9 +149,25 @@ export default defineComponent({
             }) 
         }
 
+        const getStream = () => {
+            getAdminStream({ id: route.params.id })
+                .then(response => {
+                    streamInfo.value = response.data.data;
+                }).catch(error => {
+                    toastStore.showToastAsAlert({
+                        message: error.response.data.message,
+                        type: 'error',
+                        delayTime: 1000
+                    })
+                })
+        }
+        onBeforeMount(() => {
+            getStream();
+        })
         return {
             streamForm,
-            copyToClipboard
+            copyToClipboard,
+            streamInfo
         }
     },
     components: {
