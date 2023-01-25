@@ -43,20 +43,20 @@ export default defineComponent({
                     type: 'success',
                     delayTime: 1000
                 });
-                tgMainButtonOffClick();
                 router.push({name: 'promo-codes'})
+                return tgMainButtonOffClick();
             }).catch(error => {
                 toastStore.showToastAsAlert({
                     message: error.response.data.message,
                     type: 'error',
                     delayTime: 1000
                 })
-                tgMainButtonOffClick();
+                return tgMainButtonOffClick();
             })
         }
 
         const promocodeFormWatcher = watch(promocodeForm, (newValue) => {
-            showMainButton();
+            console.log("zo'r");
             if(newValue.code) {
                 console.log(newValue.code);
                 tgSetParamsToMainButton({
@@ -75,6 +75,7 @@ export default defineComponent({
             immediate: true
         })
         const watcher = watchEffect(() => {
+            showMainButton();
             tg.MainButton.onClick(() => {
                 onPostPromoCode();
             })
