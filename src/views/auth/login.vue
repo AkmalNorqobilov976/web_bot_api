@@ -82,14 +82,14 @@ export default defineComponent( {
             if(!$event.target.value) {
                 userInfo.phone = $event.target.value;
                 tgSetParamsToMainButton({
-                    text: "SMS kodni olish1",
+                    text: "SMS kodni olish",
                     textColor: "#8C8C8C",
                     color: "#E4E6E4",
                     disabled: true
                 })
             } else {
                 tgSetParamsToMainButton({
-                    text: "SMS kodni olish2",
+                    text: "SMS kodni olish",
                     textColor: "#fff",
                     color: "#51AEE7",
                     disabled: false

@@ -8,24 +8,33 @@
                 />
             </div>
         </form>
-        <tabs class="position-sticky top-0" :tabs="tabs"/>
+
+        <div v-if="categories.$state.categories">
+            <tabs class="position-sticky top-0" :tabs="tabs"/>
+        </div>
         <router-view/>
    </div>
 </template>
 
 <script>
 import Tabs from '@/components/Layout/Tabs.vue'
-import { useBackButton } from '@/composables/useBackButton';
+import { useBackButton } from '@/composables/useBackButton'
+import { useCategories } from '@/store/server/useCategories'
 import SearchInput from '@/components/Form/inputs/SearchInput.vue'
-import { ref } from 'vue-demi';
-export default {
+import { defineComponent, onMounted, ref } from 'vue-demi';
+export default defineComponent({
     setup() {
         const good = ref("")
         const { backButton } = useBackButton()
+        const categories = useCategories()
+        onMounted(() => {
+            categories.getCategories()
+        })
         backButton('/')
 
         return {
-            good
+            good,
+            categories
         }
     },
     data: () => ({
@@ -72,5 +81,5 @@ export default {
         Tabs,
         SearchInput,
     } 
-}
+})
 </script>
