@@ -28,7 +28,7 @@ export default defineComponent({
         const router = useRouter();
         const { tg, tgMainButtonOffClick, hideMainButton, showMainButton, tgSetParamsToMainButton } = useTelegram();
         const toastStore = useToastStore()
-        backButton()
+        backButton('/promo-codes/main')
 
         const promocodeForm = reactive({
             code: ""
@@ -71,6 +71,7 @@ export default defineComponent({
                     color: "#E4E6E4"
                 });
             }
+            showMainButton()
         }, {
             immediate: true
         })
