@@ -34,7 +34,7 @@
 
 <script>
 import { useBackButton } from '@/composables/useBackButton'
-import { onMounted, watchEffect  } from '@vue/runtime-core';
+import { onMounted, onUnmounted, watchEffect  } from '@vue/runtime-core';
 import { useTelegram } from '@/composables/useTelegram';
 import { useRouter } from 'vue-router';
 import { usePromoCodesStore } from '@/store/server/usePromoCodesStore';
@@ -55,7 +55,7 @@ export default {
                 text: "Yoqilgan" //delivered
             },
         };
-        const { tg } = useTelegram()
+        const { tg, tgSetParamsToMainButton, hideMainButton, showMainButton } = useTelegram()
         const { backButton } = useBackButton()
         const promoCodesStore = usePromoCodesStore()
         backButton();
@@ -63,18 +63,24 @@ export default {
         onMounted(() => {
             promoCodesStore.getPromoCodes()
         })
-        watchEffect(() => {
-            tg.MainButton.setParams({
+        const watcher = watchEffect(() => {
+            tgSetParamsToMainButton({
                 text: "Promo-kod yaratish",
-                color: "#55BE61"
+                color: "#55BE61",
+                disabled: false
             })
-            tg.MainButton.show()
+            showMainButton()
 
             tg.MainButton.onClick(() => {
                 tg.MainButton.hide()
                 router.push({name: 'generate-promocode'})
             })
             
+        })
+        
+        onUnmounted(() => {
+            watcher();
+            hideMainButton();
         })
         return {
             navbarButtons,
