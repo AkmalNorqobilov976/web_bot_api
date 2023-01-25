@@ -142,15 +142,19 @@ export default {
         }
         
         watch(paymentForm, (newValue) => {
-            tgSetParamsToMainButton({
-                text: "Hisobni to‘ldirish",
-                color: "#E4E6E4",
-                textColor: "#8C8C8C"
-            });
             if (newValue.card_number.length == '19' && newValue.amount) {
-                tgMainButtonEnable()                
+                tgMainButtonEnable()     
+                tgSetParamsToMainButton({
+                    textColor: "#55BE61",
+                    color: "#ffffff"
+                })           
             } else {
                 tgMainButtonDisable()                
+                tgSetParamsToMainButton({
+                    text: "Hisobni to‘ldirish",
+                    color: "#E4E6E4",
+                    textColor: "#8C8C8C"
+                });
             }
         })
         watchEffect(() => {
