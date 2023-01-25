@@ -69,7 +69,6 @@ export default {
                 color: "#55BE61",
                 disabled: false
             })
-            showMainButton()
 
             tg.MainButton.onClick(() => {
                 tg.MainButton.hide()
@@ -77,7 +76,9 @@ export default {
             })
             
         })
-        
+        onMounted(() => {
+            showMainButton();
+        })
         onUnmounted(() => {
             watcher();
             hideMainButton();

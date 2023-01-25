@@ -13,7 +13,7 @@
 
 <script>
 import { useBackButton } from '@/composables/useBackButton'
-import { defineComponent, reactive, watchEffect, watch, onUnmounted } from '@vue/runtime-core'
+import { defineComponent, reactive, watchEffect, watch, onUnmounted, onMounted } from '@vue/runtime-core'
 import { useTelegram } from '@/composables/useTelegram'
 import UnderLineInput from '@/components/Form/inputs/UnderLineInput.vue'
 import { useRouter } from 'vue-router'
@@ -76,12 +76,13 @@ export default defineComponent({
             immediate: true
         })
         const watcher = watchEffect(() => {
-            showMainButton();
             tg.MainButton.onClick(() => {
                 onPostPromoCode();
             })
         })
-
+        onMounted(() => {
+            showMainButton();
+        })
         onUnmounted(() => {
             watcher();
             hideMainButton();
