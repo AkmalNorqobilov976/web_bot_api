@@ -3,11 +3,10 @@
         <article v-for="(item, i) in promoCodesStore.$state.promoCodes" :key="i" class="promo-cod">
             <nav class="promo-cod__navbar">
                 <div class="promo-cod__navbar--i1">
-                    <i class="ri-coupon-3-fill"></i> G4OFD
+                    <i class="ri-coupon-3-fill"></i> {{ item.code }}
                 </div>
                 <div class="promo-cod__navbar--button">
                     <button :style="{background: navbarButtons[item.type].color }">{{ navbarButtons[item.type].text }}</button>
-                    <!-- <button>O‘chirilgan</button> -->
                 </div>
             </nav>
             <main class="promo-cod__main">
@@ -38,6 +37,7 @@ import { onMounted, onUnmounted, watchEffect  } from '@vue/runtime-core';
 import { useTelegram } from '@/composables/useTelegram';
 import { useRouter } from 'vue-router';
 import { usePromoCodesStore } from '@/store/server/usePromoCodesStore';
+import { useToastStore } from '@/store/useToastStore';
 export default {
     setup() {
         const router = useRouter()
@@ -57,11 +57,19 @@ export default {
         };
         const { tg, tgSetParamsToMainButton, tgMainButtonOffClick, hideMainButton, showMainButton } = useTelegram()
         const { backButton } = useBackButton()
+        const toastStore = useToastStore();
         const promoCodesStore = usePromoCodesStore()
         backButton();
 
         onMounted(() => {
             promoCodesStore.getPromoCodes()
+                .catch(error => {
+                    toastStore.showToastAsAlert({
+                        message: error.response.data.message,
+                        type: 'error',
+                        delayTime: 1000
+                    })
+                })
         })
         const watcher = watchEffect(() => {
             tgSetParamsToMainButton({

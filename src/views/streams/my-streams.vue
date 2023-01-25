@@ -1,26 +1,31 @@
 <template>
     <main class="streams">
-        <article class="streams-list" @click="$router.push({name: 'stream-preview'})">
+        <article 
+            v-for="(item, i) in streamsStore.$state.streams" 
+            :key="i" 
+            class="streams-list" 
+            @click="$router.push({name: 'stream-preview', params: {id: item.id}})"
+        >
             <div class="streams-list__image">
-                <img :src="require('@/assets/images/round.png')" alt="">
+                <img :src="item.product.image" alt="none">
             </div>
             <div class="streams-list__info">
                 <div class="streams-list__info--header">
-                    Ikkinchi havolam 
+                    {{ item.name }} 
                     <span>
                         <i class="ri-eye-line"></i>
-                        34094
+                        {{ item.visits }}
                     </span>
                 </div>
                 <div class="streams-list__info--text">
                     <div class="streams-list__info--text--context">
-                        Vitek issiq va sovuq havo haydovchi Lorem ipsum dolor sit, amet consectetur adipisicing elit. Debitis, repellendus.
+                        {{ item.product.title }}
                     </div>
                     <i class="ri-arrow-right-s-line"></i>
                 </div>
             </div>
         </article>
-        <article class="streams-list">
+        <!-- <article class="streams-list">
             <div class="streams-list__image">
                 <span class="streams-list__image--front-icon">
                     <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -77,18 +82,38 @@
                     <i class="ri-arrow-right-s-line"></i>
                 </div>
             </div>
-        </article>
+        </article> -->
     </main>
 </template>
 
 <script>
 import { useBackButton } from '@/composables/useBackButton'
-export default {
+import { useStreamsStore } from '@/store/server/useStreamsStore'
+import { useToastStore } from '@/store/useToastStore';
+import { defineComponent, onBeforeMount } from 'vue-demi'
+export default defineComponent({
     setup() {
-        const { backButton } = useBackButton()
-        backButton()
+        const { backButton } = useBackButton();
+        const streamsStore = useStreamsStore();
+        const toastStore = useToastStore();
+        backButton();
+
+        onBeforeMount(() => {
+            streamsStore.getStreams()
+                .catch(error => {
+                    toastStore.showToastAsAlert({
+                        message: error.response.data.message,
+                        type: 'error',
+                        delayTime: 1000
+                    })
+                })
+        })
+    
+        return {
+            streamsStore
+        }
     },
-}
+})
 </script>
 <style lang="scss" scoped>
     .streams {

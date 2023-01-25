@@ -7,6 +7,7 @@
             <!-- error-input class -->
             <div class="stream-name__input">
                 <input v-model="streamForm.link" placeholder="Misol uchun: 1-oqim linki" />
+                <profile-setting-menu></profile-setting-menu>
             </div>
             <tooltip style="bottom: -2.2rem;" label="Bu nomdagi Oqim linki mavjud"/>
             <div class="stream-name__button-grp">
@@ -113,10 +114,11 @@
 import MarketCard from '@/components/markets/MarketCard.vue'
 import copyIcon from "@/assets/svgs/copyIcon.vue";
 import CreatedStreamCard from '@/components/streams/CreatedStreamCard.vue'
+import ProfileSettingMenu from '@/components/menu/ProfileSettingMenu.vue'
 import { useBackButton } from '@/composables/useBackButton';
-import { reactive } from 'vue-demi';
+import { defineComponent, reactive } from 'vue-demi';
 import { useToastStore } from '@/store/useToastStore';
-export default {
+export default defineComponent({
     setup() {
         const { backButton } = useBackButton()
         backButton()
@@ -146,12 +148,13 @@ export default {
         }
     },
     components: {
+        ProfileSettingMenu,
         copyIcon,
         MarketCard,
         CreatedStreamCard
         
     }
-}
+})
 </script>
 
 <style lang="scss" scoped>

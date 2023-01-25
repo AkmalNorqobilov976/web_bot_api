@@ -22,6 +22,14 @@
 import { defineComponent, ref } from "vue-demi";
 
 export default defineComponent({
+    props: {
+        top: {
+            default: '-10px'
+        },
+        left: {
+            default: "-10px"
+        }
+    },
     setup() {
         const isOpen = ref(false);
 

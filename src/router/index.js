@@ -245,7 +245,7 @@ const routes = [
             component: () => import('@/views/streams/FinalLevelCreateStream.vue')
         },
         {
-            path: "preview",
+            path: "preview/:id",
             name: "stream-preview",
             component: () => import('@/views/streams/preview.vue')
         }

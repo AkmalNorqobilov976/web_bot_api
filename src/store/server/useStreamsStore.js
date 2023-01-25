@@ -2,7 +2,7 @@ import { adminStreams } from "@/api/advertiserApi";
 import { defineStore } from "pinia";
 
 
-export const useStreams = defineStore('streams', {
+export const useStreamsStore = defineStore('streams', {
     state: () => ({
         streams: []
     }),
