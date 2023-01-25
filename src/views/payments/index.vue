@@ -179,16 +179,18 @@ export default {
         })
         
         const onCardInput = (e) => {
-             e.target.value = useCardNumberPatternMatch({
+            e.target.value = useCardNumberPatternMatch({
                 input: e.target.value,
                 template: "xxxx xxxx xxxx xxxx",
             });
-
             paymentForm.card_number = e.target.value;
         }
 
         const onPostAdminWithdraw = () => {
-            postAdminWithdraw({ ...paymentForm });
+            postAdminWithdraw({ 
+                card_number: paymentForm.card_number.split(' ').join(''), 
+                amount: paymentForm.amount 
+            });
         }
 
 
