@@ -3,7 +3,7 @@
         <teleport to="body" v-if="toastStore.isShownToast">
             <div class="toast-component">
                 <copy-icon/>
-                Manzil nusxalandi
+                {{toastStore.message ? toastStore.message : 'Manzil nusxalandi'}}
             </div>
         </teleport>
     </transition>

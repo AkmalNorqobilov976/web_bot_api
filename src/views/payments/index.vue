@@ -120,6 +120,8 @@ import { useTelegram } from '@/composables/useTelegram'
 import { useCardNumberPatternMatch } from '@/composables/useCardNumberPatternMatch'
 import { useWithdraws } from '@/store/server/useWithdraws'
 import { postAdminWithdraw } from '@/api/advertiserApi'
+import { useToastStore } from '@/store/useToastStore'
+import { useGetErrorMessage } from '@/composables/useGetErrorMessage'
 export default {
     setup() {
         const showConfirm = ref(false);
@@ -134,7 +136,9 @@ export default {
 
         const withdraws = useWithdraws();
         const { backButton } = useBackButton()
-        const { tg, tgSetParamsToMainButton, tgMainButtonDisable, tgMainButtonEnable, showMainButton } = useTelegram()
+        const { tg, tgSetParamsToMainButton, tgMainButtonDisable, tgMainButtonEnable, showMainButton } = useTelegram();
+        const toastStore = useToastStore();
+        const { getErrorMessage } = useGetErrorMessage();
         backButton()
         const inputForm = (e, key) => {
             console.log("ishla");
@@ -190,6 +194,9 @@ export default {
             postAdminWithdraw({ 
                 card_number: paymentForm.card_number.split(' ').join(''), 
                 amount: paymentForm.amount 
+            }).catch(error => {
+                let errorMessage = getErrorMessage(error);
+                toastStore.showToast({x: 0, y: 0, message: errorMessage, delayTime: 500});
             });
         }
 
