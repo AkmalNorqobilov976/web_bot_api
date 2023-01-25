@@ -1,4 +1,4 @@
-import { adminWithdraw, adminWithdraws } from "@/api/advertiserApi";
+import { postAdminWithdraw, adminWithdraws } from "@/api/advertiserApi";
 import { defineStore } from "pinia";
 
 export const useWithdraws = defineStore('withdraws', {
@@ -12,6 +12,7 @@ export const useWithdraws = defineStore('withdraws', {
             return new Promise((resolve, reject) => {
                 adminWithdraws()
                     .then(response => {
+                        console.log(response, "withdraws");
                         this.withdraws = response.data.data;
                         resolve(true)
                     })
@@ -23,7 +24,7 @@ export const useWithdraws = defineStore('withdraws', {
 
         getWithdraw() {
             return Promise((resolve, reject) => {
-                adminWithdraw()
+                postAdminWithdraw()
                     .then(response => {
                         this.withdraw = response.data.data;
                         resolve(true)

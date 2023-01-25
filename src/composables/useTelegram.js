@@ -11,6 +11,12 @@ export function useTelegram() {
     const showMainButton = () => {
         tg.MainButton.show();
     }
+    const tgMainButtonOffClick = () => {
+        tg.MainButton.offClick(() => {
+
+        })
+    }
+
     const tgSetParamsToMainButton = ({text, textColor, color, is_active, disabled}) => {
         if(disabled) {
             tg.MainButton.disable()
@@ -27,6 +33,14 @@ export function useTelegram() {
         tg.MainButton.show();
     }
 
+    const tgMainButtonDisable = () => {
+        tg.MainButton.disable();
+    }
+
+    const tgMainButtonEnable = () => {
+        tg.MainButton.enable();
+    }
+    
     const tgButtonOnClick = (cbF) => {
         try {
             tg.MainButton.onClick(() => {
@@ -45,9 +59,12 @@ export function useTelegram() {
         onClose,
         tg,
         user: tg.initDataUnsafe?.user,
+        tgMainButtonOffClick,
         tgSetParamsToMainButton,
         tgButtonOnClick,
         showMainButton,
-        hideMainButton
+        hideMainButton,
+        tgMainButtonEnable,
+        tgMainButtonDisable
     }
 }

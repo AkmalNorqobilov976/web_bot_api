@@ -43,7 +43,7 @@ export function adminWithdraws() {
     });
 }
 
-export function adminWithdraw({ card_number, amount }) {
+export function postAdminWithdraw({ card_number, amount }) {
     return request({
         url: `${URI}/withdraw`,
         method: "post",

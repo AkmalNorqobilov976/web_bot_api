@@ -34,7 +34,7 @@
                 <input 
                     pattern="[0-9]{4}"
                     autocomplete="cc-number"
-                    value="0000 1111 2222 3333" 
+                    :value="paymentForm.card_number" 
                     placeholder="0000 1111 2222 3333" 
                     @input="onCardInput($event)"
                 />
@@ -47,8 +47,8 @@
                 
                 <span 
                     class="payment-form__form--input" 
-                    @input="inputForm($event, 'sum')" 
-                    contenteditable>{{paymentForm.sum}}</span>
+                    @input="inputForm($event, 'amount')" 
+                    contenteditable>{{paymentForm.amount}}</span>
                 <span> uzs</span>
             </form>
             <div class="payment-form__suggestions">
@@ -114,43 +114,71 @@
 <script>
 import PaymentListComponent from '@/components/payments/PaymentListComponent.vue'
 import CustomConfirm from '@/components/CustomConfirm.vue'
-import { reactive, ref, watchEffect } from 'vue'
+import { onMounted, reactive, ref, watch, watchEffect } from 'vue'
 import { useBackButton } from '@/composables/useBackButton'
 import { useTelegram } from '@/composables/useTelegram'
 import { useCardNumberPatternMatch } from '@/composables/useCardNumberPatternMatch'
+import { useWithdraws } from '@/store/server/useWithdraws'
 export default {
     setup() {
         const showConfirm = ref(false);
         const paymentForm = reactive({
-            sum: "100"
+            card_number: "",
+            amount: "100"
         })
         const onConfirm = (e) => {
             console.log(e);
             showConfirm.value = false;
         }
-       
-       const { backButton } = useBackButton()
-        const { tg } = useTelegram()
+
+        const withdraws = useWithdraws();
+        const { backButton } = useBackButton()
+        const { tg, tgSetParamsToMainButton, tgMainButtonDisable, tgMainButtonEnable } = useTelegram()
         backButton()
         const inputForm = (e, key) => {
+            console.log("ishla");
+            
             paymentForm[key] = e.target.innerText
         }
-        watchEffect(() => {
-            tg.MainButton.setParams({
+        
+        watch(paymentForm, (newValue) => {
+            tgSetParamsToMainButton({
                 text: "Hisobni to‘ldirish",
                 color: "#E4E6E4",
                 textColor: "#8C8C8C"
+            });
+            if (newValue.card_number.length == '19' && newValue.amount) {
+                tgMainButtonEnable()                
+            } else {
+                tgMainButtonDisable()                
+            }
+        })
+        watchEffect(() => {
+            
+            tg.MainButton.onClick(() => {
+                onPostAdminWithdraw()
             })
         })
         
         
+        onMounted(() => {
+            withdraws.getWithdraws()
+        })
         
         const onCardInput = (e) => {
              e.target.value = useCardNumberPatternMatch({
                 input: e.target.value,
                 template: "xxxx xxxx xxxx xxxx",
             });
+
+            paymentForm.card_number = e.target.value;
         }
+
+        const onPostAdminWithdraw = () => {
+            withdraws.postAdminWithdraw({})
+        }
+
+
         return {
             onConfirm,
             showConfirm,
