@@ -119,6 +119,7 @@ import { useBackButton } from '@/composables/useBackButton'
 import { useTelegram } from '@/composables/useTelegram'
 import { useCardNumberPatternMatch } from '@/composables/useCardNumberPatternMatch'
 import { useWithdraws } from '@/store/server/useWithdraws'
+import { postAdminWithdraw } from '@/api/advertiserApi'
 export default {
     setup() {
         const showConfirm = ref(false);
@@ -167,6 +168,7 @@ export default {
         watchEffect(() => {
             
             tg.MainButton.onClick(() => {
+                console.log("clicked to main button");
                 onPostAdminWithdraw()
             })
         })
@@ -186,7 +188,7 @@ export default {
         }
 
         const onPostAdminWithdraw = () => {
-            withdraws.postAdminWithdraw({})
+            postAdminWithdraw({ ...paymentForm });
         }
 
 
