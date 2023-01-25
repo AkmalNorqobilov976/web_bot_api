@@ -6,14 +6,14 @@
             placeholder="Misol uchun: 100KUZ"
         />
     </div>
-    <p class="promocode-info" @click="onPostPromoCode">
+    <p class="promocode-info">
         Quyidagi link orqali ilovani yuklab olish mumkun. Ilovani yuklagan foydalanuvchilar quyidagi promo-kod orqali chegirmalarga ega bo‘lishadi.
     </p>
 </template>
 
 <script>
 import { useBackButton } from '@/composables/useBackButton'
-import { defineComponent, ref, reactive, watchEffect, onBeforeUnmount } from '@vue/runtime-core'
+import { defineComponent, ref, reactive, watchEffect, onBeforeUnmount, watch } from '@vue/runtime-core'
 import { useTelegram } from '@/composables/useTelegram'
 import UnderLineInput from '@/components/Form/inputs/UnderLineInput.vue'
 import { useRouter } from 'vue-router'
@@ -26,7 +26,7 @@ export default defineComponent({
     setup() {
         const { backButton } = useBackButton()
         const router = useRouter();
-        const { tg, tgMainButtonOffClick, hideMainButton } = useTelegram();
+        const { tg, tgMainButtonOffClick, hideMainButton, showMainButton, tgSetParamsToMainButton } = useTelegram();
         const toastStore = useToastStore()
         backButton()
 
@@ -54,14 +54,27 @@ export default defineComponent({
                 tgMainButtonOffClick();
             })
         }
-        const watcher = watchEffect(() => {
-            tg.MainButton.setParams({
-                text: "Promo-kod yaratish",
-                textColor: "#8C8C8C",
-                color: "#E4E6E4"
-            })
-            tg.MainButton.show()
 
+        const promocodeFormWatcher = watch(promocodeForm, (newValue) => {
+            showMainButton();
+            if(newValue.code) {
+                console.log(newValue.code);
+                tgSetParamsToMainButton({
+                    text: "Promo-kod yaratish",
+                    textColor: "#ffffff",
+                    color: "#55BE61"
+                })
+            }else {
+                tgSetParamsToMainButton({
+                    text: "Promo-kod yaratish",
+                    textColor: "#8C8C8C",
+                    color: "#E4E6E4"
+                });
+            }
+        }, {
+            immediate: true
+        })
+        const watcher = watchEffect(() => {
             tg.MainButton.onClick(() => {
                 onPostPromoCode();
             })
@@ -70,10 +83,10 @@ export default defineComponent({
         onBeforeUnmount(() => {
             watcher();
             hideMainButton();
+            promocodeFormWatcher()
         })
         return {
             promocodeForm,
-            onPostPromoCode
         }
     }
 })
