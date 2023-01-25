@@ -133,7 +133,7 @@ export default {
 
         const withdraws = useWithdraws();
         const { backButton } = useBackButton()
-        const { tg, tgSetParamsToMainButton, tgMainButtonDisable, tgMainButtonEnable } = useTelegram()
+        const { tg, tgSetParamsToMainButton, tgMainButtonDisable, tgMainButtonEnable, showMainButton } = useTelegram()
         backButton()
         const inputForm = (e, key) => {
             console.log("ishla");
@@ -143,6 +143,7 @@ export default {
         
         watch(paymentForm, (newValue) => {
             if (newValue.card_number.length == '19' && newValue.amount) {
+                console.log("well1");
                 tgMainButtonEnable()     
                 tgSetParamsToMainButton({
                     color: "#55BE61",
@@ -150,6 +151,8 @@ export default {
                     disabled: false
                 })           
             } else {
+                console.log("well1");
+                showMainButton()
                 tgMainButtonDisable()                
                 tgSetParamsToMainButton({
                     text: "Hisobni to‘ldirish",
@@ -158,6 +161,8 @@ export default {
                     disabled: true
                 });
             }
+        }, {
+            immediate: true
         })
         watchEffect(() => {
             
