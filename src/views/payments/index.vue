@@ -145,15 +145,17 @@ export default {
             if (newValue.card_number.length == '19' && newValue.amount) {
                 tgMainButtonEnable()     
                 tgSetParamsToMainButton({
-                    textColor: "#55BE61",
-                    color: "#ffffff"
+                    color: "#55BE61",
+                    textColor: "#ffffff",
+                    disabled: false
                 })           
             } else {
                 tgMainButtonDisable()                
                 tgSetParamsToMainButton({
                     text: "Hisobni to‘ldirish",
                     color: "#E4E6E4",
-                    textColor: "#8C8C8C"
+                    textColor: "#8C8C8C",
+                    disabled: true
                 });
             }
         })

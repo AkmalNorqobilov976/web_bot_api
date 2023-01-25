@@ -23,14 +23,14 @@ export function useTelegram() {
         } else {
             tg.MainButton.enable()
         }
-        tg.MainButton.hide();
+        // tg.MainButton.hide();
         tg.MainButton.setParams({
             text: text ? text: tg.MainButton.text,
             text_color: textColor ? textColor : tg.MainButton.textColor,
             color: color ? color : tg.MainButton.color,
             // is_active: is_active ? is_active : tg 
         });
-        tg.MainButton.show();
+        // tg.MainButton.show();
     }
 
     const tgMainButtonDisable = () => {
