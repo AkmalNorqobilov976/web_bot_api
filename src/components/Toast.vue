@@ -2,7 +2,7 @@
     <transition name="slide-fade">
         <teleport to="body" v-if="toastStore.isShownToast">
             <div class="toast-component">
-                <copy-icon/>
+                <copy-icon v-if="toastStore.icon"/>
                 {{toastStore.message ? toastStore.message : 'Manzil nusxalandi'}}
             </div>
         </teleport>
@@ -35,7 +35,7 @@ export default defineComponent({
 <style lang="scss" scoped>
     .toast-component {
         position: fixed;
-        width: 60%;
+        width: v-bind('toastStore.width');
        
         z-index: 5;
         background: rgba($color: #272F38, $alpha: .9);

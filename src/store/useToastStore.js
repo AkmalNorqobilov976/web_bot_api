@@ -6,13 +6,17 @@ export const useToastStore = defineStore('toast-store', {
         x: "110px",
         y: "12px",
         message: "",
-        delayTime: 300
+        icon: "",
+        delayTime: 300,
+        width: '60%'
     }),
 
     actions: {
-        showToast({message, x, y, delayTime}) {
+        showToast({message, x, y, delayTime, width}) {
+            console.log(message, x, y, delayTime, "show Toast");
             this.isShownToast = true;
             this.message = message;
+            this.width = width ? `${width}%` : '60%'
             this.x = `${x}px`;
             this.y = `${y}px`;
             this.delayTime = delayTime ? delayTime : 300

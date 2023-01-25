@@ -17,6 +17,14 @@ service.interceptors.request.use( request => {
     return request;
 });
 
+
+service.interceptors.response.use(response => {
+    
+    return response
+}, error => {
+    console.log('err' + error) // for debug
+    return Promise.reject(error)
+})
 export {
      service as request 
 };
