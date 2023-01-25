@@ -1,31 +1,31 @@
 <template>
     <div class="customers">
-        <article v-for="(item, i) in navbarButtons" :key="i" class="promo-cod">
+        <article v-for="(item, i) in promoCodesStore.$state.promoCodes" :key="i" class="promo-cod">
             <nav class="promo-cod__navbar">
                 <div class="promo-cod__navbar--i1">
                     <i class="ri-coupon-3-fill"></i> G4OFD
                 </div>
                 <div class="promo-cod__navbar--button">
-                    <button :style="{background: item.color}">{{ item.text }}</button>
+                    <button :style="{background: navbarButtons[item.type].color }">{{ navbarButtons[item.type].text }}</button>
                     <!-- <button>O‘chirilgan</button> -->
                 </div>
             </nav>
             <main class="promo-cod__main">
                 <div class="promo-cod__main--list">
                     <div>Tashriflar</div>
-                    <div>56.432</div>
+                    <div>{{item.views}}</div>
                 </div>
                 <div class="promo-cod__main--list">
                     <div>O‘rnatishlar</div>
-                    <div>132</div>
+                    <div>{{item.installs}}</div>
                 </div>
                 <div class="promo-cod__main--list">
                     <div>Mahsulot ko‘rishlar soni</div>
-                    <div>899.083</div>
+                    <div>{{item.products}}</div>
                 </div>
                 <div class="promo-cod__main--list">
                     <div>Buyurtmalar</div>
-                    <div>908</div>
+                    <div>{{item.orders ? item.orders : 0 }}</div>
                 </div>
             </main>
         </article>
@@ -41,20 +41,20 @@ import { usePromoCodesStore } from '@/store/server/usePromoCodesStore';
 export default {
     setup() {
         const router = useRouter()
-        const navbarButtons = [
-            {
+        const navbarButtons = {
+            archived: {
                 color: "#F1A30C",
-                text: "O'chirilgan"
+                text: "O'chirilgan" //archieved
             },
-            {
+            others: {
                 color: "#D60A0A",
-                text: "Yakunlangan"
+                text: "Yakunlangan" //
             },
-            {
+            delivered: {
                 color: "#23B60B",
-                text: "Yoqilgan"
+                text: "Yoqilgan" //delivered
             },
-        ];
+        };
         const { tg } = useTelegram()
         const { backButton } = useBackButton()
         const promoCodesStore = usePromoCodesStore()
@@ -77,7 +77,8 @@ export default {
             
         })
         return {
-            navbarButtons
+            navbarButtons,
+            promoCodesStore
         }
     },
 }
