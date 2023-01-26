@@ -2,18 +2,6 @@
   <article
     class="query-link"
   >
-    <!-- v-touch:swipe.left="goTabLeft"
-    v-touch:swipe.right="goTabRight" -->
-    <!-- <header class="query-link__header">
-      <i class="ri-link-m query-link__header--icon"></i>
-      <div class="query-link__header--title">
-        Ikkinchi havolam
-        <p>
-          <i class="ri-copper-coin-fill"></i>
-          94.000 UZS
-        </p>
-      </div>
-    </header> -->
     <main class="query-link__lists" v-if="listData">
       <section class="query-link__lists--i1">
         <div class="query-link__lists--i1--text">
@@ -42,7 +30,7 @@
       <section class="query-link__lists--i1">
         <div class="query-link__lists--i1--text">
           <i class="ri-pin-distance-line"></i>
-          Toshkent sh, Uchtepa t, Foziltepa k
+          {{ listData.full_address }}
         </div>
       </section>
 
@@ -56,10 +44,10 @@
         </div>
       </section>
 
-      <section class="query-link__lists--i1" @click="$router.push({ name: 'created-stream' })">
+      <section class="query-link__lists--i1" @click="$router.push({ name: 'created-stream', params: {id: listData.stream_id} })">
         <div class="query-link__lists--i1--text">
           <i class="ri-link-m"></i>
-          {{listData.stream_id}}-oqim
+          {{listData.stream_name}}
         </div>
         <div class="query-link__lists--i1--btn">
             <i class="ri-arrow-right-s-line"></i>

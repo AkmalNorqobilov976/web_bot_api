@@ -2,7 +2,7 @@
     <main class="my-profile">
         <header class="my-profile__header">
             <div class="my-profile__header--setting">
-                <profile-setting-menu/>
+                <profile-setting-menu :left="'3rem'"/>
             </div>
             <div class="my-profile__header--photo" @click="this.$refs.profileImage.click()">
                 <input 
@@ -91,7 +91,7 @@
 
 
 <script>
-import { defineComponent, reactive, ref, watchEffect, onUnmounted, watch } from 'vue'
+import { defineComponent, reactive, ref, watchEffect, onUnmounted, watch, onMounted } from 'vue'
 import UnderLineInput from '@/components/Form/inputs/UnderLineInput.vue'
 import InfoCard from '@/components/cards/InfoCard.vue'
 import { useTelegram } from '@/composables/useTelegram'
@@ -123,10 +123,16 @@ export default defineComponent({
             }
         }
 
-        const { tg } = useTelegram()
+        const { tg, showMainButton, hideMainButton } = useTelegram()
         const { backButton } = useBackButton()
         backButton();
+        onMounted(() => {
+            showMainButton();
+        })
 
+        onUnmounted(() => {
+            hideMainButton();
+        })
         watch(userInfo, (currentValue, oldValue) => {
             tg.MainButton.setParams({
                 textColor: '#fff',

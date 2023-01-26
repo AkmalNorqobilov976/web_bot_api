@@ -21,7 +21,6 @@ export default {
         backButton()
         
         const getOrders = () => {
-            console.log(route);
             ordersStore.getOrders({ status: "" })
                 .catch(error => {
                     toastStore.showToastAsAlert({
@@ -32,9 +31,7 @@ export default {
                 })
         }
         watch(route, (newValue) => {
-            console.log(newValue);
             getOrders();
-            console.log("zo'r");
         }, {
             immediate: true,
             deep: true

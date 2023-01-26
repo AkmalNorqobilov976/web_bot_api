@@ -10,7 +10,6 @@ export const useOrdersStore = defineStore('orders', {
             return new Promise((resolve, reject) => {
                 adminOrders({ status })
                     .then(response => {
-                        console.log(response);
                         this.orders = response.data.data;
                         resolve(true);
                     })

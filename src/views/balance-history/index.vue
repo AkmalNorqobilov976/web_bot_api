@@ -38,8 +38,28 @@ import InfoCard from '@/components/cards/InfoCard.vue'
 // import BarChart from '@/components/charts/BarChart.vue'
 import BalanceHistoryListComponent from '@/components/payments/BalanceHistoryListComponent.vue'
 import BarChartExample from '@/components/charts/BarChartExample.vue'
-export default {
+import { defineComponent, onBeforeMount } from 'vue-demi'
+import { useToastStore } from '@/store/useToastStore'
+import { useWithdrawsStore } from '@/store/server/useWithdrawsStore'
+export default defineComponent({
     setup() {
+        const toastStore = useToastStore();
+        const withdrawsStore = useWithdrawsStore()
+
+        const getWithDraws = () => {
+            withdrawsStore.getWithdraws()
+                .catch(error => {
+                    toastStore.showToastAsAlert({
+                        message: error.response.data.message,
+                        type: 'error',
+                        delayTime: 1000
+                    })
+                })
+        }
+
+        onBeforeMount(() => {
+            getWithDraws();
+        })
     },
      data: () => ({
         barChartData: [
@@ -68,7 +88,7 @@ export default {
         // BarChart,
         BarChartExample
     }
-}
+})
 </script>
 
 

@@ -1,7 +1,7 @@
 import { postAdminWithdraw, adminWithdraws } from "@/api/advertiserApi";
 import { defineStore } from "pinia";
 
-export const useWithdraws = defineStore('withdraws', {
+export const useWithdrawsStore = defineStore('withdraws', {
     state: () => ({
         withdraws: [],
         withdraw: null
