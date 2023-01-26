@@ -7,7 +7,17 @@
             <!-- error-input class -->
             <div class="stream-name__input">
                 <input v-model="streamForm.link" placeholder="Misol uchun: 1-oqim linki" />
-                <profile-setting-menu></profile-setting-menu>
+                <profile-setting-menu left="-16rem" top="3rem">
+                    <template #button>
+                        <i class="ri-more-2-fill"></i>
+                    </template>
+                    <template #lists>
+                        <div class="profile-setting-menu__lists--item">
+                            <i class="ri-delete-bin-6-fill"></i>
+                            <p>Oqimni o‘chirish</p>
+                        </div>
+                    </template>
+                </profile-setting-menu>
             </div>
             <tooltip style="bottom: -2.2rem;" label="Bu nomdagi Oqim linki mavjud"/>
             <div class="stream-name__button-grp">
@@ -138,6 +148,7 @@ export default defineComponent({
                     isShownToast: true,
                     message: "Nusxalandi",
                     type: "",
+                    width: 70,
                     icon: true
                 });
     
@@ -305,5 +316,14 @@ export default defineComponent({
             font-size: 2.4rem;
             font-weight: 600;
         }
+    }
+
+
+   .profile-setting-menu__lists--item {
+        font-size: 1.5rem;
+        color: $red;
+        display: flex;
+        align-items: center;
+        gap: 2rem;
     }
 </style>

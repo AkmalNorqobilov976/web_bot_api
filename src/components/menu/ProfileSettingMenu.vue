@@ -56,8 +56,8 @@ export default defineComponent({
             position: absolute;
             width: max-content;
             z-index: 5;
-            top: -1rem;
-            left: 3rem;
+            top: v-bind('top');
+            left: v-bind('left');
             padding: 1.9rem 2.5rem;
             &--item {
                 font-size: 1.5rem;
