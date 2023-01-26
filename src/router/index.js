@@ -57,12 +57,12 @@ const routes = [
             component: () => import('@/views/queries/tabs/new.vue')
         },
         {
-            path: "ready",
+            path: "accepted",
             name: "",
             meta: {
                 requiresAuth: true
             },
-            component: () => import('@/views/queries/tabs/ready.vue')
+            component: () => import('@/views/queries/tabs/accepted.vue')
         },
         {
             path: "active",
@@ -89,7 +89,7 @@ const routes = [
             component: () => import('@/views/queries/tabs/cancelled.vue')
         },
         {
-            path: "not-necessary",
+            path: "hold",
             name: "",
             meta: {
                 requiresAuth: true
@@ -97,7 +97,7 @@ const routes = [
             component: () => import('@/views/queries/tabs/not-necessary.vue')
         },
         {
-            path: "archive",
+            path: "archived",
             name: "",
             meta: {
                 requiresAuth: true

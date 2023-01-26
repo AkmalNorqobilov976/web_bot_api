@@ -1,3 +1,4 @@
+import { queryMaker } from "@/utils/former";
 import { request } from "@/utils/request";
 
 const URI = 'advertiser'
@@ -80,3 +81,11 @@ export function getProfile() {
     });
 }
 
+
+export function adminStatistics(params) {
+    const query = queryMaker(params)
+    return request({
+        url: `${URI}/streams/statistics?${query}`,
+        method: 'get'
+    })
+}

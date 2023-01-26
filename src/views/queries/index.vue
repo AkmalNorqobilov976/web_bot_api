@@ -55,15 +55,15 @@ export default {
                 text: "Yangilar"
             },
             {
-                to: "/orders/ready",
+                to: "/orders/accepted",
                 text: "Yetkazishga tayyor"
             },
             {
-                to: "/orders/active",
+                to: "/orders/sent",
                 text: "Yetkazilmoqda"
             },
             {
-                to: "/orders/deliveried",
+                to: "/orders/delivered",
                 text: "Yetkazib berildi"
             },
             {
@@ -71,11 +71,11 @@ export default {
                 text: "Qaytib keldi"
             },
             {
-                to: "/orders/not-necessary",
+                to: "/orders/hold",
                 text: "Keyin oladi"
             },
             {
-                to: "/orders/archive",
+                to: "/orders/archived",
                 text: "Arxiv"
             },
             {

@@ -1,16 +1,27 @@
 <template>
     <div class="product-sorters">
-            <div class="product-sorters__by-name">
+            <div 
+                class="product-sorters__by-name" 
+                @click="filterFunction('product')"
+            >
                 Mahsulot
-                <i class="ri-arrow-drop-down-fill" :class="{'active-sorter': true}"></i>
+                <i class="ri-arrow-drop-down-fill" :class="[{'active-sorter': statisticsFilterAttributes.sortBy == 'product'}, {'active-d-sorter': statisticsFilterAttributes.sortByDesc == 'product'}]"></i>
             </div>
-            <div class="product-sorters__by-rating">
+            <div 
+                class="product-sorters__by-rating" 
+                @click="filterFunction('orders')"
+            >
                 Reyting bilan
-                <i class="ri-arrow-drop-down-fill"></i>
+                <i class="ri-arrow-drop-down-fill" :class="[{'active-sorter': statisticsFilterAttributes.sortBy == 'orders'}, {'active-d-sorter': statisticsFilterAttributes.sortByDesc == 'orders'}]"></i>
             </div>
         </div>
+        <!-- product orders -->
         <div class="product-lists">
-            <statistics-list/>
+            <statistics-list 
+                v-for="(item, i) in statisticsStore.$state.statistics" 
+                :key="i" 
+                :listData="item"
+            />
             <statistics-list
                 btnText = "-500K"
                 btnTextBgColor="#ED5974"
@@ -25,10 +36,54 @@
 <script>
 
 import StatisticsList from '@/components/statistics/StatisticsList.vue';
-import { defineComponent } from 'vue';
+import { useStatisticsStore } from '@/store/server/useStatisticsStore';
+import { useToastStore } from '@/store/useToastStore';
+import { defineComponent, reactive, watch } from 'vue';
+import { useRoute } from 'vue-router';
 export default defineComponent({
     setup() {
-        
+        const statisticsStore = useStatisticsStore();
+        const toastStore = useToastStore();
+        const route = useRoute();
+        const statisticsFilterAttributes = reactive({
+            sortBy: "",
+            sortByDesc: ""
+        })
+
+        const filterFunction = (keyName) => {
+            if(statisticsFilterAttributes.sortBy && statisticsFilterAttributes.sortBy == keyName) {
+                statisticsFilterAttributes.sortByDesc = keyName
+                statisticsFilterAttributes.sortBy = "";
+            } else  if(statisticsFilterAttributes.sortBy == "" && statisticsFilterAttributes.sortBy == keyName){
+                    statisticsFilterAttributes.sortBy = keyName
+                    statisticsFilterAttributes.sortByDesc = "";
+            } else if(statisticsFilterAttributes.sortByDesc && statisticsFilterAttributes.sortByDesc == keyName) {
+                statisticsFilterAttributes.sortBy = keyName;
+                statisticsFilterAttributes.sortByDesc = "";
+            } else {
+                statisticsFilterAttributes.sortByDesc = keyName;
+                statisticsFilterAttributes.sortBy = "";
+            }
+        }
+        const getStatistics = () => {
+            statisticsStore.getStatistics({ ...statisticsFilterAttributes, status: route.params.tab })
+                .catch(error => {
+                    toastStore.showToastAsAlert({
+                        message: error.response.data.message,
+                        type: 'error',
+                        delayTime: 1000
+                    })
+                })
+        }
+
+        watch(statisticsFilterAttributes, () => {
+            getStatistics();
+        })
+        return {
+            statisticsStore,
+            statisticsFilterAttributes,
+            filterFunction
+        }
     },
     components: {
         StatisticsList
@@ -54,9 +109,16 @@ export default defineComponent({
             gap: .624rem;
             i {
                 font-size: 2.341rem;
+                transition: all .5s ease;
                 &.active-sorter {
                     color: $blue;
                     transform: rotateZ(180deg);
+                }
+
+                &.active-d-sorter {
+                    
+                    color: $blue;
+                    transform: rotateZ(0deg);
                 }
             }
         }
