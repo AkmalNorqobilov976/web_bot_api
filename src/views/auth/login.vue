@@ -55,6 +55,7 @@ import { usePhoneNumberPatternMatch } from '@/composables/usePhoneNumberPatternM
 import { useTelegram } from '@/composables/useTelegram';
 import { myProfile, sendPhone, verifyCode } from '@/api/authApi'
 import { setToken } from '@/utils/localStorage';
+import { useToastStore } from '@/store/useToastStore';
 export default defineComponent( {
     mounted() {
         this.$refs.phoneInput.focus();
@@ -64,6 +65,7 @@ export default defineComponent( {
         const auth = useAuthStore();
         const router = useRouter();
         const { tg, tgSetParamsToMainButton, showMainButton, hideMainButton } = useTelegram();
+        const toastStore = useToastStore();
         const userInfo = reactive({
             phone: "",
             isAgree: false,
@@ -118,7 +120,12 @@ export default defineComponent( {
                 return tg.MainButton.offClick(() => {
                     hideMainButton()
                 });
-            }).catch(() => {
+            }).catch((error) => {
+                    toastStore.showToastAsAlert({
+                        message: error.response.data.message,
+                        type: 'error',
+                        delayTime: 1000
+                    })
                 return tg.MainButton.offClick(() => {
                 });
             })
@@ -144,8 +151,12 @@ export default defineComponent( {
                     alert('Offed');
                 });
 
-            }).catch(() => {
-                alert("Sms cod xato!!!")
+            }).catch((error) => {
+                toastStore.showToastAsAlert({
+                    message: error.response.data.message,
+                    type: 'error',
+                    delayTime: 1000
+                })
                 return tg.MainButton.offClick(() => {
                     alert('Offed')
                 });
