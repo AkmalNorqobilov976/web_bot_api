@@ -181,7 +181,9 @@ export default defineComponent( {
                     sendCode();
                 }
 
-                tg.MainButton.offClick();
+                tg.MainButton.offClick(() => {
+                    
+                });
             })
         })
 
