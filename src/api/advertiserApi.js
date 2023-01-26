@@ -2,9 +2,9 @@ import { request } from "@/utils/request";
 
 const URI = 'advertiser'
 export function adminOrders({status}) {
-    // let query = status
+    let query = status ? `?status=${status}`: ""
     return request({
-        url: `${URI}/orders?status=${status}`,
+        url: `${URI}/orders${query}`,
         method: "get"
     });
 }

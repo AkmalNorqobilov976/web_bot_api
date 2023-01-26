@@ -8,10 +8,41 @@
 <script>
 import Tabs from '@/components/Layout/Tabs.vue'
 import { useBackButton } from '@/composables/useBackButton'
+import { useOrdersStore } from '@/store/server/useOrdersStore'
+import { useRoute } from 'vue-router';
+import { watch } from 'vue-demi';
+import { useToastStore } from '@/store/useToastStore';
 export default {
     setup() {
-        const { backButton } = useBackButton()
+        const { backButton } = useBackButton();
+        const route = useRoute();
+        const ordersStore = useOrdersStore();
+        const toastStore = useToastStore();
         backButton()
+        
+        const getOrders = () => {
+            console.log(route);
+            ordersStore.getOrders({ status: "" })
+                .catch(error => {
+                    toastStore.showToastAsAlert({
+                        message: error.response.data.message,
+                        type: 'error',
+                        delayTime: 1000
+                    })
+                })
+        }
+        watch(route, (newValue) => {
+            console.log(newValue);
+            getOrders();
+            console.log("zo'r");
+        }, {
+            immediate: true,
+            deep: true
+        })
+
+        return {
+            ordersStore
+        }
     },
     data: () => ({
         tabs: [

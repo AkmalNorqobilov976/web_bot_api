@@ -14,29 +14,29 @@
         </p>
       </div>
     </header> -->
-    <main class="query-link__lists">
+    <main class="query-link__lists" v-if="listData">
       <section class="query-link__lists--i1">
         <div class="query-link__lists--i1--text">
           <i class="ri-file-list-line"></i>
           <div>
-            #12456 / 79
+            #{{ listData.operator_id }} / {{ listData.id }}
            <p class="query-link__lists--i1--text--subtitle">1 hafta oldin</p>
           </div>
         </div>
         <div class="query-link__lists--i1--btn">
-          <button>{{ btnText }}</button>
+          <button :class="`${listData.status}-btn`">{{ statusTypes[listData.status] }}</button>
         </div>
       </section>
       <section class="query-link__lists--i1 border-.2">
         <div class="query-link__lists--i1--text">
           <i class="ri-message-line"></i>
-          Raqam noto‘g’ri
+          {{ listData.note ? listData.note : "Izoh mavjud emas!!!" }}
         </div>
       </section>
       <section class="query-link__lists--i1">
         <div class="query-link__lists--i1--text">
           <i class="ri-contacts-line"></i>
-          Davron Abullayev +998(90)***-12-12
+          {{listData.client_full_name}} {{ listData.customer_phone }}
         </div>
       </section>
       <section class="query-link__lists--i1">
@@ -59,7 +59,7 @@
       <section class="query-link__lists--i1" @click="$router.push({ name: 'created-stream' })">
         <div class="query-link__lists--i1--text">
           <i class="ri-link-m"></i>
-          1-oqim
+          {{listData.stream_id}}-oqim
         </div>
         <div class="query-link__lists--i1--btn">
             <i class="ri-arrow-right-s-line"></i>
@@ -82,8 +82,17 @@ export default defineComponent({
         btnText: {
             type: String,
             default: "Arxivlandi"
+        },
+        listData: {
+            type: Object,
+            default: () => {}
         }
-    }
+    },
+    data: () => ({
+        statusTypes: {
+            new: "Yangi"
+        }
+    })
 })
 </script>
 
@@ -170,6 +179,20 @@ export default defineComponent({
       text-align: center;
       padding: 1.1rem 0;
     }
+  }
+
+    .new-btn, .pending-btn, .hold-btn  {
+        background: #F1A30C;
+    }
+    .accepted-btn, .sent-btn, .delivered-btn {
+        background: $green;
+    }
+
+   
+  .cancelled-btn,
+  .archived-btn,
+  .spam-btn {
+    background: $red;
   }
 }
 </style>
