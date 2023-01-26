@@ -135,10 +135,10 @@ export default defineComponent( {
                 });
                 
                 setToken(response.data.data);
-                myProfile()
-                    .then(() => {
-                        router.push('/');
-                    })
+                // myProfile()
+                //     .then(() => {
+                //         router.push('/');
+                //     })
 
                 return tg.MainButton.offClick(() => {
                     alert('Offed');

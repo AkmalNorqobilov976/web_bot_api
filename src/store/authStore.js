@@ -26,7 +26,6 @@ export const useAuthStore = defineStore('login', {
             return new Promise((resolve, reject) => {
                 getProfile()
                     .then(response => {
-                        console.log(response);
                         this.userInfo = response.data.data;
                         resolve(true)
                     })
