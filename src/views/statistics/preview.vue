@@ -66,7 +66,7 @@ export default defineComponent({
             }
         }
         const getStatistics = () => {
-            statisticsStore.getStatistics({ ...statisticsFilterAttributes, status: route.params.tab })
+            statisticsStore.getStatistics({ ...statisticsFilterAttributes, status: route.params.tab !== 'all' ? route.params.tab : '' })
                 .catch(error => {
                     toastStore.showToastAsAlert({
                         message: error.response.data.message,
