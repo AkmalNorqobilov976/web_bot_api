@@ -32,7 +32,7 @@
                     SMS kod +998 {{userInfo.phone}} raqamiga yuborildi
                 </p>
                 <verification-input ref="verificationInput"/>
-                <p @click="backPhoneNumber" class="login__form--verification--btn">Qayta yuborish</p>
+                <p @click="backPhoneNumber" class="login__form--verification--btn">Nomerni o'zgartirish</p>
             </div>
                 <!-- :disabled="!auth.smsIsSent ? true : false" -->
         </form>
@@ -153,7 +153,7 @@ export default defineComponent( {
         }
 
         watchEffect(() => {
-            if (!auth.$state.smsIsSent) {
+            if (!auth.$state.smsIsSent && !userInfo.phone) {
                 tgSetParamsToMainButton({
                     text: "SMS kodni olish",
                     color: "#E4E6E4",
