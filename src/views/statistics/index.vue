@@ -22,7 +22,7 @@ export default defineComponent({
         const statisticsStore = useStatisticsStore();
         const toastStore = useToastStore();
         
-        backButton()
+        backButton('/')
 
         const getStatistics = () => {
             statisticsStore.getStatistics({ status: route.params.tab !== 'all' ? route.params.tab : '' })
