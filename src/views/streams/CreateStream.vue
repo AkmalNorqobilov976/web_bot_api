@@ -1,5 +1,5 @@
 <template>
-    <market-card :isShowBtn="false"/>
+    <market-card :cardData="categoriesStore.$state.selectedProduct" :isShowBtn="false"/>
     
     <section class="stream-name">
         <form @submit.prevent="">
@@ -31,11 +31,16 @@
 import MarketCard from '@/components/markets/MarketCard.vue'
 import Tooltip from '@/components/Tooltip.vue'
 import { useBackButton } from '@/composables/useBackButton'
+import { useCategoriesStore } from '@/store/server/useCategoriesStore'
 export default {
   components: { MarketCard, Tooltip },
     setup() {
         const { backButton } = useBackButton()
-        backButton()
+        const categoriesStore = useCategoriesStore();
+        backButton('/markets/preview/all')
+        return {
+            categoriesStore
+        }
     },
 }
 </script>

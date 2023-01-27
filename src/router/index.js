@@ -127,6 +127,13 @@ const routes = [
             component: () => import('@/views/markets/tabs/all.vue')
         },
         {
+            path: 'preview/:status',
+            meta: {
+                requiresAuth: true
+            },
+            component: () => import('@/views/markets/preview.vue')
+        },
+        {
             path: "new",
             name: "",
             meta: {
@@ -221,7 +228,7 @@ const routes = [
             component: () => import('@/views/streams/my-streams.vue')
         },
         {
-            path: "create-stream",
+            path: "create-stream/:id",
             name: "create-stream",
             meta: {
                 requiresAuth: true

@@ -1,11 +1,12 @@
 import { adminCategories, adminProducts } from "@/api/advertiserApi";
 import { defineStore } from "pinia";
 
-export const useCategories = defineStore('categories', {
+export const useCategoriesStore = defineStore('categories', {
     state: (() => ({
         categories: [],
         ha: true,
         products: [],
+        selectedProduct: null
     })),
 
     actions: {
@@ -23,10 +24,12 @@ export const useCategories = defineStore('categories', {
             })
         },
 
-        getProducts() {
+        getProducts(status) {
+            console.log(status, "status");
             return new Promise((resolve, reject) => {
                 adminProducts()
                     .then(response => {
+                        console.log(response, "data");
                         this.products = response.data.data;
                         resolve(true)
                     })
