@@ -20,6 +20,7 @@
                 Qo‘shimcha
             </p>
         </header>
+        <!-- product id, stream,  -->
         <main class="addition-stream-info__main">
             <div class="addition-stream-info__main--list" @click="$router.push({name: 'donation'})">
                 Xayriyaga pul ajratish <i class="ri-arrow-right-s-line"></i>

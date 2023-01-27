@@ -121,6 +121,7 @@ export default defineComponent( {
                     hideMainButton()
                 });
             }).catch((error) => {
+                    console.log(error);
                     toastStore.showToastAsAlert({
                         message: error.response.data.message,
                         type: 'error',
