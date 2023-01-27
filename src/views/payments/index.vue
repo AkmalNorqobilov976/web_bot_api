@@ -4,9 +4,9 @@
         <div class="payment__card-info">
             <div>
                 <p class="payment__card-info--title">Hisobingizda</p>
-                <p class="payment__card-info--balance">12.000.000 uzs</p>
+                <p class="payment__card-info--balance">{{ authStore.$state.userInfo.balance }} uzs</p>
                 <p class="payment__card-info--guess-balance">
-                    Taxminiy balans: <span>86.005.500 uzs</span>
+                    Taxminiy balans: <span>{{ authStore.$state.userInfo.hold_balance }} uzs</span>
                 </p>
             </div>
             
@@ -14,13 +14,13 @@
                 <div class="payment__btn-grp--btn">
                     <div class="payment__btn-grp--btn--1">
                         <i class="ri-copper-diamond-fill"></i>
-                        329
+                        {{ authStore.$state.userInfo.coins }}
                     </div>
                 </div>
                 <div class="payment__btn-grp--btn">
                     <div class="payment__btn-grp--btn--2">
                         <i class="ri-file-list-fill"></i>
-                        77709
+                        {{ authStore.$state.userInfo.id }}
                     </div>
                 </div>
             </div>
@@ -40,7 +40,7 @@
                 />
             </form>
         </section>
-
+        <!-- {{ withdrawsStore }} -->
         <section class="payment-form">
             <p class="payment-form__title">Summa</p>
             <form @submit.prevent class="payment-form__form">
@@ -118,10 +118,10 @@ import { onMounted, reactive, ref, watch, watchEffect } from 'vue'
 import { useBackButton } from '@/composables/useBackButton'
 import { useTelegram } from '@/composables/useTelegram'
 import { useCardNumberPatternMatch } from '@/composables/useCardNumberPatternMatch'
-import { useWithdraws } from '@/store/server/useWithdrawsStore'
+import { useWithdrawsStore } from '@/store/server/useWithdrawsStore'
 import { postAdminWithdraw } from '@/api/advertiserApi'
 import { useToastStore } from '@/store/useToastStore'
-import { useGetErrorMessage } from '@/composables/useGetErrorMessage'
+import { useAuthStore } from '@/store/authStore'
 export default {
     setup() {
         const showConfirm = ref(false);
@@ -134,11 +134,11 @@ export default {
             showConfirm.value = false;
         }
 
-        const withdraws = useWithdraws();
+        const withdrawsStore = useWithdrawsStore();
         const { backButton } = useBackButton()
         const { tg, tgSetParamsToMainButton, tgMainButtonDisable, tgMainButtonEnable, showMainButton } = useTelegram();
         const toastStore = useToastStore();
-        const { getErrorMessage } = useGetErrorMessage();
+        const authStore = useAuthStore();
         backButton()
         const inputForm = (e, key) => {
             console.log("ishla");
@@ -179,7 +179,8 @@ export default {
         
         
         onMounted(() => {
-            withdraws.getWithdraws()
+            authStore.getUserInfo()
+            withdrawsStore.getWithdraws()
         })
         
         const onCardInput = (e) => {
@@ -213,6 +214,8 @@ export default {
             inputForm,
             paymentForm,
             onCardInput,
+            authStore,
+            withdrawsStore,
             onPostAdminWithdraw
         }
 

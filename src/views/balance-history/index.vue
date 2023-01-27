@@ -60,6 +60,10 @@ export default defineComponent({
         onBeforeMount(() => {
             getWithDraws();
         })
+
+        return {
+            withdrawsStore
+        }
     },
      data: () => ({
         barChartData: [

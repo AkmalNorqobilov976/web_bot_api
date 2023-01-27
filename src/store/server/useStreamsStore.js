@@ -5,7 +5,13 @@ import { defineStore } from "pinia";
 export const useStreamsStore = defineStore('streams', {
     state: () => ({
         streams: [],
-        stream: null
+        stream: null,
+        streamForm: {
+            product_id: "",
+            name: "",
+            charity: "",
+            discount: ""
+        }
     }),
     actions: {
         getStreams() {

@@ -87,7 +87,8 @@ export default {
         backButton('/markets/preview/all')
         return {
             categoriesStore,
-            labelMessage
+            labelMessage,
+            streamForm
         }
     },
 }
