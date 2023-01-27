@@ -7,7 +7,7 @@
             @click="$router.push({name: 'stream-preview', params: {id: item.id}})"
         >
             <div class="streams-list__image">
-                <img :src="item.product.image" alt="none">
+                <img :src="item.product.image ? item.product.image : $noImage" alt="none">
             </div>
             <div class="streams-list__info">
                 <div class="streams-list__info--header">
@@ -124,7 +124,18 @@ export default defineComponent({
             align-items: center;
             gap: 1rem;
             &__image {
+                // display: none;
+                object-fit: contain;
+                overflow: hidden;
+                border: 1px solid #E9EBEA;
                 position: relative;
+                img {
+
+                    height: 4.8rem;
+                    width: 4.8rem;
+                    object-fit: contain;
+
+                }
                 &--front-icon {
                     position: absolute;
                     height: 4.8rem;

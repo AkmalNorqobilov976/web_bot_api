@@ -1,12 +1,10 @@
 <template>
     <main>
-        {{ categoriesStore.$state.products }}
         <market-card 
             v-for="(product, i) in categoriesStore.$state.products" 
             :key="i" 
             :cardData="product"
         />
-        <market-card/>
     </main>
 </template>
 

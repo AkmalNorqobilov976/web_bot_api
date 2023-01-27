@@ -5,8 +5,12 @@
         <form @submit.prevent="">
             <label class="stream-name__title">Oqim nomi</label>
             <!-- error-input class -->
-            <input class="stream-name__input" placeholder="Misol uchun: 1-oqim linki" />
-            <tooltip style="bottom: -2.2rem;" label="Bu nomdagi Oqim linki mavjud"/>
+            <tooltip style="bottom: -2.2rem;" :label="labelMessage"> 
+                <template #tooltip>
+                    <input class="stream-name__input" :class="{'error-input': labelMessage}" placeholder="Misol uchun: 1-oqim linki" />
+                </template>
+
+            </tooltip>
         </form>
     </section>
 
@@ -32,14 +36,57 @@ import MarketCard from '@/components/markets/MarketCard.vue'
 import Tooltip from '@/components/Tooltip.vue'
 import { useBackButton } from '@/composables/useBackButton'
 import { useCategoriesStore } from '@/store/server/useCategoriesStore'
+import { onMounted, reactive, ref, watch, watchEffect } from 'vue-demi'
+import { useTelegram } from '@/composables/useTelegram'
 export default {
   components: { MarketCard, Tooltip },
     setup() {
         const { backButton } = useBackButton()
         const categoriesStore = useCategoriesStore();
+        const { tg, showMainButton, hideMainButton, tgSetParamsToMainButton} = useTelegram();
+        const labelMessage = ref('Bu nomdagi Oqim linki mavjud')
+        
+        const streamForm = reactive({
+            stream: ""
+        })
+
+        watch(streamForm, (newValue) => {
+            if(streamForm.stream) {
+                tgSetParamsToMainButton({
+                    disabled: false,
+                    text: "Oqim yaratish",
+                    textColor: "#fff",
+                    color: "#55BE61"
+                })
+            } else {
+                tgSetParamsToMainButton({
+                    disabled: true,
+                    text: "Oqim yaratish",
+                    textColor: "#8C8C8C",
+                    color: "#E4E6E4"
+                })
+            }
+        })
+
+        watchEffect(() => {
+            tg.MainButton.onClick(() => {
+                alert("hi go somewhere")
+            })
+        })
+        onMounted(() => {
+             hideMainButton();
+            tgSetParamsToMainButton({
+                disabled: true,
+                text: "Oqim yaratish",
+                textColor: "#8C8C8C",
+                color: "#E4E6E4"
+            })
+            showMainButton();
+        })
         backButton('/markets/preview/all')
         return {
-            categoriesStore
+            categoriesStore,
+            labelMessage
         }
     },
 }
@@ -102,4 +149,8 @@ export default {
         }
     }
 
+    .error-input {
+        color: #ED5974;
+        background: rgba($color: #ED5974, $alpha: .2);
+    }
 </style>

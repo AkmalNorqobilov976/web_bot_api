@@ -2,7 +2,7 @@
     <article class="market-card" v-if="cardData">
         <div class="market-card__header">
             <div>
-                <img :src="cardData?.image ? cardData?.image : $noImage " class="market-card__header--img"/>
+                <img :src="cardData?.image ? cardData?.image : $noImage" class="market-card__header--img"/>
             </div>
             <div class="market-card__header--list">
                 {{ cardData.title }}

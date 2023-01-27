@@ -9,33 +9,44 @@ import { defineProps } from 'vue';
     })
 </script>
 <template>
+    <div class="tooltip__btn">
+        <slot name="tooltip"></slot>
+    </div>
     <div class="tooltip">
-        {{label}}        
+        <div class="tooltip__label">
+            {{label}}    
+        </div>        
     </div>
 </template>
 
 <style lang="scss" scoped>
     .tooltip {
-        position: absolute;
-        border-radius: .316rem;
-        color: $white;
-        padding: .75rem .8rem;
-        background: rgba(0, 0, 0, 0.75);
-        &::before {
-            content: '';
+        position: relative;
+        &__label {
+            padding: .75rem .8rem;
+            border-radius: .316rem;
+            color: $white;
+            top: .8rem;
+            left: 1 rem;
+            background: rgba(0, 0, 0, 0.75);
             position: absolute;
-            z-index: 3;
-            overflow: hidden;
-            top: -1.8rem;
-            background: inherit;
-            height: 2rem;
-            width: 2rem;
-            clip-path: polygon(
-                50% 70%,
-                100% 100%,
-                0% 100%
-            );
-            
+            z-index: 2;
+            &::before {
+                content: '';
+                position: absolute;
+                z-index: 3;
+                overflow: hidden;
+                top: -19.515px;
+                background: inherit;
+                height: 2rem;
+                width: 2rem;
+                clip-path: polygon(
+                    50% 70%,
+                    100% 100%,
+                    0% 100%
+                );
+                
+            }
         }
     }
 </style>
