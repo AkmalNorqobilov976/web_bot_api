@@ -44,7 +44,7 @@
             <ul>
                 <li>
                     <router-link :to="{name: 'promo-codes'}">
-                        <i class="ri-parent-fill"></i> Promokodlar
+                        <i class="ri-coupon-3-fill"></i> Promokodlar
                     </router-link>
                 </li>
                 

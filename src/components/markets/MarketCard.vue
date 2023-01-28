@@ -3,9 +3,11 @@
         <div class="market-card__header">
             <div>
                 <img 
-                    :src="cardData?.image ? cardData?.image : $noImage" 
+                    v-if="cardData?.image"
+                    :src="cardData?.image" 
                     class="market-card__header--img"
                 />
+                <i v-else class="ri-image-line"></i>
             </div>
             <div class="market-card__header--list">
                 {{ cardData.title }}
@@ -81,6 +83,19 @@ export default defineComponent({
             font-weight: bold;
             & div:first-child {
                 overflow: hidden;
+                width: 8rem;
+                height: 10.5rem;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background: rgba($color: $blue, $alpha: .15);
+                border-radius: 1.5rem 0;
+
+                i {
+                    color: $blue;
+                    font-size: 3rem;
+                    font-weight: 400;
+                }
             }
             &--img {
                 width: 8rem;
