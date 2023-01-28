@@ -7,7 +7,12 @@
             <!-- error-input class -->
             <tooltip style="bottom: -2.2rem;" :label="labelMessage"> 
                 <template #tooltip>
-                    <input class="stream-name__input" :class="{'error-input': labelMessage}" placeholder="Misol uchun: 1-oqim linki" />
+                    <input 
+                        v-model="streamsStore.$state.streamForm.name"
+                        class="stream-name__input"  
+                        :class="{'error-input': labelMessage}" 
+                        placeholder="Misol uchun: 1-oqim linki" 
+                    />
                 </template>
 
             </tooltip>
@@ -37,22 +42,31 @@ import MarketCard from '@/components/markets/MarketCard.vue'
 import Tooltip from '@/components/Tooltip.vue'
 import { useBackButton } from '@/composables/useBackButton'
 import { useCategoriesStore } from '@/store/server/useCategoriesStore'
-import { onMounted, reactive, ref, watch, watchEffect } from 'vue-demi'
+import { onMounted, onUnmounted, reactive, ref, watch, watchEffect } from 'vue-demi'
 import { useTelegram } from '@/composables/useTelegram'
+import { useRoute } from 'vue-router'
+import { useStreamsStore } from '@/store/server/useStreamsStore'
 export default {
   components: { MarketCard, Tooltip },
     setup() {
         const { backButton } = useBackButton()
         const categoriesStore = useCategoriesStore();
+        const streamsStore = useStreamsStore();
         const { tg, showMainButton, hideMainButton, tgSetParamsToMainButton} = useTelegram();
-        const labelMessage = ref('Bu nomdagi Oqim linki mavjud')
-        
-        const streamForm = reactive({
-            stream: ""
+        const route = useRoute();
+        const labelMessage = ref('')
+    
+        onMounted(() => {
+            showMainButton();
+            streamsStore.$patch({
+                streamForm: {
+                    product_id: route.params.id
+                }
+            })
+            // categoriesStore.$state.
         })
-
-        watch(streamForm, (newValue) => {
-            if(streamForm.stream) {
+        watch(streamsStore, (newValue) => {
+            if(newValue.streamForm.name) {
                 tgSetParamsToMainButton({
                     disabled: false,
                     text: "Oqim yaratish",
@@ -85,10 +99,14 @@ export default {
             showMainButton();
         })
         backButton('/markets/preview/all')
+
+        onUnmounted(() => {
+            hideMainButton();
+        })
         return {
             categoriesStore,
             labelMessage,
-            streamForm
+            streamsStore
         }
     },
 }

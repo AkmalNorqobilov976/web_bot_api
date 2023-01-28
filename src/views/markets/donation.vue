@@ -13,17 +13,23 @@
         <section class="donation-form">
             <p class="donation-form__title">Summani yozing</p>
             <form @submit.prevent class="donation-form__form">
-                <span class="donation-form__form--input" @input="inputForm($event, 'sum')" contenteditable>{{donationForm.sum}}</span>
+                <span 
+                    class="donation-form__form--input" 
+                    @input="inputForm($event, 'charity')" 
+                    contenteditable
+                >
+                    {{ streamsStore.$state.streamForm.charity }}
+                </span>
                 <span> uzs</span>
             </form>
             <div class="donation-form__suggestions">
-                <span @click="donationForm.sum = 100" class="donation-form__suggestions-item">
+                <span @click="streamsStore.$state.streamForm.charity = 100" class="donation-form__suggestions-item">
                     100 uzs
                 </span>
-                <span @click="donationForm.sum = 300" class="donation-form__suggestions-item">
+                <span @click="streamsStore.$state.streamForm.charity = 300" class="donation-form__suggestions-item">
                     300 uzs
                 </span>
-                <span @click="donationForm.sum = 500" class="donation-form__suggestions-item">
+                <span @click="streamsStore.$state.streamForm.charity = 500" class="donation-form__suggestions-item">
                     500 uzs
                 </span>
             </div>
@@ -36,24 +42,28 @@
 </template>
 <script>
 import { useBackButton } from '@/composables/useBackButton'
-import { defineComponent, reactive } from 'vue'
+import { useTelegram } from '@/composables/useTelegram';
+import { useStreamsStore } from '@/store/server/useStreamsStore';
+import { defineComponent, onMounted, reactive } from 'vue'
 export default defineComponent ({
     props: {
 
     },
     setup() {
-        const donationForm = reactive({
-            sum: "100"
-        })
+        const streamsStore = useStreamsStore();
+        const { tg, showMainButton, hideMainButton, tgSetParamsToMainButton } = useTelegram()
         const { backButton } = useBackButton()
-        backButton()
+        backButton(`/streams/create-stream/${streamsStore.$state.streamForm.product_id}`)
 
+        onMounted(() => {
+            
+        })
         const inputForm = (e, key) => {
-            donationForm[key] = e.target.innerText
+            streamsStore.$state.streamForm[key] = e.target.innerText
         }
         return {
-            donationForm,
-            inputForm
+            inputForm,
+            streamsStore
         }
     },
 })

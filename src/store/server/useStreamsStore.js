@@ -9,8 +9,8 @@ export const useStreamsStore = defineStore('streams', {
         streamForm: {
             product_id: "",
             name: "",
-            charity: "",
-            discount: ""
+            charity: "100",
+            discount: "100000"
         }
     }),
     actions: {

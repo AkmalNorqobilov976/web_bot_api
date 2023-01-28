@@ -13,7 +13,7 @@
         <section class="donation-form">
             <p class="donation-form__title">Summani yozing</p>
             <form @submit.prevent class="donation-form__form">
-                <span class="donation-form__form--input" @input="inputForm($event, 'sum')" contenteditable>{{defineAmountForm.sum}}</span>
+                <span class="donation-form__form--input" @input="inputForm($event, 'discount')" contenteditable>{{ streamsStore.$state.streamForm.discount }}</span>
                 <span> uzs</span>
             </form>
         </section>
@@ -35,21 +35,21 @@
 
 <script>
 import { useBackButton } from '@/composables/useBackButton'
-import { defineComponent, reactive } from 'vue'
+import { useStreamsStore } from '@/store/server/useStreamsStore';
+import { defineComponent } from 'vue'
 export default defineComponent ({
     setup() {
-        const defineAmountForm = reactive({
-            sum: "1.000.000"
-        })
+         const streamsStore = useStreamsStore();
+
         const { backButton } = useBackButton()
         const inputForm = (e, key) => {
-            defineAmountForm[key] = e.target.innerText
+            streamsStore.$state.streamForm[key] = e.target.innerText
         }
-        backButton()
+        backButton(`/streams/create-stream/${streamsStore.$state.streamForm.product_id}`)
 
         return {
             inputForm,
-            defineAmountForm
+            streamsStore
         }
     },
 })

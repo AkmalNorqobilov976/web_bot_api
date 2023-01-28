@@ -12,7 +12,7 @@ import { defineProps } from 'vue';
     <div class="tooltip__btn">
         <slot name="tooltip"></slot>
     </div>
-    <div class="tooltip">
+    <div class="tooltip" v-if="label">
         <div class="tooltip__label">
             {{label}}    
         </div>        
