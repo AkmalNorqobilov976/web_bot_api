@@ -55,7 +55,7 @@ export default defineComponent ({
         const { tg, showMainButton, hideMainButton, tgSetParamsToMainButton } = useTelegram()
         const { backButton } = useBackButton()
         const route = useRoute();
-        backButton(`/streams/create-stream/${streamsStore.$state.streamForm.product_id}`)
+        const backBtn = backButton(`/streams/create-stream/${streamsStore.$state.streamForm.product_id}`)
          const setParams = () => {
             if(streamsStore.streamForm.name) {
                 tgSetParamsToMainButton({
@@ -76,6 +76,7 @@ export default defineComponent ({
 
         onMounted(() => {
             showMainButton();
+            backBtn()
             streamsStore.$patch({
                 streamForm: {
                     product_id: route.params.id

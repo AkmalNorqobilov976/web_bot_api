@@ -114,10 +114,11 @@ export default {
                 tg.MainButton.offClick(addStream)
             }
         })
-        backButton('/markets/preview/all')
+        const backBtn = backButton('/markets/preview/all')
 
         onUnmounted(() => {
             hideMainButton();
+            backBtn();
             watcher();
         })
         return {
