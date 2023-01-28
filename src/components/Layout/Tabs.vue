@@ -3,7 +3,7 @@
         <header class="queries-header">
             <nav class="queries-header__navbar">
                 <div 
-                    v-for="(tab, i) in props.tabs"  
+                    v-for="(tab, i) in tabs"  
                     :key="i" 
                     class="queries-header__navbar--tab" 
                     :class="{active: ($route.path == tab.to)}"
@@ -15,21 +15,22 @@
     </horizontal-scroll>
 </template>
 
-<script setup>
+<script>
     import HorizontalScroll from "@/components/HorizontalScroll.vue";
     import { defineComponent, defineProps } from "vue"
-    const props = defineProps({
-        tabs: {
-            type: Array,
-
-        }
-    });
-
-    defineComponent({
+    
+    export default defineComponent({
+        props: {
+            tabs: {
+                type: Array,
+                default: () => []
+            }
+        },
         components: {
             HorizontalScroll
         }
     })
+
 
 </script>
 

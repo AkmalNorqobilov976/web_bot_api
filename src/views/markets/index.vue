@@ -4,13 +4,13 @@
             <div>
                 <search-input 
                     placeholder="Qidirish"
-                    v-model.number="good"
+                    :searchFunction="searchFunction"
+                    v-model="query"
                 />
             </div>
         </form>
-        <!-- v-if="categoriesStore.$state.categoriesStore" -->
-        <div >
-            <tabs class="position-sticky top-0" :tabs="tabs"/>
+        <div v-if="tabs.length">
+            <tabs class="position-sticky top-0" :tabs="[ {to: '/markets/preview/all', text: 'Barchasi'} ,...tabs]"/>
         </div>
         <router-view/>
    </div>
@@ -21,25 +21,30 @@ import Tabs from '@/components/Layout/Tabs.vue'
 import { useBackButton } from '@/composables/useBackButton'
 import { useCategoriesStore } from '@/store/server/useCategoriesStore'
 import SearchInput from '@/components/Form/inputs/SearchInput.vue'
-import { defineComponent, onMounted, ref, watch } from 'vue-demi';
+import { computed, defineComponent, onMounted, ref, watch } from 'vue-demi';
 import { useToastStore } from '@/store/useToastStore';
 import { useRoute } from 'vue-router';
 export default defineComponent({
     setup() {
-        const good = ref("")
+        const query = ref("")
         const { backButton } = useBackButton()
         const categoriesStore = useCategoriesStore()
         const toastStore = useToastStore()
         const route = useRoute();
+        const tabs = ref([]);
         onMounted(() => {
             categoriesStore.getCategories()
+                .then(() => {
+                    tabs.value = categoriesStore.getCategoriesForTab; 
+                })
             getProducts()
+                
         })
         backButton('/')
 
-        const getProducts = (status) => {
+        const getProducts = (status, query) => {
             status = status == "all" ? "" : status;
-            categoriesStore.getProducts(status? status: null)
+            categoriesStore.getProducts(status, query)
                 .catch(error => {
                     toastStore.showToastAsAlert({
                         message: error.response.data.message,
@@ -49,57 +54,23 @@ export default defineComponent({
                 })
         }
 
+        const searchFunction = () => {
+            getProducts(route.params.status, query)
+        }
+
         watch(route, (newValue) => {
-            getProducts(newValue.params.status);
+            getProducts(newValue.params.status, query);
         }, {
             immediate: true,
             deep: true
         })
         return {
-            good,
-            categoriesStore
+            query,
+            categoriesStore,
+            tabs,
+            searchFunction
         }
     },
-    data: () => ({
-        tabs: [
-            {
-                to: "/markets/preview/all",
-                text: "Barchasi"
-            },
-            {
-                to: "/markets/preview/new",
-                text: "Yangilar"
-            },
-            {
-                to: "/markets/preview/ready",
-                text: "Yetkazishga tayyor"
-            },
-            {
-                to: "/markets/preview/active",
-                text: "Yetkazilmoqda"
-            },
-            {
-                to: "/markets/preview/deliveried",
-                text: "Yetkazib berildi"
-            },
-            {
-                to: "/markets/preview/cancelled",
-                text: "Qaytib keldi"
-            },
-            {
-                to: "/markets/preview/not-necessary",
-                text: "Keyin oladi"
-            },
-            {
-                to: "/markets/preview/archive",
-                text: "Arxiv"
-            },
-            {
-                to: "/markets/preview/spam",
-                text: "Spam"
-            },
-        ]
-    }),
     components: {
         Tabs,
         SearchInput,

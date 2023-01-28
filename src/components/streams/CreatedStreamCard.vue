@@ -6,9 +6,15 @@
             </p>
         </header>
         <main>
-            <div class="created-stream-card__item" v-for="(item, i) in items" :key="i">
-                <p class="created-stream-card__item--title">{{ item.title }}</p>
-                <p class="created-stream-card__item--value">{{ item.value }}</p>
+            <div 
+                class="created-stream-card__item" 
+                v-for="(item, i) in items" 
+                :key="i"
+                :class="{'d-none': (items.length == 2 && i > 1)}"
+                :style="(i == 2 && isTwoItem) ? 'display: none': 'display: unset;'"
+            >
+                <p  :class="{'created-stream-card__item--title': items.length !== 2}">{{ item.title }}</p>
+                <p :class="{'created-stream-card__item--value': items.length !== 2}">{{ item.value }}</p>
             </div>
         </main>
     </div>
@@ -20,6 +26,9 @@ export default {
         title: {
             type: String,
             default: "Title"
+        },
+        isTwoItem: {
+            default: false
         },
         items: {
             default: [
@@ -108,5 +117,9 @@ export default {
         }
 
 
+    }
+
+    .d-none {
+        display: none;
     }
 </style>

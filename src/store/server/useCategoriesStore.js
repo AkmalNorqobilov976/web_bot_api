@@ -8,13 +8,21 @@ export const useCategoriesStore = defineStore('categories', {
         products: [],
         selectedProduct: null
     })),
-
+    getters: {
+        getCategoriesForTab: (state) => {
+            return state.categories.map(category => {
+                return {
+                    to: `/markets/preview/${category.id}`,
+                    text: category.title
+                }
+            })
+        }
+    },
     actions: {
         getCategories() {
             return new Promise((resolve, reject) => {
                 adminCategories()
                     .then(response => {
-                        console.log(response);
                         this.categories = response.data.data; 
                         resolve(response.data.data)
                     })
@@ -24,12 +32,10 @@ export const useCategoriesStore = defineStore('categories', {
             })
         },
 
-        getProducts(status) {
-            console.log(status, "status");
+        getProducts(status, query) {
             return new Promise((resolve, reject) => {
-                adminProducts()
+                adminProducts(status, query)
                     .then(response => {
-                        console.log(response, "data");
                         this.products = response.data.data;
                         resolve(true)
                     })

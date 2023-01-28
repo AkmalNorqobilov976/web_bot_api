@@ -2,7 +2,10 @@
     <article class="market-card" v-if="cardData">
         <div class="market-card__header">
             <div>
-                <img :src="cardData?.image ? cardData?.image : $noImage" class="market-card__header--img"/>
+                <img 
+                    :src="cardData?.image ? cardData?.image : $noImage" 
+                    class="market-card__header--img"
+                />
             </div>
             <div class="market-card__header--list">
                 {{ cardData.title }}
@@ -82,6 +85,8 @@ export default defineComponent({
             &--img {
                 width: 8rem;
                 object-fit: cover;
+                border-radius: 15px 0px;
+                @include card-mixin;
 
             }
             &--list {

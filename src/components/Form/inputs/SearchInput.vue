@@ -1,6 +1,6 @@
 <template>
     <div class="search-input">
-        <i class="ri-search-line"></i>
+        <i class="ri-search-line" @click="searchFunction"></i>
         <input 
             class="search-input__input" 
             type="search" 
@@ -15,6 +15,9 @@
     import { defineProps, defineEmits } from 'vue'
     defineProps({
         modelValue: {},
+        searchFunction: {
+            default: () => {}
+        },
         label: {
             type: String,
             default: "Qidirish"

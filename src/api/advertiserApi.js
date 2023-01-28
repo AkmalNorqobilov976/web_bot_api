@@ -10,10 +10,14 @@ export function adminOrders({status}) {
     });
 }
 
-export function adminProducts() {
+export function adminProducts(categoryId, query) {
     return request({
         url: `${URI}/products`,
-        method: 'get'
+        method: 'get',
+        data: {
+            category_id: categoryId,
+            query: query?.value
+        }
     });
 }
 

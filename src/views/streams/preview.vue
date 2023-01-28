@@ -1,12 +1,11 @@
 <template>
-    <market-card :isShowBtn="false"/>
-    
+    <market-card :isShowBtn="false" :cardData="streamInfo.value.product"/>
     <section class="stream-name">
         <form @submit.prevent="">
             <label class="stream-name__title">Oqim nomi</label>
             <!-- error-input class -->
             <div class="stream-name__input">
-                <input v-model="streamForm.link" placeholder="Misol uchun: 1-oqim linki" />
+                <input v-model="streamInfo.value.name" placeholder="Misol uchun: 1-oqim linki" />
                 <profile-setting-menu left="-16rem" top="3rem">
                     <template #button>
                         <i class="ri-more-2-fill"></i>
@@ -21,10 +20,10 @@
             </div>
             <tooltip style="bottom: -2.2rem;" label="Bu nomdagi Oqim linki mavjud"/>
             <div class="stream-name__button-grp">
-                <button @click="copyToClipboard($event)"  class="stream-name__button-grp--btn">
+                <button @click="copyToClipboard($event, streamInfo.value.name)"  class="stream-name__button-grp--btn">
                     <copyIcon class="stream-name__button-grp--btn--icon"/> Nusxalash
                 </button>
-                <button class="stream-name__button-grp--btn">
+                <button class="stream-name__button-grp--btn" @click="openPost">
                     <i class="ri-external-link-line stream-name__button-grp--btn--icon"></i>
                     Reklama posti
                 </button>
@@ -41,7 +40,7 @@
         <main class="addition-stream-info__main">
             <div class="addition-stream-info__main--list" @click="$router.push({name: 'donation'})">
                 <div>
-                    5.000 so‘m
+                    {{ streamInfo.value.charity }} so‘m
                     <p>
                         Xayriyaga pul ajratish
                     </p>
@@ -50,7 +49,7 @@
             </div>
             <div class="addition-stream-info__main--list" @click="$router.push({name: 'donation'})">
                 <div>
-                   100 so‘m
+                   {{ streamInfo.value.discount }} so‘m
                     <p>
                         Chegirma qo‘yilgan
                     </p>
@@ -77,26 +76,42 @@
             Tashriflar
         </p>
         <p class="stream-visit__number">
-            56.482
+            {{ streamInfo.value.visits }}
         </p>
     </section>
 
-    <created-stream-card title="Aktiv"/>
+    <created-stream-card 
+        v-if="streamInfo.value"
+        title="Aktiv"
+        :isTwoItem="true"
+        :items="[
+            {
+                title: 'Yangi',
+                value: streamInfo.value.orders_stats.new
+            },
+            {
+                title: 'Qayta qo‘ng’iroq',
+                value: streamInfo.value.orders_stats.pending
+            },
+            {
+            }
+        ]"    
+    />
     <created-stream-card 
         :title="'Buyurtma'" 
         :bgCircleColor="'#23B60B'"
         :items="[
             {
                 title: 'Yo‘lda',
-                value: 5
+                value: streamInfo.value.orders_stats.sent
             },
             {
                 title: 'Yetkazib berildi',
-                value: 70
+                value: streamInfo.value.orders_stats.delivered
             },
             {
                 title: 'Qabul qilingan',
-                value: 90
+                value: streamInfo.value.orders_stats.accepted
             }
         ]"    
     />
@@ -106,15 +121,15 @@
         :items="[
             {
                 title: 'Spam',
-                value: 5
+                value: streamInfo.value.orders_stats.spam
             },
             {
                 title: 'Qaytib keldi',
-                value: 70
+                value: streamInfo.value.orders_stats.canceled
             },
             {
                 title: 'Arxivlandi',
-                value: 69
+                value: streamInfo.value.orders_stats.archived
             }
         ]"    
     />
@@ -130,18 +145,20 @@ import { defineComponent, onBeforeMount, reactive } from 'vue-demi';
 import { useToastStore } from '@/store/useToastStore';
 import { getAdminStream } from '@/api/advertiserApi';
 import { useRoute } from 'vue-router';
+import { useStreamsStore } from '@/store/server/useStreamsStore';
 export default defineComponent({
     setup() {
         const { backButton } = useBackButton();
         const toastStore = useToastStore();
+        const streamsStore = useStreamsStore();
         const route = useRoute();
         backButton()
         const streamForm = reactive({
             link: ""
         })
         const streamInfo = reactive({})
-        const copyToClipboard = (e) => {
-            navigator.clipboard.writeText(streamForm.link).then(() => {
+        const copyToClipboard = (e, text) => {
+            navigator.clipboard.writeText(text).then(() => {
                 toastStore.$patch({
                     x: `${e.clientX}px`,
                     y: `${e.clientY}px`,
@@ -160,9 +177,14 @@ export default defineComponent({
             }) 
         }
 
+        const openPost = () => {
+            window.open('https://t.me/Indonesia_Javascript')
+        }
+
         const getStream = () => {
             getAdminStream({ id: route.params.id })
                 .then(response => {
+                    console.log(response);
                     streamInfo.value = response.data.data;
                 }).catch(error => {
                     toastStore.showToastAsAlert({
@@ -178,7 +200,8 @@ export default defineComponent({
         return {
             streamForm,
             copyToClipboard,
-            streamInfo
+            streamInfo,
+            openPost
         }
     },
     components: {
