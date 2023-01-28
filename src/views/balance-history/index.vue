@@ -41,11 +41,14 @@ import BarChartExample from '@/components/charts/BarChartExample.vue'
 import { defineComponent, onBeforeMount } from 'vue-demi'
 import { useToastStore } from '@/store/useToastStore'
 import { useWithdrawsStore } from '@/store/server/useWithdrawsStore'
+import { useBackButton } from '@/composables/useBackButton'
 export default defineComponent({
     setup() {
         const toastStore = useToastStore();
         const withdrawsStore = useWithdrawsStore()
+        const { backButton } = useBackButton();
 
+        backButton('/')
         const getWithDraws = () => {
             withdrawsStore.getWithdraws()
                 .catch(error => {
