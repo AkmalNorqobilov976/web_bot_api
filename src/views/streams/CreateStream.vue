@@ -46,6 +46,8 @@ import { onMounted, onUnmounted, reactive, ref, watch, watchEffect } from 'vue-d
 import { useTelegram } from '@/composables/useTelegram'
 import { useRoute } from 'vue-router'
 import { useStreamsStore } from '@/store/server/useStreamsStore'
+import { postAdminStream } from '@/api/advertiserApi'
+import { useToastStore } from '@/store/useToastStore'
 export default {
   components: { MarketCard, Tooltip },
     setup() {
@@ -55,18 +57,9 @@ export default {
         const { tg, showMainButton, hideMainButton, tgSetParamsToMainButton} = useTelegram();
         const route = useRoute();
         const labelMessage = ref('')
-    
-        onMounted(() => {
-            showMainButton();
-            streamsStore.$patch({
-                streamForm: {
-                    product_id: route.params.id
-                }
-            })
-            // categoriesStore.$state.
-        })
-        watch(streamsStore, (newValue) => {
-            if(newValue.streamForm.name) {
+        const toastStore = useToastStore();
+        const setParams = () => {
+            if(streamsStore.streamForm.name) {
                 tgSetParamsToMainButton({
                     disabled: false,
                     text: "Oqim yaratish",
@@ -81,27 +74,51 @@ export default {
                     color: "#E4E6E4"
                 })
             }
+        }
+
+        const addStream = () => {
+            postAdminStream(streamsStore.streamForm)
+                .then(() => {
+                    toastStore.showToastAsAlert({
+                        message: "Stream qo'shildi",
+                        delayTime: 1000,
+                        type: "success"
+                    })
+                })
+                .catch(error => {
+                    toastStore.showToastAsAlert({
+                        message: error.response.data.message,
+                        delayTime: 2000,
+                        type: 'error'
+                    })
+                })
+        }
+        onMounted(() => {
+            showMainButton();
+            streamsStore.$patch({
+                streamForm: {
+                    product_id: route.params.id
+                }
+            })
+            setParams(streamsStore.$state.streamForm.name)
+            // categoriesStore.$state.
+        })
+        watch(streamsStore, () => {
+            setParams()
         })
 
-        watchEffect(() => {
-            tg.MainButton.onClick(() => {
-                alert("hi go somewhere")
-            })
-        })
-        onMounted(() => {
-             hideMainButton();
-            tgSetParamsToMainButton({
-                disabled: true,
-                text: "Oqim yaratish",
-                textColor: "#8C8C8C",
-                color: "#E4E6E4"
-            })
-            showMainButton();
+        const watcher = watchEffect(() => {
+            tg.MainButton.onClick(addStream)
+
+            return () => {
+                tg.MainButton.offClick(addStream)
+            }
         })
         backButton('/markets/preview/all')
 
         onUnmounted(() => {
             hideMainButton();
+            watcher();
         })
         return {
             categoriesStore,

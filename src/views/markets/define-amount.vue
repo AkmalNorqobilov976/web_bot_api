@@ -35,18 +35,54 @@
 
 <script>
 import { useBackButton } from '@/composables/useBackButton'
+import { useTelegram } from '@/composables/useTelegram';
 import { useStreamsStore } from '@/store/server/useStreamsStore';
-import { defineComponent } from 'vue'
+import { defineComponent, onMounted, onUnmounted, watch } from 'vue'
+import { useRoute } from 'vue-router';
 export default defineComponent ({
     setup() {
-         const streamsStore = useStreamsStore();
-
+        const streamsStore = useStreamsStore();
+        const { tg, tgSetParamsToMainButton, showMainButton, hideMainButton } = useTelegram();
         const { backButton } = useBackButton()
+        const route = useRoute();
         const inputForm = (e, key) => {
             streamsStore.$state.streamForm[key] = e.target.innerText
         }
-        backButton(`/streams/create-stream/${streamsStore.$state.streamForm.product_id}`)
+          const setParams = () => {
+            if(streamsStore.streamForm.name) {
+                tgSetParamsToMainButton({
+                    disabled: false,
+                    text: "Oqim yaratish",
+                    textColor: "#fff",
+                    color: "#55BE61"
+                })
+            } else {
+                tgSetParamsToMainButton({
+                    disabled: true,
+                    text: "Oqim yaratish",
+                    textColor: "#8C8C8C",
+                    color: "#E4E6E4"
+                })
+            }
+        }
 
+        onMounted(() => {
+            showMainButton();
+            streamsStore.$patch({
+                streamForm: {
+                    product_id: route.params.id
+                }
+            })
+            setParams()
+            // categoriesStore.$state.
+        })
+        watch(streamsStore, () => {
+            setParams()
+        })
+        backButton(`/streams/create-stream/${streamsStore.$state.streamForm.product_id}`)
+        onUnmounted(() => {
+            hideMainButton();
+        })
         return {
             inputForm,
             streamsStore
