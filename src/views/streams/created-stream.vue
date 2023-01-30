@@ -1,5 +1,5 @@
 <template>
-    <market-card :isShowBtn="false"/>
+    <market-card :cardData="categoriesStore.$state.selectedProduct" :isShowBtn="false"/>
     
     <section class="stream-name">
         <form @submit.prevent="">
@@ -106,9 +106,11 @@ import copyIcon from "@/assets/svgs/copyIcon.vue";
 import CreatedStreamCard from '@/components/streams/CreatedStreamCard.vue'
 import { useBackButton } from '@/composables/useBackButton';
 import { reactive } from 'vue-demi';
+import { useCategoriesStore } from '@/store/server/useCategoriesStore';
 export default {
     setup() {
         const { backButton } = useBackButton()
+        const categoriesStore = useCategoriesStore();
         backButton('/markets/preview/all')
         const streamForm = reactive({
             link: ""
@@ -117,6 +119,7 @@ export default {
             navigator.clipboard.writeText(streamForm.link)
         }
         return {
+            categoriesStore,
             copyToClipboard
         }
     },
