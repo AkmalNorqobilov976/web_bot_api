@@ -1,4 +1,12 @@
 <template>
+    <custom-confirm 
+        title="Oqimni chindan ham o‘chirmoqchimisiz?"
+        subtitle="Agar o‘chirilsangiz oqimni qayta tiklab bo‘lmaydi"
+        sayNo="Yo‘q, ortga qaytish"
+        sayYes="Ha, o‘chirilsin"
+        :showConfirm="openDeleteStreamConfirmDialog" 
+        @onConfirm="onConfirm($event)"
+    />
     <market-card :isShowBtn="false" :cardData="streamInfo.product"/>
     <section class="stream-name">
         <form @submit.prevent="">
@@ -11,7 +19,7 @@
                         <i class="ri-more-2-fill"></i>
                     </template>
                     <template #lists>
-                        <div @click="deleteStream($route.params.id)" class="profile-setting-menu__lists--item">
+                        <div @click="openDeleteStreamConfirmDialog = true" class="profile-setting-menu__lists--item">
                             <i class="ri-delete-bin-6-fill"></i>
                             <p>Oqimni o‘chirish</p>
                         </div>
@@ -87,7 +95,7 @@
         :items="[
             {
                 title: 'Yangi',
-                value: streamInfo.orders_stats.new
+                value: streamInfo.orders_stats.new ? streamInfo.orders_stats.new: 0
             },
             {
                 title: 'Qayta qo‘ng’iroq',
@@ -146,6 +154,7 @@ import { useToastStore } from '@/store/useToastStore';
 import { deleteAdminStream, getAdminStream } from '@/api/advertiserApi';
 import { useRoute } from 'vue-router';
 import { useStreamsStore } from '@/store/server/useStreamsStore';
+import CustomConfirm from '@/components/CustomConfirm.vue'
 import router from '@/router';
 export default defineComponent({
     setup() {
@@ -153,6 +162,7 @@ export default defineComponent({
         const toastStore = useToastStore();
         const streamsStore = useStreamsStore();
         const route = useRoute();
+        const openDeleteStreamConfirmDialog = ref(false)
         backButton()
         const streamForm = reactive({
             link: ""
@@ -182,6 +192,14 @@ export default defineComponent({
             window.open('https://t.me/Indonesia_Javascript')
         }
 
+        const onConfirm = (e) => {
+            if(e) {
+                deleteStream(route.params.id)
+            }
+
+            openDeleteStreamConfirmDialog.value = false;
+        }
+        
         const deleteStream = (stream_id) => {
             deleteAdminStream({ stream_id })
                 .then(() => {
@@ -219,10 +237,13 @@ export default defineComponent({
             copyToClipboard,
             streamInfo,
             openPost,
-            deleteStream
+            deleteStream,
+            openDeleteStreamConfirmDialog,
+            onConfirm
         }
     },
     components: {
+        CustomConfirm,
         ProfileSettingMenu,
         copyIcon,
         MarketCard,

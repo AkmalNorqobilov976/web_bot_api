@@ -10,8 +10,18 @@
                             {{ subtitle }}
                         </p>
                         <div class="confirm-screen__body--action">
-                            <button @click="$emit('onConfirm', false)" class="confirm-screen__body--action--cancel">Yo‘q, ortga qaytish</button>
-                            <button @click="$emit('onConfirm', true)" class="confirm-screen__body--action--agree">Ha, bekor qilinsin</button>
+                            <button 
+                                @click="$emit('onConfirm', false)" 
+                                class="confirm-screen__body--action--cancel"
+                            >
+                                {{ sayNo }}
+                            </button>
+                            <button 
+                                @click="$emit('onConfirm', true)" 
+                                class="confirm-screen__body--action--agree"
+                            >
+                                {{ sayYes }}
+                            </button>
                         </div>
                     </div>
             </div>
@@ -25,6 +35,12 @@ import { defineComponent } from "vue-demi";
 export default defineComponent({
     emits: ['onConfirm'],
     props: {
+        sayNo: {
+            default: 'Yo‘q, ortga qaytish'
+        },
+        sayYes: {
+            default: 'Ha, bekor qilinsin'
+        },
         showConfirm: {
             type: Boolean,
             default: false
