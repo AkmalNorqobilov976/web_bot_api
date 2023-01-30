@@ -50,7 +50,7 @@ export default defineComponent( {
                 });
                 setToken(response.data.data)
                 .then(() => {
-                    auth.getUserInfo()
+                    auth.getUserInfo(response.data.data)
                         .then(() => {
                             router.push('/')
                         })

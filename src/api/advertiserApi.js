@@ -86,9 +86,12 @@ export function postAdminWithdraw({ card_number, amount }) {
 }
 
 
-export function getProfile() {
+export function getProfile(token) {
     return request({
         url: `${URI}/profile`,
+        // headers: {
+        //     Authorization: 
+        // },
         method: 'get'
     });
 }

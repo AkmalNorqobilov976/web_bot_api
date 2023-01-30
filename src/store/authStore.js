@@ -22,9 +22,9 @@ export const useAuthStore = defineStore('login', {
            }) 
         },
 
-        getUserInfo() {
+        getUserInfo(token) {
             return new Promise((resolve, reject) => {
-                getProfile()
+                getProfile(token)
                     .then(response => {
                         this.userInfo = response.data.data;
                         resolve(true)

@@ -11,7 +11,7 @@ const service = axios.create({
 
 
 service.interceptors.request.use( request => {
-    request.headers['Authorization'] = `Bearer ${token}`;
+    request.headers['Authorization'] = `Bearer ${localStorage.getItem('token')}`;
     request.headers['Accept'] = 'application/json';
 
     return request;
