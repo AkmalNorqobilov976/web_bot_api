@@ -1,19 +1,29 @@
 <template>
-    <market-card :cardData="categoriesStore.$state.selectedProduct" :isShowBtn="false"/>
-    
+    <market-card 
+        :isShowBtn="false"
+        :cardData="streamInfo.product" 
+    />
+    {{ streamInfo }}
     <section class="stream-name">
         <form @submit.prevent="">
             <label class="stream-name__title">Oqim nomi</label>
             <!-- error-input class -->
             <div class="stream-name__input">
-                <input class="" placeholder="Misol uchun: 1-oqim linki" />
+                <input readonly v-model="streamInfo.name" placeholder="Misol uchun: 1-oqim linki" />
             </div>
             <tooltip style="bottom: -2.2rem;" label="Bu nomdagi Oqim linki mavjud"/>
             <div class="stream-name__button-grp">
                 <button class="stream-name__button-grp--btn" >
-                    <copyIcon class="stream-name__button-grp--btn--icon"/> Nusxalash
+                    <copyIcon 
+                        class="stream-name__button-grp--btn--icon"
+                        @click="copyToClipboard($event, streamInfo.name)"
+                    /> 
+                    Nusxalash
                 </button>
-                <button class="stream-name__button-grp--btn">
+                <button 
+                    @click="openPost"
+                    class="stream-name__button-grp--btn"
+                >
                     <i class="ri-external-link-line stream-name__button-grp--btn--icon"></i>
                     Reklama posti
                 </button>
@@ -30,7 +40,7 @@
         <main class="addition-stream-info__main">
             <div class="addition-stream-info__main--list" @click="$router.push({name: 'donation'})">
                 <div>
-                    5.000 so‘m
+                    {{ streamInfo.charity }} so‘m
                     <p>
                         Xayriyaga pul ajratish
                     </p>
@@ -105,22 +115,70 @@ import MarketCard from '@/components/markets/MarketCard.vue'
 import copyIcon from "@/assets/svgs/copyIcon.vue";
 import CreatedStreamCard from '@/components/streams/CreatedStreamCard.vue'
 import { useBackButton } from '@/composables/useBackButton';
-import { reactive } from 'vue-demi';
+import { defineComponent, onBeforeMount, ref } from 'vue-demi';
 import { useCategoriesStore } from '@/store/server/useCategoriesStore';
-export default {
+import { getAdminStream } from '@/api/advertiserApi';
+import { useRoute } from 'vue-router';
+import { useToastStore } from '@/store/useToastStore';
+export default defineComponent({
     setup() {
         const { backButton } = useBackButton()
         const categoriesStore = useCategoriesStore();
+        const route = useRoute();
+        const toastStore = useToastStore();
         backButton('/markets/preview/all')
-        const streamForm = reactive({
+        const streamInfo = ref({
             link: ""
         })
-        const copyToClipboard = () => {
-            navigator.clipboard.writeText(streamForm.link)
+
+        onBeforeMount(() => {
+            getStream();
+        })
+        
+        
+        const getStream = () => {
+            getAdminStream({ id: route.params.id })
+                .then(response => {
+                    console.log(response);
+                    streamInfo.value = response.data.data;
+                }).catch(error => {
+                    toastStore.showToastAsAlert({
+                        message: error.response.data.message,
+                        type: 'error',
+                        delayTime: 1000
+                    })
+                })
         }
+
+        const copyToClipboard = (e, text) => {
+            navigator.clipboard.writeText(text).then(() => {
+                toastStore.$patch({
+                    x: `${e.clientX}px`,
+                    y: `${e.clientY}px`,
+                    isShownToast: true,
+                    message: "Nusxalandi",
+                    type: "",
+                    width: 70,
+                    icon: true
+                });
+    
+                setTimeout(() => {
+                    toastStore.$patch({
+                        isShownToast: false
+                    });
+                }, 800) 
+            }) 
+        }
+
+        const openPost = () => {
+            window.open('https://t.me/Indonesia_Javascript')
+        }
+
         return {
             categoriesStore,
-            copyToClipboard
+            copyToClipboard,
+            streamInfo,
+            openPost
         }
     },
     components: {
@@ -129,7 +187,7 @@ export default {
         CreatedStreamCard
         
     }
-}
+})
 </script>
 
 <style lang="scss" scoped>
