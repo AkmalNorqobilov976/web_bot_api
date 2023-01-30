@@ -94,11 +94,13 @@ export default defineComponent( {
                 textColor: '#ffffff',
                 color: "#51AEE7",
                 text: "Kirish"
-            })
+            });
+            tg.onEvent('mainButtonClicked', sendCode)
         });
 
         onUnmounted(() => {
             hideMainButton()
+            tg.offEvent('mainButtonClicked', sendCode)
         })
         return {
             userInfo,

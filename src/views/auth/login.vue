@@ -81,6 +81,7 @@ export default defineComponent( {
 
 
         const sendPhoneNumber = () => {
+            console.log("Hdskfsdklfj");
             sendPhone({ phone: `+998${userInfo.phone.split(' ').join('').split('-').join('')}` })
             .then(() => {
                 auth.$patch({
@@ -111,22 +112,17 @@ export default defineComponent( {
             }
         })
 
-        tg.MainButton.onClick(() => {
-            sendPhoneNumber()
-        })
 
-        
-        tg.MainButton.offClick(() => {
-            sendPhoneNumber()
-        });
-        
           onMounted(() => {
-            if(getToken()) {
-                // router.push('/');
+              if(getToken()) {
+                  // router.push('/');
             }
+
+            tg.onEvent('mainButtonClicked', sendPhoneNumber)
             showMainButton();
         });
         onUnmounted(() => {
+            tg.offEvent('mainButtonClicked', sendPhoneNumber)
             hideMainButton()
         })
         return {
