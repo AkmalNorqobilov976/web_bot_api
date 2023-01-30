@@ -115,7 +115,6 @@ export default {
             hideMainButton();
             tg.offEvent('mainButtonClicked', addStream);
             backBtn();
-            watcher();
         })
         return {
             categoriesStore,
