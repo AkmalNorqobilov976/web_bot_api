@@ -44,7 +44,7 @@ import { useBackButton } from '@/composables/useBackButton'
 import { useCategoriesStore } from '@/store/server/useCategoriesStore'
 import { onMounted, onUnmounted, ref, watch } from 'vue-demi'
 import { useTelegram } from '@/composables/useTelegram'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { useStreamsStore } from '@/store/server/useStreamsStore'
 import { postAdminStream } from '@/api/advertiserApi'
 import { useToastStore } from '@/store/useToastStore'
@@ -56,6 +56,7 @@ export default {
         const streamsStore = useStreamsStore();
         const { tg, showMainButton, hideMainButton, tgSetParamsToMainButton} = useTelegram();
         const route = useRoute();
+        const router = useRouter();
         const labelMessage = ref('')
         const toastStore = useToastStore();
         const setParams = () => {
@@ -84,6 +85,8 @@ export default {
                         delayTime: 1000,
                         type: "success"
                     })
+
+                    router.push({name: "created-stream", params: { id: route.params.id }})
                 })
                 .catch(error => {
                     labelMessage.value = error.response.data.message; 

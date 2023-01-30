@@ -165,7 +165,7 @@ const routes = [
             component: () => import('@/views/streams/CreateStream.vue')
         },
         {
-            path: "created-stream",
+            path: "created-stream/:id",
             name: "created-stream",
             meta: {
                 requiresAuth: true

@@ -109,7 +109,7 @@ import { reactive } from 'vue-demi';
 export default {
     setup() {
         const { backButton } = useBackButton()
-        backButton()
+        backButton('/markets/preview/all')
         const streamForm = reactive({
             link: ""
         })
