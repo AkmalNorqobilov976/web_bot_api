@@ -75,20 +75,14 @@ export default defineComponent({
         }, {
             immediate: true
         })
-        const watcher = watchEffect(() => {
-            tg.MainButton.onClick(() => {
-                onPostPromoCode();
-
-                tgMainButtonOffClick()
-            })
-        })
         onMounted(() => {
             showMainButton();
+            tg.onEvent('mainButtonClicked', onPostPromoCode)
         })
         onUnmounted(() => {
-            watcher();
             hideMainButton();
             promocodeFormWatcher()
+             tg.offEvent('mainButtonClicked', onPostPromoCode)
         })
         return {
             promocodeForm,
