@@ -1,4 +1,3 @@
-import { useAuthStore } from '@/store/authStore'
 import { getLastRouter, getToken } from '@/utils/localStorage'
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
@@ -259,10 +258,7 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-    const auth = useAuthStore();
-    
-    let isAuthenticated = auth.$state.isAuthenticated
-    if(!getToken()) {
+    if(!getToken() && to.meta.requiresAuth) {
         
         
         if(to.path !== '/login') {

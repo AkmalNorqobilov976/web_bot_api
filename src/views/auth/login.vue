@@ -61,7 +61,6 @@ export default defineComponent( {
       
         const onPhoneInput = ($event) => {
             $event.target.value = usePhoneNumberPatternMatch($event.target.value);
-            // console.log($event.target.value, "event");
             if(!$event.target.value) {
                 userInfo.phone = $event.target.value;
                 tgSetParamsToMainButton({
@@ -83,8 +82,7 @@ export default defineComponent( {
 
         const sendPhoneNumber = () => {
             sendPhone({ phone: `+998${userInfo.phone.split(' ').join('').split('-').join('')}` })
-            .then((response) => {
-                // console.log(response);
+            .then(() => {
                 auth.$patch({
                     smsIsSent: true,
                     userInfo: {
@@ -92,12 +90,7 @@ export default defineComponent( {
                         phone: `+998${userInfo.phone.split(' ').join('').split('-').join('')}`   
                     }
                 });
-
                 router.push('/verify-sms-code');
-                
-                return tg.MainButton.offClick(() => {
-                    sendPhoneNumber()
-                });
             }).catch((error) => {
                 toastStore.showToastAsAlert({
                     message: error.response.data.message,
@@ -120,8 +113,6 @@ export default defineComponent( {
                     disabled: true
                 })
             }
-
-            console.log("hello")
         })
 
         tg.MainButton.onClick(() => {
