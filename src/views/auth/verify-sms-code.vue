@@ -1,6 +1,5 @@
 <template>
     <div class="login">
-        <p class="login__title" @click="sendCode">Tizimga kirish</p>
         <form @submit.prevent="sendCode" class="login__form">
             <div class="login__form--verification">
                 <p class="login__form--verification--title">SMS kod yuborildi</p>
