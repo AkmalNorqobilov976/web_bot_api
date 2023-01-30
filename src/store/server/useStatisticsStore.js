@@ -11,7 +11,6 @@ export const useStatisticsStore = defineStore('statistic', {
             return new Promise((resolve, reject) => {
                 adminStatistics(params)
                     .then(response => {
-                        console.log(response);
                         this.statistics = response.data.data;
                         resolve(true)
                     })

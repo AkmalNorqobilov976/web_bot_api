@@ -3,7 +3,6 @@
         :isShowBtn="false"
         :cardData="streamInfo.product" 
     />
-    {{ streamInfo }}
     <section class="stream-name">
         <form @submit.prevent="">
             <label class="stream-name__title">Oqim nomi</label>
@@ -154,7 +153,6 @@ export default defineComponent({
         const getStream = () => {
             getAdminStream({ id: route.params.id })
                 .then(response => {
-                    console.log(response);
                     streamInfo.value = response.data.data;
                 }).catch(error => {
                     toastStore.showToastAsAlert({

@@ -59,6 +59,13 @@ export function getAdminStream({ id }) {
     });
 }
 
+export function deleteAdminStream({ stream_id }) {
+    return request({
+        url: `${URI}/streams/${stream_id}`,
+        method: 'delete'
+    })
+}
+
 export function postAdminStream(data) {
     return request({
         url: `${URI}/streams`,
@@ -104,3 +111,4 @@ export function adminStatistics(params) {
         method: 'get'
     })
 }
+

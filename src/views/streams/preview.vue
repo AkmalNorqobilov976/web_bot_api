@@ -11,7 +11,7 @@
                         <i class="ri-more-2-fill"></i>
                     </template>
                     <template #lists>
-                        <div class="profile-setting-menu__lists--item">
+                        <div @click="deleteStream($route.params.id)" class="profile-setting-menu__lists--item">
                             <i class="ri-delete-bin-6-fill"></i>
                             <p>Oqimni o‘chirish</p>
                         </div>
@@ -143,9 +143,10 @@ import ProfileSettingMenu from '@/components/menu/ProfileSettingMenu.vue'
 import { useBackButton } from '@/composables/useBackButton';
 import { defineComponent, onBeforeMount, reactive, ref } from 'vue-demi';
 import { useToastStore } from '@/store/useToastStore';
-import { getAdminStream } from '@/api/advertiserApi';
+import { deleteAdminStream, getAdminStream } from '@/api/advertiserApi';
 import { useRoute } from 'vue-router';
 import { useStreamsStore } from '@/store/server/useStreamsStore';
+import router from '@/router';
 export default defineComponent({
     setup() {
         const { backButton } = useBackButton();
@@ -181,6 +182,23 @@ export default defineComponent({
             window.open('https://t.me/Indonesia_Javascript')
         }
 
+        const deleteStream = (stream_id) => {
+            deleteAdminStream({ stream_id })
+                .then(() => {
+                    toastStore.showToastAsAlert({
+                        message: "O'chirildi",
+                        type: "success",
+                        delayTime: 1000
+                    })
+                    router.back();
+                }).catch(error => {
+                    toastStore.showToastAsAlert({
+                        message: error.response.data.message,
+                        type: 'error',
+                        delayTime: 3000
+                    })
+                })
+        }
         const getStream = () => {
             getAdminStream({ id: route.params.id })
                 .then(response => {
@@ -200,7 +218,8 @@ export default defineComponent({
             streamForm,
             copyToClipboard,
             streamInfo,
-            openPost
+            openPost,
+            deleteStream
         }
     },
     components: {
