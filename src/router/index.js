@@ -240,6 +240,16 @@ const routes = [
         requiresAuth: false
     },
     component: () => import('@/views/auth/login.vue')
+  },
+
+  
+  {
+    path: "/verify-sms-code",
+    name: "verify-sms-code",
+    meta: {
+        requiresAuth: false
+    },
+    component: () => import('@/views/auth/verify-sms-code.vue')
   }
 ]
 
