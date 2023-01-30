@@ -37,7 +37,7 @@ import { defineComponent, onMounted, onUnmounted, watch, watchEffect } from 'vue
 import { usePhoneNumberPatternMatch } from '@/composables/usePhoneNumberPatternMatch'
 import { useTelegram } from '@/composables/useTelegram';
 import { sendPhone } from '@/api/authApi'
-import { setToken } from '@/utils/localStorage';
+import { setToken, getToken } from '@/utils/localStorage';
 import { useToastStore } from '@/store/useToastStore';
 export default defineComponent( {
     mounted() {
@@ -92,21 +92,21 @@ export default defineComponent( {
                         phone: `+998${userInfo.phone.split(' ').join('').split('-').join('')}`   
                     }
                 });
-                // tgSetParamsToMainButton({
-                //     text: "Kirish",
-                //     color: "#51AEE7",
-                //     disabled: false
-                // });
+
+                router.push('/verify-sms-code');
                 
-                return tg.MainButton.offClick(sendPhoneNumber());
+                return tg.MainButton.offClick(() => {
+                    sendPhoneNumber()
+                });
             }).catch((error) => {
-                // console.log(error);
-                    toastStore.showToastAsAlert({
-                        message: error.response.data.message,
+                toastStore.showToastAsAlert({
+                    message: error.response.data.message,
                         type: 'error',
                         delayTime: 1000
                     })
-                return tg.MainButton.offClick(() => {
+                    
+                    return tg.MainButton.offClick(() => {
+                        sendPhoneNumber()
                     });
             })
         }
@@ -129,6 +129,9 @@ export default defineComponent( {
         })
         
           onMounted(() => {
+            if(getToken()) {
+                // router.push('/');
+            }
             showMainButton();
         });
         onUnmounted(() => {
