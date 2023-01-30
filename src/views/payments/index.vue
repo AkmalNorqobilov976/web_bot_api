@@ -136,7 +136,7 @@ export default {
 
         const withdrawsStore = useWithdrawsStore();
         const { backButton } = useBackButton()
-        const { tg, tgSetParamsToMainButton, tgMainButtonDisable, tgMainButtonEnable, showMainButton } = useTelegram();
+        const { tg, tgSetParamsToMainButton, tgMainButtonDisable, tgMainButtonEnable, showMainButton, hideMainButton } = useTelegram();
         const toastStore = useToastStore();
         const authStore = useAuthStore();
         backButton()
@@ -179,6 +179,7 @@ export default {
 
         onUnmounted(() => {
             tg.offEvent('mainButtonClicked', onPostAdminWithdraw)
+            hideMainButton();
         })
         
         const onCardInput = (e) => {
