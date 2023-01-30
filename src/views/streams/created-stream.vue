@@ -49,7 +49,7 @@
             </div>
             <div class="addition-stream-info__main--list" @click="$router.push({name: 'donation'})">
                 <div>
-                   100 so‘m
+                   {{ streamInfo.discount }} so‘m
                     <p>
                         Chegirma qo‘yilgan
                     </p>
@@ -67,26 +67,42 @@
             Tashriflar
         </p>
         <p class="stream-visit__number">
-            56,482
+            {{ streamInfo.visits }}
         </p>
     </section>
 
-    <created-stream-card/>
+    <created-stream-card 
+        v-if="streamInfo"
+        title="Aktiv"
+        :isTwoItem="true"
+        :items="[
+            {
+                title: 'Yangi',
+                value: streamInfo.orders_stats.new
+            },
+            {
+                title: 'Qayta qo‘ng’iroq',
+                value: streamInfo.orders_stats.pending
+            },
+            {
+            }
+        ]"    
+    />
     <created-stream-card 
         :title="'Buyurtma'" 
         :bgCircleColor="'#23B60B'"
         :items="[
             {
                 title: 'Yo‘lda',
-                value: 5
+                value: streamInfo.orders_stats.sent
             },
             {
                 title: 'Yetkazib berildi',
-                value: 70
+                value: streamInfo.orders_stats.delivered
             },
             {
                 title: 'Qabul qilingan',
-                value: 90
+                value: streamInfo.orders_stats.accepted
             }
         ]"    
     />
@@ -96,15 +112,15 @@
         :items="[
             {
                 title: 'Spam',
-                value: 5
+                value: streamInfo.orders_stats.spam
             },
             {
                 title: 'Qaytib keldi',
-                value: 70
+                value: streamInfo.orders_stats.canceled
             },
             {
                 title: 'Arxivlandi',
-                value: 69
+                value: streamInfo.orders_stats.archived
             }
         ]"    
     />
@@ -128,7 +144,6 @@ export default defineComponent({
         const toastStore = useToastStore();
         backButton('/markets/preview/all')
         const streamInfo = ref({
-            link: ""
         })
 
         onBeforeMount(() => {
