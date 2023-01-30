@@ -42,7 +42,7 @@ import MarketCard from '@/components/markets/MarketCard.vue'
 import Tooltip from '@/components/Tooltip.vue'
 import { useBackButton } from '@/composables/useBackButton'
 import { useCategoriesStore } from '@/store/server/useCategoriesStore'
-import { onMounted, onUnmounted, reactive, ref, watch, watchEffect } from 'vue-demi'
+import { onMounted, onUnmounted, ref, watch } from 'vue-demi'
 import { useTelegram } from '@/composables/useTelegram'
 import { useRoute } from 'vue-router'
 import { useStreamsStore } from '@/store/server/useStreamsStore'
@@ -109,13 +109,6 @@ export default {
             setParams()
         })
 
-        const watcher = watchEffect(() => {
-            tg.MainButton.onClick(addStream)
-
-            return () => {
-                tg.MainButton.offClick(addStream)
-            }
-        })
         const backBtn = backButton('/markets/preview/all')
 
         onUnmounted(() => {
