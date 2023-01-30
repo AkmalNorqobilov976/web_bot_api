@@ -61,7 +61,7 @@
             </div>
         </section>
 
-          <section class="payment-expected" @click="onPostAdminWithdraw">
+          <section class="payment-expected">
             <p class="payment-expected__title">Kutilayotgan to‘lo‘vlar</p>
             <PaymentListComponent> 
                 <template #cancel-btn>
@@ -114,7 +114,7 @@
 <script>
 import PaymentListComponent from '@/components/payments/PaymentListComponent.vue'
 import CustomConfirm from '@/components/CustomConfirm.vue'
-import { onMounted, reactive, ref, watch, watchEffect } from 'vue'
+import { onMounted, onUnmounted, reactive, ref, watch, watchEffect } from 'vue'
 import { useBackButton } from '@/composables/useBackButton'
 import { useTelegram } from '@/composables/useTelegram'
 import { useCardNumberPatternMatch } from '@/composables/useCardNumberPatternMatch'
@@ -169,18 +169,16 @@ export default {
         }, {
             immediate: true
         })
-        watchEffect(() => {
-            
-            tg.MainButton.onClick(() => {
-                console.log("clicked to main button");
-                onPostAdminWithdraw()
-            })
-        })
         
         
         onMounted(() => {
             authStore.getUserInfo()
             withdrawsStore.getWithdraws()
+            tg.onEvent('mainButtonClicked', onPostAdminWithdraw)
+        })
+
+        onUnmounted(() => {
+            tg.offEvent('mainButtonClicked', onPostAdminWithdraw)
         })
         
         const onCardInput = (e) => {

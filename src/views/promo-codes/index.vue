@@ -61,6 +61,10 @@ export default {
         const promoCodesStore = usePromoCodesStore()
         backButton();
 
+        const routerToGeneratePromocode = () => {
+            router.push({name: 'generate-promocode'});
+        }
+
         onMounted(() => {
             promoCodesStore.getPromoCodes()
                 .catch(error => {
@@ -77,19 +81,16 @@ export default {
                 color: "#55BE61",
                 disabled: false
             })
-
-            tg.MainButton.onClick(() => {
-                tgMainButtonOffClick();
-                tg.MainButton.hide();
-                router.push({name: 'generate-promocode'});
-            })
-            
         })
+
         onMounted(() => {
+            tg.onEvent('mainButtonClicked', routerToGeneratePromocode)
             showMainButton();
         })
+        
         onUnmounted(() => {
             watcher();
+            tg.offEvent('mainButtonClicked', routerToGeneratePromocode)
             hideMainButton();
         })
         return {
