@@ -127,7 +127,8 @@ export default defineComponent({
                 // display: none;
                 object-fit: contain;
                 overflow: hidden;
-                border: 1px solid #E9EBEA;
+                // border: 1px solid #E9EBEA;
+                background: transparent;
                 position: relative;
                 img {
 

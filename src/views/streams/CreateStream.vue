@@ -86,6 +86,7 @@ export default {
                     })
                 })
                 .catch(error => {
+                    labelMessage.value = error.response.data.message; 
                     toastStore.showToastAsAlert({
                         message: error.response.data.message,
                         delayTime: 2000,
@@ -100,6 +101,7 @@ export default {
                     product_id: route.params.id
                 }
             })
+            tg.onEvent('mainButtonClicked', addStream)
             setParams(streamsStore.$state.streamForm.name)
             // categoriesStore.$state.
         })
@@ -118,6 +120,7 @@ export default {
 
         onUnmounted(() => {
             hideMainButton();
+            tg.offEvent('mainButtonClicked', addStream);
             backBtn();
             watcher();
         })
@@ -150,15 +153,11 @@ export default {
             border-radius: 1rem;
             border: none;
             outline: none;
-            background: #C2D9E7;
+            background: rgba($color: #C2D9E7, $alpha: .15);
             &::placeholder {
                 color: rgba(0, 0, 0, 0.45);
             }
 
-
-            &:focus {
-                
-                }
         }
     }
 

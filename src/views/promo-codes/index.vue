@@ -55,7 +55,7 @@ export default {
                 text: "Yoqilgan" //delivered
             },
         };
-        const { tg, tgSetParamsToMainButton, tgMainButtonOffClick, hideMainButton, showMainButton } = useTelegram()
+        const { tg, tgSetParamsToMainButton,  hideMainButton, showMainButton } = useTelegram()
         const { backButton } = useBackButton()
         const toastStore = useToastStore();
         const promoCodesStore = usePromoCodesStore()
@@ -78,6 +78,7 @@ export default {
         const watcher = watchEffect(() => {
             tgSetParamsToMainButton({
                 text: "Promo-kod yaratish",
+                textColor: "#ffffff",
                 color: "#55BE61",
                 disabled: false
             })

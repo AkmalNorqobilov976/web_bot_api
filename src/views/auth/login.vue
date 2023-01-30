@@ -115,7 +115,7 @@ export default defineComponent( {
 
           onMounted(() => {
               if(getToken()) {
-                  // router.push('/');
+                  router.push('/');
             }
 
             tg.onEvent('mainButtonClicked', sendPhoneNumber)

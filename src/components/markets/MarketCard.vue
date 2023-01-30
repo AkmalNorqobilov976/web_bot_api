@@ -100,8 +100,6 @@ export default defineComponent({
             &--img {
                 width: 8rem;
                 object-fit: cover;
-                border-radius: 15px 0px;
-                @include card-mixin;
 
             }
             &--list {
