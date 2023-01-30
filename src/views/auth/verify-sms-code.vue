@@ -53,8 +53,19 @@ export default defineComponent( {
                     token: response.data.data,
                     isAuthenticated: true
                 });
-                router.push('/')
                 setToken(response.data.data);
+
+                auth.getUserInfo()
+                    .then(() => {
+                        router.push('/')
+                    })
+                    .catch(error => {
+                        toastStore.showToastAsAlert({
+                            message: error.response.data.message,
+                            type: 'error',
+                            delayTime: 1000
+                        })
+                    })
             }).catch((error) => {
                 toastStore.showToastAsAlert({
                     message: error.response.data.message,
