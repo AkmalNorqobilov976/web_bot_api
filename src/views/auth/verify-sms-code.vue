@@ -53,7 +53,7 @@ export default defineComponent( {
                     token: response.data.data,
                     isAuthenticated: true
                 });
-                router.push('/')
+                router.push('/verify-sms-code')
                 setToken(response.data.data);
             }).catch((error) => {
                 toastStore.showToastAsAlert({
