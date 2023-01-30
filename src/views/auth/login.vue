@@ -124,7 +124,9 @@ export default defineComponent( {
             console.log("hello")
         })
 
-        tg.MainButton.onClick(sendPhoneNumber())
+        tg.MainButton.onClick(() => {
+            sendPhoneNumber()
+        })
         
           onMounted(() => {
             showMainButton();
