@@ -38,10 +38,10 @@ export default defineComponent( {
 
         tg.MainButton.onClick(() => {
                 sendCode();
-            tg.MainButton.offClick(() => {
-                sendCode();
-            });
         })
+        tg.MainButton.offClick(() => {
+            sendCode();
+        });
 
         const sendCode = () => {
             console.log(auth.$state);

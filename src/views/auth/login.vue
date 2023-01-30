@@ -97,10 +97,6 @@ export default defineComponent( {
                         type: 'error',
                         delayTime: 1000
                     })
-
-                    return tg.MainButton.offClick(() => {
-                        sendPhoneNumber()
-                    });
             })
         }
         
@@ -118,6 +114,11 @@ export default defineComponent( {
         tg.MainButton.onClick(() => {
             sendPhoneNumber()
         })
+
+        
+        tg.MainButton.offClick(() => {
+            sendPhoneNumber()
+        });
         
           onMounted(() => {
             if(getToken()) {
