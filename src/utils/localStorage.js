@@ -1,7 +1,14 @@
 import { useRoute } from "vue-router";
 
 export function setToken(token) {
-    localStorage.setItem('token', token);
+    return new Promise((resolve, reject) => {
+        try {
+            localStorage.setItem('token', token);
+            resolve(true)
+        } catch (error) {
+            reject(error);
+        }
+    })
 }
 
 export function getToken() {

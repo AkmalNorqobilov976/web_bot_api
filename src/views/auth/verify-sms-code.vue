@@ -1,5 +1,6 @@
 <template>
     <div class="login">
+        <p class="login__title" @click="sendCode">Tizimga kirish</p>
         <form @submit.prevent="sendCode" class="login__form">
             <div class="login__form--verification">
                 <p class="login__form--verification--title">SMS kod yuborildi</p>
@@ -35,12 +36,7 @@ export default defineComponent( {
             code: "467"
         });
 
-        tg.MainButton.onClick(() => {
-                sendCode();
-        })
-        tg.MainButton.offClick(() => {
-            sendCode();
-        });
+      
 
         const sendCode = () => {
             console.log(auth.$state);
@@ -52,19 +48,21 @@ export default defineComponent( {
                     token: response.data.data,
                     isAuthenticated: true
                 });
-                setToken(response.data.data);
-
-                auth.getUserInfo()
-                    .then(() => {
-                        router.push('/')
-                    })
-                    .catch(error => {
-                        toastStore.showToastAsAlert({
-                            message: error.response.data.message,
-                            type: 'error',
-                            delayTime: 1000
+                setToken(response.data.data)
+                .then(() => {
+                    auth.getUserInfo()
+                        .then(() => {
+                            router.push('/')
                         })
-                    })
+                        .catch(error => {
+                            toastStore.showToastAsAlert({
+                                message: error.response.data.message,
+                                type: 'error',
+                                delayTime: 1000
+                            })
+                        })
+                });
+
             }).catch((error) => {
                 toastStore.showToastAsAlert({
                     message: error.response.data.message,
