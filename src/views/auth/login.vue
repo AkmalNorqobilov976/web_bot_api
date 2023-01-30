@@ -1,8 +1,8 @@
 <template>
     <div class="login">
-        <p class="login__title" v-if="!auth.smsIsSent">Tizimga kirish</p>
-        <form @submit.prevent class="login__form">
-            <div class="login__form--phone" v-if="!auth.smsIsSent">
+        <p class="login__title">Tizimga kirish</p>
+        <form @submit.prevent="sendPhoneNumber" class="login__form">
+            <div class="login__form--phone">
                 <span>+998</span>
                 <input 
                     class="login__form--phone--input" 
@@ -104,7 +104,7 @@ export default defineComponent( {
                         type: 'error',
                         delayTime: 1000
                     })
-                    
+
                     return tg.MainButton.offClick(() => {
                         sendPhoneNumber()
                     });
@@ -142,7 +142,8 @@ export default defineComponent( {
             // login,
             auth,
             backPhoneNumber,
-            onPhoneInput
+            onPhoneInput,
+            sendPhoneNumber
         }
     }
 })

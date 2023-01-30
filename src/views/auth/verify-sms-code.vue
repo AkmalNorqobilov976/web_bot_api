@@ -1,57 +1,31 @@
 <template>
     <div class="login">
-        <p class="login__title" v-if="!auth.smsIsSent">Tizimga kirish</p>
-        <form @submit.prevent class="login__form">
-            <div class="login__form--phone" v-if="!auth.smsIsSent">
-                <span>+998</span>
-                <input 
-                    class="login__form--phone--input" 
-                    type="text" 
-                    ref="phoneInput"
-                    placeholder="00 000 00 00"
-                    v-model="userInfo.phone"
-                    @input="onPhoneInput($event)"
-                />
-            </div>
-            
-          
-
-            <div v-if="auth.smsIsSent" class="login__form--verification">
+        <p class="login__title" @click="sendCode">Tizimga kirish</p>
+        <form @submit.prevent="sendCode" class="login__form">
+            <div class="login__form--verification">
                 <p class="login__form--verification--title">SMS kod yuborildi</p>
                 <p class="login__form--verification--subtitle">
-                    SMS kod +998 {{userInfo.phone}} raqamiga yuborildi
+                    SMS kod {{auth.userInfo.phone}} raqamiga yuborildi
                 </p>
-                <verification-input ref="verificationInput"/>
-                <p @click="backPhoneNumber" class="login__form--verification--btn">Nomerni o'zgartirish</p>
+                <verification-input/>
+                <p @click="$router.push('/login')" class="login__form--verification--btn">Nomerni o'zgartirish</p>
             </div>
-                <!-- :disabled="!auth.smsIsSent ? true : false" -->
         </form>
-
-            <!-- <button 
-                class="login__form--submit-btn"
-                :class="[{ disabled : !auth.smsIsSent}, {'phoneEntered': userInfo.phone}]"
-                @click="login"
-            > {{!auth.smsIsSent ? 'SMS kodni olish' : 'Kirish'}} </button> -->
     </div>
 </template>
 
 <script>
-import { reactive, ref } from '@vue/reactivity'
+import { reactive } from '@vue/reactivity'
 import { useAuthStore } from '@/store/authStore';
 import { useRouter } from 'vue-router';
 import VerificationInput from '@/components/Form/inputs/VerificationInput.vue'
-import { defineComponent, onMounted, onUnmounted, watch, watchEffect } from 'vue-demi';
-import { usePhoneNumberPatternMatch } from '@/composables/usePhoneNumberPatternMatch'
+import { defineComponent, onMounted, onUnmounted, watchEffect } from 'vue-demi';
 import { useTelegram } from '@/composables/useTelegram';
-import { myProfile, sendPhone, verifyCode } from '@/api/authApi'
+import { verifyCode } from '@/api/authApi'
 import { setToken } from '@/utils/localStorage';
 import { useToastStore } from '@/store/useToastStore';
 export default defineComponent( {
-    mounted() {
-        this.$refs.phoneInput.focus();
-    },
     setup() {
-        const verificationInput = ref(null)
         const auth = useAuthStore();
         const router = useRouter();
         const { tg, tgSetParamsToMainButton, showMainButton, hideMainButton } = useTelegram();
@@ -61,82 +35,18 @@ export default defineComponent( {
             isAgree: false,
             code: "467"
         });
-        const phoneInput = ref(null)
-        const backPhoneNumber = () => {
-            auth.$patch({
-                smsIsSent: false
+
+        tg.MainButton.onClick(() => {
+                sendCode();
+            tg.MainButton.offClick(() => {
+                sendCode();
             });
-        }
-      
-        const onPhoneInput = ($event) => {
-            $event.target.value = usePhoneNumberPatternMatch($event.target.value);
-            // console.log($event.target.value, "event");
-            if(!$event.target.value) {
-                userInfo.phone = $event.target.value;
-                tgSetParamsToMainButton({
-                    text: "SMS kodni olish",
-                    textColor: "#8C8C8C",
-                    color: "#E4E6E4",
-                    disabled: true
-                })
-            } else {
-                tgSetParamsToMainButton({
-                    text: "SMS kodni olish",
-                    textColor: "#fff",
-                    color: "#51AEE7",
-                    disabled: false
-                })
-            }
-        }
-
-        // tg.MainButton.onClick(() => {
-        //     if(!auth.$state.smsIsSent) {
-        //         sendPhoneNumber();
-        //     }
-        //     else {
-        //         sendCode();
-        //     }
-
-        //     tg.MainButton.offClick(() => {
-                
-        //     });
-        // })
-
-        const sendPhoneNumber = () => {
-            sendPhone({ phone: `+998${userInfo.phone.split(' ').join('').split('-').join('')}` })
-            .then((response) => {
-                // console.log(response);
-                auth.$patch({
-                    smsIsSent: true,
-                    userInfo: {
-                        ...auth.$state,
-                        phone: `+998${userInfo.phone.split(' ').join('').split('-').join('')}`   
-                    }
-                });
-                tgSetParamsToMainButton({
-                    text: "Kirish",
-                    color: "#51AEE7",
-                    disabled: false
-                });
-                
-                return tg.MainButton.offClick(() => {
-                    hideMainButton()
-                });
-            }).catch((error) => {
-                    // console.log(error);
-                    toastStore.showToastAsAlert({
-                        message: error.response.data.message,
-                        type: 'error',
-                        delayTime: 1000
-                    })
-                return tg.MainButton.offClick(() => {
-                });
-            })
-        }
+        })
 
         const sendCode = () => {
+            console.log(auth.$state);
             verifyCode({
-                phone: auth.$state.userInfo.phone,
+                phone: auth.userInfo.phone,
                 code: auth.$state.code
             }).then((response) => {
                 auth.$patch({
@@ -145,53 +55,44 @@ export default defineComponent( {
                 });
                 
                 setToken(response.data.data);
-                // myProfile()
-                //     .then(() => {
-                //         router.push('/');
-                //     })
-
-                return tg.MainButton.offClick(() => {
-                    alert('Offed');
-                });
-
             }).catch((error) => {
                 toastStore.showToastAsAlert({
                     message: error.response.data.message,
                     type: 'error',
                     delayTime: 1000
                 })
-                return tg.MainButton.offClick(() => {
-                    alert('Offed')
-                });
             })
         }
         
         watchEffect(() => {
             if (!auth.$state.smsIsSent) {
-                // tgSetParamsToMainButton({
-                //     text: "SMS kodni olish",
-                //     color: "#E4E6E4",
-                //     textColor: "#8C8C8C",
-                //     disabled: true
-                // })
+                tgSetParamsToMainButton({
+                    text: "SMS kodni olish",
+                    color: "#E4E6E4",
+                    textColor: "#8C8C8C",
+                    disabled: true
+                })
             }
-
-            console.log("hello")
         })
 
         
           onMounted(() => {
             showMainButton();
+            tgSetParamsToMainButton({
+                disabled: false,
+                textColor: '#ffffff',
+                color: "#51AEE7",
+                text: "Kirish"
+            })
         });
+
         onUnmounted(() => {
             hideMainButton()
         })
         return {
             userInfo,
-            // login,
             auth,
-            backPhoneNumber,
-            onPhoneInput
+            sendCode
         }
     },
     components: {
