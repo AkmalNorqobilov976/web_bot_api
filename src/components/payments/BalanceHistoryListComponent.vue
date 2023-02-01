@@ -1,15 +1,15 @@
 <template>
-    <div class="payment-list">
-        <div class="payment-list__icon">
-            <i :class="icon"></i>
+    <div class="payment-list" v-if="cardData">
+        <div class="payment-list__icon" :class="cardData.type == 'minus' ? 'balance-minus' : 'balance-plus'">
+            <i :class="cardData.type =='minus' ? 'ri-arrow-left-down-line' : 'ri-arrow-right-up-line'"></i>
         </div>
         <div class="payment-list__body">
             <p class="payment-list__body--debit-card">
-                {{ debitCard }}
+                #{{ cardData.target_id }} {{ cardData.comment }}
             </p>
             <div class="payment-list__body--income">
-                <p>{{ price }}</p>
-                <span class="payment-list__body--income-time">{{ sentTime }}</span>
+                <p>{{ cardData.amount }} so‘m</p>
+                <span class="payment-list__body--income-time">{{ cardData.created_at_label }}</span>
             </div>
         </div>
     </div>
@@ -21,29 +21,9 @@
 <script>
 export default {
     props: {
-        debitCard: {
-            default: "#478725 raqamli jo'natma uchun tizim komissiyasi yechib olindi."
+        cardData: {
+
         },
-        price: {
-            default: "500.000 so‘m"
-        },
-        sentTime: {
-            default: "2 daq oldin"
-        },
-        icon: {
-            type: String,
-            default: "ri-time-fill"
-        },
-        iconColor: {
-            default: "#F1A30C"
-        },
-       
-    },
-    data: () => ({
-         iconBgColor: ""
-    }),
-    mounted() {
-        this.iconBgColor = `${this.iconColor}20`
     }
 }
 </script>
@@ -67,7 +47,6 @@ export default {
             border: .1rem solid v-bind('iconColor');
             i {
                 font-size: 2rem;
-                color: v-bind('iconColor');
             }
         }
 
@@ -107,5 +86,17 @@ export default {
     }
     .cancel-btn-slot {
         background: $white;
+    }
+
+    .balance-minus {
+        background: rgba($color:  #F1A30C, $alpha: .2) !important;
+        color: #F1A30C !important;
+        border: #F1A30C solid .1rem !important;
+    }
+    // transaction.type ? 
+    .balance-plus {
+        background: rgba($color: #23B60B, $alpha: .2) !important;
+        color: #23B60B !important;
+        border: #23B60B solid .1rem !important;
     }
 </style>

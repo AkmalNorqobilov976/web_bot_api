@@ -46,7 +46,7 @@
             </p>
         </header>
         <main class="addition-stream-info__main">
-            <div class="addition-stream-info__main--list" @click="$router.push({name: 'donation'})">
+            <div class="addition-stream-info__main--list" @click="$router.push({name: 'donation-update', params: { id: $route.params.id }})">
                 <div>
                     {{ streamInfo.charity }} so‘m
                     <p>

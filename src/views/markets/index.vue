@@ -24,6 +24,7 @@ import SearchInput from '@/components/Form/inputs/SearchInput.vue'
 import { computed, defineComponent, onMounted, ref, watch } from 'vue-demi';
 import { useToastStore } from '@/store/useToastStore';
 import { useRoute } from 'vue-router';
+import { useCardNumberPatternMatch } from '@/composables/useCardNumberPatternMatch';
 export default defineComponent({
     setup() {
         const query = ref("")
@@ -32,6 +33,12 @@ export default defineComponent({
         const toastStore = useToastStore()
         const route = useRoute();
         const tabs = ref([]);
+        // const 
+        console.log(useCardNumberPatternMatch({
+            input: "3244324432443244",
+            template: 'xxxx xxxx xxxx xxxx'
+        }), "lasdkjfsdf")
+        
         onMounted(() => {
             categoriesStore.getCategories()
                 .then(() => {

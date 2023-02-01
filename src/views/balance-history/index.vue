@@ -8,7 +8,11 @@
                 />
             </div>
         </form>
-        <info-card class="balance-history__info-card" title="To‘lovlar monitoringi">
+        <info-card 
+           
+            class="balance-history__info-card" 
+            title="To‘lovlar monitoringi"
+        >
             <template #body>
                 <p class="balance-history__info-card--barchart-title">
                     xarid qilingan va bekor qilingan mahsulotlar statistikasi
@@ -18,10 +22,13 @@
                     <!-- <bar-chart/> -->
                     <!-- <balans-history-bar-chart title="xarid qilingan va bekor qilingan mahsulotlar statistikasi" xKey="name" yKey="amount" :data="barChartData"/> -->
                 
-                    <balance-history-list-component 
-                        icon="ri-arrow-left-down-line"
-                        iconColor="#23B60B"
+                    <balance-history-list-component
+                        v-for="(transaction, i) in transactionsStore.$state.transactions"
+                        :key="i" 
+                        :cardData="transaction"
                     />       
+                        <!-- :icon="transaction.type =='minus' ? 'ri-arrow-left-down-line' : 'ri-arrow-right-up-line'"
+                        :iconColor="transaction.type ? '#23B60B' : '#F1A30C'" -->
                     <balance-history-list-component 
                         icon="ri-arrow-right-up-line"
                         iconColor="#F1A30C"
@@ -42,15 +49,17 @@ import { defineComponent, onBeforeMount } from 'vue-demi'
 import { useToastStore } from '@/store/useToastStore'
 import { useWithdrawsStore } from '@/store/server/useWithdrawsStore'
 import { useBackButton } from '@/composables/useBackButton'
+import { useTransactionsStore } from '@/store/server/useTransactionsStore'
 export default defineComponent({
     setup() {
         const toastStore = useToastStore();
         const withdrawsStore = useWithdrawsStore()
+        const transactionsStore = useTransactionsStore();
         const { backButton } = useBackButton();
 
         backButton('/')
         const getWithDraws = () => {
-            withdrawsStore.getWithdraws()
+            transactionsStore.getTransactions()
                 .catch(error => {
                     toastStore.showToastAsAlert({
                         message: error.response.data.message,
@@ -65,7 +74,7 @@ export default defineComponent({
         })
 
         return {
-            withdrawsStore
+            transactionsStore
         }
     },
      data: () => ({

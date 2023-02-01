@@ -81,6 +81,13 @@ export function adminWithdraws() {
     });
 }
 
+export function adminTransactions() {
+    return request({
+        url: `${URI}/transactions`,
+        method: "get"
+    });
+}
+
 export function postAdminWithdraw({ card_number, amount }) {
     return request({
         url: `${URI}/withdraw`,

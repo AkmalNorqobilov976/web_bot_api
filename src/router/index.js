@@ -134,16 +134,30 @@ const routes = [
       component: () => import('@/views/markets/donation.vue')
   },
   {
+    path: '/donation/:id',
+    name: 'donation-update',
+    component: () => import('@/views/markets/updates/donation.vue')
+  },
+  {
       path: "/define-amount",
       name: "define-amount",
       component: () => import('@/views/markets/define-amount.vue')
+  },
+  {
+    path: "/define-amount/:id",
+    name: "define-amount-update",
+    component: () => import('@/views/markets/updates/define-amount.vue')
   },
   {
       path: "/advertesiment",
       name: "advertesiment",
       component: () => import('@/views/markets/advertesiment.vue')
   },
-
+  {
+    path: "/advertesiment/:id",
+    name: "advertesiment-update",
+    component: () => import('@/views/markets/updates/advertesiment.vue')
+  },
   {
     path: "/streams",
     component: () => import('@/views/streams/index.vue'),

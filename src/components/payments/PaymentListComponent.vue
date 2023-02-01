@@ -1,15 +1,20 @@
 <template>
-    <div class="payment-list">
-        <div class="payment-list__icon">
-            <i :class="icon"></i>
+    <div v-if="cardData" class="payment-list">
+        <div class="payment-list__icon" :class="`payment-${cardData.status}`">
+            <i 
+                :class="[
+                    {'ri-checkbox-circle-fill': cardData.status == 'paid'}, 
+                    {'ri-spam-3-fill': cardData.status == 'cancelled'},
+                    {'ri-time-fill': cardData.status == 'new'}]"
+                ></i>
         </div>
         <div class="payment-list__body">
             <p class="payment-list__body--debit-card">
-                {{ debitCard }}
+                {{ $filter.debitCardFormat(cardData.account) }}
             </p>
             <div class="payment-list__body--income">
-                <p>{{ price }}</p>
-                <span class="payment-list__body--income-time">{{ sentTime }}</span>
+                <p>{{ $filter.numberFormat(cardData.amount) }} so‘m</p>
+                <span class="payment-list__body--income-time">{{ cardData.created_at_label }}</span>
             </div>
         </div>
     </div>
@@ -21,6 +26,9 @@
 <script>
 export default {
     props: {
+        cardData: {
+
+        },
         debitCard: {
             default: "9860 1234 5678 9012"
         },
@@ -63,11 +71,8 @@ export default {
             display: flex;
             justify-content: center;
             align-items: center;
-            background: v-bind('iconBgColor');
-            border: .1rem solid v-bind('iconColor');
             i {
                 font-size: 2rem;
-                color: v-bind('iconColor');
             }
         }
 
@@ -100,4 +105,29 @@ export default {
     .cancel-btn-slot {
         background: $white;
     }
+
+    .payment-paid {
+        background: rgba($color: #23B60B, $alpha: .2) !important;
+        border: .1rem solid rgba($color: #23B60B, $alpha: 1.0) !important;
+        i {
+            color: rgba($color: #23B60B, $alpha: 1.0) !important;
+        }
+    }
+
+    .payment-cancelled {
+        background: rgba($color: #ED5974, $alpha: .2) !important;
+        border: .1rem solid rgba($color: #ED5974, $alpha: 1.0) !important;
+        i {
+            color: rgba($color: #ED5974, $alpha: 1.0) !important;
+        }
+    }
+
+    .payment-new {
+        background: rgba($color: #F1A30C, $alpha: .2) !important;
+        border: .1rem solid rgba($color: #F1A30C, $alpha: 1.0) !important;
+        i {
+            color: rgba($color: #F1A30C, $alpha: 1.0) !important;
+        }
+    }
+
 </style>

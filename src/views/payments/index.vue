@@ -52,11 +52,11 @@
                 <span> uzs</span>
             </form>
             <div class="payment-form__suggestions">
-                <span @click="paymentForm.sum = 100000" class="payment-form__suggestions-item">
-                    100.000 uzs
+                <span @click="paymentForm.amount = 100000" class="payment-form__suggestions-item">
+                    100,000 uzs
                 </span>
-                <span @click="paymentForm.sum = 500000" class="payment-form__suggestions-item">
-                    500.000 uzs
+                <span @click="paymentForm.amount = 500000" class="payment-form__suggestions-item">
+                    500,000 uzs
                 </span>
             </div>
         </section>
@@ -74,8 +74,13 @@
         </section>
 
         <section class="payment-history">
-            <p class="payment-history__title">O‘tkazmalar tarixi</p> 
-            <payment-list-component 
+            <p class="payment-history__title">O‘tkazmalar tarixi</p>
+            <payment-list-component
+                v-for="(withdraw, i) in withdrawsStore.$state.withdraws"
+                :key="i"
+                :cardData="withdraw"
+            /> 
+            <!-- <payment-list-component 
                 icon="ri-checkbox-circle-fill"
                 iconColor="#23B60B"
             />       
@@ -106,7 +111,7 @@
             <payment-list-component 
                 icon="ri-spam-3-fill"
                 iconColor="#ED5974"
-            />       
+            />        -->
         </section>
     </div>
 </template>
@@ -130,7 +135,6 @@ export default {
             amount: "100"
         })
         const onConfirm = (e) => {
-            console.log(e);
             showConfirm.value = false;
         }
 
@@ -141,14 +145,12 @@ export default {
         const authStore = useAuthStore();
         backButton()
         const inputForm = (e, key) => {
-            console.log("ishla");
             
             paymentForm[key] = e.target.innerText
         }
         
         watch(paymentForm, (newValue) => {
             if (newValue.card_number.length == '19' && newValue.amount) {
-                console.log("well1");
                 tgMainButtonEnable()     
                 tgSetParamsToMainButton({
                     color: "#55BE61",
@@ -156,7 +158,6 @@ export default {
                     disabled: false
                 })           
             } else {
-                console.log("well1");
                 showMainButton()
                 tgMainButtonDisable()                
                 tgSetParamsToMainButton({
