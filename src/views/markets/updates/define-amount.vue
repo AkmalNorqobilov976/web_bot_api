@@ -1,5 +1,5 @@
 <template>
-    <main class="donation">
+    <main v-if="streamsStore.$state.stream" class="donation">
         <header class="donation-header">
             <i class="ri-percent-line"></i>
             <article class="donation-header__note">
@@ -13,7 +13,13 @@
         <section class="donation-form">
             <p class="donation-form__title">Summani yozing</p>
             <form @submit.prevent class="donation-form__form">
-                <span class="donation-form__form--input" @input="inputForm($event, 'discount')" contenteditable>{{ streamsStore.$state.streamForm.discount }}</span>
+                <span 
+                    class="donation-form__form--input" 
+                    @input="inputForm($event, 'discount')" 
+                    contenteditable
+                >
+                    {{ streamsStore.$state.stream.discount }}
+                </span>
                 <span> uzs</span>
             </form>
         </section>
@@ -46,7 +52,7 @@ export default defineComponent ({
         const { backButton } = useBackButton()
         const route = useRoute();
         const inputForm = (e, key) => {
-            streamsStore.$state.streamForm[key] = e.target.innerText
+            streamsStore.$state.stream[key] = e.target.innerText
         }
           const setParams = () => {
             if(streamsStore.streamForm.name) {

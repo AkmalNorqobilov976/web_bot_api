@@ -1,5 +1,6 @@
 <template>
-    <custom-confirm 
+    <div v-if="streamsStore.$state.stream">
+        <custom-confirm 
         title="Oqimni chindan ham o‘chirmoqchimisiz?"
         subtitle="Agar o‘chirilsangiz oqimni qayta tiklab bo‘lmaydi"
         sayNo="Yo‘q, ortga qaytish"
@@ -7,13 +8,16 @@
         :showConfirm="openDeleteStreamConfirmDialog" 
         @onConfirm="onConfirm($event)"
     />
-    <market-card :isShowBtn="false" :cardData="streamInfo.product"/>
+    <market-card :isShowBtn="false" :cardData="streamsStore.$state.stream.product"/>
     <section class="stream-name">
         <form @submit.prevent="">
             <label class="stream-name__title">Oqim nomi</label>
             <!-- error-input class -->
             <div class="stream-name__input">
-                <input v-model="streamInfo.name" placeholder="Misol uchun: 1-oqim linki" />
+                <input 
+                    v-model="streamsStore.$state.stream.name" 
+                    placeholder="Misol uchun: 1-oqim linki" 
+                />
                 <profile-setting-menu left="-16rem" top="3rem">
                     <template #button>
                         <i class="ri-more-2-fill"></i>
@@ -28,7 +32,7 @@
             </div>
             <tooltip style="bottom: -2.2rem;" label="Bu nomdagi Oqim linki mavjud"/>
             <div class="stream-name__button-grp">
-                <button @click="copyToClipboard($event, streamInfo.name)"  class="stream-name__button-grp--btn">
+                <button @click="copyToClipboard($event, streamsStore.$state.stream.name)"  class="stream-name__button-grp--btn">
                     <copyIcon class="stream-name__button-grp--btn--icon"/> Nusxalash
                 </button>
                 <button class="stream-name__button-grp--btn" @click="openPost">
@@ -48,23 +52,26 @@
         <main class="addition-stream-info__main">
             <div class="addition-stream-info__main--list" @click="$router.push({name: 'donation-update', params: { id: $route.params.id }})">
                 <div>
-                    {{ streamInfo.charity }} so‘m
+                    {{ streamsStore.$state.stream.charity }} so‘m
                     <p>
                         Xayriyaga pul ajratish
                     </p>
                 </div>
                 <i class="ri-arrow-right-s-line"></i>
             </div>
-            <div class="addition-stream-info__main--list" @click="$router.push({name: 'donation'})">
+            <div 
+                class="addition-stream-info__main--list" 
+                @click="$router.push({name: 'define-amount-update', params: {id: $route.params.id}})"
+            >
                 <div>
-                   {{ streamInfo.discount }} so‘m
+                   {{ streamsStore.$state.stream.discount }} so‘m
                     <p>
                         Chegirma qo‘yilgan
                     </p>
                 </div>
                 <i class="ri-arrow-right-s-line"></i>
             </div>
-            <div class="addition-stream-info__main--list" @click="$router.push({name: 'advertesiment'})">
+            <div class="addition-stream-info__main--list" @click="$router.push({name: 'advertesiment-update', params: { id: $route.params.id }})">
                 <div>
                    0 so‘m
                     <p>
@@ -84,22 +91,22 @@
             Tashriflar
         </p>
         <p class="stream-visit__number">
-            {{ streamInfo.visits }}
+            {{ streamsStore.$state.stream.visits }}
         </p>
     </section>
 
     <created-stream-card 
-        v-if="streamInfo"
+        v-if="streamsStore.$state.stream"
         title="Aktiv"
         :isTwoItem="true"
         :items="[
             {
                 title: 'Yangi',
-                value: streamInfo.orders_stats.new ? streamInfo.orders_stats.new: 0
+                value: streamsStore.$state.stream.orders_stats.new ? streamsStore.$state.stream.orders_stats.new: 0
             },
             {
                 title: 'Qayta qo‘ng’iroq',
-                value: streamInfo.orders_stats.pending
+                value: streamsStore.$state.stream.orders_stats.pending
             },
             {
             }
@@ -111,15 +118,15 @@
         :items="[
             {
                 title: 'Yo‘lda',
-                value: streamInfo.orders_stats.sent
+                value: streamsStore.$state.stream.orders_stats.sent
             },
             {
                 title: 'Yetkazib berildi',
-                value: streamInfo.orders_stats.delivered
+                value: streamsStore.$state.stream.orders_stats.delivered
             },
             {
                 title: 'Qabul qilingan',
-                value: streamInfo.orders_stats.accepted
+                value: streamsStore.$state.stream.orders_stats.accepted
             }
         ]"    
     />
@@ -129,18 +136,19 @@
         :items="[
             {
                 title: 'Spam',
-                value: streamInfo.orders_stats.spam
+                value: streamsStore.$state.stream.orders_stats.spam
             },
             {
                 title: 'Qaytib keldi',
-                value: streamInfo.orders_stats.canceled
+                value: streamsStore.$state.stream.orders_stats.canceled
             },
             {
                 title: 'Arxivlandi',
-                value: streamInfo.orders_stats.archived
+                value: streamsStore.$state.stream.orders_stats.archived
             }
         ]"    
     />
+    </div>
 </template>
 
 <script>
@@ -220,7 +228,9 @@ export default defineComponent({
         const getStream = () => {
             getAdminStream({ id: route.params.id })
                 .then(response => {
-                    streamInfo.value = response.data.data;
+                    streamsStore.$patch({
+                        stream: response.data.data 
+                    });
                 }).catch(error => {
                     toastStore.showToastAsAlert({
                         message: error.response.data.message,
@@ -239,7 +249,8 @@ export default defineComponent({
             openPost,
             deleteStream,
             openDeleteStreamConfirmDialog,
-            onConfirm
+            onConfirm,
+            streamsStore
         }
     },
     components: {

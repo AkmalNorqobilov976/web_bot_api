@@ -1,5 +1,5 @@
 <template>
-    <main class="donation">
+    <main v-if="streamsStore.$state.stream" class="donation">
         <header class="donation-header">
             <i class="ri-file-list-3-line"></i>
             <article class="donation-header__note">
@@ -25,12 +25,14 @@
 </template>
 <script>
 import { useBackButton } from '@/composables/useBackButton'
+import { useStreamsStore } from '@/store/server/useStreamsStore'
 import { defineComponent, reactive } from 'vue'
 export default defineComponent ({
     props: {
 
     },
     setup() {
+        const streamsStore = useStreamsStore();
         const donationForm = reactive({
             sum: "1000,000"
         })
@@ -42,7 +44,8 @@ export default defineComponent ({
         }
         return {
             donationForm,
-            inputForm
+            inputForm,
+            streamsStore
         }
     },
 })

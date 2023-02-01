@@ -1,6 +1,5 @@
 <template>
-    <main class="donation">
-        {{ streamsStore.$state.stream }}
+    <main v-if="streamsStore.$state.stream" class="donation">
         <header class="donation-header">
             <i class="ri-hand-coin-line"></i>
             <article class="donation-header__note">
@@ -19,18 +18,18 @@
                     @input="inputForm($event, 'charity')" 
                     contenteditable
                 >
-                    {{ streamsStore.$state.streamForm.charity }}
+                    {{ streamsStore.$state.stream.charity }}
                 </span>
                 <span> uzs</span>
             </form>
             <div class="donation-form__suggestions">
-                <span @click="streamsStore.$state.streamForm.charity = 100" class="donation-form__suggestions-item">
+                <span @click="streamsStore.$state.stream.charity = 100" class="donation-form__suggestions-item">
                     100 uzs
                 </span>
-                <span @click="streamsStore.$state.streamForm.charity = 300" class="donation-form__suggestions-item">
+                <span @click="streamsStore.$state.stream.charity = 300" class="donation-form__suggestions-item">
                     300 uzs
                 </span>
-                <span @click="streamsStore.$state.streamForm.charity = 500" class="donation-form__suggestions-item">
+                <span @click="streamsStore.$state.stream.charity = 500" class="donation-form__suggestions-item">
                     500 uzs
                 </span>
             </div>
@@ -90,7 +89,7 @@ export default defineComponent ({
             setParams()
         })
         const inputForm = (e, key) => {
-            streamsStore.$state.streamForm[key] = e.target.innerText
+            streamsStore.$state.stream[key] = e.target.innerText
         }
         onUnmounted(() => {
             hideMainButton();
