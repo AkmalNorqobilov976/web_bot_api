@@ -117,7 +117,6 @@ export default defineComponent({
         })
 
         const onPhotoChange = (e) => {
-            console.log(e.target.files[0]);
             if(e.target.files[0]) {
                 isImage.value = URL.createObjectURL(e.target.files[0])
             }

@@ -23,11 +23,6 @@ app.config.globalProperties.$filter = {
         return new Intl.NumberFormat(undefined).format(e)
     }
 }
-app.directive('custommodel', (el, binding) => {
-    console.log(el, binding);
-    el.oninput = (e) => {
-        console.log(e, "eku");
-    }
-})
+
 app.use(Vue3TouchEvents)
 app.use(router).mount('#app')

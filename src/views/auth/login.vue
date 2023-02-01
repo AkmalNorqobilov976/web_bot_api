@@ -81,7 +81,6 @@ export default defineComponent( {
 
 
         const sendPhoneNumber = () => {
-            console.log("Hdskfsdklfj");
             sendPhone({ phone: `+998${userInfo.phone.split(' ').join('').split('-').join('')}` })
             .then(() => {
                 auth.$patch({

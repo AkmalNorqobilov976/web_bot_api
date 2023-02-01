@@ -38,7 +38,6 @@ export default defineComponent( {
       
 
         const sendCode = () => {
-            console.log(auth.$state);
             verifyCode({
                 phone: auth.userInfo.phone,
                 code: auth.$state.code

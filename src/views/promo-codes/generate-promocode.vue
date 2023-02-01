@@ -56,9 +56,7 @@ export default defineComponent({
         }
 
         const promocodeFormWatcher = watch(promocodeForm, (newValue) => {
-            console.log("zo'r");
             if(newValue.code) {
-                console.log(newValue.code);
                 tgSetParamsToMainButton({
                     text: "Promo-kod yaratish",
                     textColor: "#ffffff",

@@ -3,11 +3,6 @@ export function useCardNumberPatternMatch({ input, template }) {
       let j = 0;
       let plaintext = "";
       let countj = 0;
-    //   if(!Number(input) || input !== ' ') {
-
-    //     console.log("ishlamadi", input);
-    //     throw Error("") 
-    //   }
       while (j < template.length) {
         if (countj > input.length - 1) {
           template = template.substring(0, j);

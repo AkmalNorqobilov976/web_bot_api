@@ -33,12 +33,7 @@ export default defineComponent({
         const toastStore = useToastStore()
         const route = useRoute();
         const tabs = ref([]);
-        // const 
-        console.log(useCardNumberPatternMatch({
-            input: "3244324432443244",
-            template: 'xxxx xxxx xxxx xxxx'
-        }), "lasdkjfsdf")
-        
+ 
         onMounted(() => {
             categoriesStore.getCategories()
                 .then(() => {

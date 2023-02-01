@@ -6,7 +6,6 @@ export function useNumberFormatter() {
     }
 
     const numberFormatter = (value) => {
-        console.log(value, "qiymati", new Intl.NumberFormat(undefined).format(value));
         return computed(() => new Intl.NumberFormat(undefined).format(value))
     };
 

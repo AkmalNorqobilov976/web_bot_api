@@ -60,17 +60,21 @@
                 </span>
             </div>
         </section>
-
-          <section class="payment-expected">
+          <section class="payment-expected" v-if="withdrawsStore.getNewWithdraws.length">
             <p class="payment-expected__title">Kutilayotgan to‘lo‘vlar</p>
-            <PaymentListComponent> 
-                <template #cancel-btn>
-                    <div class="cancel-btn" @click="showConfirm = true">
-                        <i class="ri-close-line"></i>
-                        Bekor qilish
-                    </div>
-                </template>
-            </PaymentListComponent>
+            <div
+                v-for="(withdraw, i) in withdrawsStore.$state.withdraws"
+                :key="i"
+            >
+                <PaymentListComponent v-if="withdraw.status == 'new'" :cardData="withdraw"> 
+                    <template #cancel-btn>
+                        <div class="cancel-btn" @click="showConfirm = true">
+                            <i class="ri-close-line"></i>
+                            Bekor qilish
+                        </div>
+                    </template>
+                </PaymentListComponent>
+            </div>
         </section>
 
         <section class="payment-history">

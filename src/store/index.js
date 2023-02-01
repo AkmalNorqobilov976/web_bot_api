@@ -18,7 +18,6 @@ export default createStore({
   },
   actions: {
     login(ctx, data) {
-        console.log(data);
         ctx.commit('SET_INFO', data)
     }
   },

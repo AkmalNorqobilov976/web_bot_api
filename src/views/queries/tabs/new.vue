@@ -20,15 +20,6 @@ export default defineComponent({
         return {
             ordersStore
         }
-    },
-    methods: {
-        goTabRight(e) {
-            console.log(e);
-        },
-
-        goTabLeft(e) {
-            console.log(e);
-        }
     }
 })
 </script>

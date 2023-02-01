@@ -7,12 +7,16 @@ export const useWithdrawsStore = defineStore('withdraws', {
         withdraw: null
     }),
 
+    getters: {
+        getNewWithdraws(state) {
+            return state.withdraws.filter(withdraw => withdraw.status === 'new')
+        }
+    },
     actions: {
         getWithdraws() {
             return new Promise((resolve, reject) => {
                 adminWithdraws()
                     .then(response => {
-                        console.log(response, "withdraws");
                         this.withdraws = response.data.data;
                         resolve(true)
                     })

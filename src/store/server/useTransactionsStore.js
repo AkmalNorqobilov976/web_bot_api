@@ -11,7 +11,6 @@ export const useTransactionsStore = defineStore('transaction', {
             return new Promise((resolve, reject) => {
                 adminTransactions()
                     .then(response => {
-                        console.log(response.data);
                         this.transactions = response.data.data;
                         resolve(true);
                     })
