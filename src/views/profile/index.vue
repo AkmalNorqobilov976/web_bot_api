@@ -1,5 +1,8 @@
 <template>
     <main class="my-profile">
+         <!-- {{ authStore }} -->
+         <!-- <br> -->
+         <!-- {{ helperStore }} -->
         <header class="my-profile__header">
             <div class="my-profile__header--setting">
                 <profile-setting-menu :left="'3rem'"/>
@@ -39,6 +42,7 @@
         <info-card> 
             <template #body>
                 <form @submit.prevent>
+                   
                     <div class="my-profile__form--field">
                             <under-line-input 
                                 label="Ismingiz" 
@@ -63,15 +67,23 @@
                             />
                     </div>
                     <div class="my-profile__form--field">
-                            <under-line-input 
-                                placeholder="Kiritilmagan"
-                                label="Viloyat/shahar" 
-                                v-model="userInfo.region"
-                            />
+                        <under-line-select 
+                            v-if="helperStore.$state.regions.length"
+                            label="Viloyat/shahar" 
+                            :options="helperStore.$state.regions"
+                            :text="'name'"
+                            :value="'id'"
+                            placeholder="Kiritilmagan"
+                            v-model="userInfo.region"
+                        />
                     </div>
                     <div class="my-profile__form--field">
-                            <under-line-input 
+                            <under-line-select 
+                                v-if="helperStore.$state.districts.length"
                                 label="Tuman" 
+                                :options="helperStore.$state.districts"
+                                :text="'name'"
+                                :value="'id'"
                                 placeholder="Kiritilmagan"
                                 v-model="userInfo.district"
                             />
@@ -98,15 +110,24 @@ import { useTelegram } from '@/composables/useTelegram'
 import { useBackButton } from '@/composables/useBackButton'
 import { usePhoneNumberPatternMatch } from '@/composables/usePhoneNumberPatternMatch'
 import ProfileSettingMenu from '@/components/menu/ProfileSettingMenu.vue'
+import { useHelperStore } from '@/store/server/useHelperStore'
+import { useToastStore } from '@/store/useToastStore'
+import { useAuthStore } from '@/store/authStore'
+import UnderLineSelect from '@/components/Form/inputs/UnderLineSelect.vue'
 export default defineComponent({
     components: { 
         UnderLineInput, 
         InfoCard, 
-        ProfileSettingMenu 
+        ProfileSettingMenu,
+        UnderLineSelect 
     },
     setup() {
         const isImage = ref(false)
         const profileImage = ref(null)
+        const helperStore = useHelperStore();
+        const toastStore = useToastStore();
+        const authStore = useAuthStore();
+
         const userInfo = reactive({
             firstname: "hammaga salom",
             lastname: "Ganiyev",
@@ -127,6 +148,33 @@ export default defineComponent({
         backButton();
         onMounted(() => {
             showMainButton();
+            helperStore.getRegions()
+                .catch(error => {
+                    toastStore.showToastAsAlert({
+                        message: error.response.data.message,
+                        delayTime: 3000,
+                        type: 'error'
+                    })
+                })
+
+             helperStore.getDistricts()
+                .catch(error => {
+                    toastStore.showToastAsAlert({
+                        message: error.response.data.message,
+                        delayTime: 3000,
+                        type: 'error'
+                    })
+                })
+
+            authStore.getUserInfo()
+                .catch(error => {
+                    toastStore.showToastAsAlert({
+                        message: error.response.data.message,
+                        delayTime: 3000,
+                        type: 'error'
+                    })
+                })
+
         })
 
         onUnmounted(() => {
@@ -166,7 +214,9 @@ export default defineComponent({
             isImage,
             userInfo,
             onPhotoChange,
-            onPhoneInput
+            onPhoneInput,
+            helperStore,
+            authStore
         }
     },
 })
