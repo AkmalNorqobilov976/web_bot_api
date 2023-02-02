@@ -98,7 +98,7 @@ export default {
         return {
             authStore
         }
-    },
+    }
 }
 </script>
 <style lang="scss" scoped>

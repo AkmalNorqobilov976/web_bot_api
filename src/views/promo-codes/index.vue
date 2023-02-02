@@ -1,4 +1,5 @@
 <template>
+    <message-not-found v-if="!promoCodesStore.$state.promoCodes.length"/>
     <div class="customers">
         <article 
             v-for="(item, i) in promoCodesStore.$state.promoCodes" 
@@ -43,7 +44,9 @@ import { useTelegram } from '@/composables/useTelegram';
 import { useRouter } from 'vue-router';
 import { usePromoCodesStore } from '@/store/server/usePromoCodesStore';
 import { useToastStore } from '@/store/useToastStore';
+import MessageNotFound from '@/components/MessageNotFound.vue';
 export default {
+  components: { MessageNotFound },
     setup() {
         const router = useRouter()
         const navbarButtons = {

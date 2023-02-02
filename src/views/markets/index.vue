@@ -12,6 +12,7 @@
         <div v-if="tabs.length">
             <tabs class="position-sticky top-0" :tabs="[ {to: '/markets/preview/all', text: 'Barchasi'} ,...tabs]"/>
         </div>
+        <message-not-found v-if="!categoriesStore.$state.products.length"/>
         <router-view/>
    </div>
 </template>
@@ -25,6 +26,7 @@ import { computed, defineComponent, onMounted, ref, watch } from 'vue-demi';
 import { useToastStore } from '@/store/useToastStore';
 import { useRoute } from 'vue-router';
 import { useCardNumberPatternMatch } from '@/composables/useCardNumberPatternMatch';
+import MessageNotFound from '@/components/MessageNotFound.vue';
 export default defineComponent({
     setup() {
         const query = ref("")
@@ -76,6 +78,7 @@ export default defineComponent({
     components: {
         Tabs,
         SearchInput,
+        MessageNotFound,
     } 
 })
 </script>

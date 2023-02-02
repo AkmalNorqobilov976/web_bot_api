@@ -10,7 +10,6 @@ export const useCopyToClipboard = () => {
                     x: e.clientX,
                     y: e.clientY,
                     message: "Nusxalandi",
-                    type: "Success",
                     delayTime: 3000
                 })
             })

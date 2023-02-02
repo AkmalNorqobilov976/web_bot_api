@@ -18,7 +18,7 @@ export default {
         const route = useRoute();
         const ordersStore = useOrdersStore();
         const toastStore = useToastStore();
-        backButton()
+        backButton('/')
         
         const getOrders = () => {
             ordersStore.getOrders({ status: "" })
@@ -27,7 +27,7 @@ export default {
                         message: error.response.data.message,
                         type: 'error',
                         delayTime: 1000
-                    })
+                    });
                 })
         }
         watch(route, (newValue) => {
