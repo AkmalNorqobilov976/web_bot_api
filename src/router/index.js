@@ -125,9 +125,17 @@ const routes = [
             },
             component: () => import('@/views/markets/preview.vue')
         },
-       
+        
     ]
   },
+  {
+    path: "/generated-promocode/:id",
+    name: "generated-promocode",
+    meta: {
+        requiresAuth: true
+    },
+    component: () => import('@/views/promo-codes/generated-promocode.vue')
+},
   {
       path: "/donation",
       name: "donation",
@@ -185,14 +193,6 @@ const routes = [
                 requiresAuth: true
             },
             component: () => import('@/views/streams/created-stream.vue')
-        },
-        {
-            path: "final-level-create-stream",
-            name: "final-level-create-stream",
-            meta: {
-                requiresAuth: true
-            },
-            component: () => import('@/views/streams/FinalLevelCreateStream.vue')
         },
         {
             path: "preview/:id",

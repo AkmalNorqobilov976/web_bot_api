@@ -35,6 +35,12 @@ export function adminPromoCodes() {
     });
 }
 
+export function getAdminPromocode(promoCode_id) {
+    return request({
+        url: `${URI}/promo-codes/${promoCode_id}`
+    })
+}
+
 export function postPromoCode({ code }) {
     return request({
         url: `${URI}/promo-codes`,

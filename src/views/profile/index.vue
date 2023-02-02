@@ -70,7 +70,7 @@
                         <under-line-select 
                             v-if="helperStore.$state.regions.length"
                             label="Viloyat/shahar" 
-                            :options="helperStore.$state.regions"
+                             :options="helperStore.$state.regions"
                             :text="'name'"
                             :value="'id'"
                             placeholder="Kiritilmagan"

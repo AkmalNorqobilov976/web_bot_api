@@ -37,13 +37,13 @@ export default defineComponent({
         const onPostPromoCode = () => {
             postPromoCode({
                 code: promocodeForm.code
-            }).then(() => {
+            }).then((response) => {
                 toastStore.showToastAsAlert({
                     message: "Promo cod qo'shildi!!!",
                     type: 'success',
                     delayTime: 1000
                 });
-                router.push({name: 'promo-codes'})
+                router.push({name: 'generated-promocode', params: { id: response.data.data.id }})
                 return tgMainButtonOffClick();
             }).catch(error => {
                 toastStore.showToastAsAlert({

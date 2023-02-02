@@ -1,18 +1,16 @@
 <template>
-    <div class="createdStream">
+    <div class="createdStream" v-if="promoCode">
         <p class="createdStream__title">Promo-kod yaratildi</p>
         <p class="createdStream__subtitle">Quyidagi Promo-kod orqali ilovadan ro‘yhatdan o‘tgan foydalanuvchilar chegirmalarga ega bo‘lishadi va sizga bonuslar tushishni boshlaydi</p>
         <div class="createdStream__card">
-            100KUZ
+            {{ promoCode.code }}
         </div>
 
         <section class="stream-name">
             <form @submit.prevent="">
-                <label class="stream-name__title">Oqim nomi</label>
                 <!-- error-input class -->
                 <div class="stream-name__input">
-                    <input class="" placeholder="Misol uchun: 1-oqim linki" />
-                    <i class="ri-more-2-fill"></i>
+                    <input class="" readonly placeholder="Misol uchun: 1-oqim linki" />
                 </div>
             </form>
         </section>
@@ -20,7 +18,7 @@
         <p class="createdStream__address">
             Sizning yangi “Promo-kod” manzilingiz
         </p>
-        <div class="createdStream__button">
+        <div class="createdStream__button" @click="copyToClipboard($event, promoCode.code)">
             <copy-icon/>
             Manzilni nusxalash
         </div>
@@ -29,9 +27,41 @@
 
 <script>
 import CopyIcon from '@/assets/svgs/copyIcon.vue'
+import { getAdminPromocode } from '@/api/advertiserApi'
+import { useRoute } from 'vue-router'
+import { useCopyToClipboard } from '@/composables/useCopyToClipboard'
+import { onBeforeMount, ref } from 'vue-demi'
+import { useToastStore } from '@/store/useToastStore'
 export default {
     setup() {
-        
+        const route = useRoute();
+        const { copyToClipboard } = useCopyToClipboard();
+        const promoCode = ref(null);
+        const toastStore = useToastStore();
+        const getPromocode = () => {
+            getAdminPromocode(route.params.id)
+                .then(response => {
+                    promoCode.value = response.data.data;
+                    console.log(response.data.data);
+                })
+                .catch(error => {
+                    toastStore.showToastAsAlert({
+                        message: error.response.data.message,
+                        delayTime: 3000,
+                        type: 'error'
+                    })
+                })
+        }
+
+
+        onBeforeMount(() => {
+            getPromocode();
+        })
+
+        return {
+            promoCode,
+            copyToClipboard
+        }
   
     },
     components: {

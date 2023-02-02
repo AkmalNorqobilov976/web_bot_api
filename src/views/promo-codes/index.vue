@@ -1,6 +1,11 @@
 <template>
     <div class="customers">
-        <article v-for="(item, i) in promoCodesStore.$state.promoCodes" :key="i" class="promo-cod">
+        <article 
+            v-for="(item, i) in promoCodesStore.$state.promoCodes" 
+            :key="i" 
+            class="promo-cod"
+            @click="$router.push({name: 'generated-promocode', params: { id: item.id}})"
+        >
             <nav class="promo-cod__navbar">
                 <div class="promo-cod__navbar--i1">
                     <i class="ri-coupon-3-fill"></i> {{ item.code }}
