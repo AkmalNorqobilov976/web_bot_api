@@ -1,5 +1,5 @@
 <template>
-    <div class="message-not-found">
+    <div v-if="messageNotFoundStore.$state.isError" class="message-not-found">
         <video class="message-not-found__video" autoplay loop muted>
             <source :src="require('@/assets/images/nothing.webm')" type="video/webm" />
         </video>
@@ -12,6 +12,20 @@
     </div>
 </template>
 
+
+<script>
+import { useMessageNotFoundStore } from "@/store/useMessageNotFoundStore";
+import { defineComponent } from "vue-demi";
+
+export default defineComponent({
+    setup() {
+        const messageNotFoundStore = useMessageNotFoundStore();
+        return {
+            messageNotFoundStore
+        }
+    }   
+})
+</script>
 <style lang="scss" scoped>
     .message-not-found {
         background: $white;

@@ -45,6 +45,7 @@ export default defineComponent({
         }
     },
     data: () => ({
+        // new,accepted,sent,delivered,pending,spam,archived
         tabs: [
             {
                 to: "/statistics/preview/all",
@@ -67,13 +68,13 @@ export default defineComponent({
                 text: "Yetkazib berildi"
             },
             {
-                to: "/statistics/preview/cancelled",
-                text: "Qaytib keldi"
+                to: "/statistics/preview/pending",
+                text: "Kutlayotgan"
             },
-            {
-                to: "/statistics/preview/hold",
-                text: "Keyin oladi"
-            },
+            // {
+            //     to: "/statistics/preview/hold",
+            //     text: "Keyin oladi"
+            // },
             {
                 to: "/statistics/preview/archived",
                 text: "Arxiv"
