@@ -12,6 +12,11 @@ const pinia = createPinia()
 const app = createApp(App);
 app.config.globalProperties.$noImage = 'https://archive.org/download/no-photo-available/no-photo-available.png';
 app.use(pinia);
+window.addEventListener('DOMContentLoaded', () => {
+    if(localStorage.getItem('last-route')) {
+        router.push(localStorage.getItem('last-route'));
+    }
+})
 app.use(vClickOutside)
 app.config.globalProperties.$filter = {
     debitCardFormat(e) {

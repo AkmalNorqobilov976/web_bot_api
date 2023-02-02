@@ -92,6 +92,9 @@ export default {
         });
 
         onMounted(() => {
+            tg.onEvent('invoiceClosed', () => {
+                
+            })
             authStore.getUserInfo()
         })
 
