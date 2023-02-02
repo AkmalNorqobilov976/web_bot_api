@@ -1,3 +1,4 @@
+import { adminLocations } from "@/api/advertiserApi";
 import { getDistricts, getRegions } from "@/api/helpersApi";
 import { defineStore } from "pinia";
 
@@ -10,7 +11,7 @@ export const useHelperStore = defineStore('helper', {
     actions: {
         getRegions() {
             return new Promise((resolve, reject) => {
-                getRegions()
+                adminLocations()
                     .then(response => {
                         this.regions = response.data.data;
                         resolve(true);

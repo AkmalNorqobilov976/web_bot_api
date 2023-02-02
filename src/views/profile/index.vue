@@ -83,7 +83,7 @@
                             <under-line-select 
                                 v-if="helperStore.$state.districts.length"
                                 label="Tuman" 
-                                :options="helperStore.$state.districts"
+                                :options="getDistricts(userInfo.region)"
                                 :text="'name'"
                                 :value="'id'"
                                 placeholder="Kiritilmagan"
@@ -209,6 +209,13 @@ export default defineComponent({
             }
         })
 
+        const getDistricts = (regionId) => {
+            let districts = helperStore.regions.find(
+                (region) => region.id == regionId
+            );
+            return districts?.districts;
+        }
+
         const onPhoneInput = ($event) => {
             $event.target.value = usePhoneNumberPatternMatch($event.target.value);
         }
@@ -218,7 +225,8 @@ export default defineComponent({
             onPhotoChange,
             onPhoneInput,
             helperStore,
-            authStore
+            authStore,
+            getDistricts
         }
     },
 })

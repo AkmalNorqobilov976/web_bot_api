@@ -125,3 +125,9 @@ export function adminStatistics(params) {
     })
 }
 
+export function adminLocations() {
+    return request({
+        url: `${URI}/locations`,
+        method: 'get'
+    });
+}

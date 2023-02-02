@@ -67,7 +67,7 @@ export default {
         const { backButton } = useBackButton()
         const toastStore = useToastStore();
         const promoCodesStore = usePromoCodesStore()
-        backButton();
+        backButton('/');
 
         const routerToGeneratePromocode = () => {
             router.push({name: 'generate-promocode'});
