@@ -90,6 +90,7 @@
 <script>
 import MessageNotFound from '@/components/MessageNotFound.vue';
 import { useBackButton } from '@/composables/useBackButton'
+import { useLastRoute } from '@/composables/useLastRoute';
 import { useStreamsStore } from '@/store/server/useStreamsStore'
 import { useToastStore } from '@/store/useToastStore';
 import { defineComponent, onBeforeMount } from 'vue-demi'
@@ -99,6 +100,8 @@ export default defineComponent({
         const { backButton } = useBackButton();
         const streamsStore = useStreamsStore();
         const toastStore = useToastStore();
+        const { setLastRoute } = useLastRoute();
+        setLastRoute();
         backButton();
 
         onBeforeMount(() => {

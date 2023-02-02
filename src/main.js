@@ -14,7 +14,7 @@ app.config.globalProperties.$noImage = 'https://archive.org/download/no-photo-av
 app.use(pinia);
 window.addEventListener('DOMContentLoaded', () => {
     if(localStorage.getItem('last-route')) {
-        router.push('/balance-history');
+        router.push(localStorage.getItem('last-route'));
     }
 })
 app.use(vClickOutside)

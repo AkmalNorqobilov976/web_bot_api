@@ -83,17 +83,25 @@
 import { useTelegram } from '@/composables/useTelegram'
 import { onMounted, watchEffect } from '@vue/runtime-core';
 import { useAuthStore } from '@/store/authStore';
+import { useLastRoute } from '@/composables/useLastRoute'
 export default {
     setup() {
         const { tg } = useTelegram();
         const authStore = useAuthStore();
-        watchEffect(() => {
+        const { setLastRoute } = useLastRoute();
+        setLastRoute();
+        onMounted(() => {
             tg.BackButton.hide();
-        });
+        })
+
+
+
+
+
 
         onMounted(() => {
             tg.onEvent('invoiceClosed', () => {
-                
+                alert("hi")
             })
             authStore.getUserInfo()
         })
