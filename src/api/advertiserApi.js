@@ -131,3 +131,10 @@ export function adminLocations() {
         method: 'get'
     });
 }
+
+export function adminProfile() {
+    return request({
+        url: `${URI}/profile`,
+        method: 'get'
+    });
+}

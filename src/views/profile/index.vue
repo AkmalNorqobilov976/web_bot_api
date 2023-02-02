@@ -17,11 +17,11 @@
                     accept="image/png, image/jpeg" 
                     style="display: none;"
                 />
-                <img v-if="isImage" class=""   :src="isImage" alt="">
+                <img v-if="userInfo.avatar" class=""   :src="userInfo.avatar" alt="">
                 <i v-else class="ri-user-6-fill"></i>
                 <!-- <i class="ri-camera-fill my-profile__header--photo--image-uploader"></i> -->
             </div>
-            <p class="my-profile__header--name">{{ userInfo.firstname }} {{userInfo.lastname}}</p>
+            <p class="my-profile__header--name">{{ userInfo.name }} {{userInfo.surname}}</p>
         </header>
 
          <div class="my-profile__btn-grp">
@@ -49,14 +49,14 @@
                             <under-line-input 
                                 label="Ismingiz" 
                                 placeholder="Kiritilmagan"
-                                v-model="userInfo.firstname"
+                                v-model="userInfo.name"
                             />
                     </div>
                     <div class="my-profile__form--field">
                             <under-line-input 
                                 label="Familiyangiz" 
                                 placeholder="Kiritilmagan"
-                                v-model="userInfo.lastname"
+                                v-model="userInfo.surname"
                             />
                     </div>
                     <div class="my-profile__form--field">
@@ -64,7 +64,7 @@
                                 placeholder="Kiritilmagan"
                                 label="Telefon raqam" 
                                 phone="+998 "
-                                v-model="userInfo.phone"
+                                v-model="userInfo.username"
                                 @input="onPhoneInput($event)"
                             />
                     </div>
@@ -76,26 +76,26 @@
                             :text="'name'"
                             :value="'id'"
                             placeholder="Kiritilmagan"
-                            v-model="userInfo.region"
+                            v-model="userInfo.region_id"
                         />
                     </div>
                     <div class="my-profile__form--field">
                             <under-line-select 
                                 v-if="helperStore.$state.districts.length"
                                 label="Tuman" 
-                                :options="getDistricts(userInfo.region)"
+                                :options="getDistricts(userInfo.region_id)"
                                 :text="'name'"
                                 :value="'id'"
                                 placeholder="Kiritilmagan"
-                                v-model="userInfo.district"
+                                v-model="userInfo.district_id"
                             />
                     </div>
                     <div class="my-profile__form--field">
-                            <under-line-input 
-                                label="Manzil" 
-                                placeholder="Kiritilmagan"
-                                v-model="userInfo.address"
-                            />
+                        <under-line-input 
+                            label="Manzil" 
+                            placeholder="Kiritilmagan"
+                            v-model="userInfo.address"
+                        />
                     </div>
                 </form>
             </template>
@@ -105,7 +105,7 @@
 
 
 <script>
-import { defineComponent, reactive, ref, watchEffect, onUnmounted, watch, onMounted } from 'vue'
+import { defineComponent, ref, watchEffect, onUnmounted, watch, onMounted } from 'vue'
 import UnderLineInput from '@/components/Form/inputs/UnderLineInput.vue'
 import InfoCard from '@/components/cards/InfoCard.vue'
 import { useTelegram } from '@/composables/useTelegram'
@@ -116,6 +116,8 @@ import { useHelperStore } from '@/store/server/useHelperStore'
 import { useToastStore } from '@/store/useToastStore'
 import { useAuthStore } from '@/store/authStore'
 import UnderLineSelect from '@/components/Form/inputs/UnderLineSelect.vue'
+import { adminProfile } from '@/api/advertiserApi'
+import { updateMyProfile } from '@/api/authApi'
 export default defineComponent({
     components: { 
         UnderLineInput, 
@@ -130,25 +132,31 @@ export default defineComponent({
         const toastStore = useToastStore();
         const authStore = useAuthStore();
 
-        const userInfo = reactive({
-            firstname: "hammaga salom",
-            lastname: "Ganiyev",
+        const userInfo = ref({
+            name: "hammaga salom",
+            surname: "Ganiyev",
             phone: "+998 90 000-23-12",
-            region: "",
-            district: "",
-            address: ""
+            region_id: "",
+            district_id: "",
+            address: "",
+            avatar: null
         })
 
         const onPhotoChange = (e) => {
             if(e.target.files[0]) {
-                isImage.value = URL.createObjectURL(e.target.files[0])
+                userInfo.value.avatar = URL.createObjectURL(e.target.files[0])
             }
+        }
+
+        const updateProfile = () => {
+            updateMyProfile(userInfo.value);
         }
 
         const { tg, showMainButton, hideMainButton } = useTelegram()
         const { backButton } = useBackButton()
         backButton();
         onMounted(() => {
+            tg.onEvent('mainButtonClicked', updateProfile);
             showMainButton();
             helperStore.getRegions()
                 .catch(error => {
@@ -177,10 +185,17 @@ export default defineComponent({
                     })
                 })
 
+            adminProfile()
+                .then(response => {
+                    console.log(response);
+                    userInfo.value = response.data.data;
+                })
+
         })
 
         onUnmounted(() => {
             hideMainButton();
+            tg.offEvent('mainButtonClicked', updateProfile);
         })
         watch(userInfo, (currentValue, oldValue) => {
             tg.MainButton.setParams({

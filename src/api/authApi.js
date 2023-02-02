@@ -1,3 +1,4 @@
+import { formerSingleFile } from "@/utils/former";
 import { request } from "@/utils/request";
 
 const URI = 'auth'
@@ -28,4 +29,14 @@ export function myProfile() {
         url: "profile",
         method: "get"
     });
+}
+
+
+export function updateMyProfile(data) {
+    const form = formerSingleFile(data);
+    return request({
+        url: 'profile/update',
+        method: 'post',
+        data: form
+    })
 }
