@@ -1,6 +1,8 @@
 <template>
     <main class="my-profile">
-         <!-- {{ authStore }} -->
+        {{helperStore.$state.regions[0]}}
+        {{helperStore.$state.districts[0]}}
+         {{ authStore }}
          <!-- <br> -->
          <!-- {{ helperStore }} -->
         <header class="my-profile__header">
