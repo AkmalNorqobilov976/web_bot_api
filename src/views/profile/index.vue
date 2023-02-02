@@ -40,7 +40,7 @@
                 </div>
             </div>
         </div>
-
+        <!-- <button @click="updateProfile">Send</button> -->
         <info-card> 
             <template #body>
                 <form @submit.prevent>
@@ -149,7 +149,21 @@ export default defineComponent({
         }
 
         const updateProfile = () => {
-            updateMyProfile(userInfo.value);
+            console.log(userInfo);
+            updateMyProfile(userInfo.value)
+                .then(() => {
+                    toastStore.showToastAsAlert({
+                        message: "Yangilandi!",
+                        type: "succes",
+                        delayTime: 3000
+                    })
+                }).catch(error => {
+                    toastStore.showToastAsAlert({
+                        message: error.response.data.message,
+                        type: 'error',
+                        delayTime: 3000
+                    })
+                });
         }
 
         const { tg, showMainButton, hideMainButton } = useTelegram()
@@ -241,7 +255,8 @@ export default defineComponent({
             onPhoneInput,
             helperStore,
             authStore,
-            getDistricts
+            getDistricts,
+            updateProfile
         }
     },
 })
