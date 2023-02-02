@@ -3,7 +3,7 @@
         <i class="ri-search-line" @click="searchFunction"></i>
         <input 
             class="search-input__input" 
-            type="search" 
+            type="text" 
             :value="modelValue"
             @input="updateModel($event)" 
             v-bind="$attrs"
