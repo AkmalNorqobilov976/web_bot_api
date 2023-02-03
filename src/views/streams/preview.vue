@@ -283,6 +283,7 @@ export default defineComponent({
 
         onMounted(() => {
             showMainButton();
+            setParams();
             tg.onEvent('mainButtonClicked', updateStream)
         })
 
