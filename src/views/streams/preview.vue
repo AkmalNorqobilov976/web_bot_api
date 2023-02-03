@@ -16,6 +16,7 @@
             <div class="stream-name__input">
                 <input 
                     v-model="streamsStore.$state.stream.name" 
+                    @input="onShowMainButton"
                     placeholder="Misol uchun: 1-oqim linki" 
                 />
                 <profile-setting-menu left="-16rem" top="3rem">
@@ -177,6 +178,14 @@ export default defineComponent({
         const streamForm = reactive({
             link: ""
         })
+        const onShowMainButton = () => {
+            tgSetParamsToMainButton({
+                disabled: false,
+                text: "Oqim yaratish",
+                textColor: "#fff",
+                color: "#55BE61"
+            })
+        }
         const streamInfo = ref(streamsStore.stream);
         const copyToClipboard = (e, text) => {
             navigator.clipboard.writeText(text).then(() => {
@@ -210,18 +219,7 @@ export default defineComponent({
             openDeleteStreamConfirmDialog.value = false;
         }
         
-        watch(streamInfo, () => {
-            console.log("well");
-                tgSetParamsToMainButton({
-                    disabled: false,
-                    text: "Oqim yaratish",
-                    textColor: "#fff",
-                    color: "#55BE61"
-                })
-        }, {
-            deep: true
-        })
-        const deleteStream = (stream_id) => {
+       const deleteStream = (stream_id) => {
             deleteAdminStream({ stream_id })
                 .then(() => {
                     toastStore.showToastAsAlert({
@@ -310,7 +308,8 @@ export default defineComponent({
             deleteStream,
             openDeleteStreamConfirmDialog,
             onConfirm,
-            streamsStore
+            streamsStore,
+            onShowMainButton
         }
     },
     components: {
@@ -318,7 +317,7 @@ export default defineComponent({
         ProfileSettingMenu,
         copyIcon,
         MarketCard,
-        CreatedStreamCard
+        CreatedStreamCard,
         
     }
 })
