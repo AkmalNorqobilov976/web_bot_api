@@ -157,7 +157,7 @@ import copyIcon from "@/assets/svgs/copyIcon.vue";
 import CreatedStreamCard from '@/components/streams/CreatedStreamCard.vue'
 import ProfileSettingMenu from '@/components/menu/ProfileSettingMenu.vue'
 import { useBackButton } from '@/composables/useBackButton';
-import { defineComponent, onBeforeMount, onMounted, onUnmounted, reactive, ref } from 'vue-demi';
+import { defineComponent, onBeforeMount, onMounted, onUnmounted, reactive, ref, watch } from 'vue-demi';
 import { useToastStore } from '@/store/useToastStore';
 import { deleteAdminStream, getAdminStream } from '@/api/advertiserApi';
 import { useRoute } from 'vue-router';
@@ -177,7 +177,7 @@ export default defineComponent({
         const streamForm = reactive({
             link: ""
         })
-        const streamInfo = ref({})
+        const streamInfo = ref(streamsStore.stream);
         const copyToClipboard = (e, text) => {
             navigator.clipboard.writeText(text).then(() => {
                 toastStore.$patch({
@@ -210,6 +210,16 @@ export default defineComponent({
             openDeleteStreamConfirmDialog.value = false;
         }
         
+        watch(streamInfo, () => {
+                tgSetParamsToMainButton({
+                    disabled: false,
+                    text: "Oqim yaratish",
+                    textColor: "#fff",
+                    color: "#55BE61"
+                })
+        }, {
+            deep: true
+        })
         const deleteStream = (stream_id) => {
             deleteAdminStream({ stream_id })
                 .then(() => {
