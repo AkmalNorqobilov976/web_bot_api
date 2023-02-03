@@ -22,6 +22,7 @@
 import { logoutUser } from "@/api/authApi";
 import { useToastStore } from "@/store/useToastStore";
 import { defineComponent, ref } from "vue-demi";
+import { useRouter } from "vue-router";
 
 export default defineComponent({
     props: {
@@ -34,6 +35,7 @@ export default defineComponent({
     },
     setup() {
         const isOpen = ref(false);
+        const router = useRouter();
         const logout = () => {
             logoutUser()
                 .then(() => {
@@ -43,6 +45,10 @@ export default defineComponent({
                         delayTime: 3000,
                         type: 'success'
                     })
+                    router.push('/login')
+                }).catch(() => {
+                    localStorage.removeItem('token')
+                    router.push('/login')
                 })
         }
         return {

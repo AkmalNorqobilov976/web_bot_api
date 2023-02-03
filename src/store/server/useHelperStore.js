@@ -13,6 +13,7 @@ export const useHelperStore = defineStore('helper', {
             return new Promise((resolve, reject) => {
                 adminLocations()
                     .then(response => {
+                        console.log(response);
                         this.regions = response.data.data;
                         resolve(true);
                     })
