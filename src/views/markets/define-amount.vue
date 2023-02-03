@@ -13,7 +13,14 @@
         <section class="donation-form">
             <p class="donation-form__title">Summani yozing</p>
             <form @submit.prevent class="donation-form__form">
-                <span class="donation-form__form--input" @input="inputForm($event, 'discount')" contenteditable>{{ streamsStore.$state.streamForm.discount }}</span>
+                <input 
+                    class="donation-form__form--input" 
+                    v-money3="numberFormatterConfig"
+                    v-model="streamsStore.$state.streamForm.discount"
+                    v-autowidth="{
+                        maxWidth: '260px',
+                    }"
+                />
                 <span> uzs</span>
             </form>
         </section>
@@ -36,6 +43,7 @@
 <script>
 import { useBackButton } from '@/composables/useBackButton'
 import { useTelegram } from '@/composables/useTelegram';
+import { useVMoney } from '@/composables/useVMoney';
 import { useStreamsStore } from '@/store/server/useStreamsStore';
 import { defineComponent, onMounted, onUnmounted, watch } from 'vue'
 import { useRoute } from 'vue-router';
@@ -44,6 +52,7 @@ export default defineComponent ({
         const streamsStore = useStreamsStore();
         const { tg, tgSetParamsToMainButton, showMainButton, hideMainButton } = useTelegram();
         const { backButton } = useBackButton()
+        const { numberFormatterConfig } = useVMoney();
         const route = useRoute();
         const inputForm = (e, key) => {
             streamsStore.$state.streamForm[key] = e.target.innerText
@@ -79,14 +88,14 @@ export default defineComponent ({
         watch(streamsStore, () => {
             setParams()
         })
-        const backBtn = backButton(`/streams/create-stream/${streamsStore.$state.streamForm.product_id}`)
+        backButton(`/streams/create-stream/${streamsStore.$state.streamForm.product_id}`)
         onUnmounted(() => {
             hideMainButton();
-            backBtn();
         })
         return {
             inputForm,
-            streamsStore
+            streamsStore,
+            numberFormatterConfig
         }
     },
 })

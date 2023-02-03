@@ -966,6 +966,11 @@
     "@babel/helper-validator-identifier" "^7.19.1"
     to-fast-properties "^2.0.0"
 
+"@braintree/browser-detection@^1.11.1":
+  version "1.14.0"
+  resolved "https://registry.yarnpkg.com/@braintree/browser-detection/-/browser-detection-1.14.0.tgz#d1b397b00ccbc7cac12f6cec27c0a413d740332a"
+  integrity sha512-OsqU+28RhNvSw8Y5JEiUHUrAyn4OpYazFkjSJe8ZVZfkAaRXQc6hsV38MMEpIlkPMig+A68buk/diY+0O8/dMQ==
+
 "@eslint/eslintrc@^0.4.3":
   version "0.4.3"
   resolved "https://registry.npmmirror.com/@eslint/eslintrc/-/eslintrc-0.4.3.tgz#9e42981ef035beb3dd49add17acb96e8ff6f394c"
@@ -2497,6 +2502,13 @@ cosmiconfig@^7.0.0:
     parse-json "^5.0.0"
     path-type "^4.0.0"
     yaml "^1.10.0"
+
+credit-card-input-mask@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/credit-card-input-mask/-/credit-card-input-mask-3.0.0.tgz#f002e13eee01b0365366b4eba950bbd354564951"
+  integrity sha512-lkXbGVkLy9Q/S8aw8f1i1VQNrJSKoLdVllrWPhb/do8gQtJkwG1vI6C5MIUtWlCYEZgiMXynVscV6qAdcZIsdA==
+  dependencies:
+    "@braintree/browser-detection" "^1.11.1"
 
 cross-spawn@^5.0.1:
   version "5.1.0"
@@ -6113,6 +6125,11 @@ uuid@^8.3.2:
   resolved "https://registry.npmmirror.com/uuid/-/uuid-8.3.2.tgz#80d5b5ced271bb9af6c445f21a1a04c606cefbe2"
   integrity sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==
 
+v-money3@^3.22.3:
+  version "3.22.3"
+  resolved "https://registry.yarnpkg.com/v-money3/-/v-money3-3.22.3.tgz#a0c16d142fbfb06d2df648d525403fbb37017d96"
+  integrity sha512-eLl+tg6iffrEBt55u6mIlzx+rvxJQLQYGaNTvwh9S4hzgz8oIhbTfNOsgHJjaoLD86zGuH+22YDELy4teddV5g==
+
 v8-compile-cache@^2.0.3:
   version "2.3.0"
   resolved "https://registry.npmmirror.com/v8-compile-cache/-/v8-compile-cache-2.3.0.tgz#2de19618c66dc247dcfb6f99338035d8245a2cee"
@@ -6154,6 +6171,11 @@ vue-hot-reload-api@^2.3.0:
   resolved "https://registry.npmmirror.com/vue-hot-reload-api/-/vue-hot-reload-api-2.3.4.tgz#532955cc1eb208a3d990b3a9f9a70574657e08f2"
   integrity sha512-BXq3jwIagosjgNVae6tkHzzIk6a8MHFtzAdwhnV5VlvPTFxDCvIttgSiHWjdGoTJvXtmRu5HacExfdarRcFhog==
 
+vue-input-autowidth@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/vue-input-autowidth/-/vue-input-autowidth-2.2.0.tgz#d3c42f17b3199e234cc575f5a80b40d1f970c514"
+  integrity sha512-yRngEzIdQb0GxY6+JNIvhDXX9RAuXlq+DwILZMUlK1SO/mGKKYd7Nq42AuUOZC/ZGkMHR400N8FbHVaWFNoYvw==
+
 vue-loader@^17.0.0:
   version "17.0.1"
   resolved "https://registry.npmmirror.com/vue-loader/-/vue-loader-17.0.1.tgz#c0ee8875e0610a0c2d13ba9b4d50a9c8442e7a3a"
@@ -6162,6 +6184,13 @@ vue-loader@^17.0.0:
     chalk "^4.1.0"
     hash-sum "^2.0.0"
     loader-utils "^2.0.0"
+
+vue-restricted-input@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/vue-restricted-input/-/vue-restricted-input-1.0.2.tgz#857e671ec11ca16922ca26f85e338ac4370bc401"
+  integrity sha512-KUfcI0qg2K7iIs8aYDJRYlIKwF8Cgt15v29N77Fpe8qYLT8XHm6uwFbaCYqIJ3rv+HrD6I3TOFfSVCCoSgHj2Q==
+  dependencies:
+    credit-card-input-mask "^3.0.0"
 
 vue-router@^4.0.13:
   version "4.0.13"

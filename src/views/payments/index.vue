@@ -32,23 +32,24 @@
             <form @submit.prevent class="payment-debit-card-form__form">
                 <label for="payment-debit-card-form__form--label">Karta raqami</label>
                 <input 
-                    pattern="[0-9]{4}"
-                    autocomplete="cc-number"
-                    :value="paymentForm.card_number" 
+                    v-model="paymentForm.card_number"
+                    v-mask="cardMask" 
                     placeholder="0000 1111 2222 3333" 
-                    @input="onCardInput($event)"
                 />
             </form>
         </section>
-        <!-- {{ withdrawsStore }} -->
         <section class="payment-form">
             <p class="payment-form__title">Summa</p>
             <form @submit.prevent class="payment-form__form">
                 
-                <span 
+                <input 
                     class="payment-form__form--input" 
-                    @input="inputForm($event, 'amount')" 
-                    contenteditable>{{paymentForm.amount}}</span>
+                    v-model="paymentForm.amount"
+                    v-money3="config"
+                    v-autowidth="{
+                        maxWidth: '260px',
+                    }"
+                />
                 <span> uzs</span>
             </form>
             <div class="payment-form__suggestions">
@@ -84,38 +85,6 @@
                 :key="i"
                 :cardData="withdraw"
             /> 
-            <!-- <payment-list-component 
-                icon="ri-checkbox-circle-fill"
-                iconColor="#23B60B"
-            />       
-            <payment-list-component 
-                icon="ri-spam-3-fill"
-                iconColor="#ED5974"
-            />       
-            <payment-list-component 
-                icon="ri-checkbox-circle-fill"
-                iconColor="#23B60B"
-            />       
-            <payment-list-component 
-                icon="ri-spam-3-fill"
-                iconColor="#ED5974"
-            />       
-            <payment-list-component 
-                icon="ri-checkbox-circle-fill"
-                iconColor="#23B60B"
-            />       
-            <payment-list-component 
-                icon="ri-spam-3-fill"
-                iconColor="#ED5974"
-            />       
-            <payment-list-component 
-                icon="ri-checkbox-circle-fill"
-                iconColor="#23B60B"
-            />       
-            <payment-list-component 
-                icon="ri-spam-3-fill"
-                iconColor="#ED5974"
-            />        -->
         </section>
     </div>
 </template>
@@ -126,14 +95,30 @@ import CustomConfirm from '@/components/CustomConfirm.vue'
 import { onMounted, onUnmounted, reactive, ref, watch, watchEffect } from 'vue'
 import { useBackButton } from '@/composables/useBackButton'
 import { useTelegram } from '@/composables/useTelegram'
-import { useCardNumberPatternMatch } from '@/composables/useCardNumberPatternMatch'
 import { useWithdrawsStore } from '@/store/server/useWithdrawsStore'
 import { postAdminWithdraw } from '@/api/advertiserApi'
 import { useToastStore } from '@/store/useToastStore'
 import { useAuthStore } from '@/store/authStore'
 export default {
+    data: () => ({
+        config: {
+          prefix: '',
+          suffix: '',
+          thousands: ',',
+          decimal: '.',
+          precision: 0,
+          disableNegative: false,
+          disabled: false,
+          min: null,
+          max: 10000000,
+          allowBlank: false,
+          minimumNumberOfCharacters: 0,
+        }
+    }),
     setup() {
         const showConfirm = ref(false);
+        const cardMask = ref('{{9999}} {{9999}} {{9999}} {{9999}}')
+        
         const paymentForm = reactive({
             card_number: "",
             amount: "100"
@@ -187,14 +172,7 @@ export default {
             hideMainButton();
         })
         
-        const onCardInput = (e) => {
-            e.target.value = useCardNumberPatternMatch({
-                input: e.target.value,
-                template: "xxxx xxxx xxxx xxxx",
-            });
-            paymentForm.card_number = e.target.value;
-        }
-
+    
         const onPostAdminWithdraw = () => {
             postAdminWithdraw({ 
                 card_number: paymentForm.card_number.split(' ').join(''), 
@@ -217,16 +195,14 @@ export default {
             showConfirm,
             inputForm,
             paymentForm,
-            onCardInput,
             authStore,
             withdrawsStore,
-            onPostAdminWithdraw
+            onPostAdminWithdraw,
+            cardMask
         }
 
         
     },
-    data: () => ({
-    }),
     components: {
         PaymentListComponent,
         CustomConfirm

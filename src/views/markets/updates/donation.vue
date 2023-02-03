@@ -9,17 +9,15 @@
                 </div>
             </article>
         </header>
-
         <section class="donation-form">
             <p class="donation-form__title">Summani yozing</p>
             <form @submit.prevent class="donation-form__form">
-                <span 
+                <input 
                     class="donation-form__form--input" 
-                    @input="inputForm($event, 'charity')" 
-                    contenteditable
-                >
-                    {{ streamsStore.$state.stream.charity }}
-                </span>
+                    v-model="streamsStore.$state.stream.charity"
+                    v-money3="numberFormatterConfig"
+                    v-autowidth
+                />
                 <span> uzs</span>
             </form>
             <div class="donation-form__suggestions">
@@ -46,6 +44,7 @@ import { useTelegram } from '@/composables/useTelegram';
 import { useStreamsStore } from '@/store/server/useStreamsStore';
 import { defineComponent, onMounted, onUnmounted, reactive, watch } from 'vue'
 import { useRoute } from 'vue-router';
+import { useVMoney } from '@/composables/useVMoney'
 export default defineComponent ({
     props: {
 
@@ -55,7 +54,8 @@ export default defineComponent ({
         const { tg, showMainButton, hideMainButton, tgSetParamsToMainButton } = useTelegram()
         const { backButton } = useBackButton()
         const route = useRoute();
-        const backBtn = backButton(`/streams/create-stream/${streamsStore.$state.streamForm.product_id}`)
+        const { numberFormatterConfig } = useVMoney();
+        backButton(`/streams/create-stream/${streamsStore.$state.streamForm.product_id}`)
          const setParams = () => {
             if(streamsStore.streamForm.name) {
                 tgSetParamsToMainButton({
@@ -76,7 +76,6 @@ export default defineComponent ({
 
         onMounted(() => {
             showMainButton();
-            backBtn()
             streamsStore.$patch({
                 streamForm: {
                     product_id: route.params.id
@@ -96,7 +95,8 @@ export default defineComponent ({
         })
         return {
             inputForm,
-            streamsStore
+            streamsStore,
+            numberFormatterConfig
         }
     },
 })

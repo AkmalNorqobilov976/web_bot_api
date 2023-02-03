@@ -13,13 +13,12 @@
         <section class="donation-form">
             <p class="donation-form__title">Summani yozing</p>
             <form @submit.prevent class="donation-form__form">
-                <span 
+                <input 
                     class="donation-form__form--input" 
-                    @input="inputForm($event, 'discount')" 
-                    contenteditable
-                >
-                    {{ streamsStore.$state.stream.discount }}
-                </span>
+                    v-model="streamsStore.$state.stream.discount"
+                    v-money3="numberFormatterConfig"
+                    v-autowidth
+                />
                 <span> uzs</span>
             </form>
         </section>
@@ -42,6 +41,7 @@
 <script>
 import { useBackButton } from '@/composables/useBackButton'
 import { useTelegram } from '@/composables/useTelegram';
+import { useVMoney } from '@/composables/useVMoney';
 import { useStreamsStore } from '@/store/server/useStreamsStore';
 import { defineComponent, onMounted, onUnmounted, watch } from 'vue'
 import { useRoute } from 'vue-router';
@@ -50,6 +50,7 @@ export default defineComponent ({
         const streamsStore = useStreamsStore();
         const { tg, tgSetParamsToMainButton, showMainButton, hideMainButton } = useTelegram();
         const { backButton } = useBackButton()
+        const { numberFormatterConfig } = useVMoney()
         const route = useRoute();
         const inputForm = (e, key) => {
             streamsStore.$state.stream[key] = e.target.innerText
@@ -92,7 +93,8 @@ export default defineComponent ({
         })
         return {
             inputForm,
-            streamsStore
+            streamsStore,
+            numberFormatterConfig
         }
     },
 })

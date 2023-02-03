@@ -13,7 +13,12 @@
         <section class="donation-form">
             <p class="donation-form__title">Summa</p>
             <form @submit.prevent class="donation-form__form">
-                <span class="donation-form__form--input" @input="inputForm($event, 'sum')" contenteditable>{{donationForm.sum}}</span>
+                <input 
+                    class="donation-form__form--input"
+                    v-model="donationForm.sum"
+                    v-autowith
+                    v-money3="numberFormatterConfig"
+                />
                 <span> uzs</span>
             </form>
         </section>
@@ -25,6 +30,7 @@
 </template>
 <script>
 import { useBackButton } from '@/composables/useBackButton'
+import { useVMoney } from '@/composables/useVMoney';
 import { useStreamsStore } from '@/store/server/useStreamsStore'
 import { defineComponent, reactive } from 'vue'
 export default defineComponent ({
@@ -37,6 +43,7 @@ export default defineComponent ({
             sum: "1000,000"
         })
         const { backButton } = useBackButton()
+        const { numberFormatterConfig } = useVMoney()
         backButton()
 
         const inputForm = (e, key) => {
@@ -45,7 +52,8 @@ export default defineComponent ({
         return {
             donationForm,
             inputForm,
-            streamsStore
+            streamsStore,
+            numberFormatterConfig
         }
     },
 })

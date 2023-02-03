@@ -13,14 +13,15 @@
         <section class="donation-form">
             <p class="donation-form__title">Summani yozing</p>
             <form @submit.prevent class="donation-form__form">
-                <span 
+                <input 
                     class="donation-form__form--input" 
-                    @input="inputForm($event, 'charity')" 
-                    contenteditable
-                >
-                    {{ streamsStore.$state.streamForm.charity }}
-                </span>
-                <span> uzs</span>
+                    v-model="streamsStore.$state.streamForm.charity"
+                    v-autowidth="{
+                        maxWidth: '260px',
+                    }"
+                    v-money3="numberFormatterConfig"
+                />
+                <span>uzs</span>
             </form>
             <div class="donation-form__suggestions">
                 <span @click="streamsStore.$state.streamForm.charity = 100" class="donation-form__suggestions-item">
@@ -43,6 +44,7 @@
 <script>
 import { useBackButton } from '@/composables/useBackButton'
 import { useTelegram } from '@/composables/useTelegram';
+import { useVMoney } from '@/composables/useVMoney';
 import { useStreamsStore } from '@/store/server/useStreamsStore';
 import { defineComponent, onMounted, onUnmounted, reactive, watch } from 'vue'
 import { useRoute } from 'vue-router';
@@ -52,10 +54,11 @@ export default defineComponent ({
     },
     setup() {
         const streamsStore = useStreamsStore();
+        const { numberFormatterConfig } = useVMoney();
         const { tg, showMainButton, hideMainButton, tgSetParamsToMainButton } = useTelegram()
         const { backButton } = useBackButton()
         const route = useRoute();
-        const backBtn = backButton(`/streams/create-stream/${streamsStore.$state.streamForm.product_id}`)
+        backButton(`/streams/create-stream/${streamsStore.$state.streamForm.product_id}`)
          const setParams = () => {
             if(streamsStore.streamForm.name) {
                 tgSetParamsToMainButton({
@@ -76,7 +79,6 @@ export default defineComponent ({
 
         onMounted(() => {
             showMainButton();
-            backBtn()
             streamsStore.$patch({
                 streamForm: {
                     product_id: route.params.id
@@ -96,7 +98,8 @@ export default defineComponent ({
         })
         return {
             inputForm,
-            streamsStore
+            streamsStore,
+            numberFormatterConfig
         }
     },
 })

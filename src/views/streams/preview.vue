@@ -52,7 +52,7 @@
         <main class="addition-stream-info__main">
             <div class="addition-stream-info__main--list" @click="$router.push({name: 'donation-update', params: { id: $route.params.id }})">
                 <div>
-                    {{ streamsStore.$state.stream.charity }} so‘m
+                    {{ $filter.numberFormat(streamsStore.$state.stream.charity) }} so‘m
                     <p>
                         Xayriyaga pul ajratish
                     </p>
@@ -64,7 +64,7 @@
                 @click="$router.push({name: 'define-amount-update', params: {id: $route.params.id}})"
             >
                 <div>
-                   {{ streamsStore.$state.stream.discount }} so‘m
+                   {{ $filter.numberFormat(streamsStore.$state.stream.discount) }} so‘m
                     <p>
                         Chegirma qo‘yilgan
                     </p>
