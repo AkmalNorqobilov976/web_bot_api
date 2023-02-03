@@ -91,9 +91,6 @@ export default defineComponent ({
                 }
             })
         })
-        watch(streamsStore, () => {
-            setParams()
-        })
         backButton(`/streams/create-stream/${streamsStore.$state.streamForm.product_id}`)
         onUnmounted(() => {
             hideMainButton();
