@@ -211,6 +211,7 @@ export default defineComponent({
         }
         
         watch(streamInfo, () => {
+            console.log("well");
                 tgSetParamsToMainButton({
                     disabled: false,
                     text: "Oqim yaratish",
