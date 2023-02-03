@@ -225,6 +225,10 @@ export default defineComponent({
                     })
                 })
         }
+
+        const updateStream = () => {
+            
+        }
         const getStream = () => {
             getAdminStream({ id: route.params.id })
                 .then(response => {

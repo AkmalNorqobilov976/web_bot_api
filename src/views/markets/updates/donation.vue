@@ -45,6 +45,7 @@ import { useStreamsStore } from '@/store/server/useStreamsStore';
 import { defineComponent, onMounted, onUnmounted, reactive, watch } from 'vue'
 import { useRoute } from 'vue-router';
 import { useVMoney } from '@/composables/useVMoney'
+import { useToastStore } from '@/store/useToastStore';
 export default defineComponent ({
     props: {
 
@@ -54,43 +55,47 @@ export default defineComponent ({
         const { tg, showMainButton, hideMainButton, tgSetParamsToMainButton } = useTelegram()
         const { backButton } = useBackButton()
         const route = useRoute();
+        const toastStore = useToastStore();
         const { numberFormatterConfig } = useVMoney();
         backButton(`/streams/create-stream/${streamsStore.$state.streamForm.product_id}`)
-         const setParams = () => {
-            if(streamsStore.streamForm.name) {
-                tgSetParamsToMainButton({
-                    disabled: false,
-                    text: "Oqim yaratish",
-                    textColor: "#fff",
-                    color: "#55BE61"
+       tgSetParamsToMainButton({
+            disabled: false,
+            text: "Oqim yaratish",
+            textColor: "#fff",
+            color: "#55BE61"
+        })
+        const updateStream = () => {
+            streamsStore.updateStream(streamsStore.stream)
+                .then(() => {
+                    toastStore.showToastAsAlert({
+                        message: "Yangilandi!",
+                        type: "success",
+                        delayTime: 3000
+                    })
                 })
-            } else {
-                tgSetParamsToMainButton({
-                    disabled: true,
-                    text: "Oqim yaratish",
-                    textColor: "#8C8C8C",
-                    color: "#E4E6E4"
+                .catch(error => {
+                    toastStore.showToastAsAlert({
+                        message: error.response.data.message,
+                        type: 'error',
+                        delayTime: 3000
+                    })
                 })
-            }
         }
-
         onMounted(() => {
+            tg.onEvent('mainButtonClicked', updateStream)
             showMainButton();
             streamsStore.$patch({
                 streamForm: {
                     product_id: route.params.id
                 }
             })
-            setParams()
-            // categoriesStore.$state.
         })
-        watch(streamsStore, () => {
-            setParams()
-        })
+      
         const inputForm = (e, key) => {
             streamsStore.$state.stream[key] = e.target.innerText
         }
         onUnmounted(() => {
+            tg.offEvent('mainButtonClicked', updateStream)
             hideMainButton();
         })
         return {

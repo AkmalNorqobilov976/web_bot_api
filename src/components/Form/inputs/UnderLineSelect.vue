@@ -2,6 +2,7 @@
     <div class="under-line-input position-relative" ref="clickOutsideOfInput">
         <label class="under-line-input--label" for="">{{ label }}</label>
         <div>
+            <!-- {{options}} -->
            <div class="position-relative">
                 <input 
                     class="under-line-input--field" 
@@ -39,7 +40,7 @@
 </template>
 
 <script>
-    import { ref, defineComponent,  toRaw } from "vue";
+    import { ref, defineComponent,  toRaw, onMounted, computed, watch } from "vue";
 
     export default defineComponent({
         emits: ['update:modelValue'],
@@ -70,6 +71,13 @@
                 isToggle.value = false;
             }
 
+            watch(() => props.options, (newValue) => {
+                console.log(newValue , "new Value");
+                // let val = searchById();
+                // inputValue.value = val[props.text];
+            }, {
+                immediate: true
+            })
             const onSearchOptions = (text) => {
                 if(!text) {
                     searchOptions.value = props.options;
@@ -85,6 +93,26 @@
 
                 }
             }
+
+            const searchById = () => {
+                return props.options.find(option => option.id == props.modelValue)
+            } 
+            onMounted(() => {
+                console.log(rawOptions, "rawOptions");
+                let value = searchById();
+                console.log(value);
+                inputValue.value = value?.[props.text]
+                console.log(inputValue.value);
+            })
+
+            const resultValue = computed({
+                get() {
+                    return inputValue
+                },
+                set(val) {
+                    inputValue.value = val;
+                }
+            })
             return {
                 isToggle,
                 search,
@@ -92,7 +120,8 @@
                 searchOptions,
                 onSearchOptions,
                 inputValue,
-                onClickOutsideOfSelect
+                onClickOutsideOfSelect,
+                resultValue
             }
         }
     })

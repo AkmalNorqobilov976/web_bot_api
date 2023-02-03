@@ -65,6 +65,15 @@ export function getAdminStream({ id }) {
     });
 }
 
+
+export function updateAdminStream(data) {
+    return request({
+        url: `${URI}/streams/${data.id}`,
+        method: 'put',
+        data: data
+    })
+}
+
 export function deleteAdminStream({ stream_id }) {
     return request({
         url: `${URI}/streams/${stream_id}`,

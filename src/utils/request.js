@@ -5,6 +5,7 @@ import { getToken } from "./localStorage";
 const token = getToken()
 
 const service = axios.create({
+    // baseURL: 'http://192.168.1.21:8083/api/'
     baseURL: "https://larashop.yuzka.uz/api/"
     // baseURL: `https://api.telegram.org/${BOT_TOKEN}/sendMessage`
 });

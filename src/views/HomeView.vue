@@ -84,11 +84,15 @@ import { useTelegram } from '@/composables/useTelegram'
 import { onMounted, watchEffect } from '@vue/runtime-core';
 import { useAuthStore } from '@/store/authStore';
 import { useLastRoute } from '@/composables/useLastRoute'
+import { useHelperStore } from '@/store/server/useHelperStore';
+import { useToastStore } from '@/store/useToastStore';
 export default {
     setup() {
         const { tg } = useTelegram();
         const authStore = useAuthStore();
         const { setLastRoute } = useLastRoute();
+        const helperStore = useHelperStore();
+        const toastStore = useToastStore();
         setLastRoute();
         onMounted(() => {
             tg.BackButton.hide();
@@ -103,6 +107,15 @@ export default {
             tg.onEvent('invoiceClosed', () => {
                 alert("hi")
             })
+                helperStore.getRegions()
+                .catch(error => {
+                    toastStore.showToastAsAlert({
+                        message: error.response.data.message,
+                        delayTime: 3000,
+                        type: 'error'
+                    })
+                })
+
             authStore.getUserInfo()
         })
 

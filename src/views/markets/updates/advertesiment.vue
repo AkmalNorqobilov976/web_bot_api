@@ -30,28 +30,55 @@
 </template>
 <script>
 import { useBackButton } from '@/composables/useBackButton'
+import { useTelegram } from '@/composables/useTelegram';
 import { useVMoney } from '@/composables/useVMoney';
 import { useStreamsStore } from '@/store/server/useStreamsStore'
-import { defineComponent, reactive } from 'vue'
+import { useToastStore } from '@/store/useToastStore';
+import { defineComponent, onMounted, onUnmounted, reactive } from 'vue'
 export default defineComponent ({
     props: {
 
     },
     setup() {
         const streamsStore = useStreamsStore();
+        const { tg, showMainButton, hideMainButton } = useTelegram();
         const donationForm = reactive({
             sum: "1000,000"
         })
         const { backButton } = useBackButton()
         const { numberFormatterConfig } = useVMoney()
+        const toastStore = useToastStore();
         backButton()
 
-        const inputForm = (e, key) => {
-            donationForm[key] = e.target.innerText
+        const updateStream = () => {
+            streamsStore.updateStream(streamsStore.stream)
+                .then(() => {
+                    toastStore.showToastAsAlert({
+                        message: "Yangilandi!",
+                        type: "success",
+                        delayTime: 3000
+                    })
+                })
+                .catch(error => {
+                    toastStore.showToastAsAlert({
+                        message: error.response.data.message,
+                        type: 'error',
+                        delayTime: 3000
+                    })
+                })
         }
+
+        onMounted(() => {
+            showMainButton();
+            tg.onEvent('mainButtonClicked', updateStream)
+        })
+
+        onUnmounted(() => {
+            tg.offEvent('mainButtonClicked', updateStream)
+            hideMainButton();
+        })
         return {
             donationForm,
-            inputForm,
             streamsStore,
             numberFormatterConfig
         }

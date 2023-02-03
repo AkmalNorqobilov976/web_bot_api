@@ -1,10 +1,5 @@
 <template>
     <main class="my-profile">
-        {{helperStore.$state.regions[0]}}
-        {{helperStore.$state.districts[0]}}
-         {{ authStore }}
-         <!-- <br> -->
-         <!-- {{ helperStore }} -->
         <header class="my-profile__header">
             <div class="my-profile__header--setting">
                 <profile-setting-menu :left="'3rem'"/>
@@ -17,7 +12,8 @@
                     accept="image/png, image/jpeg" 
                     style="display: none;"
                 />
-                <img v-if="userInfo.avatar" class=""   :src="userInfo.avatar" alt="">
+                <img v-if="profilePicture" class=""   :src="profilePicture" alt="">
+                <img v-else-if="userInfo.avatar" class=""   :src="userInfo.avatar" alt="">
                 <i v-else class="ri-user-6-fill"></i>
                 <!-- <i class="ri-camera-fill my-profile__header--photo--image-uploader"></i> -->
             </div>
@@ -30,13 +26,13 @@
                     <span>
                         <i class="ri-link-m"></i>
                     </span>
-                    329
+                    {{ authStore.userInfo.coins }}
                 </div>
             </div>
             <div class="my-profile__btn-grp--btn">
                 <div class="my-profile__btn-grp--btn--2">
                     <i class="ri-file-list-fill"></i>
-                    77709
+                    {{ authStore.userInfo.id }}
                 </div>
             </div>
         </div>
@@ -72,7 +68,7 @@
                         <under-line-select 
                             v-if="helperStore.$state.regions.length"
                             label="Viloyat/shahar" 
-                             :options="helperStore.$state.regions"
+                             :options="computedRegions"
                             :text="'name'"
                             :value="'id'"
                             placeholder="Kiritilmagan"
@@ -81,7 +77,7 @@
                     </div>
                     <div class="my-profile__form--field">
                             <under-line-select 
-                                v-if="helperStore.$state.districts.length"
+                                v-if="getDistricts(userInfo.region_id)"
                                 label="Tuman" 
                                 :options="getDistricts(userInfo.region_id)"
                                 :text="'name'"
@@ -105,7 +101,7 @@
 
 
 <script>
-import { defineComponent, ref, watchEffect, onUnmounted, watch, onMounted } from 'vue'
+import { defineComponent, ref, watchEffect, onUnmounted, watch, onMounted, computed, onBeforeMount } from 'vue'
 import UnderLineInput from '@/components/Form/inputs/UnderLineInput.vue'
 import InfoCard from '@/components/cards/InfoCard.vue'
 import { useTelegram } from '@/composables/useTelegram'
@@ -131,7 +127,7 @@ export default defineComponent({
         const helperStore = useHelperStore();
         const toastStore = useToastStore();
         const authStore = useAuthStore();
-
+        const profilePicture =ref("");
         const userInfo = ref({
             name: "hammaga salom",
             surname: "Ganiyev",
@@ -142,14 +138,22 @@ export default defineComponent({
             avatar: null
         })
 
+        const computedRegions = computed({
+            get() {
+                return helperStore.$state.regions
+            },
+            set(val) {
+            
+            }
+        })
         const onPhotoChange = (e) => {
             if(e.target.files[0]) {
-                userInfo.value.avatar = URL.createObjectURL(e.target.files[0])
+                userInfo.value.avatar = e.target.files[0]
+                profilePicture.value = URL.createObjectURL(e.target.files[0])
             }
         }
 
         const updateProfile = () => {
-            console.log(userInfo);
             updateMyProfile(userInfo.value)
                 .then(() => {
                     toastStore.showToastAsAlert({
@@ -169,19 +173,8 @@ export default defineComponent({
         const { tg, showMainButton, hideMainButton } = useTelegram()
         const { backButton } = useBackButton()
         backButton();
-        onMounted(() => {
-            tg.onEvent('mainButtonClicked', updateProfile);
-            showMainButton();
+        onBeforeMount(() => {
             helperStore.getRegions()
-                .catch(error => {
-                    toastStore.showToastAsAlert({
-                        message: error.response.data.message,
-                        delayTime: 3000,
-                        type: 'error'
-                    })
-                })
-
-             helperStore.getDistricts()
                 .catch(error => {
                     toastStore.showToastAsAlert({
                         message: error.response.data.message,
@@ -201,9 +194,12 @@ export default defineComponent({
 
             adminProfile()
                 .then(response => {
-                    console.log(response);
                     userInfo.value = response.data.data;
                 })
+        })
+        onMounted(() => {
+            tg.onEvent('mainButtonClicked', updateProfile);
+            showMainButton();
 
         })
 
@@ -229,7 +225,7 @@ export default defineComponent({
 
         onUnmounted(() => {
             tg.MainButton.hide();
-            watchEffective.stop()
+            watchEffective()
         })
 
         defineComponent({
@@ -256,7 +252,9 @@ export default defineComponent({
             helperStore,
             authStore,
             getDistricts,
-            updateProfile
+            updateProfile,
+            computedRegions,
+            profilePicture
         }
     },
 })

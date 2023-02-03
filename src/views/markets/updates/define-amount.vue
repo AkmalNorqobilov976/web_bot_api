@@ -43,6 +43,7 @@ import { useBackButton } from '@/composables/useBackButton'
 import { useTelegram } from '@/composables/useTelegram';
 import { useVMoney } from '@/composables/useVMoney';
 import { useStreamsStore } from '@/store/server/useStreamsStore';
+import { useToastStore } from '@/store/useToastStore';
 import { defineComponent, onMounted, onUnmounted, watch } from 'vue'
 import { useRoute } from 'vue-router';
 export default defineComponent ({
@@ -50,46 +51,53 @@ export default defineComponent ({
         const streamsStore = useStreamsStore();
         const { tg, tgSetParamsToMainButton, showMainButton, hideMainButton } = useTelegram();
         const { backButton } = useBackButton()
+        const toastStore = useToastStore()
         const { numberFormatterConfig } = useVMoney()
         const route = useRoute();
         const inputForm = (e, key) => {
             streamsStore.$state.stream[key] = e.target.innerText
         }
-          const setParams = () => {
-            if(streamsStore.streamForm.name) {
-                tgSetParamsToMainButton({
-                    disabled: false,
-                    text: "Oqim yaratish",
-                    textColor: "#fff",
-                    color: "#55BE61"
-                })
-            } else {
-                tgSetParamsToMainButton({
-                    disabled: true,
-                    text: "Oqim yaratish",
-                    textColor: "#8C8C8C",
-                    color: "#E4E6E4"
-                })
-            }
-        }
 
+        tgSetParamsToMainButton({
+            disabled: false,
+            text: "Oqim yaratish",
+            textColor: "#fff",
+            color: "#55BE61"
+        })
+
+        const updateStream = () => {
+            streamsStore.updateStream(streamsStore.stream)
+                .then(() => {
+                    toastStore.showToastAsAlert({
+                        message: "Yangilandi!",
+                        type: "success",
+                        delayTime: 3000
+                    })
+                })
+                .catch(error => {
+                    toastStore.showToastAsAlert({
+                        message: error.response.data.message,
+                        type: 'error',
+                        delayTime: 3000
+                    })
+                })
+        }
         onMounted(() => {
             showMainButton();
+            tg.onEvent('mainButtonClicked', updateStream)
             streamsStore.$patch({
                 streamForm: {
                     product_id: route.params.id
                 }
             })
-            setParams()
-            // categoriesStore.$state.
         })
         watch(streamsStore, () => {
             setParams()
         })
-        const backBtn = backButton(`/streams/create-stream/${streamsStore.$state.streamForm.product_id}`)
+        backButton(`/streams/create-stream/${streamsStore.$state.streamForm.product_id}`)
         onUnmounted(() => {
             hideMainButton();
-            backBtn();
+            tg.offEvent('mainButtonClicked', updateStream)
         })
         return {
             inputForm,

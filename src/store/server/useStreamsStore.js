@@ -1,4 +1,4 @@
-import { adminStreams } from "@/api/advertiserApi";
+import { adminStreams, updateAdminStream } from "@/api/advertiserApi";
 import { defineStore } from "pinia";
 
 
@@ -24,6 +24,17 @@ export const useStreamsStore = defineStore('streams', {
                 .catch(error => {
                     reject(error);
                 })
+            })
+        },
+        updateStream(data) {
+            return new Promise((resolve, reject) => {
+                updateAdminStream(data)
+                    .then(() => {
+                        resolve(true)
+                    })
+                    .catch(error => {
+                        reject(error)
+                    })
             })
         }
     }
