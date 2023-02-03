@@ -40,3 +40,10 @@ export function updateMyProfile(data) {
         data: form
     })
 }
+
+export function logoutUser() {
+    return request({
+        url: 'profile/invalidate-token',
+        method: 'post'
+    })
+}

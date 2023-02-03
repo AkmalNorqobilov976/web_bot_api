@@ -8,7 +8,7 @@
         <transition name="fade">
             <div v-if="isOpen" class="profile-setting-menu__lists">
                 <slot name="lists">
-                    <div class="profile-setting-menu__lists--item">
+                    <div @click="logout" class="profile-setting-menu__lists--item">
                         <i class="ri-logout-box-r-line"></i>
                         <p>Hisobdan chiqish</p>
                     </div>
@@ -19,6 +19,8 @@
 </template>
 
 <script>
+import { logoutUser } from "@/api/authApi";
+import { useToastStore } from "@/store/useToastStore";
 import { defineComponent, ref } from "vue-demi";
 
 export default defineComponent({
@@ -32,8 +34,19 @@ export default defineComponent({
     },
     setup() {
         const isOpen = ref(false);
-
+        const logout = () => {
+            logoutUser()
+                .then(() => {
+                    localStorage.removeItem('token')
+                    useToastStore().showToastAsAlert({
+                        message: "Hisobdan chiqdingiz!!!",
+                        delayTime: 3000,
+                        type: 'success'
+                    })
+                })
+        }
         return {
+            logout,
             isOpen
         }
 
