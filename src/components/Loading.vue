@@ -1,17 +1,8 @@
 <template>
     <teleport to="body">
         <div class="center">
-        <div class="wave"></div>
-        <div class="wave"></div>
-        <div class="wave"></div>
-        <div class="wave"></div>
-        <div class="wave"></div>
-        <div class="wave"></div>
-        <div class="wave"></div>
-        <div class="wave"></div>
-        <div class="wave"></div>
-        <div class="wave"></div>
-    </div>
+            <Vue3Lottie :animationData="require('@/assets/images/loading.json')" :height="200" :width="200" />
+        </div>
     </teleport>
 </template>
 
@@ -26,7 +17,7 @@
     bottom: 0;
     justify-content: center;
     align-items: center;
-    background: #000;
+    background: #fff;
     }
     .wave {
     width: 5px;

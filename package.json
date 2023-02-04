@@ -20,6 +20,7 @@
     "vue-input-autowidth": "^2.2.0",
     "vue-restricted-input": "^1.0.2",
     "vue-router": "^4.0.13",
+    "vue3-lottie": "^2.4.0",
     "vue3-touch-events": "^4.1.0"
   },
   "devDependencies": {
