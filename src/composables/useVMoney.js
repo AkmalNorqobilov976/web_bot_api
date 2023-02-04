@@ -3,6 +3,7 @@ export const useVMoney = () => {
     const numberFormatterConfig = ref({
         prefix: '',
         suffix: '',
+        masked: false,
         thousands: ',',
         decimal: '.',
         precision: 0,

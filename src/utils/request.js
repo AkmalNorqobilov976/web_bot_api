@@ -23,7 +23,6 @@ service.interceptors.request.use( request => {
 
 
 service.interceptors.response.use(response => {
-    
     return response
 }, error => {
     const messageNotFoundStore = useMessageNotFoundStore();

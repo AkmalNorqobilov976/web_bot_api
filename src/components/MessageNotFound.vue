@@ -1,5 +1,5 @@
 <template>
-    <div v-if="messageNotFoundStore.$state.isError" class="message-not-found">
+    <div class="message-not-found">
         <video class="message-not-found__video" autoplay loop muted>
             <source :src="require('@/assets/images/nothing.webm')" type="video/webm" />
         </video>
