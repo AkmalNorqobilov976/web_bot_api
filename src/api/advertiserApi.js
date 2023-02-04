@@ -1,5 +1,8 @@
+import { useNumberFormatter } from "@/composables/useNumberFormatter";
 import { queryMaker } from "@/utils/former";
 import { request } from "@/utils/request";
+
+const { numberReformatter } = useNumberFormatter();
 
 const URI = 'advertiser'
 export function adminOrders({status}) {
@@ -67,10 +70,12 @@ export function getAdminStream({ id }) {
 
 
 export function updateAdminStream(data) {
+    data.charity = numberReformatter(data?.charity);
+    data.discount = numberReformatter(data?.discount);
     return request({
         url: `${URI}/streams/${data.id}`,
         method: 'put',
-        data: data
+        data
     })
 }
 
@@ -82,6 +87,8 @@ export function deleteAdminStream({ stream_id }) {
 }
 
 export function postAdminStream(data) {
+    data.charity = numberReformatter(data?.charity);
+    data.discount = numberReformatter(data?.discount);
     return request({
         url: `${URI}/streams`,
         method: 'post',
@@ -104,6 +111,7 @@ export function adminTransactions() {
 }
 
 export function postAdminWithdraw({ card_number, amount }) {
+    amount = numberReformatter(amount);
     return request({
         url: `${URI}/withdraw`,
         method: "post",

@@ -15,11 +15,16 @@
 
 <script>
 import { useMessageNotFoundStore } from "@/store/useMessageNotFoundStore";
-import { defineComponent } from "vue-demi";
+import { defineComponent, onUnmounted } from "vue-demi";
 
 export default defineComponent({
     setup() {
         const messageNotFoundStore = useMessageNotFoundStore();
+        onUnmounted(() => {
+            messageNotFoundStore.$patch({
+                isError: false
+            })
+        })
         return {
             messageNotFoundStore
         }
