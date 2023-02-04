@@ -46,10 +46,11 @@
                     class="payment-form__form--input" 
                     v-model="paymentForm.amount"
                     v-money3="config"
-                    v-autowidth="{
-                        maxWidth: '260px',
-                    }"
+                    v-resizable
                 />
+                    <!-- v-autowidth="{
+                        maxWidth: '260px',
+                    }" -->
                 <span> uzs</span>
             </form>
             <div class="payment-form__suggestions">

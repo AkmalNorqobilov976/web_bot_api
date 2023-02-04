@@ -1,5 +1,4 @@
 <template>
-    <message-not-found v-if="!promoCodesStore.$state.promoCodes.length || messageNotFoundStore.$state.isError"/>
     <div class="customers">
         <article 
             v-for="(item, i) in promoCodesStore.$state.promoCodes" 
@@ -44,10 +43,7 @@ import { useTelegram } from '@/composables/useTelegram';
 import { useRouter } from 'vue-router';
 import { usePromoCodesStore } from '@/store/server/usePromoCodesStore';
 import { useToastStore } from '@/store/useToastStore';
-import MessageNotFound from '@/components/MessageNotFound.vue';
-import { useMessageNotFoundStore } from '@/store/useMessageNotFoundStore';
 export default {
-  components: { MessageNotFound },
     setup() {
         const router = useRouter()
         const navbarButtons = {
@@ -64,7 +60,6 @@ export default {
                 text: "Yoqilgan" //delivered
             },
         };
-        const messageNotFoundStore = useMessageNotFoundStore();
         const { tg, tgSetParamsToMainButton,  hideMainButton, showMainButton } = useTelegram()
         const { backButton } = useBackButton()
         const toastStore = useToastStore();
@@ -106,8 +101,7 @@ export default {
         })
         return {
             navbarButtons,
-            promoCodesStore,
-            messageNotFoundStore
+            promoCodesStore
         }
     },
 }

@@ -34,6 +34,12 @@ app.config.globalProperties.$filter = {
 app.directive('mask', VueRestrictedInputDirective);
 app.directive('money3', Money3Directive);
 app.directive('autowidth', VueInputAutowidthDirective);
-
+app.directive('resizable', (el, binding)=> {
+    var int = 16;
+    function resize() {el.style.width = ((el.value.length+1) * int) + 'px'}
+    var e = 'keyup,keypress,focus,blur,change'.split(',');
+    for (var i in e) el.addEventListener(e[i],resize,false);
+    resize();
+})
 app.use(Vue3TouchEvents)
 app.use(router).mount('#app')

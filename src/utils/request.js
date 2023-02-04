@@ -6,7 +6,8 @@ const token = getToken()
 
 const service = axios.create({
     // baseURL: 'http://192.168.1.21:8083/api/'
-    baseURL: "https://larashop.yuzka.uz/api/"
+    baseURL: "https://larashop.yuzka.uz/api/",
+    timeout: 5000
     // baseURL: `https://api.telegram.org/${BOT_TOKEN}/sendMessage`
 });
 // 192.168.1.83 larashop
@@ -15,6 +16,7 @@ const service = axios.create({
 service.interceptors.request.use( request => {
     const messageNotFoundStore = useMessageNotFoundStore();
     messageNotFoundStore.setIsError(false);
+    messageNotFoundStore.setIsLoading(true);
     request.headers['Authorization'] = `Bearer ${localStorage.getItem('token')}`;
     request.headers['Accept'] = 'application/json';
     
@@ -23,10 +25,13 @@ service.interceptors.request.use( request => {
 
 
 service.interceptors.response.use(response => {
+    const messageNotFoundStore = useMessageNotFoundStore();
+    messageNotFoundStore.setIsLoading(false);
     return response
 }, error => {
     const messageNotFoundStore = useMessageNotFoundStore();
     messageNotFoundStore.setIsError(false);
+    messageNotFoundStore.setIsLoading(false);
     console.log('err' + error) // for debug
     return Promise.reject(error)
 })

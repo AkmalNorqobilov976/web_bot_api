@@ -8,7 +8,6 @@
                 />
             </div>
         </form>
-        <message-not-found v-if="!transactionsStore.$state.transactions.length || messageNotFoundStore.$state.isError"/>
         <info-card 
            
             class="balance-history__info-card" 
@@ -51,15 +50,12 @@ import { useToastStore } from '@/store/useToastStore'
 import { useWithdrawsStore } from '@/store/server/useWithdrawsStore'
 import { useBackButton } from '@/composables/useBackButton'
 import { useTransactionsStore } from '@/store/server/useTransactionsStore'
-import MessageNotFound from '@/components/MessageNotFound.vue'
-import { useMessageNotFoundStore } from '@/store/useMessageNotFoundStore'
 export default defineComponent({
     setup() {
         const toastStore = useToastStore();
         const withdrawsStore = useWithdrawsStore()
         const transactionsStore = useTransactionsStore();
         const { backButton } = useBackButton();
-        const messageNotFoundStore = useMessageNotFoundStore();
 
         backButton('/')
         const getWithDraws = () => {
@@ -78,8 +74,7 @@ export default defineComponent({
         })
 
         return {
-            transactionsStore,
-            messageNotFoundStore
+            transactionsStore
         }
     },
      data: () => ({
@@ -107,8 +102,7 @@ export default defineComponent({
         InfoCard,
         BalanceHistoryListComponent,
         // BarChart,
-        BarChartExample,
-        MessageNotFound
+        BarChartExample
     }
 })
 </script>

@@ -17,9 +17,7 @@
                     class="donation-form__form--input" 
                     v-money3="numberFormatterConfig"
                     v-model="streamsStore.$state.streamForm.discount"
-                    v-autowidth="{
-                        maxWidth: '260px',
-                    }"
+                    v-resizable
                 />
                 <span> uzs</span>
             </form>

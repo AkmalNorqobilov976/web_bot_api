@@ -1,6 +1,5 @@
 <template>
     <main class="streams">
-        <message-not-found v-if="!streamsStore.$state.streams.length || messageNotFoundStore.$state.isError"/>
         <article 
             v-for="(item, i) in streamsStore.$state.streams" 
             :key="i" 
@@ -30,18 +29,14 @@
 </template>
 
 <script>
-import MessageNotFound from '@/components/MessageNotFound.vue';
 import { useBackButton } from '@/composables/useBackButton'
 import { useLastRoute } from '@/composables/useLastRoute';
 import { useStreamsStore } from '@/store/server/useStreamsStore'
-import { useMessageNotFoundStore } from '@/store/useMessageNotFoundStore';
 import { useToastStore } from '@/store/useToastStore';
 import { defineComponent, onBeforeMount } from 'vue-demi'
 export default defineComponent({
-  components: { MessageNotFound },
     setup() {
         const { backButton } = useBackButton();
-        const messageNotFoundStore = useMessageNotFoundStore();
         const streamsStore = useStreamsStore();
         const toastStore = useToastStore();
         const { setLastRoute } = useLastRoute();
@@ -60,8 +55,7 @@ export default defineComponent({
         })
     
         return {
-            streamsStore,
-            messageNotFoundStore
+            streamsStore
         }
     },
 })
