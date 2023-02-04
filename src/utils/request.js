@@ -3,7 +3,7 @@ import { useMessageNotFoundStore } from '@/store/useMessageNotFoundStore'
 import axios from "axios";
 import { getToken } from "./localStorage";
 const token = getToken()
-
+import NProgress from "nprogress";
 const service = axios.create({
     // baseURL: 'http://192.168.1.21:8083/api/'
     baseURL: "https://larashop.yuzka.uz/api/",
@@ -14,6 +14,7 @@ const service = axios.create({
 
 
 service.interceptors.request.use( request => {
+    NProgress.start();
     const messageNotFoundStore = useMessageNotFoundStore();
     messageNotFoundStore.setIsError(false);
     messageNotFoundStore.setIsLoading(true);
@@ -25,10 +26,12 @@ service.interceptors.request.use( request => {
 
 
 service.interceptors.response.use(response => {
+    NProgress.done();
     const messageNotFoundStore = useMessageNotFoundStore();
     messageNotFoundStore.setIsLoading(false);
     return response
 }, error => {
+    NProgress.done();
     const messageNotFoundStore = useMessageNotFoundStore();
     messageNotFoundStore.setIsError(false);
     messageNotFoundStore.setIsLoading(false);

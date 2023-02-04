@@ -13,6 +13,7 @@
     "core-js": "^3.8.3",
     "credit-card-input-mask": "^3.0.0",
     "d3": "^7.8.1",
+    "nprogress": "^0.2.0",
     "pinia": "^2.0.29",
     "remixicon": "^2.5.0",
     "v-money3": "^3.22.3",
