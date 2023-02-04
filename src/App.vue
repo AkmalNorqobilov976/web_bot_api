@@ -7,20 +7,28 @@
 </template>
 
 <script>
-import { defineComponent } from 'vue-demi';
+import { defineComponent, watch } from 'vue-demi';
 import Toast from './components/Toast.vue';
 import { useMessageNotFoundStore } from './store/useMessageNotFoundStore';
 // import Loading from '@/components/Loading.vue'
 import MessageNotFound from './components/NetworkError.vue';
+import nprogress from 'nprogress';
+
     export default defineComponent({
         components: {
             Toast,
             // Loading,
                 MessageNotFound
         },
+
         setup() {
             const messageNotFoundStore = useMessageNotFoundStore();
-
+            watch(nprogress, (newValue) => {
+                console.log(newValue, "progr");
+            }, {
+                deep: true,
+                immediate: true
+            })
             return {
                 messageNotFoundStore
             }

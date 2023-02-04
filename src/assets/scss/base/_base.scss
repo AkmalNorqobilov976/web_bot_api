@@ -49,3 +49,8 @@
     }
 }
 
+.d-grid-max-content {
+    display: grid;
+    grid-template-rows: max-content 1fr;
+    height: 100vh;
+}

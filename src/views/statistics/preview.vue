@@ -16,25 +16,29 @@
             </div>
         </div>
         <!-- product orders -->
-        <div class="product-lists">
-            <statistics-list 
-                v-for="(item, i) in statisticsStore.$state.statistics" 
-                :key="i" 
-                :listData="item"
-            />
-            <statistics-list
-                btnText = "-500K"
-                btnTextBgColor="#ED5974"
-            />
-            <statistics-list
-                btnText = "0.00"
-                btnTextBgColor="#9EB2BD"
-            />
+        <div class="product-lists d-grid-max-content">
+            <div>
+                <statistics-list 
+                    v-for="(item, i) in statisticsStore.$state.statistics" 
+                    :key="i" 
+                    :listData="item"
+                />
+                <statistics-list
+                    btnText = "-500K"
+                    btnTextBgColor="#ED5974"
+                />
+                <statistics-list
+                    btnText = "0.00"
+                    btnTextBgColor="#9EB2BD"
+                />
+            </div>
+            <message-not-found v-if="!statisticsStore.$state.statistics.length"/>
         </div>
 </template>
 
 <script>
 
+import MessageNotFound from '@/components/MessageNotFound.vue';
 import StatisticsList from '@/components/statistics/StatisticsList.vue';
 import { useStatisticsStore } from '@/store/server/useStatisticsStore';
 import { useToastStore } from '@/store/useToastStore';
@@ -86,7 +90,8 @@ export default defineComponent({
         }
     },
     components: {
-        StatisticsList
+        StatisticsList,
+        MessageNotFound
     }
 })
 </script>

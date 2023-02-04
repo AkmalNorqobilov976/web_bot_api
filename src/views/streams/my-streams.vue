@@ -1,6 +1,7 @@
 <template>
     <main class="streams">
-        <article 
+        <div>
+              <article 
             v-for="(item, i) in streamsStore.$state.streams" 
             :key="i" 
             class="streams-list" 
@@ -25,16 +26,20 @@
                 </div>
             </div>
         </article>
+        </div>
+        <message-not-found v-if="!streamsStore.$state.streams.length"/>
     </main>
 </template>
 
 <script>
+import MessageNotFound from '@/components/MessageNotFound.vue';
 import { useBackButton } from '@/composables/useBackButton'
 import { useLastRoute } from '@/composables/useLastRoute';
 import { useStreamsStore } from '@/store/server/useStreamsStore'
 import { useToastStore } from '@/store/useToastStore';
 import { defineComponent, onBeforeMount } from 'vue-demi'
 export default defineComponent({
+  components: { MessageNotFound },
     setup() {
         const { backButton } = useBackButton();
         const streamsStore = useStreamsStore();
@@ -62,6 +67,9 @@ export default defineComponent({
 </script>
 <style lang="scss" scoped>
     .streams {
+        height: 100vh;
+        display: grid;
+        grid-template-rows: max-content 1fr;
         &-list {
             @include card-mixin;
             padding: 1.4rem 1.6rem;

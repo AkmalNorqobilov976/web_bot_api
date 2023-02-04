@@ -26,7 +26,9 @@ service.interceptors.request.use( request => {
 
 
 service.interceptors.response.use(response => {
+    console.log(NProgress.status, "status");
     NProgress.done();
+    console.log(NProgress.status, "status");
     const messageNotFoundStore = useMessageNotFoundStore();
     messageNotFoundStore.setIsLoading(false);
     return response

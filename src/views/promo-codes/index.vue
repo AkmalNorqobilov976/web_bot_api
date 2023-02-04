@@ -1,38 +1,41 @@
 <template>
-    <div class="customers">
-        <article 
-            v-for="(item, i) in promoCodesStore.$state.promoCodes" 
-            :key="i" 
-            class="promo-cod"
-            @click="$router.push({name: 'generated-promocode', params: { id: item.id}})"
-        >
-            <nav class="promo-cod__navbar">
-                <div class="promo-cod__navbar--i1">
-                    <i class="ri-coupon-3-fill"></i> {{ item.code }}
-                </div>
-                <div class="promo-cod__navbar--button">
-                    <button :style="{background: navbarButtons[item.type].color }">{{ navbarButtons[item.type].text }}</button>
-                </div>
-            </nav>
-            <main class="promo-cod__main">
-                <div class="promo-cod__main--list">
-                    <div>Tashriflar</div>
-                    <div>{{item.views}}</div>
-                </div>
-                <div class="promo-cod__main--list">
-                    <div>O‘rnatishlar</div>
-                    <div>{{item.installs}}</div>
-                </div>
-                <div class="promo-cod__main--list">
-                    <div>Mahsulot ko‘rishlar soni</div>
-                    <div>{{item.products}}</div>
-                </div>
-                <div class="promo-cod__main--list">
-                    <div>Buyurtmalar</div>
-                    <div>{{item.orders ? item.orders : 0 }}</div>
-                </div>
-            </main>
-        </article>
+    <div class="customers d-grid-max-content">
+       <div>
+             <article 
+                v-for="(item, i) in promoCodesStore.$state.promoCodes" 
+                :key="i" 
+                class="promo-cod"
+                @click="$router.push({name: 'generated-promocode', params: { id: item.id}})"
+            >
+                <nav class="promo-cod__navbar">
+                    <div class="promo-cod__navbar--i1">
+                        <i class="ri-coupon-3-fill"></i> {{ item.code }}
+                    </div>
+                    <div class="promo-cod__navbar--button">
+                        <button :style="{background: navbarButtons[item.type].color }">{{ navbarButtons[item.type].text }}</button>
+                    </div>
+                </nav>
+                <main class="promo-cod__main">
+                    <div class="promo-cod__main--list">
+                        <div>Tashriflar</div>
+                        <div>{{item.views}}</div>
+                    </div>
+                    <div class="promo-cod__main--list">
+                        <div>O‘rnatishlar</div>
+                        <div>{{item.installs}}</div>
+                    </div>
+                    <div class="promo-cod__main--list">
+                        <div>Mahsulot ko‘rishlar soni</div>
+                        <div>{{item.products}}</div>
+                    </div>
+                    <div class="promo-cod__main--list">
+                        <div>Buyurtmalar</div>
+                        <div>{{item.orders ? item.orders : 0 }}</div>
+                    </div>
+                </main>
+            </article>
+       </div>
+       <message-not-found v-if="!promoCodesStore.$state.promoCodes.length"/>
     </div>
 </template>
 
@@ -43,7 +46,9 @@ import { useTelegram } from '@/composables/useTelegram';
 import { useRouter } from 'vue-router';
 import { usePromoCodesStore } from '@/store/server/usePromoCodesStore';
 import { useToastStore } from '@/store/useToastStore';
+import MessageNotFound from '@/components/MessageNotFound.vue';
 export default {
+  components: { MessageNotFound },
     setup() {
         const router = useRouter()
         const navbarButtons = {
