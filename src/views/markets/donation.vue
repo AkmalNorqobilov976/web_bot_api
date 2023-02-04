@@ -15,7 +15,6 @@
             <form @submit.prevent class="donation-form__form">
                 <input 
                     class="donation-form__form--input" 
-                    type="number"
                     v-model="streamsStore.$state.streamForm.charity"
                     v-autowidth="{
                         maxWidth: '260px',
