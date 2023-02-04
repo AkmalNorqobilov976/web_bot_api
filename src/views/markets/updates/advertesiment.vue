@@ -16,6 +16,7 @@
                 <input 
                     class="donation-form__form--input"
                     v-model="donationForm.sum"
+                    type="number"
                     v-autowith
                     v-money3="numberFormatterConfig"
                 />

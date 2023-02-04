@@ -45,6 +45,7 @@
                 <input 
                     class="payment-form__form--input" 
                     v-model="paymentForm.amount"
+                    type="number"
                     v-money3="config"
                     v-autowidth="{
                         maxWidth: '260px',

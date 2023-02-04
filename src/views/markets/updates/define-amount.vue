@@ -15,6 +15,7 @@
             <form @submit.prevent class="donation-form__form">
                 <input 
                     class="donation-form__form--input" 
+                    type="number"
                     v-model="streamsStore.$state.stream.discount"
                     v-money3="numberFormatterConfig"
                     v-autowidth

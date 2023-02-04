@@ -16,6 +16,7 @@
                 <input 
                     class="donation-form__form--input" 
                     v-money3="numberFormatterConfig"
+                    type="number"
                     v-model="streamsStore.$state.streamForm.discount"
                     v-autowidth="{
                         maxWidth: '260px',

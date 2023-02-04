@@ -16,6 +16,7 @@
                     class="donation-form__form--input" 
                     v-model="streamsStore.$state.stream.charity"
                     v-money3="numberFormatterConfig"
+                    type="number"
                     v-autowidth
                 />
                 <span> uzs</span>
