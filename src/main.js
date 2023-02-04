@@ -38,7 +38,7 @@ app.directive('mask', VueRestrictedInputDirective);
 app.directive('money3', Money3Directive);
 app.directive('autowidth', VueInputAutowidthDirective);
 app.directive('resizable', (el, binding)=> {
-    var int = 16;
+    var int = 18;
     function resize() {el.style.width = ((el.value.length+1) * int) + 'px'}
     var e = 'keyup,keypress,focus,blur,change'.split(',');
     for (var i in e) el.addEventListener(e[i],resize,false);
