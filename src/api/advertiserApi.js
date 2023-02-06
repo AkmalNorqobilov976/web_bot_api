@@ -70,8 +70,10 @@ export function getAdminStream({ id }) {
 
 
 export function updateAdminStream(data) {
+    console.log(data, 'before');
     data.charity = numberReformatter(data?.charity);
     data.discount = numberReformatter(data?.discount);
+    console.log(data, "after");
     return request({
         url: `${URI}/streams/${data.id}`,
         method: 'put',

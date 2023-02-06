@@ -2,7 +2,7 @@ import { computed } from 'vue';
 export function useNumberFormatter() {
 
     const numberReformatter = (value) => {
-        return value.split(',').join('');
+        return value.toString().split(',').join('');
     }
 
     const numberFormatter = (value) => {

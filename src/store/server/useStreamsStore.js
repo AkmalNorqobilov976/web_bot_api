@@ -42,6 +42,7 @@ export const useStreamsStore = defineStore('streams', {
                     resolve(true)
                     })
                     .catch(error => {
+                        console.log(error, "server errror");
                         reject(error)
                     })
             })

@@ -156,7 +156,7 @@ export default defineComponent({
                     streamInfo.value = response.data.data;
                 }).catch(error => {
                     toastStore.showToastAsAlert({
-                        message: error.response.data.message,
+                        message: error.response ? error.response.data.message: "Xatolik mavjud!!",
                         type: 'error',
                         delayTime: 1000
                     })

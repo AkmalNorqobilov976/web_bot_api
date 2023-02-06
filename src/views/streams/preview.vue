@@ -253,7 +253,6 @@ export default defineComponent({
                 })
             }
         }
-
         const updateStream = () => {
             streamsStore.updateStream(streamsStore.stream)
                 .then(() => {
@@ -264,6 +263,7 @@ export default defineComponent({
                     })
                 })
                 .catch(error => {
+                    console.log(error);
                     toastStore.showToastAsAlert({
                         message: error.response.data.message,
                         type: 'error',
