@@ -17,6 +17,7 @@
                     class="donation-form__form--input" 
                     v-money3="numberFormatterConfig"
                     v-model="streamsStore.$state.streamForm.discount"
+                    placeholder="10,000"
                     v-resizable
                 />
                 <span> uzs</span>

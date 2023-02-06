@@ -79,14 +79,14 @@ export default {
 
         const addStream = () => {
             postAdminStream(streamsStore.streamForm)
-                .then(() => {
+                .then((response) => {
                     toastStore.showToastAsAlert({
                         message: "Stream qo'shildi",
                         delayTime: 1000,
                         type: "success"
                     })
 
-                    router.push({name: "created-stream", params: { id: route.params.id }})
+                    router.push({name: "created-stream", params: { id: response.data.data.id }})
                 })
                 .catch(error => {
                     labelMessage.value = error.response.data.message; 

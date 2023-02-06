@@ -9,11 +9,19 @@ export const useStreamsStore = defineStore('streams', {
         streamForm: {
             product_id: "",
             name: "",
-            charity: "10000",
-            discount: "100000"
+            charity: "",
+            discount: ""
         }
     }),
     actions: {
+        clearStreamForm() {
+            this.streamForm = {
+                product_id: "",
+                name: "",
+                charity: "",
+                discount: ""
+            }
+        },
         getStreams() {
             return new Promise((resolve, reject) => {
                 adminStreams()
