@@ -15,9 +15,9 @@
             <form @submit.prevent class="donation-form__form">
                 <input 
                     class="donation-form__form--input" 
+                    v-money3="numberFormatterConfig"
                     v-model="streamsStore.$state.streamForm.discount"
                     placeholder="10,000"
-                    v-money3="numberFormatterConfig"
                     v-resizable
                 />
                 <span> uzs</span>
@@ -40,7 +40,6 @@
 </template>
 
 <script>
-import { postAdminStream } from '@/api/advertiserApi';
 import { useBackButton } from '@/composables/useBackButton'
 import { useTelegram } from '@/composables/useTelegram';
 import { useVMoney } from '@/composables/useVMoney';
@@ -52,7 +51,7 @@ export default defineComponent ({
     setup() {
         const streamsStore = useStreamsStore();
         const toastStore = useToastStore();
-        const router = useRouter();
+        const router = useRouter()
         const { tg, tgSetParamsToMainButton, showMainButton, hideMainButton } = useTelegram();
         const { backButton } = useBackButton()
         const { numberFormatterConfig } = useVMoney();
@@ -121,10 +120,7 @@ export default defineComponent ({
         return {
             inputForm,
             streamsStore,
-            numberFormatterConfig: {
-                ...numberFormatterConfig.value,
-                min: 1000
-            }
+            numberFormatterConfig
         }
     },
 })

@@ -9,7 +9,7 @@ export const useVMoney = () => {
         precision: 0,
         disableNegative: false,
         disabled: false,
-        min: null,
+        min: 1000,
         max: 10000000,
         allowBlank: false,
         minimumNumberOfCharacters: 0,

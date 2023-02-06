@@ -139,10 +139,7 @@ const addStream = () => {
         return {
             inputForm,
             streamsStore,
-            numberFormatterConfig: {
-                ...numberFormatterConfig,
-                min: 1000    
-            }
+            numberFormatterConfig
         }
     },
 })
