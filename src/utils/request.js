@@ -15,6 +15,7 @@ const service = axios.create({
 
 service.interceptors.request.use( request => {
     NProgress.start();
+    tg.MainButton.showProgress(true);
     const messageNotFoundStore = useMessageNotFoundStore();
     messageNotFoundStore.setIsError(false);
     messageNotFoundStore.setIsLoading(true);
@@ -23,6 +24,7 @@ service.interceptors.request.use( request => {
     
     return request;
 });
+const { tg } = useTelegram();
 
 
 service.interceptors.response.use(response => {
@@ -31,9 +33,11 @@ service.interceptors.response.use(response => {
     console.log(NProgress.status, "status");
     const messageNotFoundStore = useMessageNotFoundStore();
     messageNotFoundStore.setIsLoading(false);
+    tg.MainButton.hideProgress();
     return response
 }, error => {
     NProgress.done();
+    tg.MainButton.hideProgress();
     const messageNotFoundStore = useMessageNotFoundStore();
     messageNotFoundStore.setIsError(false);
     messageNotFoundStore.setIsLoading(false);
