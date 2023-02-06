@@ -9,8 +9,8 @@ export const useStreamsStore = defineStore('streams', {
         streamForm: {
             product_id: "",
             name: "",
-            charity: "",
-            discount: ""
+            charity: "10000",
+            discount: "10000"
         }
     }),
     actions: {
@@ -18,8 +18,8 @@ export const useStreamsStore = defineStore('streams', {
             this.streamForm = {
                 product_id: "",
                 name: "",
-                charity: "",
-                discount: ""
+                charity: "10000",
+                discount: "10000"
             }
         },
         getStreams() {
@@ -37,8 +37,9 @@ export const useStreamsStore = defineStore('streams', {
         updateStream(data) {
             return new Promise((resolve, reject) => {
                 updateAdminStream(data)
-                    .then(() => {
-                        resolve(true)
+                .then(() => {
+                    this.clearStreamForm();
+                    resolve(true)
                     })
                     .catch(error => {
                         reject(error)

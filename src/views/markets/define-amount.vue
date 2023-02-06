@@ -15,9 +15,9 @@
             <form @submit.prevent class="donation-form__form">
                 <input 
                     class="donation-form__form--input" 
-                    v-money3="numberFormatterConfig"
                     v-model="streamsStore.$state.streamForm.discount"
                     placeholder="10,000"
+                    v-money3="numberFormatterConfig"
                     v-resizable
                 />
                 <span> uzs</span>
@@ -40,17 +40,19 @@
 </template>
 
 <script>
+import { postAdminStream } from '@/api/advertiserApi';
 import { useBackButton } from '@/composables/useBackButton'
 import { useTelegram } from '@/composables/useTelegram';
 import { useVMoney } from '@/composables/useVMoney';
 import { useStreamsStore } from '@/store/server/useStreamsStore';
 import { useToastStore } from '@/store/useToastStore';
 import { defineComponent, onMounted, onUnmounted, watch } from 'vue'
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 export default defineComponent ({
     setup() {
         const streamsStore = useStreamsStore();
         const toastStore = useToastStore();
+        const router = useRouter();
         const { tg, tgSetParamsToMainButton, showMainButton, hideMainButton } = useTelegram();
         const { backButton } = useBackButton()
         const { numberFormatterConfig } = useVMoney();
@@ -58,20 +60,23 @@ export default defineComponent ({
         const inputForm = (e, key) => {
             streamsStore.$state.streamForm[key] = e.target.innerText
         }
-            const updateStream = () => {
-            streamsStore.updateStream(streamsStore.stream)
-                .then(() => {
+        
+        const addStream = () => {
+            postAdminStream(streamsStore.streamForm)
+                .then((response) => {
                     toastStore.showToastAsAlert({
-                        message: "Yangilandi!",
-                        type: "success",
-                        delayTime: 3000
+                        message: "Stream qo'shildi",
+                        delayTime: 1000,
+                        type: "success"
                     })
+
+                    router.push({name: "created-stream", params: { id: response.data.data.id }})
                 })
                 .catch(error => {
                     toastStore.showToastAsAlert({
                         message: error.response.data.message,
-                        type: 'error',
-                        delayTime: 3000
+                        delayTime: 2000,
+                        type: 'error'
                     })
                 })
         }
@@ -101,7 +106,7 @@ export default defineComponent ({
                     product_id: route.params.id
                 }
             })
-            tg.onEvent('mainButtonClicked', updateStream)
+            tg.onEvent('mainButtonClicked', addStream)
             setParams()
             // categoriesStore.$state.
         })
@@ -111,12 +116,15 @@ export default defineComponent ({
         backButton(`/streams/create-stream/${streamsStore.$state.streamForm.product_id}`)
         onUnmounted(() => {
             hideMainButton();
-            tg.offEvent('mainButtonClicked', updateStream)
+            tg.offEvent('mainButtonClicked', addStream)
         })
         return {
             inputForm,
             streamsStore,
-            numberFormatterConfig
+            numberFormatterConfig: {
+                ...numberFormatterConfig.value,
+                min: 1000
+            }
         }
     },
 })

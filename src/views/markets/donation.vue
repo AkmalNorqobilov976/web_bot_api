@@ -41,13 +41,14 @@
     </main>
 </template>
 <script>
+import { postAdminStream } from '@/api/advertiserApi';
 import { useBackButton } from '@/composables/useBackButton'
 import { useTelegram } from '@/composables/useTelegram';
 import { useVMoney } from '@/composables/useVMoney';
 import { useStreamsStore } from '@/store/server/useStreamsStore';
 import { useToastStore } from '@/store/useToastStore';
 import { defineComponent, onMounted, onUnmounted, reactive, watch } from 'vue'
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 export default defineComponent ({
     props: {
 
@@ -55,6 +56,7 @@ export default defineComponent ({
     setup() {
         const streamsStore = useStreamsStore();
         const toastStore = useToastStore();
+        const router = useRouter();
         const { numberFormatterConfig } = useVMoney();
         const { tg, showMainButton, hideMainButton, tgSetParamsToMainButton } = useTelegram()
         const { backButton } = useBackButton()
@@ -94,7 +96,25 @@ export default defineComponent ({
                 })
             }
         }
+const addStream = () => {
+            postAdminStream(streamsStore.streamForm)
+                .then((response) => {
+                    toastStore.showToastAsAlert({
+                        message: "Stream qo'shildi",
+                        delayTime: 1000,
+                        type: "success"
+                    })
 
+                    router.push({name: "created-stream", params: { id: response.data.data.id }})
+                })
+                .catch(error => {
+                    toastStore.showToastAsAlert({
+                        message: error.response.data.message,
+                        delayTime: 2000,
+                        type: 'error'
+                    })
+                })
+        }
         onMounted(() => {
             showMainButton();
             streamsStore.$patch({
@@ -103,7 +123,7 @@ export default defineComponent ({
                 }
             })
             setParams()
-             tg.onEvent('mainButtonClicked', updateStream)
+            tg.onEvent('mainButtonClicked', addStream)
             // categoriesStore.$state.
         })
         watch(streamsStore, () => {
@@ -114,12 +134,15 @@ export default defineComponent ({
         }
         onUnmounted(() => {
             hideMainButton();
-            tg.offEvent('mainButtonClicked', updateStream)
+            tg.offEvent('mainButtonClicked', addStream)
         })
         return {
             inputForm,
             streamsStore,
-            numberFormatterConfig
+            numberFormatterConfig: {
+                ...numberFormatterConfig,
+                min: 1000    
+            }
         }
     },
 })
