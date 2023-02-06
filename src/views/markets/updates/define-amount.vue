@@ -60,7 +60,7 @@ export default defineComponent ({
 
         tgSetParamsToMainButton({
             disabled: false,
-            text: "Oqim yaratish",
+            text: "Oqim yangilash",
             textColor: "#fff",
             color: "#55BE61"
         })

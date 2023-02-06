@@ -60,7 +60,7 @@ export default defineComponent ({
         backButton(`/streams/create-stream/${streamsStore.$state.streamForm.product_id}`)
        tgSetParamsToMainButton({
             disabled: false,
-            text: "Oqim yaratish",
+            text: "Oqim yangilash",
             textColor: "#fff",
             color: "#55BE61"
         })

@@ -181,7 +181,7 @@ export default defineComponent({
         const onShowMainButton = () => {
             tgSetParamsToMainButton({
                 disabled: false,
-                text: "Oqim yaratish",
+                text: "Oqimni yangilash",
                 textColor: "#fff",
                 color: "#55BE61"
             })
@@ -240,14 +240,14 @@ export default defineComponent({
             if(streamsStore.streamForm.name) {
                 tgSetParamsToMainButton({
                     disabled: false,
-                    text: "Oqim yaratish",
+                    text: "Oqimni yangilash",
                     textColor: "#fff",
                     color: "#55BE61"
                 })
             } else {
                 tgSetParamsToMainButton({
                     disabled: true,
-                    text: "Oqim yaratish",
+                    text: "Oqimni yangilash",
                     textColor: "#8C8C8C",
                     color: "#E4E6E4"
                 })
