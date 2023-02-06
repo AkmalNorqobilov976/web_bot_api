@@ -43,11 +43,13 @@ import { useBackButton } from '@/composables/useBackButton'
 import { useTelegram } from '@/composables/useTelegram';
 import { useVMoney } from '@/composables/useVMoney';
 import { useStreamsStore } from '@/store/server/useStreamsStore';
+import { useToastStore } from '@/store/useToastStore';
 import { defineComponent, onMounted, onUnmounted, watch } from 'vue'
 import { useRoute } from 'vue-router';
 export default defineComponent ({
     setup() {
         const streamsStore = useStreamsStore();
+        const toastStore = useToastStore();
         const { tg, tgSetParamsToMainButton, showMainButton, hideMainButton } = useTelegram();
         const { backButton } = useBackButton()
         const { numberFormatterConfig } = useVMoney();
@@ -55,7 +57,25 @@ export default defineComponent ({
         const inputForm = (e, key) => {
             streamsStore.$state.streamForm[key] = e.target.innerText
         }
-          const setParams = () => {
+            const updateStream = () => {
+            streamsStore.updateStream(streamsStore.stream)
+                .then(() => {
+                    toastStore.showToastAsAlert({
+                        message: "Yangilandi!",
+                        type: "success",
+                        delayTime: 3000
+                    })
+                })
+                .catch(error => {
+                    toastStore.showToastAsAlert({
+                        message: error.response.data.message,
+                        type: 'error',
+                        delayTime: 3000
+                    })
+                })
+        }
+        
+        const setParams = () => {
             if(streamsStore.streamForm.name) {
                 tgSetParamsToMainButton({
                     disabled: false,
@@ -80,6 +100,7 @@ export default defineComponent ({
                     product_id: route.params.id
                 }
             })
+            tg.onEvent('mainButtonClicked', updateStream)
             setParams()
             // categoriesStore.$state.
         })
@@ -89,6 +110,7 @@ export default defineComponent ({
         backButton(`/streams/create-stream/${streamsStore.$state.streamForm.product_id}`)
         onUnmounted(() => {
             hideMainButton();
+            tg.offEvent('mainButtonClicked', updateStream)
         })
         return {
             inputForm,

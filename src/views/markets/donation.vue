@@ -44,6 +44,7 @@ import { useBackButton } from '@/composables/useBackButton'
 import { useTelegram } from '@/composables/useTelegram';
 import { useVMoney } from '@/composables/useVMoney';
 import { useStreamsStore } from '@/store/server/useStreamsStore';
+import { useToastStore } from '@/store/useToastStore';
 import { defineComponent, onMounted, onUnmounted, reactive, watch } from 'vue'
 import { useRoute } from 'vue-router';
 export default defineComponent ({
@@ -52,12 +53,30 @@ export default defineComponent ({
     },
     setup() {
         const streamsStore = useStreamsStore();
+        const toastStore = useToastStore();
         const { numberFormatterConfig } = useVMoney();
         const { tg, showMainButton, hideMainButton, tgSetParamsToMainButton } = useTelegram()
         const { backButton } = useBackButton()
         const route = useRoute();
         backButton(`/streams/create-stream/${streamsStore.$state.streamForm.product_id}`)
-         const setParams = () => {
+        const updateStream = () => {
+            streamsStore.updateStream(streamsStore.stream)
+                .then(() => {
+                    toastStore.showToastAsAlert({
+                        message: "Yangilandi!",
+                        type: "success",
+                        delayTime: 3000
+                    })
+                })
+                .catch(error => {
+                    toastStore.showToastAsAlert({
+                        message: error.response.data.message,
+                        type: 'error',
+                        delayTime: 3000
+                    })
+                })
+        }
+        const setParams = () => {
             if(streamsStore.streamForm.name) {
                 tgSetParamsToMainButton({
                     disabled: false,
@@ -83,6 +102,7 @@ export default defineComponent ({
                 }
             })
             setParams()
+             tg.onEvent('mainButtonClicked', updateStream)
             // categoriesStore.$state.
         })
         watch(streamsStore, () => {
@@ -93,6 +113,7 @@ export default defineComponent ({
         }
         onUnmounted(() => {
             hideMainButton();
+            tg.offEvent('mainButtonClicked', updateStream)
         })
         return {
             inputForm,
