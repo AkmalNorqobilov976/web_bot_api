@@ -12,6 +12,7 @@ import { useOrdersStore } from '@/store/server/useOrdersStore'
 import { useRoute } from 'vue-router';
 import { watch } from 'vue-demi';
 import { useToastStore } from '@/store/useToastStore';
+import { useLastRoute } from '@/composables/useLastRoute';
 export default {
     setup() {
         const { backButton } = useBackButton();
@@ -19,7 +20,7 @@ export default {
         const ordersStore = useOrdersStore();
         const toastStore = useToastStore();
         backButton('/')
-        
+        useLastRoute().setLastRoute();
         const getOrders = () => {
             ordersStore.getOrders({ status: "" })
                 .catch(error => {
