@@ -47,6 +47,7 @@ import { useRouter } from 'vue-router';
 import { usePromoCodesStore } from '@/store/server/usePromoCodesStore';
 import { useToastStore } from '@/store/useToastStore';
 import MessageNotFound from '@/components/MessageNotFound.vue';
+import { useLastRoute } from '@/composables/useLastRoute';
 export default {
   components: { MessageNotFound },
     setup() {
@@ -65,6 +66,7 @@ export default {
                 text: "Yoqilgan" //delivered
             },
         };
+        useLastRoute().setLastRoute();
         const { tg, tgSetParamsToMainButton,  hideMainButton, showMainButton } = useTelegram()
         const { backButton } = useBackButton()
         const toastStore = useToastStore();

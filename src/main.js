@@ -16,7 +16,12 @@ import 'nprogress/nprogress.css'
 import { useCardNumberPatternMatch } from './composables/useCardNumberPatternMatch'
 const pinia = createPinia()
 const app = createApp(App);
-
+window.addEventListener('DOMContentLoaded', () => {
+    let lastRoute = localStorage.getItem('last-route');
+    if(lastRoute) {
+        router.push(`${lastRoute}`)
+    }
+})
 app.use(Vue3Lottie);
 app.use(VueInputAutowidth);
 app.config.globalProperties.$noImage = 'https://archive.org/download/no-photo-available/no-photo-available.png';

@@ -166,8 +166,10 @@ import { useStreamsStore } from '@/store/server/useStreamsStore';
 import CustomConfirm from '@/components/CustomConfirm.vue'
 import router from '@/router';
 import { useTelegram } from '@/composables/useTelegram';
+import { useLastRoute } from '@/composables/useLastRoute';
 export default defineComponent({
     setup() {
+        useLastRoute().setLastRoute();
         const { backButton } = useBackButton();
         const { tg, showMainButton, hideMainButton, tgSetParamsToMainButton } = useTelegram();
         const toastStore = useToastStore();

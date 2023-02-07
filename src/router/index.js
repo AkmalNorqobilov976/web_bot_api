@@ -1,4 +1,4 @@
-import { getLastRouter, getToken } from '@/utils/localStorage'
+import { getToken } from '@/utils/localStorage'
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 
@@ -273,7 +273,6 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
     console.log(to.fullPath);
-    // localStorage.setItem('last-route', to.fullPath)
     if(!getToken() && to.meta.requiresAuth) {
         console.log(getToken(), "tokencha");
         

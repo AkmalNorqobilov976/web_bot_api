@@ -40,6 +40,7 @@
 
 <script>
 import { useBackButton } from '@/composables/useBackButton'
+import { useLastRoute } from '@/composables/useLastRoute';
 import { useTelegram } from '@/composables/useTelegram';
 import { useVMoney } from '@/composables/useVMoney';
 import { useStreamsStore } from '@/store/server/useStreamsStore';
@@ -52,6 +53,7 @@ export default defineComponent ({
         const { tg, tgSetParamsToMainButton, showMainButton, hideMainButton } = useTelegram();
         const { backButton } = useBackButton()
         const toastStore = useToastStore()
+        useLastRoute().setLastRoute();
         const { numberFormatterConfig } = useVMoney()
         const route = useRoute();
         const inputForm = (e, key) => {

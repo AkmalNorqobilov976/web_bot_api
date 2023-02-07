@@ -135,6 +135,7 @@ import { useCategoriesStore } from '@/store/server/useCategoriesStore';
 import { getAdminStream } from '@/api/advertiserApi';
 import { useRoute } from 'vue-router';
 import { useToastStore } from '@/store/useToastStore';
+import { useLastRoute } from '@/composables/useLastRoute';
 export default defineComponent({
     setup() {
         const { backButton } = useBackButton()
@@ -142,6 +143,7 @@ export default defineComponent({
         const route = useRoute();
         const toastStore = useToastStore();
         backButton('/markets/preview/all')
+        useLastRoute().setLastRoute();
         const streamInfo = ref({
         })
 

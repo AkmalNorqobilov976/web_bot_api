@@ -14,12 +14,3 @@ export function setToken(token) {
 export function getToken() {
     return localStorage.getItem('token') || false;
 }
-
-export function setLastRouter() {
-    const route = useRoute();
-    localStorage.setItem('last-router', route.path);
-}
-
-export function getLastRouter() {
-    return localStorage.getItem('last-router');
-}

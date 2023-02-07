@@ -14,12 +14,13 @@
 <script>
 import MarketCard from '@/components/markets/MarketCard.vue'
 import MessageNotFound from '@/components/MessageNotFound.vue';
+import { useLastRoute } from '@/composables/useLastRoute';
 import { useCategoriesStore } from '@/store/server/useCategoriesStore'
 import { defineComponent } from 'vue-demi'
 export default defineComponent({
     setup() {
         const categoriesStore = useCategoriesStore();
-
+        useLastRoute().setLastRoute();
         return {
             categoriesStore
         }

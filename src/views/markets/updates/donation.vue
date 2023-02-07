@@ -46,6 +46,7 @@ import { defineComponent, onMounted, onUnmounted, reactive, watch } from 'vue'
 import { useRoute } from 'vue-router';
 import { useVMoney } from '@/composables/useVMoney'
 import { useToastStore } from '@/store/useToastStore';
+import { useLastRoute } from '@/composables/useLastRoute';
 export default defineComponent ({
     props: {
 
@@ -56,6 +57,7 @@ export default defineComponent ({
         const { backButton } = useBackButton()
         const route = useRoute();
         const toastStore = useToastStore();
+        useLastRoute().setLastRoute();
         const { numberFormatterConfig } = useVMoney();
         backButton(`/streams/create-stream/${streamsStore.$state.streamForm.product_id}`)
        tgSetParamsToMainButton({

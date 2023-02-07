@@ -25,6 +25,7 @@
 </template>
 <script>
 import { useBackButton } from '@/composables/useBackButton'
+import { useLastRoute } from '@/composables/useLastRoute'
 import { defineComponent, reactive } from 'vue'
 export default defineComponent ({
     props: {
@@ -36,7 +37,7 @@ export default defineComponent ({
         })
         const { backButton } = useBackButton()
         backButton()
-
+        useLastRoute().setLastRoute();
         const inputForm = (e, key) => {
             donationForm[key] = e.target.innerText
         }

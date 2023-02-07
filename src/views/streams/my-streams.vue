@@ -47,7 +47,7 @@ export default defineComponent({
         const { setLastRoute } = useLastRoute();
         setLastRoute();
         backButton();
-
+        useLastRoute().setLastRoute();
         onBeforeMount(() => {
             streamsStore.getStreams()
                 .catch(error => {

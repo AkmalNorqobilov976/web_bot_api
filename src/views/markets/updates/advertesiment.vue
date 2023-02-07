@@ -30,6 +30,7 @@
 </template>
 <script>
 import { useBackButton } from '@/composables/useBackButton'
+import { useLastRoute } from '@/composables/useLastRoute';
 import { useTelegram } from '@/composables/useTelegram';
 import { useVMoney } from '@/composables/useVMoney';
 import { useStreamsStore } from '@/store/server/useStreamsStore'
@@ -41,6 +42,7 @@ export default defineComponent ({
     },
     setup() {
         const streamsStore = useStreamsStore();
+        useLastRoute().setLastRoute();
         const { tg, showMainButton, hideMainButton } = useTelegram();
         const donationForm = reactive({
             sum: "1000,000"

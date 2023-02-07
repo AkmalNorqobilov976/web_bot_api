@@ -112,6 +112,7 @@ import { useAuthStore } from '@/store/authStore'
 import UnderLineSelect from '@/components/Form/inputs/UnderLineSelect.vue'
 import { adminProfile } from '@/api/advertiserApi'
 import { updateMyProfile } from '@/api/authApi'
+import { useLastRoute } from '@/composables/useLastRoute'
 export default defineComponent({
     components: { 
         UnderLineInput, 
@@ -122,6 +123,7 @@ export default defineComponent({
     setup() {
         const isImage = ref(false)
         const profileImage = ref(null)
+        useLastRoute().setLastRoute();
         const helperStore = useHelperStore();
         const toastStore = useToastStore();
         const authStore = useAuthStore();

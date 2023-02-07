@@ -100,6 +100,7 @@ import { useWithdrawsStore } from '@/store/server/useWithdrawsStore'
 import { postAdminWithdraw } from '@/api/advertiserApi'
 import { useToastStore } from '@/store/useToastStore'
 import { useAuthStore } from '@/store/authStore'
+import { useLastRoute } from '@/composables/useLastRoute'
 export default {
     data: () => ({
         config: {
@@ -119,7 +120,7 @@ export default {
     setup() {
         const showConfirm = ref(false);
         const cardMask = ref('{{9999}} {{9999}} {{9999}} {{9999}}')
-        
+        useLastRoute().setLastRoute();
         const paymentForm = reactive({
             card_number: "",
             amount: "100"

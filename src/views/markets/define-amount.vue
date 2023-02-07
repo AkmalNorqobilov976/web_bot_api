@@ -42,6 +42,7 @@
 <script>
 import { postAdminStream } from '@/api/advertiserApi';
 import { useBackButton } from '@/composables/useBackButton'
+import { useLastRoute } from '@/composables/useLastRoute';
 import { useTelegram } from '@/composables/useTelegram';
 import { useVMoney } from '@/composables/useVMoney';
 import { useStreamsStore } from '@/store/server/useStreamsStore';
@@ -53,6 +54,7 @@ export default defineComponent ({
         const streamsStore = useStreamsStore();
         const toastStore = useToastStore();
         const router = useRouter()
+        useLastRoute().setLastRoute();
         const { tg, tgSetParamsToMainButton, showMainButton, hideMainButton } = useTelegram();
         const { backButton } = useBackButton()
         const { numberFormatterConfig } = useVMoney();

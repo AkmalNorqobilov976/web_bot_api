@@ -15,6 +15,15 @@ import MessageNotFound from './components/NetworkError.vue';
 import nprogress from 'nprogress';
 
     export default defineComponent({
+          beforeRouteEnter(to, from, next) {
+            let lastRoute = localStorage.getItem('last-route');
+            console.log(lastRoute, "lastRoute");
+            console.log(to, from);
+            if(lastRoute && to.path == from.path) {
+
+                this.$router.push(lastRoute);
+            }
+        },
         components: {
             Toast,
             // Loading,

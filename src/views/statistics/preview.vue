@@ -40,6 +40,7 @@
 
 import MessageNotFound from '@/components/MessageNotFound.vue';
 import StatisticsList from '@/components/statistics/StatisticsList.vue';
+import { useLastRoute } from '@/composables/useLastRoute';
 import { useStatisticsStore } from '@/store/server/useStatisticsStore';
 import { useToastStore } from '@/store/useToastStore';
 import { defineComponent, reactive, watch } from 'vue';
@@ -53,7 +54,7 @@ export default defineComponent({
             sortBy: "",
             sortByDesc: ""
         })
-
+        useLastRoute().setLastRoute();
         const filterFunction = (keyName) => {
             if(statisticsFilterAttributes.sortBy && statisticsFilterAttributes.sortBy == keyName) {
                 statisticsFilterAttributes.sortByDesc = keyName

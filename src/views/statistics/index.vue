@@ -14,6 +14,7 @@ import { useRoute } from 'vue-router';
 import { useStatisticsStore } from '@/store/server/useStatisticsStore'
 import Preview from './preview.vue'
 import { useToastStore } from '@/store/useToastStore';
+import { useLastRoute } from '@/composables/useLastRoute';
 export default defineComponent({
     setup() {
         const good = ref("")
@@ -21,6 +22,7 @@ export default defineComponent({
         const route = useRoute();
         const statisticsStore = useStatisticsStore();
         const toastStore = useToastStore();
+        useLastRoute().setLastRoute();
         
         backButton('/')
 

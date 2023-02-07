@@ -33,6 +33,7 @@ import { useCopyToClipboard } from '@/composables/useCopyToClipboard'
 import { onBeforeMount, ref } from 'vue-demi'
 import { useToastStore } from '@/store/useToastStore'
 import { useBackButton } from '@/composables/useBackButton'
+import { useLastRoute } from '@/composables/useLastRoute'
 export default {
     setup() {
         const route = useRoute();
@@ -41,6 +42,7 @@ export default {
         const toastStore = useToastStore();
         const { backButton } = useBackButton();
         backButton('/promo-codes/main');
+        useLastRoute().setLastRoute();
         const getPromocode = () => {
             getAdminPromocode(route.params.id)
                 .then(response => {

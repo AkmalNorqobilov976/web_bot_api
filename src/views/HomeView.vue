@@ -83,17 +83,15 @@
 import { useTelegram } from '@/composables/useTelegram'
 import { onMounted, watchEffect } from '@vue/runtime-core';
 import { useAuthStore } from '@/store/authStore';
-import { useLastRoute } from '@/composables/useLastRoute'
 import { useHelperStore } from '@/store/server/useHelperStore';
 import { useToastStore } from '@/store/useToastStore';
 export default {
+    
     setup() {
         const { tg } = useTelegram();
         const authStore = useAuthStore();
-        const { setLastRoute } = useLastRoute();
         const helperStore = useHelperStore();
         const toastStore = useToastStore();
-        setLastRoute();
         onMounted(() => {
                helperStore.getRegions()
                 .catch(error => {

@@ -50,13 +50,14 @@ import { useBackButton } from '@/composables/useBackButton'
 import { useTransactionsStore } from '@/store/server/useTransactionsStore'
 import BarChart from '@/components/charts/BarChart.vue'
 import MessageNotFound from '@/components/MessageNotFound.vue'
+import { useLastRoute } from '@/composables/useLastRoute'
 export default defineComponent({
     setup() {
         const toastStore = useToastStore();
         const withdrawsStore = useWithdrawsStore()
         const transactionsStore = useTransactionsStore();
         const { backButton } = useBackButton();
-
+        useLastRoute().setLastRoute();
         backButton('/')
         const getWithDraws = () => {
             transactionsStore.getTransactions()

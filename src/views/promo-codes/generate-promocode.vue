@@ -19,6 +19,7 @@ import UnderLineInput from '@/components/Form/inputs/UnderLineInput.vue'
 import { useRouter } from 'vue-router'
 import { postPromoCode } from '@/api/advertiserApi'
 import { useToastStore } from '@/store/useToastStore'
+import { useLastRoute } from '@/composables/useLastRoute'
 export default defineComponent({
     components: {
         UnderLineInput
@@ -29,6 +30,7 @@ export default defineComponent({
         const { tg, tgMainButtonOffClick, hideMainButton, showMainButton, tgSetParamsToMainButton } = useTelegram();
         const toastStore = useToastStore()
         backButton('/promo-codes/main')
+        useLastRoute().setLastRoute();
 
         const promocodeForm = reactive({
             code: ""
