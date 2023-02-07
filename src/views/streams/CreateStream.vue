@@ -10,6 +10,7 @@
                     <input 
                         v-model="streamsStore.$state.streamForm.name"
                         class="stream-name__input"  
+                        type="text"
                         :class="{'error-input': labelMessage}" 
                         placeholder="Misol uchun: 1-oqim linki" 
                     />

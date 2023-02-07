@@ -8,7 +8,7 @@
             <label class="stream-name__title">Oqim nomi</label>
             <!-- error-input class -->
             <div class="stream-name__input">
-                <input readonly v-model="streamInfo.name" placeholder="Misol uchun: 1-oqim linki" />
+                <input readonly type="text" v-model="streamInfo.name" placeholder="Misol uchun: 1-oqim linki" />
             </div>
             <tooltip style="bottom: -2.2rem;" label="Bu nomdagi Oqim linki mavjud"/>
             <div class="stream-name__button-grp">
