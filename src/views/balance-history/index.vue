@@ -1,41 +1,40 @@
 <template>
-    <div class="balance-history">
-        <form @submit.prevent="">
-            <div>
-                <search-input 
-                    placeholder="Qidirish"
-                    v-model="good"
-                />
-            </div>
-        </form>
-        <info-card 
-           
-            class="balance-history__info-card" 
-            title="To‘lovlar monitoringi"
-        >
-            <template #body>
-                <p class="balance-history__info-card--barchart-title">
-                    xarid qilingan va bekor qilingan mahsulotlar statistikasi
-                </p>
-                <div class="balance-history__info-card--body">
-                    <bar-chart-example/>
-                    <!-- <bar-chart/> -->
-                    <!-- <balans-history-bar-chart title="xarid qilingan va bekor qilingan mahsulotlar statistikasi" xKey="name" yKey="amount" :data="barChartData"/> -->
-                
-                    <balance-history-list-component
-                        v-for="(transaction, i) in transactionsStore.$state.transactions"
-                        :key="i" 
-                        :cardData="transaction"
-                    />       
-                        <!-- :icon="transaction.type =='minus' ? 'ri-arrow-left-down-line' : 'ri-arrow-right-up-line'"
-                        :iconColor="transaction.type ? '#23B60B' : '#F1A30C'" -->
-                    <balance-history-list-component 
-                        icon="ri-arrow-right-up-line"
-                        iconColor="#F1A30C"
-                    />     
-                </div> 
-            </template>
-        </info-card>
+    <div class="d-grid-max-content">
+        <div class="balance-history">
+            <form @submit.prevent="">
+                <div>
+                    <search-input 
+                        placeholder="Qidirish"
+                        v-model="good"
+                    />
+                </div>
+            </form>
+            <info-card 
+                v-if="transactionsStore.$state.transactions.length"
+                class="balance-history__info-card" 
+                title="To‘lovlar monitoringi"
+            >
+                <template #body>
+                    <p class="balance-history__info-card--barchart-title">
+                        xarid qilingan va bekor qilingan mahsulotlar statistikasi
+                    </p>
+                    <div class="balance-history__info-card--body">
+                        <bar-chart :chartData="transactionsStore.$state.transactions" :xKey="day" :yKey="amount"/>
+                    
+                        <balance-history-list-component
+                            v-for="(transaction, i) in transactionsStore.$state.transactions"
+                            :key="i" 
+                            :cardData="transaction"
+                        />       
+                        <balance-history-list-component 
+                            icon="ri-arrow-right-up-line"
+                            iconColor="#F1A30C"
+                        />     
+                    </div> 
+                </template>
+            </info-card>
+        </div>
+        <message-not-found v-if="!transactionsStore.$state.transactions.length"/>
     </div>
 </template>
 
@@ -44,12 +43,13 @@ import SearchInput from '@/components/Form/inputs/SearchInput.vue'
 import InfoCard from '@/components/cards/InfoCard.vue'
 // import BarChart from '@/components/charts/BarChart.vue'
 import BalanceHistoryListComponent from '@/components/payments/BalanceHistoryListComponent.vue'
-import BarChartExample from '@/components/charts/BarChartExample.vue'
-import { defineComponent, onBeforeMount } from 'vue-demi'
+import { defineComponent, onBeforeMount, onMounted } from 'vue-demi'
 import { useToastStore } from '@/store/useToastStore'
 import { useWithdrawsStore } from '@/store/server/useWithdrawsStore'
 import { useBackButton } from '@/composables/useBackButton'
 import { useTransactionsStore } from '@/store/server/useTransactionsStore'
+import BarChart from '@/components/charts/BarChart.vue'
+import MessageNotFound from '@/components/MessageNotFound.vue'
 export default defineComponent({
     setup() {
         const toastStore = useToastStore();
@@ -100,9 +100,10 @@ export default defineComponent({
     components: {
         SearchInput,
         InfoCard,
-        BalanceHistoryListComponent,
+        BarChart,
+        MessageNotFound,
+        // ResponsiveLineChart,
         // BarChart,
-        BarChartExample
     }
 })
 </script>

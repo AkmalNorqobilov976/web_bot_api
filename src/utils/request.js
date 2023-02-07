@@ -4,6 +4,7 @@ import axios from "axios";
 import { getToken } from "./localStorage";
 const token = getToken()
 import NProgress from "nprogress";
+import { useRouter } from "vue-router";
 const service = axios.create({
     // baseURL: 'http://192.168.1.21:8083/api/'
     baseURL: "https://larashop.yuzka.uz/api/",
@@ -42,6 +43,10 @@ service.interceptors.response.use(response => {
     messageNotFoundStore.setIsError(false);
     messageNotFoundStore.setIsLoading(false);
     console.log('err' + error) // for debug
+    const router = useRouter();
+    if(error.response.status == 401) {
+        router.push('/login');
+    }
     return Promise.reject(error)
 })
 export {
