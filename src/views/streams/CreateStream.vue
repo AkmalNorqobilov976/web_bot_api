@@ -150,6 +150,7 @@ export default {
             padding: 1rem 2rem;
             border-radius: 1rem;
             border: none;
+            font-size: 1.5rem;
             outline: none;
             background: rgba($color: #C2D9E7, $alpha: .15);
             &::placeholder {

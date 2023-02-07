@@ -43,6 +43,7 @@
             flex-grow: 1;
             border: none;
             outline: none;
+            font-size: 1.6rem;
             background: $bg-color;
         }
 
