@@ -4,7 +4,6 @@ import axios from "axios";
 import { getToken } from "./localStorage";
 const token = getToken()
 import NProgress from "nprogress";
-import { useRouter } from "vue-router";
 const service = axios.create({
     // baseURL: 'http://192.168.1.21:8083/api/'
     baseURL: "https://larashop.yuzka.uz/api/",
@@ -29,15 +28,10 @@ const { tg } = useTelegram();
 
 
 service.interceptors.response.use(response => {
-    console.log(response, "resonse");
     NProgress.done();
     const messageNotFoundStore = useMessageNotFoundStore();
     messageNotFoundStore.setIsLoading(false);
     tg.MainButton.hideProgress();
-    const router = useRouter();
-    if(response.status == 401) {
-        router.push('/login');
-    }
     return response
 }, error => {
     NProgress.done();
@@ -45,9 +39,6 @@ service.interceptors.response.use(response => {
     const messageNotFoundStore = useMessageNotFoundStore();
     messageNotFoundStore.setIsError(false);
     messageNotFoundStore.setIsLoading(false);
-    console.log('err' + error) // for debug
-    const router = useRouter();
-    console.log(error, "resonse");
     if(error.response.status == 401) {
         localStorage.removeItem('token');
         location.reload();

@@ -70,14 +70,7 @@
             const onClickOutsideOfSelect = () => {
                 isToggle.value = false;
             }
-
-            watch(() => props.options, (newValue) => {
-                console.log(newValue , "new Value");
-                // let val = searchById();
-                // inputValue.value = val[props.text];
-            }, {
-                immediate: true
-            })
+            
             const onSearchOptions = (text) => {
                 if(!text) {
                     searchOptions.value = props.options;
@@ -86,7 +79,6 @@
                                             .value
                                             .filter(option => {
                                                 if(option[props.text].includes(text)) {
-                                                    console.log(option[props.text]);
                                                     return option;
                                                 }
                                             })
@@ -98,11 +90,8 @@
                 return props.options.find(option => option.id == props.modelValue)
             } 
             onMounted(() => {
-                console.log(rawOptions, "rawOptions");
                 let value = searchById();
-                console.log(value);
                 inputValue.value = value?.[props.text]
-                console.log(inputValue.value);
             })
 
             const resultValue = computed({

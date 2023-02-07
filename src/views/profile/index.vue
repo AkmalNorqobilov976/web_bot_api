@@ -66,7 +66,6 @@
                     </div>
                     <div class="my-profile__form--field">
                         <under-line-select 
-                            v-if="helperStore.$state.regions.length"
                             label="Viloyat/shahar" 
                              :options="computedRegions"
                             :text="'name'"
@@ -77,7 +76,6 @@
                     </div>
                     <div class="my-profile__form--field">
                             <under-line-select 
-                                v-if="getDistricts(userInfo.region_id)"
                                 label="Tuman" 
                                 :options="getDistricts(userInfo.region_id)"
                                 :text="'name'"
@@ -174,15 +172,6 @@ export default defineComponent({
         const { backButton } = useBackButton()
         backButton();
         onBeforeMount(() => {
-            helperStore.getRegions()
-                .catch(error => {
-                    toastStore.showToastAsAlert({
-                        message: error.response.data.message,
-                        delayTime: 3000,
-                        type: 'error'
-                    })
-                })
-
             authStore.getUserInfo()
                 .catch(error => {
                     toastStore.showToastAsAlert({
