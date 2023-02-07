@@ -29,12 +29,15 @@ const { tg } = useTelegram();
 
 
 service.interceptors.response.use(response => {
-    console.log(NProgress.status, "status");
+    console.log(response, "resonse");
     NProgress.done();
-    console.log(NProgress.status, "status");
     const messageNotFoundStore = useMessageNotFoundStore();
     messageNotFoundStore.setIsLoading(false);
     tg.MainButton.hideProgress();
+    const router = useRouter();
+    if(response.status == 401) {
+        router.push('/login');
+    }
     return response
 }, error => {
     NProgress.done();
@@ -44,8 +47,10 @@ service.interceptors.response.use(response => {
     messageNotFoundStore.setIsLoading(false);
     console.log('err' + error) // for debug
     const router = useRouter();
+    console.log(error, "resonse");
     if(error.response.status == 401) {
-        router.push('/login');
+        localStorage.removeItem('token');
+        location.reload();
     }
     return Promise.reject(error)
 })

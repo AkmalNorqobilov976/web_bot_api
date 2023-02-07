@@ -62,9 +62,9 @@ export default defineComponent({
             transactionsStore.getTransactions()
                 .catch(error => {
                     toastStore.showToastAsAlert({
-                        message: error.response.data.message,
+                        message: "Nimadir xato ketdi",
                         type: 'error',
-                        delayTime: 1000
+                        delayTime: 3000
                     })
                 })
         }

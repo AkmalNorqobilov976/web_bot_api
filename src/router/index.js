@@ -274,7 +274,8 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
     console.log(to.fullPath);
     // localStorage.setItem('last-route', to.fullPath)
-    if(!getToken() && to.meta.requiresAuth) {
+    if(!getToken()) {
+        console.log(getToken(), "tokencha");
         
         
         if(to.path !== '/login') {
