@@ -54,11 +54,17 @@
                 <span> uzs</span>
             </form>
             <div class="payment-form__suggestions">
-                <span @click="paymentForm.amount = 100000" class="payment-form__suggestions-item">
-                    100,000 uzs
+                <span @click="paymentForm.amount = authStore.$state.userInfo.balance * 0.1" class="payment-form__suggestions-item">
+                    10%
                 </span>
-                <span @click="paymentForm.amount = 500000" class="payment-form__suggestions-item">
-                    500,000 uzs
+                <span @click="paymentForm.amount = authStore.$state.userInfo.balance * 0.2" class="payment-form__suggestions-item">
+                    25%
+                </span>
+                <span @click="paymentForm.amount = authStore.$state.userInfo.balance * 0.5" class="payment-form__suggestions-item">
+                    50%
+                </span>
+                <span @click="paymentForm.amount = authStore.$state.userInfo.balance * 0.75" class="payment-form__suggestions-item">
+                    100%
                 </span>
             </div>
         </section>
@@ -382,7 +388,7 @@ export default {
             
             &__suggestions {
                 display: grid;
-                grid-template-columns: 1fr 1fr;
+                grid-template-columns: 1fr 1fr 1fr 1fr;
                 text-align: center;
                 padding: 0 1rem;
                 gap: 1rem;
