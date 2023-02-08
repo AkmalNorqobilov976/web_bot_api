@@ -3,6 +3,7 @@ import { useToastStore } from "@/store/useToastStore"
 export const useCopyToClipboard = () => {
     const toastStore = useToastStore();
     const copyToClipboard = (e, text, inputE) => {
+        console.log(inputE);
         navigator.clipboard.writeText(text)
         .then(() => {
             toastStore.showToastAsAlert({
@@ -11,14 +12,9 @@ export const useCopyToClipboard = () => {
                 type: 'copy'
             })
         })
-        .catch((error) => {
+        .catch(() => {
             inputE.select();
-            toastStore.showToastAsAlert({
-                    message: error.message,
-                    delayTime: 3000,
-                    type: 'copy'
-                })
-            })
+        })
     }
 
     return {
