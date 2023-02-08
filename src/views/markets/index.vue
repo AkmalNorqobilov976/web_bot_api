@@ -60,7 +60,7 @@ export default defineComponent({
         }
 
         watch(route, (newValue) => {
-            getProducts(newValue.params.status, query);
+            getProducts(newValue.params.status, query.value);
         }, {
             immediate: true,
             deep: true
