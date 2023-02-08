@@ -147,7 +147,7 @@ export default {
             
             paymentForm[key] = e.target.innerText
         }
-        console.log("salom".slice(0, 4))
+
         watch(paymentForm, (newValue) => {
             if(newValue.card_number.length == 17) {
                 paymentForm.value = newValue.card_number.slice(0, 16)
