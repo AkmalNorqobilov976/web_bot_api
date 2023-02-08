@@ -17,7 +17,7 @@
                         class="stream-name__button-grp--btn--icon"
                         @click="copyToClipboard($event, streamInfo.name)"
                     /> 
-                    Nusxalash
+                    Nusxalash 
                 </button>
                 <button 
                     @click="openPost"
