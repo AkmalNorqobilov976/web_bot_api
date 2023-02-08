@@ -167,6 +167,7 @@ import CustomConfirm from '@/components/CustomConfirm.vue'
 import router from '@/router';
 import { useTelegram } from '@/composables/useTelegram';
 import { useLastRoute } from '@/composables/useLastRoute';
+import { useCopyToClipboard } from '@/composables/useCopyToClipboard';
 export default defineComponent({
     setup() {
         useLastRoute().setLastRoute();
@@ -189,26 +190,7 @@ export default defineComponent({
             })
         }
         const streamInfo = ref(streamsStore.stream);
-        const copyToClipboard = (e, text) => {
-            navigator.clipboard.writeText(text).then(() => {
-                toastStore.$patch({
-                    x: `${e.clientX}px`,
-                    y: `${e.clientY}px`,
-                    isShownToast: true,
-                    message: "Nusxalandi",
-                    type: "",
-                    width: 70,
-                    icon: true
-                });
-    
-                setTimeout(() => {
-                    toastStore.$patch({
-                        isShownToast: false
-                    });
-                }, 800) 
-            }) 
-        }
-
+        const { copyToClipboard } = useCopyToClipboard();
         const openPost = () => {
             window.open('https://t.me/Indonesia_Javascript')
         }
