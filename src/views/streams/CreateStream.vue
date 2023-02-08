@@ -1,6 +1,6 @@
 <template>
     <market-card :cardData="categoriesStore.$state.selectedProduct" :isShowBtn="false"/>
-    <button @click="addStream" >Send</button>
+    
     <section class="stream-name">
         <form @submit.prevent="">
             <label class="stream-name__title">Oqim nomi</label>
@@ -125,8 +125,7 @@ export default {
         return {
             categoriesStore,
             labelMessage,
-            streamsStore,
-             addStream
+            streamsStore
         }
     },
 }
