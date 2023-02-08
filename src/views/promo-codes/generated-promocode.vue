@@ -91,11 +91,13 @@ export default {
         &__card {
             color: $white;
             box-sizing: content-box;
-            display: block;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             background: url('@/assets/images/promo-kod.png');
             background-size: 100% 100%;
             font-weight: 700;
-            height: 14rem;
+            height: 8rem;
             padding: 5rem -0rem;
             margin: 0 -1rem;
             padding-right: 5.8rem;
