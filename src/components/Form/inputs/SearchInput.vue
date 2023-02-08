@@ -6,6 +6,7 @@
             type="text" 
             :value="modelValue"
             @input="updateModel($event)" 
+            @keydown.enter="searchFunction"
             v-bind="$attrs"
         />
     </div>

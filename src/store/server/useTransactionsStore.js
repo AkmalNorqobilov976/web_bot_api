@@ -7,9 +7,9 @@ export const useTransactionsStore = defineStore('transaction', {
     }),
 
     actions: {
-        getTransactions() {
+        getTransactions(query) {
             return new Promise((resolve, reject) => {
-                adminTransactions()
+                adminTransactions(query)
                     .then(response => {
                         this.transactions = response.data.data;
                         resolve(true);

@@ -56,7 +56,7 @@ export default defineComponent({
         }
 
         const searchFunction = () => {
-            getProducts(route.params.status, query)
+            getProducts(route.params.status, query.value)
         }
 
         watch(route, (newValue) => {

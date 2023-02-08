@@ -5,7 +5,8 @@
                 <div>
                     <search-input 
                         placeholder="Qidirish"
-                        v-model="good"
+                        :searchFunction="searchFunction"
+                        v-model="query"
                     />
                 </div>
             </form>
@@ -43,7 +44,7 @@ import SearchInput from '@/components/Form/inputs/SearchInput.vue'
 import InfoCard from '@/components/cards/InfoCard.vue'
 // import BarChart from '@/components/charts/BarChart.vue'
 import BalanceHistoryListComponent from '@/components/payments/BalanceHistoryListComponent.vue'
-import { defineComponent, onBeforeMount, onMounted } from 'vue-demi'
+import { defineComponent, onBeforeMount, ref } from 'vue-demi'
 import { useToastStore } from '@/store/useToastStore'
 import { useWithdrawsStore } from '@/store/server/useWithdrawsStore'
 import { useBackButton } from '@/composables/useBackButton'
@@ -56,11 +57,12 @@ export default defineComponent({
         const toastStore = useToastStore();
         const withdrawsStore = useWithdrawsStore()
         const transactionsStore = useTransactionsStore();
+        const query = ref("");
         const { backButton } = useBackButton();
         useLastRoute().setLastRoute();
         backButton('/')
-        const getWithDraws = () => {
-            transactionsStore.getTransactions()
+        const getWithDraws = (query) => {
+            transactionsStore.getTransactions(query)
                 .catch(error => {
                     toastStore.showToastAsAlert({
                         message: "Nimadir xato ketdi",
@@ -70,12 +72,17 @@ export default defineComponent({
                 })
         }
 
+        const searchFunction = () => {
+            getWithDraws(query.value)
+        }
         onBeforeMount(() => {
             getWithDraws();
         })
 
         return {
-            transactionsStore
+            transactionsStore,
+            searchFunction,
+            query
         }
     },
      data: () => ({
@@ -102,7 +109,7 @@ export default defineComponent({
         SearchInput,
         InfoCard,
         BarChart,
-        MessageNotFound,
+        MessageNotFound
         // ResponsiveLineChart,
         // BarChart,
     }

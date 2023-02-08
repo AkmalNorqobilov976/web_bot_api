@@ -14,13 +14,16 @@ export function adminOrders({status}) {
 }
 
 export function adminProducts(categoryId, query) {
+    let urlParams = "?"
+    if(categoryId) {
+        urlParams += `category_id=${categoryId}`
+    }
+    if(query) {
+        urlParams = `query=${query}`
+    }
     return request({
-        url: `${URI}/products`,
+        url: `${URI}/products/?${urlParams}`,
         method: 'get',
-        data: {
-            category_id: categoryId,
-            query: query?.value
-        }
     });
 }
 
@@ -105,9 +108,13 @@ export function adminWithdraws() {
     });
 }
 
-export function adminTransactions() {
+export function adminTransactions(query) {
+    let urlParams = "?";
+    if(query) {
+        urlParams += `query=${query}`
+    }
     return request({
-        url: `${URI}/transactions`,
+        url: `${URI}/transactions${urlParams}`,
         method: "get"
     });
 }
