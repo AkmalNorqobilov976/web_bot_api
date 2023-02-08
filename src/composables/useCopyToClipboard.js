@@ -6,11 +6,10 @@ export const useCopyToClipboard = () => {
             
         navigator.clipboard.writeText(text)
             .then(() => {
-                toastStore.showToast({
-                    x: e.clientX,
-                    y: e.clientY,
+                toastStore.showToastAsAlert({
                     message: "Nusxalandi",
-                    delayTime: 3000
+                    delayTime: 3000,
+                    type: 'copy'
                 })
             })
     }
