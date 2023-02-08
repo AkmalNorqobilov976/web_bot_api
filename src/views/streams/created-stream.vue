@@ -136,12 +136,14 @@ import { getAdminStream } from '@/api/advertiserApi';
 import { useRoute } from 'vue-router';
 import { useToastStore } from '@/store/useToastStore';
 import { useLastRoute } from '@/composables/useLastRoute';
+import { useCopyToClipboard } from '@/composables/useCopyToClipboard';
 export default defineComponent({
     setup() {
         const { backButton } = useBackButton()
         const categoriesStore = useCategoriesStore();
         const route = useRoute();
         const toastStore = useToastStore();
+        const copyToClipboard = useCopyToClipboard();
         backButton('/markets/preview/all')
         useLastRoute().setLastRoute();
         const streamInfo = ref({
@@ -165,30 +167,10 @@ export default defineComponent({
                 })
         }
 
-        const copyToClipboard = (e, text) => {
-            navigator.clipboard.writeText(text).then(() => {
-                toastStore.$patch({
-                    x: `${e.clientX}px`,
-                    y: `${e.clientY}px`,
-                    isShownToast: true,
-                    message: "Nusxalandi",
-                    type: "",
-                    width: 70,
-                    icon: true
-                });
-    
-                setTimeout(() => {
-                    toastStore.$patch({
-                        isShownToast: false
-                    });
-                }, 800) 
-            }) 
-        }
-
         const openPost = () => {
             window.open('https://t.me/Indonesia_Javascript')
         }
-
+        
         return {
             categoriesStore,
             copyToClipboard,
