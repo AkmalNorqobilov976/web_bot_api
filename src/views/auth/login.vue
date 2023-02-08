@@ -1,6 +1,7 @@
 <template>
     <div class="login">
         <p class="login__title">Tizimga kirish</p>
+        <p class="login__subtitle">Doimiy telefon raqamingizni kiriting:</p>
         <form @submit.prevent="sendPhoneNumber" class="login__form">
             <div class="login__form--phone">
                 <span>+998</span>
@@ -9,6 +10,7 @@
                     type="text" 
                     ref="phoneInput"
                     placeholder="00 000 00 00"
+                    v-mask="`{{99}} {{999}}-{{99}}-{{99}}`"
                     v-model="userInfo.phone"
                     @input="onPhoneInput($event)"
                 />
@@ -30,14 +32,13 @@
 </template>
 
 <script>
-import { reactive, ref } from '@vue/reactivity'
+import { reactive } from '@vue/reactivity'
 import { useAuthStore } from '@/store/authStore';
 import { useRouter } from 'vue-router';
-import { defineComponent, onMounted, onUnmounted, watch, watchEffect } from 'vue-demi';
-import { usePhoneNumberPatternMatch } from '@/composables/usePhoneNumberPatternMatch'
+import { defineComponent, onMounted, onUnmounted, watchEffect } from 'vue-demi';
 import { useTelegram } from '@/composables/useTelegram';
 import { sendPhone } from '@/api/authApi'
-import { setToken, getToken } from '@/utils/localStorage';
+import { getToken } from '@/utils/localStorage';
 import { useToastStore } from '@/store/useToastStore';
 export default defineComponent( {
     mounted() {
@@ -60,7 +61,6 @@ export default defineComponent( {
         }
       
         const onPhoneInput = ($event) => {
-            $event.target.value = usePhoneNumberPatternMatch($event.target.value);
             if(!$event.target.value) {
                 userInfo.phone = $event.target.value;
                 tgSetParamsToMainButton({
@@ -158,10 +158,18 @@ export default defineComponent( {
 
         &__title {
             margin: 1.3rem .5rem;
-            color: $blue;
-            font-size: 1.5rem;
+            color: $black;
+            font-size: 1.7rem;
+            font-weight: 600;
+            text-align: center;
         }
         
+        &__subtitle {
+            font-size: 1.5rem;
+            color: $gray;
+            text-align: center;
+            font-weight: 400;
+        }
         &__form {
             input[type="text"] {
                 border: none;

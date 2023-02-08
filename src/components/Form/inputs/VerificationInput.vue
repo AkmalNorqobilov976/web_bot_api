@@ -113,19 +113,24 @@ function onPaste(event) {
 form {
   display: flex;
   flex-direction: row;
-  gap: 18px;
+  height: 5.6rem;
+  gap: 1.5rem;
 }
 input[type="number"] {
   font-size: 2rem;
   padding: 1.65rem 0;
+  width: 4.8rem !important;
   text-align: center;
   font-weight: 500;
   border-radius: .8rem;
   border: .1rem solid rgba($color: $blue, $alpha: .5);
   caret-color: transparent !important;
   outline: none;
+  &:focus {
+      border: .1rem solid rgba($color: $blue, $alpha: 1) !important;
+  }
     &.filled-input {
-        border: .1rem solid rgba($color: $blue, $alpha: 1) !important;
+        border: .1rem solid rgba($color: $blue, $alpha: .6) !important;
     }
 }
 /* Chrome, Safari, Edge, Opera */

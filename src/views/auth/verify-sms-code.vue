@@ -2,9 +2,14 @@
     <div class="login">
         <form @submit.prevent="sendCode" class="login__form">
             <div class="login__form--verification">
-                <p class="login__form--verification--title">SMS kod yuborildi</p>
+                <lock-icon class="login__form--verification--lock-icon"/>
+                <p class="login__form--verification--title">Kodni kiriting !</p>
                 <p class="login__form--verification--subtitle">
-                    SMS kod {{auth.userInfo.phone}} raqamiga yuborildi
+                    SMS kod <input 
+                        v-autowidth 
+                        :value="auth.userInfo.phone"
+                        v-mask="`+998 {{99}} {{999}}-{{99}}-{{99}}`"
+                    /> raqamiga yuborildi
                 </p>
                 <verification-input/>
                 <p @click="$router.push('/login')" class="login__form--verification--btn">Nomerni o'zgartirish</p>
@@ -22,6 +27,7 @@ import { defineComponent, onMounted, onUnmounted, watchEffect } from 'vue-demi';
 import { useTelegram } from '@/composables/useTelegram';
 import { verifyCode } from '@/api/authApi'
 import { setToken } from '@/utils/localStorage';
+import LockIcon from '@/assets/icons/LockIcon.vue'
 import { useToastStore } from '@/store/useToastStore';
 export default defineComponent( {
     setup() {
@@ -104,7 +110,8 @@ export default defineComponent( {
         }
     },
     components: {
-        VerificationInput
+        VerificationInput,
+        LockIcon
     }
 })
 </script>
@@ -206,6 +213,10 @@ export default defineComponent( {
 
             &--verification {
                 text-align: center;
+                &--lock-icon {
+                    margin-top: 4.2rem;
+                    margin-bottom: 2.8rem;
+                }
                 &--title {
                     font-size: 1.7rem;
                     font-weight: 600;
@@ -215,6 +226,14 @@ export default defineComponent( {
                 &--subtitle {
                     font-size: 1.5rem;
                     color: $gray;
+                    input {
+                        font-size: 1.5rem;
+                        color: $gray;
+                        display: inline;
+                        border: none;
+                        outline: none;
+                        max-width: min-content;
+                    }
                 }
                 &--btn {
                     color: $blue;
