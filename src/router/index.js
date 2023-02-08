@@ -64,7 +64,7 @@ const routes = [
             component: () => import('@/views/queries/tabs/accepted.vue')
         },
         {
-            path: "active",
+            path: "sent",
             name: "",
             meta: {
                 requiresAuth: true
@@ -72,7 +72,7 @@ const routes = [
             component: () => import('@/views/queries/tabs/active.vue')
         },
         {
-            path: "deliveried",
+            path: "delivered",
             name: "",
             meta: {
                 requiresAuth: true

@@ -1,31 +1,31 @@
 <template>
     <main class="streams">
         <div>
-              <article 
-            v-for="(item, i) in streamsStore.$state.streams" 
-            :key="i" 
-            class="streams-list" 
-            @click="$router.push({name: 'stream-preview', params: {id: item.id}})"
-        >
-            <div class="streams-list__image">
-                <img :src="item.product.image ? item.product.image : $noImage" alt="none">
-            </div>
-            <div class="streams-list__info">
-                <div class="streams-list__info--header">
-                    {{ item.name }} 
-                    <span>
-                        <i class="ri-eye-line"></i>
-                        {{ item.visits }}
-                    </span>
+            <article 
+                v-for="(item, i) in streamsStore.$state.streams" 
+                :key="i" 
+                class="streams-list" 
+                @click="$router.push({name: 'stream-preview', params: {id: item.id}})"
+            >
+                <div class="streams-list__image">
+                    <img :src="item.product.image ? item.product.image : $noImage" alt="none">
                 </div>
-                <div class="streams-list__info--text">
-                    <div class="streams-list__info--text--context">
-                        {{ item.product.title }}
+                <div class="streams-list__info">
+                    <div class="streams-list__info--header">
+                        {{ item.name }} 
+                        <span>
+                            <i class="ri-eye-line"></i>
+                            {{ item.visits }}
+                        </span>
                     </div>
-                    <i class="ri-arrow-right-s-line"></i>
+                    <div class="streams-list__info--text">
+                        <div class="streams-list__info--text--context">
+                            {{ item.product.title }}
+                        </div>
+                        <i class="ri-arrow-right-s-line"></i>
+                    </div>
                 </div>
-            </div>
-        </article>
+            </article>
         </div>
         <message-not-found v-if="!streamsStore.$state.streams.length"/>
     </main>

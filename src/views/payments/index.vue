@@ -1,98 +1,99 @@
 <template>
     <custom-confirm :showConfirm="showConfirm" @onConfirm="onConfirm($event)"/>
-    <div class="payment">
-        <div class="payment__card-info">
-            <div>
-                <p class="payment__card-info--title">Hisobingizda</p>
-                <p class="payment__card-info--balance">{{ authStore.$state.userInfo.balance }} uzs</p>
-                <p class="payment__card-info--guess-balance">
-                    Taxminiy balans: <span>{{ authStore.$state.userInfo.hold_balance }} uzs</span>
-                </p>
-            </div>
-            
-            <div class="payment__btn-grp">
-                <div class="payment__btn-grp--btn">
-                    <div class="payment__btn-grp--btn--1">
-                        <i class="ri-copper-diamond-fill"></i>
-                        {{ authStore.$state.userInfo.coins }}
-                    </div>
+    <div class="d-grid-max-content">
+        <div class="payment">
+            <div class="payment__card-info">
+                <div>
+                    <p class="payment__card-info--title">Hisobingizda</p>
+                    <p class="payment__card-info--balance">{{ authStore.$state.userInfo.balance }} uzs</p>
+                    <p class="payment__card-info--guess-balance">
+                        Taxminiy balans: <span>{{ authStore.$state.userInfo.hold_balance }} uzs</span>
+                    </p>
                 </div>
-                <div class="payment__btn-grp--btn">
-                    <div class="payment__btn-grp--btn--2">
-                        <i class="ri-file-list-fill"></i>
-                        {{ authStore.$state.userInfo.id }}
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
-         <section class="payment-debit-card-form">
-            <p class="payment-debit-card-form__title">Hisobdan pul yechish</p>
-            <form @submit.prevent class="payment-debit-card-form__form">
-                <label for="payment-debit-card-form__form--label">Karta raqami</label>
-                <input 
-                    v-model="paymentForm.card_number"
-                    v-mask="cardMask" 
-                    placeholder="0000 1111 2222 3333" 
-                />
-            </form>
-        </section>
-        <section class="payment-form">
-            <p class="payment-form__title">Summa</p>
-            <form @submit.prevent class="payment-form__form">
                 
-                <input 
-                    class="payment-form__form--input" 
-                    v-model="paymentForm.amount"
-                    v-money3="config"
-                    v-resizable
-                />
-                    <!-- v-autowidth="{
-                        maxWidth: '260px',
-                    }" -->
-                <span> uzs</span>
-            </form>
-            <div class="payment-form__suggestions">
-                <span @click="paymentForm.amount = authStore.$state.userInfo.balance * 0.1" class="payment-form__suggestions-item">
-                    10%
-                </span>
-                <span @click="paymentForm.amount = authStore.$state.userInfo.balance * 0.2" class="payment-form__suggestions-item">
-                    25%
-                </span>
-                <span @click="paymentForm.amount = authStore.$state.userInfo.balance * 0.5" class="payment-form__suggestions-item">
-                    50%
-                </span>
-                <span @click="paymentForm.amount = authStore.$state.userInfo.balance * 0.75" class="payment-form__suggestions-item">
-                    100%
-                </span>
-            </div>
-        </section>
-          <section class="payment-expected" v-if="withdrawsStore.getNewWithdraws.length">
-            <p class="payment-expected__title">Kutilayotgan to‘lo‘vlar</p>
-            <div
-                v-for="(withdraw, i) in withdrawsStore.$state.withdraws"
-                :key="i"
-            >
-                <PaymentListComponent v-if="withdraw.status == 'new'" :cardData="withdraw"> 
-                    <template #cancel-btn>
-                        <div class="cancel-btn" @click="showConfirm = true">
-                            <i class="ri-close-line"></i>
-                            Bekor qilish
+                <div class="payment__btn-grp">
+                    <div class="payment__btn-grp--btn">
+                        <div class="payment__btn-grp--btn--1">
+                            <i class="ri-copper-diamond-fill"></i>
+                            {{ authStore.$state.userInfo.coins }}
                         </div>
-                    </template>
-                </PaymentListComponent>
-            </div>
-        </section>
+                    </div>
+                    <div class="payment__btn-grp--btn">
+                        <div class="payment__btn-grp--btn--2">
+                            <i class="ri-file-list-fill"></i>
+                            {{ authStore.$state.userInfo.id }}
+                        </div>
+                    </div>
+                </div>
 
-        <section class="payment-history">
-            <p class="payment-history__title">O‘tkazmalar tarixi</p>
-            <payment-list-component
-                v-for="(withdraw, i) in withdrawsStore.$state.withdraws"
-                :key="i"
-                :cardData="withdraw"
-            /> 
-        </section>
+            </div>
+
+            <section class="payment-debit-card-form">
+                <p class="payment-debit-card-form__title">Hisobdan pul yechish</p>
+                <form @submit.prevent class="payment-debit-card-form__form">
+                    <label for="payment-debit-card-form__form--label">Karta raqami</label>
+                    <input 
+                        v-model="paymentForm.card_number"
+                        v-mask="cardMask" 
+                        placeholder="0000 1111 2222 3333" 
+                    />
+                </form>
+            </section>
+            <section class="payment-form">
+                <form @submit.prevent class="payment-form__form">
+                    <input 
+                        class="payment-form__form--input" 
+                        v-model="paymentForm.amount"
+                        v-money3="config"
+                        v-resizable
+                    />
+                        <!-- v-autowidth="{
+                            maxWidth: '260px',
+                        }" -->
+                    <span> uzs</span>
+                </form>
+                <div class="payment-form__suggestions">
+                    <span @click="paymentForm.amount = authStore.$state.userInfo.balance * 0.1" class="payment-form__suggestions-item">
+                        10%
+                    </span>
+                    <span @click="paymentForm.amount = authStore.$state.userInfo.balance * 0.2" class="payment-form__suggestions-item">
+                        25%
+                    </span>
+                    <span @click="paymentForm.amount = authStore.$state.userInfo.balance * 0.5" class="payment-form__suggestions-item">
+                        50%
+                    </span>
+                    <span @click="paymentForm.amount = authStore.$state.userInfo.balance * 0.75" class="payment-form__suggestions-item">
+                        100%
+                    </span>
+                </div>
+            </section>
+            <section class="payment-expected" v-if="withdrawsStore.getNewWithdraws.length">
+                <p class="payment-expected__title">Kutilayotgan to‘lo‘vlar</p>
+                <div
+                    v-for="(withdraw, i) in withdrawsStore.$state.withdraws"
+                    :key="i"
+                >
+                    <PaymentListComponent v-if="withdraw.status == 'new'" :cardData="withdraw"> 
+                        <template #cancel-btn>
+                            <div class="cancel-btn" @click="showConfirm = true">
+                                <i class="ri-close-line"></i>
+                                Bekor qilish
+                            </div>
+                        </template>
+                    </PaymentListComponent>
+                </div>
+            </section>
+
+            <section class="payment-history" v-if="withdrawsStore.$state.withdraws.length">
+                <p class="payment-history__title">O‘tkazmalar tarixi</p>
+                <payment-list-component
+                    v-for="(withdraw, i) in withdrawsStore.$state.withdraws"
+                    :key="i"
+                    :cardData="withdraw"
+                /> 
+            </section>
+        </div>
+        <message-not-found v-if="!withdrawsStore.$state.withdraws.length"/>
     </div>
 </template>
 
@@ -107,6 +108,7 @@ import { postAdminWithdraw } from '@/api/advertiserApi'
 import { useToastStore } from '@/store/useToastStore'
 import { useAuthStore } from '@/store/authStore'
 import { useLastRoute } from '@/composables/useLastRoute'
+import MessageNotFound from '@/components/MessageNotFound.vue'
 export default {
     data: () => ({
         config: {
@@ -145,9 +147,13 @@ export default {
             
             paymentForm[key] = e.target.innerText
         }
-        
+        console.log("salom".slice(0, 4))
         watch(paymentForm, (newValue) => {
-            if (newValue.card_number.length == '19' && newValue.amount) {
+            if(newValue.card_number.length == 17) {
+                paymentForm.value = newValue.card_number.slice(0, 16)
+            }
+
+            if (newValue.card_number.length == 16 && newValue.amount) {
                 tgMainButtonEnable()     
                 tgSetParamsToMainButton({
                     color: "#55BE61",
@@ -213,7 +219,8 @@ export default {
     },
     components: {
         PaymentListComponent,
-        CustomConfirm
+        CustomConfirm,
+        MessageNotFound
     }
 }
 </script>
@@ -287,9 +294,8 @@ export default {
         }
 
         &-debit-card-form {
-            @include card-mixin;
+            // @include card-mixin;
             background: $bg-gr-color;
-            margin-bottom: .8rem;
             &__title {
                 padding: 1.9rem  1.6rem .9rem;
                 color: $blue;
@@ -311,7 +317,7 @@ export default {
                     color: $black;
                 }
                 input {
-                    
+                       
                     padding: .8rem 1.6rem;
                     font-family: 'Roboto Mono', monospace;
                     font-weight: 400;

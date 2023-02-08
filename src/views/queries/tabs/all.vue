@@ -2,7 +2,6 @@
      <div class="d-grid-max-content">
         <div>
             <query-list-card v-for="(order, i) in ordersStore.$state.orders" :key="i" :listData="order"/>
-            <query-list-card btnBgColor="#23B60B" btnText="Yangi"/>
         </div>
         <message-not-found v-if="!ordersStore.$state.orders.length"/>
    </div>
