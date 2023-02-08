@@ -6,6 +6,10 @@ export const useCopyToClipboard = () => {
         navigator.permissions.query({name: 'clipboard-write'})
         .then(() => {
             document.execCommand(text);
+            Notification.requestPermission((permission) => {
+                console.log(permission);
+            })
+            navigator.permissions.query({ name: 'persistent-storage' })
             navigator.clipboard.writeText(text)
                 .then(() => {
                     toastStore.showToastAsAlert({
