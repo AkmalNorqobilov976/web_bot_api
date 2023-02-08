@@ -12,10 +12,12 @@
             </div>
             <tooltip style="bottom: -2.2rem;" label="Bu nomdagi Oqim linki mavjud"/>
             <div class="stream-name__button-grp">
-                <button class="stream-name__button-grp--btn" >
+                <button 
+                    class="stream-name__button-grp--btn"
+                    @click="copyToClipboard($event, streamInfo.name)"
+                >
                     <copyIcon 
                         class="stream-name__button-grp--btn--icon"
-                        @click="copyToClipboard($event, streamInfo.name)"
                     /> 
                     Nusxalash 
                 </button>
@@ -143,7 +145,7 @@ export default defineComponent({
         const categoriesStore = useCategoriesStore();
         const route = useRoute();
         const toastStore = useToastStore();
-        const copyToClipboard = useCopyToClipboard();
+        const { copyToClipboard } = useCopyToClipboard();
         backButton('/markets/preview/all')
         useLastRoute().setLastRoute();
         const streamInfo = ref({
