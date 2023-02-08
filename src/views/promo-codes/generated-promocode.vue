@@ -149,6 +149,9 @@ export default {
             input {
                 flex: 1 1 auto;
                 background: inherit;
+                font-size: 1.5rem;
+                font-weight: 900;
+                color: black;
                 border: none;
                 outline: none;
             }
