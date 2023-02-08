@@ -192,13 +192,10 @@ export default {
                 card_number: paymentForm.card_number.split(' ').join(''), 
                 amount: paymentForm.amount 
             }).catch(error => {
-                toastStore.showToast({
-                    icon: "", 
-                    x: 0, 
-                    y: 0, 
-                    message: error.response.data.message, 
-                    delayTime: 1000,
-                    width: 100
+                toastStore.showToastAsAlert({
+                    message: error.response.data.message,
+                    delayTime: 3000,
+                    type: 'error'
                 });
             });
         }
