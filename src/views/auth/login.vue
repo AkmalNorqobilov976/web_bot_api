@@ -16,7 +16,7 @@
                 />
             </div>
 
-            <div class="login__form--is-agree" v-if="!auth.smsIsSent">
+            <div class="login__form--is-agree">
                 <input 
                     class="login__form--is-agree--input" 
                     type="checkbox" 
