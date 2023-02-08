@@ -87,7 +87,7 @@ export default defineComponent( {
                     smsIsSent: true,
                     userInfo: {
                         ...auth.$state,
-                        phone: `+998${userInfo.phone.split(' ').join('').split('-').join('')}`   
+                        phone: `${userInfo.phone.split(' ').join('').split('-').join('')}`   
                     }
                 });
                 router.push('/verify-sms-code');

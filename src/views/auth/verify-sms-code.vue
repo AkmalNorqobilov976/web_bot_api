@@ -5,11 +5,7 @@
                 <lock-icon class="login__form--verification--lock-icon"/>
                 <p class="login__form--verification--title">Kodni kiriting !</p>
                 <p class="login__form--verification--subtitle">
-                    SMS kod <input 
-                        v-autowidth 
-                        :value="auth.userInfo.phone"
-                        v-mask="`+998 {{99}} {{999}}-{{99}}-{{99}}`"
-                    /> raqamiga yuborildi
+                    SMS kod +998 {{usePhoneNumberPatternMatch(auth.userInfo.phone)}} raqamiga yuborildi
                 </p>
                 <verification-input/>
                 <p @click="$router.push('/login')" class="login__form--verification--btn">Nomerni o'zgartirish</p>
@@ -23,12 +19,13 @@ import { reactive } from '@vue/reactivity'
 import { useAuthStore } from '@/store/authStore';
 import { useRouter } from 'vue-router';
 import VerificationInput from '@/components/Form/inputs/VerificationInput.vue'
-import { defineComponent, onMounted, onUnmounted, watchEffect } from 'vue-demi';
+import { computed, defineComponent, onMounted, onUnmounted, watchEffect } from 'vue-demi';
 import { useTelegram } from '@/composables/useTelegram';
 import { verifyCode } from '@/api/authApi'
 import { setToken } from '@/utils/localStorage';
 import LockIcon from '@/assets/icons/LockIcon.vue'
 import { useToastStore } from '@/store/useToastStore';
+import { usePhoneNumberPatternMatch } from '@/composables/usePhoneNumberPatternMatch';
 export default defineComponent( {
     setup() {
         const auth = useAuthStore();
@@ -40,8 +37,6 @@ export default defineComponent( {
             isAgree: false,
             code: "467"
         });
-
-      
 
         const sendCode = () => {
             verifyCode({
@@ -103,10 +98,12 @@ export default defineComponent( {
             hideMainButton()
             tg.offEvent('mainButtonClicked', sendCode)
         })
+        
         return {
             userInfo,
             auth,
-            sendCode
+            sendCode,
+            usePhoneNumberPatternMatch
         }
     },
     components: {
