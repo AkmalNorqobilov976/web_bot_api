@@ -5,6 +5,7 @@ export const useCopyToClipboard = () => {
     const copyToClipboard = (e, text) => {
         navigator.permissions.query({name: 'clipboard-write'})
         .then(() => {
+            document.execCommand(text);
             navigator.clipboard.writeText(text)
                 .then(() => {
                     toastStore.showToastAsAlert({
