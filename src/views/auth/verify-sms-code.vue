@@ -40,7 +40,7 @@ export default defineComponent( {
 
         const sendCode = () => {
             verifyCode({
-                phone: auth.userInfo.phone,
+                phone: `+998${auth.userInfo.phone}`,
                 code: auth.$state.code
             }).then((response) => {
                 auth.$patch({
