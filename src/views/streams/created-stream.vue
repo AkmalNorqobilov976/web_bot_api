@@ -8,13 +8,13 @@
             <label class="stream-name__title">Oqim nomi</label>
             <!-- error-input class -->
             <div class="stream-name__input">
-                <input readonly type="text" v-model="streamInfo.name" placeholder="Misol uchun: 1-oqim linki" />
+                <input readonly type="text" ref="inputRef" v-model="streamInfo.name" placeholder="Misol uchun: 1-oqim linki" />
             </div>
             <tooltip style="bottom: -2.2rem;" label="Bu nomdagi Oqim linki mavjud"/>
             <div class="stream-name__button-grp">
                 <button 
                     class="stream-name__button-grp--btn"
-                    @click="copyToClipboard($event, streamInfo.name)"
+                    @click="copyToClipboard($event, streamInfo.name, $refs.inputRef)"
                 >
                     <copyIcon 
                         class="stream-name__button-grp--btn--icon"
