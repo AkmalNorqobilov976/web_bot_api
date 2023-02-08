@@ -177,6 +177,9 @@ export default {
         
         onMounted(() => {
             authStore.getUserInfo()
+                .then(() => {
+                    paymentForm.amount = authStore.$state.userInfo.balance;
+                })
             withdrawsStore.getWithdraws()
             tg.onEvent('mainButtonClicked', onPostAdminWithdraw)
         })
