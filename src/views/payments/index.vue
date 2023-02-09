@@ -1,10 +1,8 @@
 <template>
     <custom-confirm :showConfirm="showConfirm" @onConfirm="onConfirm($event)"/>
-    <!-- <div :class="{ error: v$.firstName.$errors.length }"> -->
 
     <div class="d-grid-max-content">
         <p style="font-size: 3rem;">
-            {{ $v.card_number.$errors.length }}
         </p>
         <div class="payment">
             <div class="payment__card-info">
