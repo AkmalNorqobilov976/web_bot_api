@@ -39,6 +39,10 @@ export function useTelegram() {
     const tgMainButtonEnable = () => {
         tg.MainButton.enable();
     }
+
+    const notificationOccurred = type => {
+        tg.HapticFeedback.notificationOccurred(type);
+    }
     
     const tgButtonOnClick = (cbF) => {
         try {
@@ -64,6 +68,7 @@ export function useTelegram() {
         showMainButton,
         hideMainButton,
         tgMainButtonEnable,
-        tgMainButtonDisable
+        tgMainButtonDisable,
+        notificationOccurred
     }
 }

@@ -13,6 +13,7 @@ import { useMessageNotFoundStore } from './store/useMessageNotFoundStore';
 // import Loading from '@/components/Loading.vue'
 import MessageNotFound from './components/NetworkError.vue';
 import nprogress from 'nprogress';
+import { useTelegram } from './composables/useTelegram';
 
     export default defineComponent({
         components: {
@@ -22,6 +23,8 @@ import nprogress from 'nprogress';
         },
 
         setup() {
+            const { notificationOccurred } = useTelegram();
+            notificationOccurred('error');
             const messageNotFoundStore = useMessageNotFoundStore();
 
             return {
