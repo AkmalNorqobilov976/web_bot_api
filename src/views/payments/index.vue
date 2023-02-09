@@ -1,6 +1,11 @@
 <template>
     <custom-confirm :showConfirm="showConfirm" @onConfirm="onConfirm($event)"/>
+    <!-- <div :class="{ error: v$.firstName.$errors.length }"> -->
+
     <div class="d-grid-max-content">
+        <p style="font-size: 3rem;">
+            {{ $v.card_number.$errors.length }}
+        </p>
         <div class="payment">
             <div class="payment__card-info">
                 <div>
@@ -29,6 +34,7 @@
             </div>
 
             <section class="payment-debit-card-form">
+                {{ paymentForm.card_number.length }}
                 <p class="payment-debit-card-form__title">Hisobdan pul yechish</p>
                 <form @submit.prevent class="payment-debit-card-form__form">
                     <label for="payment-debit-card-form__form--label">Karta raqami</label>
@@ -36,6 +42,7 @@
                         v-model="paymentForm.card_number"
                         v-mask="cardMask" 
                         placeholder="0000 1111 2222 3333" 
+                        :class="{ 'shake error-text': $v.card_number.$errors.length }"
                     />
                 </form>
             </section>
@@ -109,19 +116,21 @@ import { useToastStore } from '@/store/useToastStore'
 import { useAuthStore } from '@/store/authStore'
 import { useLastRoute } from '@/composables/useLastRoute'
 import MessageNotFound from '@/components/MessageNotFound.vue'
+import { useVuelidate } from '@vuelidate/core'
+import { maxLength } from '@vuelidate/validators'
 export default {
     data: () => ({
         config: {
-          prefix: '',
-          suffix: '',
-          thousands: ',',
-          decimal: '.',
-          precision: 0,
-          disableNegative: false,
-          disabled: false,
-          min: null,
-          max: 10000000,
-          allowBlank: false,
+            prefix: '',
+            suffix: '',
+            thousands: ',',
+            decimal: '.',
+            precision: 0,
+            disableNegative: false,
+            disabled: false,
+            min: null,
+            max: 10000000,
+            allowBlank: false,
           minimumNumberOfCharacters: 0,
         }
     }),
@@ -133,13 +142,31 @@ export default {
             card_number: "",
             amount: "100"
         })
+        
+        const paymentFormValidationRules = {
+            card_number: {
+                maxLength: maxLength(16)
+            },
+            amount: {
+                maxLength: maxLength(8)
+            }
+        }
+        const $v = useVuelidate(paymentFormValidationRules, paymentForm)
         const onConfirm = (e) => {
             showConfirm.value = false;
         }
 
         const withdrawsStore = useWithdrawsStore();
         const { backButton } = useBackButton()
-        const { tg, tgSetParamsToMainButton, tgMainButtonDisable, tgMainButtonEnable, showMainButton, hideMainButton } = useTelegram();
+        const { 
+            tg, 
+            tgSetParamsToMainButton, 
+            tgMainButtonDisable, 
+            tgMainButtonEnable, 
+            showMainButton, 
+            hideMainButton, 
+            notificationOccurred 
+        } = useTelegram();
         const toastStore = useToastStore();
         const authStore = useAuthStore();
         backButton()
@@ -149,27 +176,28 @@ export default {
         }
 
         watch(paymentForm, (newValue) => {
-            if(newValue.card_number.length == 17) {
-                paymentForm.value = newValue.card_number.slice(0, 16)
-            }
-
-            if (newValue.card_number.length == 16 && newValue.amount) {
-                tgMainButtonEnable()     
-                tgSetParamsToMainButton({
-                    color: "#55BE61",
-                    textColor: "#ffffff",
-                    disabled: false
-                })           
-            } else {
-                showMainButton()
-                tgMainButtonDisable()                
-                tgSetParamsToMainButton({
-                    text: "Hisobni to‘ldirish",
-                    color: "#E4E6E4",
-                    textColor: "#8C8C8C",
-                    disabled: true
-                });
-            }
+            $v.value.$validate()
+                .then(res => {
+                    console.log(res);
+                    if(!res) {
+                        notificationOccurred('error')
+                        showMainButton()
+                        tgMainButtonDisable()                
+                        tgSetParamsToMainButton({
+                            text: "Hisobni to‘ldirish",
+                            color: "#E4E6E4",
+                            textColor: "#8C8C8C",
+                            disabled: true
+                        });
+                    } else {
+                        tgMainButtonEnable()     
+                        tgSetParamsToMainButton({
+                            color: "#55BE61",
+                            textColor: "#ffffff",
+                            disabled: false
+                        })           
+                    }
+                })
         }, {
             immediate: true
         })
@@ -203,7 +231,6 @@ export default {
             });
         }
 
-
         return {
             onConfirm,
             showConfirm,
@@ -212,7 +239,8 @@ export default {
             authStore,
             withdrawsStore,
             onPostAdminWithdraw,
-            cardMask
+            cardMask,
+            $v
         }
 
         
@@ -311,6 +339,7 @@ export default {
                 justify-items: flex-start;
                 // gap: 1rem;
                 font-size: 1.5rem;
+                overflow: hidden;
                 label {
                     font-size: 1.6rem;
                     padding: .4rem 1.6rem;
