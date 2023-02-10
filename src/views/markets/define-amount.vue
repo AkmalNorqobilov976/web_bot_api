@@ -5,7 +5,7 @@
             <article class="donation-header__note">
                 <p class="donation-header__note--title"> Diqqat eslatma! </p>
                 <div class="donation-header__note--description">
-                    Mahsulotga beriladigan chegirma birinchi mahsulotga 40.000 UZS gacha beriladi
+                    Mahsulotga beriladigan chegirma birinchi mahsulotga {{ categoriesStore.$state.selectedProduct.admin_fee }} UZS gacha beriladi
                 </div>
             </article>
         </header>
@@ -33,7 +33,7 @@
                 <i class="ri-price-tag-2-line"></i>
                 <div>
                     <p class="donation-footer__article--title">Maxsulot chegirma bilan:</p>
-                    <p class="donation-footer__article--info">365.000 so‘m</p>
+                    <p class="donation-footer__article--info">{{ computedProfit }} so‘m</p>
                 </div>
             </article>
         </footer>
@@ -51,7 +51,7 @@ import { useStreamsStore } from '@/store/server/useStreamsStore';
 import { useToastStore } from '@/store/useToastStore';
 import { useVuelidate } from '@vuelidate/core';
 import { maxValue } from '@vuelidate/validators';
-import { defineComponent, onMounted, onUnmounted, reactive, ref, watch } from 'vue'
+import { computed, defineComponent, onMounted, onUnmounted, reactive, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router';
 export default defineComponent ({
     setup() {
@@ -72,6 +72,9 @@ export default defineComponent ({
         }
         const defineAmountForm = reactive({
             discount: 0
+        })
+        const computedProfit = computed(() => {
+            return categoriesStore.selectedProduct.admin_fee - defineAmountForm.discount
         })
         const defineAmountFormValidationRule = {
             discount: {
@@ -173,7 +176,9 @@ export default defineComponent ({
             numberFormatterConfig,
             defineAmountConfig,
             isDefineAmountError,
-            defineAmountForm
+            defineAmountForm,
+            categoriesStore,
+            computedProfit
         }
     },
 })
