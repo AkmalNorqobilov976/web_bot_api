@@ -143,8 +143,7 @@ export default {
         }
         const paymentFormValidationRules = {
             card_number: {
-                required,
-                mustBeCool
+                maxLength: maxLength(16)
             },
             amount: {
                 maxLength: maxLength(10),
@@ -170,7 +169,6 @@ export default {
         } = useTelegram();
         backButton()
         const inputForm = (e, key) => {
-            
             paymentForm[key] = e.target.innerText
         }
 
