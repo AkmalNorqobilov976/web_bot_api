@@ -1,6 +1,6 @@
 <template>
     <div class="d-grid-max-content">
-        <div class="balance-history">
+        <div class="balance-history" ref="scrollComponent">
             <form @submit.prevent="">
                 <div>
                     <search-input 
@@ -44,7 +44,7 @@ import SearchInput from '@/components/Form/inputs/SearchInput.vue'
 import InfoCard from '@/components/cards/InfoCard.vue'
 // import BarChart from '@/components/charts/BarChart.vue'
 import BalanceHistoryListComponent from '@/components/payments/BalanceHistoryListComponent.vue'
-import { defineComponent, onBeforeMount, ref } from 'vue-demi'
+import { defineComponent, onBeforeMount, ref, onMounted, onUnmounted } from 'vue-demi'
 import { useToastStore } from '@/store/useToastStore'
 import { useWithdrawsStore } from '@/store/server/useWithdrawsStore'
 import { useBackButton } from '@/composables/useBackButton'
@@ -57,6 +57,7 @@ export default defineComponent({
         const toastStore = useToastStore();
         const withdrawsStore = useWithdrawsStore()
         const transactionsStore = useTransactionsStore();
+        const scrollComponent = ref(null);
         const query = ref("");
         const { backButton } = useBackButton();
         useLastRoute().setLastRoute();
@@ -78,11 +79,26 @@ export default defineComponent({
         onBeforeMount(() => {
             getWithDraws();
         })
+        onMounted(() => {
+            window.addEventListener('scroll', handleScroll)
+        })
+
+        onUnmounted(() => {
+            window.removeEventListener('scroll', handleScroll);
+        })
+
+        const handleScroll = (e) => {
+            let element = scrollComponent.value;
+            if(element?.getBoundingClientRect()?.bottom % window.innerHeight < 20) {
+                getWithDraws();
+            }
+        }
 
         return {
             transactionsStore,
             searchFunction,
-            query
+            query,
+            scrollComponent
         }
     },
      data: () => ({

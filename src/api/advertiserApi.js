@@ -35,9 +35,9 @@ export function adminCategories() {
     });
 }
 
-export function adminPromoCodes() {
+export function adminPromoCodes(page) {
     return request({
-        url: `${URI}/promo-codes`,
+        url: `${URI}/promo-codes?page=${page}`,
         method: 'get'
     });
 }
@@ -144,10 +144,10 @@ export function getProfile() {
 }
 
 
-export function adminStatistics(params) {
+export function adminStatistics(params, page) {
     const query = queryMaker(params)
     return request({
-        url: `${URI}/streams/statistics?${query}`,
+        url: `${URI}/streams/statistics?page=${page}${query}`,
         method: 'get'
     })
 }
