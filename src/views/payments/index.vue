@@ -33,7 +33,6 @@
 
             <section class="payment-debit-card-form">
                 <p class="payment-debit-card-form__title">Hisobdan pul yechish</p>
-                {{ paymentForm.card_number }}
                 <form @submit.prevent class="payment-debit-card-form__form">
                     <label for="payment-debit-card-form__form--label">Karta raqami</label>
                     <input 
@@ -113,7 +112,7 @@ import { useAuthStore } from '@/store/authStore'
 import { useLastRoute } from '@/composables/useLastRoute'
 import MessageNotFound from '@/components/MessageNotFound.vue'
 import { useVuelidate } from '@vuelidate/core'
-import { maxLength, maxValue } from '@vuelidate/validators'
+import { maxLength, maxValue, required } from '@vuelidate/validators'
 export default {
     
     setup() {
@@ -144,6 +143,7 @@ export default {
         }
         const paymentFormValidationRules = {
             card_number: {
+                required,
                 mustBeCool
             },
             amount: {
@@ -189,11 +189,13 @@ export default {
                         });
                     } else {
                         tgMainButtonEnable()     
-                        tgSetParamsToMainButton({
-                            color: "#55BE61",
-                            textColor: "#ffffff",
-                            disabled: false
-                        })           
+                        if(mustBeCool(newValue.card_number)) {
+                            tgSetParamsToMainButton({
+                                color: "#55BE61",
+                                textColor: "#ffffff",
+                                disabled: false
+                            })           
+                        }
                     }
                 })
         }, {
@@ -350,8 +352,10 @@ export default {
                     padding: .8rem 1.6rem;
                     font-family: 'Roboto Mono', monospace;
                     font-weight: 400;
-                    font-size: 2.6rem;
+                    font-size: 3.2rem;
                     width: 100%;
+                    word-spacing: -.5rem;
+                    letter-spacing: -.1rem;
                     border: none;
                     outline: none;
                     background: inherit;
