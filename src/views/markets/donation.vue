@@ -24,14 +24,14 @@
                 <span>uzs</span>
             </form>
             <div class="donation-form__suggestions">
-                <span @click="streamForm.charity = 1000" class="donation-form__suggestions-item">
-                    100 uzs
+                <span @click="donationForm.charity = 1000" class="donation-form__suggestions-item">
+                    1000 uzs
                 </span>
-                <span @click="streamForm.charity = 3000" class="donation-form__suggestions-item">
-                    300 uzs
+                <span @click="donationForm.charity = 3000" class="donation-form__suggestions-item">
+                    3000 uzs
                 </span>
-                <span @click="streamForm.charity = 5000" class="donation-form__suggestions-item">
-                    500 uzs
+                <span @click="donationForm.charity = 5000" class="donation-form__suggestions-item">
+                    5000 uzs
                 </span>
             </div>
         </section>
