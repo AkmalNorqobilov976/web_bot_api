@@ -179,7 +179,6 @@ export default {
                     console.log(res);
                     if(!res) {
                         notificationOccurred('error')
-                        showMainButton()
                         tgMainButtonDisable()                
                         tgSetParamsToMainButton({
                             text: "Hisobni to‘ldirish",
@@ -202,6 +201,7 @@ export default {
         
         
         onMounted(() => {
+            showMainButton()
             authStore.getUserInfo()
                 .then(() => {
                     paymentForm.amount = authStore.$state.userInfo.balance;
