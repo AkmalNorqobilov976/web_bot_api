@@ -144,14 +144,19 @@ export default defineComponent ({
                     notificationOccurred('error')
                     isDefineAmountError.value = true;
                     tgSetParamsToMainButton({
-                        disabled: false,
+                        disabled: true,
                         text: "Oqim yaratish",
                         textColor: "#fff",
                         color: "#55BE61"
                     })
                 } else {
                     isDefineAmountError.value = false;
-                    setParams()
+                    tgSetParamsToMainButton({
+                        disabled: true,
+                        text: "Oqim yaratish",
+                        textColor: "#8C8C8C",
+                        color: "#E4E6E4"
+                    })
                     }
                 })
         })
