@@ -13,12 +13,14 @@
         <section class="donation-form">
             <p class="donation-form__title">Summani yozing</p>
             <form @submit.prevent class="donation-form__form">
+                {{ streamsStore.$vToAdd.charity }}
                 <input 
                     class="donation-form__form--input" 
                     v-model="streamsStore.$state.streamForm.charity"
                     v-resizable
                     placeholder="10,000"
                     v-money3="numberFormatterConfig"
+                    :class="{'shake error-text': streamsStore.$vToAdd.charity.$errors.length}"
                 />
                 <span>uzs</span>
             </form>
@@ -48,7 +50,7 @@ import { useTelegram } from '@/composables/useTelegram';
 import { useVMoney } from '@/composables/useVMoney';
 import { useStreamsStore } from '@/store/server/useStreamsStore';
 import { useToastStore } from '@/store/useToastStore';
-import { defineComponent, onMounted, onUnmounted, reactive, watch } from 'vue'
+import { defineComponent, onMounted, onUnmounted, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router';
 export default defineComponent ({
     props: {
@@ -128,8 +130,19 @@ const addStream = () => {
             tg.onEvent('mainButtonClicked', addStream)
             // categoriesStore.$state.
         })
-        watch(streamsStore, () => {
-            setParams()
+        watch(streamsStore.streamForm, () => {
+            streamsStore.$vToAdd.$validate()
+                .then(res => {
+                    console.log(res);
+                    if(!res) {
+                        tgSetParamsToMainButton({
+                            disabled: false,
+                            text: "Oqim yaratish",
+                            textColor: "#fff",
+                            color: "#55BE61"
+                        })
+                    }    
+                })
         })
         const inputForm = (e, key) => {
             streamsStore.$state.streamForm[key] = e.target.innerText

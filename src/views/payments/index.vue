@@ -48,13 +48,9 @@
                     <input 
                         class="payment-form__form--input" 
                         v-model="paymentForm.amount"
-                        v-money3="config"
                         v-resizable
                         :class="{ 'shake error-text': $v.amount.$errors.length }"
                     />
-                        <!-- v-autowidth="{
-                            maxWidth: '260px',
-                        }" -->
                     <span> uzs</span>
                 </form>
                 <div class="payment-form__suggestions">
@@ -115,7 +111,7 @@ import { useAuthStore } from '@/store/authStore'
 import { useLastRoute } from '@/composables/useLastRoute'
 import MessageNotFound from '@/components/MessageNotFound.vue'
 import { useVuelidate } from '@vuelidate/core'
-import { maxLength } from '@vuelidate/validators'
+import { maxLength, maxValue } from '@vuelidate/validators'
 export default {
     data: () => ({
         config: {
@@ -138,15 +134,16 @@ export default {
         useLastRoute().setLastRoute();
         const paymentForm = reactive({
             card_number: "",
-            amount: "100"
+            amount: "0"
         })
         
         const paymentFormValidationRules = {
             card_number: {
-                maxLength: maxLength(16)
             },
             amount: {
-                maxLength: maxLength(10)
+                maxLength: maxLength(10),
+                maxValue: maxValue(authStore.$state.userInfo.balance)
+
             }
         }
         const $v = useVuelidate(paymentFormValidationRules, paymentForm)

@@ -1,18 +1,37 @@
 import { adminStreams, updateAdminStream } from "@/api/advertiserApi";
 import { defineStore } from "pinia";
-
+import { useVuelidate } from '@vuelidate/core'
+import { maxLength, minLength, required } from "@vuelidate/validators";
 
 export const useStreamsStore = defineStore('streams', {
-    state: () => ({
-        streams: [],
-        stream: null,
-        streamForm: {
+    state: () => {
+        let streamForm = {
             product_id: "",
             name: "",
-            charity: "1000",
-            discount: "1000"
+            charity: "1,000",
+            discount: "1,000"
+        };
+        let streamFormValidationRules = {
+            name: {
+                required: required
+            },
+            charity: {
+                maxLength: maxLength(6),
+                minLength: minLength(5)
+            },
+            discount: {
+                maxLength: maxLength(6),
+                minLength: minLength(5)
+            }
         }
-    }),
+        return {
+            streams: [],
+            stream: null,
+            streamForm: streamForm,
+            streamFormValidationRules,
+            $vToAdd: useVuelidate(streamFormValidationRules, streamForm)
+        }
+    },
     actions: {
         clearStreamForm() {
             this.streamForm = {
