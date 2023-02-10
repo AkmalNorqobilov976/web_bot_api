@@ -4,14 +4,16 @@ import { defineStore } from "pinia";
 
 export const usePromoCodesStore = defineStore('promo-codes', {
     state: () => ({
+        page: 1,
         promoCodes: []
     }),
     actions: {
         getPromoCodes() {
             return new Promise((resolve, reject) => {
-                adminPromoCodes()
+                adminPromoCodes(this.page)
                     .then(response => {
-                        this.promoCodes = response.data.data;
+                        this.promoCodes = [ ...this.promoCodes, ...response.data.data];
+                        this.page++;
                         resolve(true);
                     })
                     .catch(error => {

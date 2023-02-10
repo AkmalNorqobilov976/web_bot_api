@@ -1,6 +1,6 @@
 <template>
     <div class="customers d-grid-max-content">
-       <div>
+       <div ref="scrollComponent">
              <article 
                 v-for="(item, i) in promoCodesStore.$state.promoCodes" 
                 :key="i" 
@@ -41,7 +41,7 @@
 
 <script>
 import { useBackButton } from '@/composables/useBackButton'
-import { onMounted, onUnmounted, watchEffect  } from '@vue/runtime-core';
+import { onMounted, onUnmounted, watchEffect, ref  } from '@vue/runtime-core';
 import { useTelegram } from '@/composables/useTelegram';
 import { useRouter } from 'vue-router';
 import { usePromoCodesStore } from '@/store/server/usePromoCodesStore';
@@ -52,6 +52,7 @@ export default {
   components: { MessageNotFound },
     setup() {
         const router = useRouter()
+        const scrollComponent = ref(null);
         const navbarButtons = {
             archived: {
                 color: "#F1A30C",
@@ -77,7 +78,7 @@ export default {
             router.push({name: 'generate-promocode'});
         }
 
-        onMounted(() => {
+        const getPromocodes = () => {
             promoCodesStore.getPromoCodes()
                 .catch(error => {
                     toastStore.showToastAsAlert({
@@ -86,6 +87,9 @@ export default {
                         delayTime: 1000
                     })
                 })
+        }
+        onMounted(() => {
+           getPromocodes();
         })
         const watcher = watchEffect(() => {
             tgSetParamsToMainButton({
@@ -106,9 +110,25 @@ export default {
             tg.offEvent('mainButtonClicked', routerToGeneratePromocode)
             hideMainButton();
         })
+
+        onMounted(() => {
+            window.addEventListener('scroll', handleScroll)
+        })
+
+        onUnmounted(() => {
+            window.removeEventListener('scroll', handleScroll);
+        })
+
+        const handleScroll = (e) => {
+            let element = scrollComponent.value;
+            if(element?.getBoundingClientRect()?.bottom % window.innerHeight < 20) {
+                getPromocodes();
+            }
+        }
         return {
             navbarButtons,
-            promoCodesStore
+            promoCodesStore,
+            scrollComponent
         }
     },
 }
