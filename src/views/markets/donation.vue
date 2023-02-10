@@ -13,25 +13,24 @@
         <section class="donation-form">
             <p class="donation-form__title">Summani yozing</p>
             <form @submit.prevent class="donation-form__form">
-                {{ streamsStore.$vToAdd.charity }}
                 <input 
                     class="donation-form__form--input" 
-                    v-model="streamsStore.$state.streamForm.charity"
+                    v-model="donationForm.charity"
                     v-resizable
                     placeholder="10,000"
-                    v-money3="numberFormatterConfig"
-                    :class="{'shake error-text': streamsStore.$vToAdd.charity.$errors.length}"
-                />
+                    v-money3="donationConfig"
+                    :class="{'shake error-text': isDonationError}"
+                    />
                 <span>uzs</span>
             </form>
             <div class="donation-form__suggestions">
-                <span @click="streamsStore.$state.streamForm.charity = 100" class="donation-form__suggestions-item">
+                <span @click="streamForm.charity = 1000" class="donation-form__suggestions-item">
                     100 uzs
                 </span>
-                <span @click="streamsStore.$state.streamForm.charity = 300" class="donation-form__suggestions-item">
+                <span @click="streamForm.charity = 3000" class="donation-form__suggestions-item">
                     300 uzs
                 </span>
-                <span @click="streamsStore.$state.streamForm.charity = 500" class="donation-form__suggestions-item">
+                <span @click="streamForm.charity = 5000" class="donation-form__suggestions-item">
                     500 uzs
                 </span>
             </div>
@@ -47,10 +46,12 @@ import { postAdminStream } from '@/api/advertiserApi';
 import { useBackButton } from '@/composables/useBackButton'
 import { useLastRoute } from '@/composables/useLastRoute';
 import { useTelegram } from '@/composables/useTelegram';
-import { useVMoney } from '@/composables/useVMoney';
+import { useCategoriesStore } from '@/store/server/useCategoriesStore';
 import { useStreamsStore } from '@/store/server/useStreamsStore';
 import { useToastStore } from '@/store/useToastStore';
-import { defineComponent, onMounted, onUnmounted, watch } from 'vue'
+import { useVuelidate } from '@vuelidate/core';
+import { maxLength, maxValue } from '@vuelidate/validators';
+import { defineComponent, onMounted, onUnmounted, reactive, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router';
 export default defineComponent ({
     props: {
@@ -60,11 +61,35 @@ export default defineComponent ({
         const streamsStore = useStreamsStore();
         const toastStore = useToastStore();
         useLastRoute().setLastRoute();
+        const categoriesStore = useCategoriesStore();
+        const donationConfig = {
+            masked: false,
+            thousands: '',
+            decimal: '.',
+            precision: 0,
+            disableNegative: false,
+            disabled: false,
+            min: 0,
+            max: 5000,
+            allowBlank: false,
+            minimumNumberOfCharacters: 0  
+        }
+        
         const router = useRouter();
-        const { numberFormatterConfig } = useVMoney();
-        const { tg, showMainButton, hideMainButton, tgSetParamsToMainButton } = useTelegram()
+        const { tg, showMainButton, hideMainButton, tgSetParamsToMainButton, notificationOccurred } = useTelegram()
         const { backButton } = useBackButton()
         const route = useRoute();
+     
+        const donationForm = reactive({
+            charity: 0
+        });
+        const donationFormValidationRule = {
+            charity: {
+                maxValue: maxValue(5000)
+            }
+        }
+        const isDonationError = ref(false)
+        const $validation = useVuelidate(donationFormValidationRule, donationForm);
         backButton(`/streams/create-stream/${streamsStore.$state.streamForm.product_id}`)
         const updateStream = () => {
             streamsStore.updateStream(streamsStore.stream)
@@ -100,7 +125,7 @@ export default defineComponent ({
                 })
             }
         }
-const addStream = () => {
+        const addStream = () => {
             postAdminStream(streamsStore.streamForm)
                 .then((response) => {
                     toastStore.showToastAsAlert({
@@ -130,19 +155,26 @@ const addStream = () => {
             tg.onEvent('mainButtonClicked', addStream)
             // categoriesStore.$state.
         })
-        watch(streamsStore.streamForm, () => {
-            streamsStore.$vToAdd.$validate()
+        watch(donationForm, (newValue) => {
+            streamsStore.streamForm.charity = newValue.charity;
+            $validation.value.$validate()
                 .then(res => {
-                    console.log(res);
                     if(!res) {
+                        isDonationError.value = !res;
+                        notificationOccurred('error')
                         tgSetParamsToMainButton({
                             disabled: false,
                             text: "Oqim yaratish",
                             textColor: "#fff",
                             color: "#55BE61"
                         })
-                    }    
+                    } else {
+                        isDonationError.value = false;
+                        setParams();
+                    } 
                 })
+        }, {
+            immediate: true
         })
         const inputForm = (e, key) => {
             streamsStore.$state.streamForm[key] = e.target.innerText
@@ -154,7 +186,10 @@ const addStream = () => {
         return {
             inputForm,
             streamsStore,
-            numberFormatterConfig
+            donationConfig,
+            donationForm,
+            $validation,
+            isDonationError
         }
     },
 })

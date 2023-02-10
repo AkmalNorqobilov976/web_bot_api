@@ -36,8 +36,8 @@
                 <form @submit.prevent class="payment-debit-card-form__form">
                     <label for="payment-debit-card-form__form--label">Karta raqami</label>
                     <input 
-                        v-model="paymentForm.card_number"
                         v-mask="cardMask" 
+                        v-model="paymentForm.card_number"
                         placeholder="0000 1111 2222 3333" 
                         :class="{ 'shake error-text': $v.card_number.$errors.length }"
                     />
@@ -49,6 +49,7 @@
                         class="payment-form__form--input" 
                         v-model="paymentForm.amount"
                         v-resizable
+                        v-money3="config"
                         :class="{ 'shake error-text': $v.amount.$errors.length }"
                     />
                     <span> uzs</span>
@@ -113,24 +114,25 @@ import MessageNotFound from '@/components/MessageNotFound.vue'
 import { useVuelidate } from '@vuelidate/core'
 import { maxLength, maxValue } from '@vuelidate/validators'
 export default {
-    data: () => ({
-        config: {
+    
+    setup() {
+        const toastStore = useToastStore();
+        const authStore = useAuthStore();
+        const showConfirm = ref(false);
+        const cardMask = ref('{{9999}} {{9999}} {{9999}} {{9999}}');
+        const config = ref({
             prefix: '',
             suffix: '',
-            thousands: ',',
+            thousands: '',
             decimal: '.',
             precision: 0,
             disableNegative: false,
             disabled: false,
             min: null,
-            max: 10000000,
+            max: authStore.$state.userInfo.balance,
             allowBlank: false,
-          minimumNumberOfCharacters: 0,
-        }
-    }),
-    setup() {
-        const showConfirm = ref(false);
-        const cardMask = ref('{{9999}} {{9999}} {{9999}} {{9999}}')
+            minimumNumberOfCharacters: 0,
+        })
         useLastRoute().setLastRoute();
         const paymentForm = reactive({
             card_number: "",
@@ -162,8 +164,6 @@ export default {
             hideMainButton, 
             notificationOccurred 
         } = useTelegram();
-        const toastStore = useToastStore();
-        const authStore = useAuthStore();
         backButton()
         const inputForm = (e, key) => {
             
@@ -235,7 +235,8 @@ export default {
             withdrawsStore,
             onPostAdminWithdraw,
             cardMask,
-            $v
+            $v,
+            config
         }
 
         

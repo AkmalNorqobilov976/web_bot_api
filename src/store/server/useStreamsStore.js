@@ -8,8 +8,8 @@ export const useStreamsStore = defineStore('streams', {
         let streamForm = {
             product_id: "",
             name: "",
-            charity: "1,000",
-            discount: "1,000"
+            charity: "1000",
+            discount: "1000"
         };
         let streamFormValidationRules = {
             name: {

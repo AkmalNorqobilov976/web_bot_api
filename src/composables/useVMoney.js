@@ -4,7 +4,7 @@ export const useVMoney = () => {
         prefix: '',
         suffix: '',
         masked: false,
-        thousands: ',',
+        thousands: '',
         decimal: '.',
         precision: 0,
         disableNegative: false,

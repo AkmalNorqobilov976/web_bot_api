@@ -15,9 +15,10 @@
             <form @submit.prevent class="donation-form__form">
                 <input 
                     class="donation-form__form--input" 
-                    v-money3="numberFormatterConfig"
-                    v-model="streamsStore.$state.streamForm.discount"
+                    v-model="defineAmountForm.discount"
+                    v-money3="defineAmountConfig"
                     placeholder="10,000"
+                    :class="{'shake error-text': isDefineAmountError}"
                     v-resizable
                 />
                 <span> uzs</span>
@@ -45,23 +46,46 @@ import { useBackButton } from '@/composables/useBackButton'
 import { useLastRoute } from '@/composables/useLastRoute';
 import { useTelegram } from '@/composables/useTelegram';
 import { useVMoney } from '@/composables/useVMoney';
+import { useCategoriesStore } from '@/store/server/useCategoriesStore';
 import { useStreamsStore } from '@/store/server/useStreamsStore';
 import { useToastStore } from '@/store/useToastStore';
-import { defineComponent, onMounted, onUnmounted, watch } from 'vue'
+import { useVuelidate } from '@vuelidate/core';
+import { maxValue } from '@vuelidate/validators';
+import { defineComponent, onMounted, onUnmounted, reactive, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router';
 export default defineComponent ({
     setup() {
         const streamsStore = useStreamsStore();
         const toastStore = useToastStore();
+        const categoriesStore = useCategoriesStore();
+        const defineAmountConfig = {
+            masked: false,
+            thousands: '',
+            decimal: '.',
+            precision: 0,
+            disableNegative: false,
+            disabled: false,
+            min: 0,
+            max: categoriesStore.$state.selectedProduct.admin_fee,
+            allowBlank: false,
+            minimumNumberOfCharacters: 0  
+        }
+        const defineAmountForm = reactive({
+            discount: 0
+        })
+        const defineAmountFormValidationRule = {
+            discount: {
+                maxValue: maxValue(categoriesStore.$state.selectedProduct.admin_fee)
+            }
+        }
+        const isDefineAmountError = ref(false);
+        const $v = useVuelidate(defineAmountFormValidationRule, defineAmountForm);
         const router = useRouter()
         useLastRoute().setLastRoute();
-        const { tg, tgSetParamsToMainButton, showMainButton, hideMainButton } = useTelegram();
+        const { tg, tgSetParamsToMainButton, showMainButton, hideMainButton, notificationOccurred } = useTelegram();
         const { backButton } = useBackButton()
         const { numberFormatterConfig } = useVMoney();
         const route = useRoute();
-        const inputForm = (e, key) => {
-            streamsStore.$state.streamForm[key] = e.target.innerText
-        }
         
         const addStream = () => {
             postAdminStream(streamsStore.streamForm)
@@ -112,8 +136,24 @@ export default defineComponent ({
             setParams()
             // categoriesStore.$state.
         })
-        watch(streamsStore, () => {
-            setParams()
+        watch(defineAmountForm, (newValue) => {
+            streamsStore.streamForm.discount = newValue.discount; 
+            $v.value.$validate()
+            .then(res => {
+                if(!res) {
+                    notificationOccurred('error')
+                    isDefineAmountError.value = true;
+                    tgSetParamsToMainButton({
+                        disabled: false,
+                        text: "Oqim yaratish",
+                        textColor: "#fff",
+                        color: "#55BE61"
+                    })
+                } else {
+                    isDefineAmountError.value = false;
+                    setParams()
+                    }
+                })
         })
         backButton(`/streams/create-stream/${streamsStore.$state.streamForm.product_id}`)
         onUnmounted(() => {
@@ -121,9 +161,11 @@ export default defineComponent ({
             tg.offEvent('mainButtonClicked', addStream)
         })
         return {
-            inputForm,
             streamsStore,
-            numberFormatterConfig
+            numberFormatterConfig,
+            defineAmountConfig,
+            isDefineAmountError,
+            defineAmountForm
         }
     },
 })
@@ -181,7 +223,7 @@ export default defineComponent ({
             &--input {
                 font-weight: 600;
                 flex: 1 1 auto;
-                color: $red;
+                color: $black;
                 font-size: inherit;
                 padding: .3rem;
                 // width: 16.5rem;
@@ -190,7 +232,7 @@ export default defineComponent ({
                 background: inherit;
             }
             & span:last-child {
-                color: rgba($red, .5);
+                color: rgba($black, .5);
             }
 
 

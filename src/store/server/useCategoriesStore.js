@@ -6,7 +6,7 @@ export const useCategoriesStore = defineStore('categories', {
         categories: [],
         ha: true,
         products: [],
-        selectedProduct: null
+        selectedProduct: {}
     })),
     getters: {
         getCategoriesForTab: (state) => {

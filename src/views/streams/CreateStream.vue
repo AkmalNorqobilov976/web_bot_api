@@ -115,12 +115,11 @@ export default {
             setParams()
         })
 
-        const backBtn = backButton('/markets/preview/all')
+        backButton('/markets/preview/all')
 
         onUnmounted(() => {
             hideMainButton();
             tg.offEvent('mainButtonClicked', addStream);
-            backBtn();
         })
         return {
             categoriesStore,
