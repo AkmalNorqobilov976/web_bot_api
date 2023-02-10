@@ -163,19 +163,20 @@ export default defineComponent ({
                         isDonationError.value = !res;
                         notificationOccurred('error')
                         tgSetParamsToMainButton({
-                            disabled: false,
-                            text: "Oqim yaratish",
-                            textColor: "#fff",
-                            color: "#55BE61"
-                        })
-                    } else {
-                        isDonationError.value = false;
-                        tgSetParamsToMainButton({
                             disabled: true,
                             text: "Oqim yaratish",
                             textColor: "#8C8C8C",
                             color: "#E4E6E4"
                         })
+                    } else {
+                        tgSetParamsToMainButton({
+                            disabled: false,
+                            text: "Oqim yaratish",
+                            textColor: "#fff",
+                            color: "#55BE61"
+                        })
+                        isDonationError.value = false;
+                        
                     } 
                 })
         }, {

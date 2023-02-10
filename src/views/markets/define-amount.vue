@@ -146,19 +146,22 @@ export default defineComponent ({
                     tgSetParamsToMainButton({
                         disabled: true,
                         text: "Oqim yaratish",
-                        textColor: "#fff",
-                        color: "#55BE61"
+                        textColor: "#8C8C8C",
+                        color: "#E4E6E4"
                     })
                 } else {
                     isDefineAmountError.value = false;
                     tgSetParamsToMainButton({
                         disabled: true,
                         text: "Oqim yaratish",
-                        textColor: "#8C8C8C",
-                        color: "#E4E6E4"
+                        textColor: "#fff",
+                        color: "#55BE61"
                     })
+                    
                     }
                 })
+        }, {
+            immediate: true
         })
         backButton(`/streams/create-stream/${streamsStore.$state.streamForm.product_id}`)
         onUnmounted(() => {
