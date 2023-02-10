@@ -32,7 +32,6 @@
             </div>
 
             <section class="payment-debit-card-form">
-                {{ paymentForm.card_number.length }}
                 <p class="payment-debit-card-form__title">Hisobdan pul yechish</p>
                 <form @submit.prevent class="payment-debit-card-form__form">
                     <label for="payment-debit-card-form__form--label">Karta raqami</label>
@@ -51,6 +50,7 @@
                         v-model="paymentForm.amount"
                         v-money3="config"
                         v-resizable
+                        :class="{ 'shake error-text': $v.amount.$errors.length }"
                     />
                         <!-- v-autowidth="{
                             maxWidth: '260px',
@@ -146,7 +146,7 @@ export default {
                 maxLength: maxLength(16)
             },
             amount: {
-                maxLength: maxLength(8)
+                maxLength: maxLength(10)
             }
         }
         const $v = useVuelidate(paymentFormValidationRules, paymentForm)
