@@ -140,7 +140,7 @@ export default {
             amount: "0"
         })
         const mustBeCool = (value) =>{
-            return value.length == 16
+            return value.replace(/\D/g, '').length == 16
         }
         const paymentFormValidationRules = {
             card_number: {
