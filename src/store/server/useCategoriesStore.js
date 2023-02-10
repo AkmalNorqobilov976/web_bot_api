@@ -3,6 +3,9 @@ import { defineStore } from "pinia";
 
 export const useCategoriesStore = defineStore('categories', {
     state: (() => ({
+        query: "",
+        page: 1,
+        category_id: '',
         categories: [],
         ha: true,
         products: [],
@@ -32,11 +35,16 @@ export const useCategoriesStore = defineStore('categories', {
             })
         },
 
-        getProducts(status, query) {
+        getProducts(status, query, page) {
             return new Promise((resolve, reject) => {
-                adminProducts(status, query)
+                adminProducts(status, query, page)
                     .then(response => {
-                        this.products = response.data.data;
+                        if(this.page == 1) {
+                            this.products = [ ...response.data.data ];    
+                        } else {
+                            this.products = [...this.products, ...response.data.data];
+                        }
+                        this.page++;
                         resolve(true)
                     })
                     .catch(error => {

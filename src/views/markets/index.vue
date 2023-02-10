@@ -5,7 +5,7 @@
                 <search-input 
                     placeholder="Qidirish"
                     :searchFunction="searchFunction"
-                    v-model="query"
+                    v-model="categoriesStore.query"
                 />
             </div>
         </form>
@@ -32,44 +32,43 @@ export default defineComponent({
         const toastStore = useToastStore()
         const route = useRoute();
         const tabs = ref([]);
- 
+        let page = ref(1);
         onMounted(() => {
             categoriesStore.getCategories()
                 .then(() => {
                     tabs.value = categoriesStore.getCategoriesForTab; 
                 })
-            getProducts()
+            // getProducts()
                 
         })
         backButton('/')
-
-        const getProducts = (status, query) => {
+        
+        const getProducts = (status, query, page) => {
             status = status == "all" ? "" : status;
-            categoriesStore.getProducts(status, query)
+            categoriesStore.getProducts(status, query, page)
                 .catch(error => {
                     toastStore.showToastAsAlert({
                         message: error.response.data.message,
                         type: 'error',
-                        delayTime: 1000
+                        delayTime: 3000
                     })
                 })
         }
-
         const searchFunction = () => {
-            getProducts(route.params.status, query.value)
+            getProducts(route.params.status, categoriesStore.query, categoriesStore.page)
         }
 
         watch(route, (newValue) => {
-            getProducts(newValue.params.status, query.value);
+            categoriesStore.page = 1;
+            getProducts(route.params.status, categoriesStore.query, categoriesStore.page);
         }, {
-            immediate: true,
             deep: true
         })
         return {
             query,
             categoriesStore,
             tabs,
-            searchFunction
+            searchFunction,
         }
     },
     components: {

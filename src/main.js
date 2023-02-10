@@ -8,6 +8,8 @@ import { Money3Directive } from 'v-money3'
 import { plugin as VueInputAutowidth, directive as VueInputAutowidthDirective} from 'vue-input-autowidth'
 import {VueRestrictedInputDirective} from 'vue-restricted-input';
 import Vue3Lottie from 'vue3-lottie'
+import InfiniteLoading from "v3-infinite-loading";
+import "v3-infinite-loading/lib/style.css";
 import 'vue3-lottie/dist/style.css'
 import 'remixicon/fonts/remixicon.css'
 import '@/assets/scss/main.scss'
@@ -21,6 +23,7 @@ window.addEventListener('DOMContentLoaded', () => {
         // router.push(`${lastRoute}`)
     }
 })
+app.component("infinite-loading", InfiniteLoading);
 app.use(Vue3Lottie);
 app.use(VueInputAutowidth);
 app.config.globalProperties.$noImage = 'https://archive.org/download/no-photo-available/no-photo-available.png';
