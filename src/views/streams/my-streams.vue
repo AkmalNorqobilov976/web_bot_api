@@ -1,6 +1,6 @@
 <template>
     <main class="streams">
-        <div>
+        <div ref="scrollComponent">
             <article 
                 v-for="(item, i) in streamsStore.$state.streams" 
                 :key="i" 
@@ -37,18 +37,34 @@ import { useBackButton } from '@/composables/useBackButton'
 import { useLastRoute } from '@/composables/useLastRoute';
 import { useStreamsStore } from '@/store/server/useStreamsStore'
 import { useToastStore } from '@/store/useToastStore';
-import { defineComponent, onBeforeMount } from 'vue-demi'
+import { defineComponent, ref, onMounted, onUnmounted } from 'vue-demi'
 export default defineComponent({
   components: { MessageNotFound },
     setup() {
         const { backButton } = useBackButton();
         const streamsStore = useStreamsStore();
+        const scrollComponent = ref(null);
         const toastStore = useToastStore();
         const { setLastRoute } = useLastRoute();
         setLastRoute();
         backButton();
         useLastRoute().setLastRoute();
-        onBeforeMount(() => {
+
+        onMounted(() => {
+            getStreams();
+            window.addEventListener('scroll', handleScroll)
+        })
+
+        onUnmounted(() => {
+            window.removeEventListener('scroll', handleScroll);
+        })
+        const handleScroll = (e) => {
+            let element = scrollComponent.value;
+            if(element?.getBoundingClientRect()?.bottom % window.innerHeight < 20) {
+                getStreams();
+            }
+        }
+        const getStreams = () => {
             streamsStore.getStreams()
                 .catch(error => {
                     toastStore.showToastAsAlert({
@@ -57,10 +73,12 @@ export default defineComponent({
                         delayTime: 1000
                     })
                 })
-        })
+        }
+        
     
         return {
-            streamsStore
+            streamsStore,
+            scrollComponent
         }
     },
 })

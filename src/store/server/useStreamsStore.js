@@ -25,6 +25,7 @@ export const useStreamsStore = defineStore('streams', {
             }
         }
         return {
+            page: 1,
             streams: [],
             stream: null,
             streamForm: streamForm,
@@ -43,9 +44,11 @@ export const useStreamsStore = defineStore('streams', {
         },
         getStreams() {
             return new Promise((resolve, reject) => {
-                adminStreams()
+                adminStreams(this.page)
                 .then(response => {
-                    this.streams = response.data.data;
+                    
+                    this.streams = [ ...this.streams, ...response.data.data ];
+                    this.page++;
                     resolve(true);
                 })
                 .catch(error => {

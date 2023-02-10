@@ -23,7 +23,7 @@ export function adminProducts(categoryId, query, page) {
         urlParams = `&query=${query}`
     }
     return request({
-        url: `${URI}/products?page=${page}&per_page=3${urlParams}`,
+        url: `${URI}/products?page=${page}${urlParams}`,
         method: 'get',
     });
 }
@@ -58,9 +58,9 @@ export function postPromoCode({ code }) {
     })
 }
 
-export function adminStreams() {
+export function adminStreams(page) {
     return request({
-        url: `${URI}/streams`,
+        url: `${URI}/streams?page=${page}`,
         method: "get"
     });
 }

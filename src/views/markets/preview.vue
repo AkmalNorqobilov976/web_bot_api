@@ -26,7 +26,6 @@ export default defineComponent({
         const route = useRoute();
         const scrollComponent = ref(null);
         const getProductsByPagination = () => {
-            console.log("this is perpage pagination");
             categoriesStore.getProducts(route.params.status, 
                 categoriesStore.query, 
                 categoriesStore.page
@@ -34,7 +33,6 @@ export default defineComponent({
             categoriesStore.page++;
         }
         const load = () => {
-            console.log("loading...");
             categoriesStore.getProducts(
                 route.params.status == 'all' ? "" : route.params.status, 
                 categoriesStore.query, 
@@ -50,7 +48,6 @@ export default defineComponent({
         })
         const handleScroll = (e) => {
             let element = scrollComponent.value;
-            console.log(element?.getBoundingClientRect().bottom, window.innerHeight);
             if(element?.getBoundingClientRect()?.bottom % window.innerHeight < 20) {
                 load();
             }

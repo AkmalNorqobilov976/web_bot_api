@@ -17,7 +17,7 @@
         </div>
         <!-- product orders -->
         <div class="product-lists d-grid-max-content">
-            <div>
+            <div ref="scrollComponent">
                 <statistics-list 
                     v-for="(item, i) in statisticsStore.$state.statistics" 
                     :key="i" 
@@ -43,12 +43,13 @@ import StatisticsList from '@/components/statistics/StatisticsList.vue';
 import { useLastRoute } from '@/composables/useLastRoute';
 import { useStatisticsStore } from '@/store/server/useStatisticsStore';
 import { useToastStore } from '@/store/useToastStore';
-import { defineComponent, reactive, watch } from 'vue';
+import { defineComponent, reactive, watch, ref, onMounted, onUnmounted } from 'vue';
 import { useRoute } from 'vue-router';
 export default defineComponent({
     setup() {
         const statisticsStore = useStatisticsStore();
         const toastStore = useToastStore();
+        const scrollComponent = ref(null);
         const route = useRoute();
         const statisticsFilterAttributes = reactive({
             sortBy: "",
@@ -81,13 +82,28 @@ export default defineComponent({
                 })
         }
 
+        onMounted(() => {
+            window.addEventListener('scroll', handleScroll)
+        })
+
+        onUnmounted(() => {
+            window.removeEventListener('scroll', handleScroll);
+        })
+        const handleScroll = (e) => {
+            let element = scrollComponent.value;
+            if(element?.getBoundingClientRect()?.bottom % window.innerHeight < 20) {
+                getStatistics();
+            }
+        }
+
         watch(statisticsFilterAttributes, () => {
             getStatistics();
         })
         return {
             statisticsStore,
             statisticsFilterAttributes,
-            filterFunction
+            filterFunction,
+            scrollComponent
         }
     },
     components: {
