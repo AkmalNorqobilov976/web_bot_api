@@ -33,6 +33,7 @@
 
             <section class="payment-debit-card-form">
                 <p class="payment-debit-card-form__title">Hisobdan pul yechish</p>
+                {{ paymentForm.card_number }}
                 <form @submit.prevent class="payment-debit-card-form__form">
                     <label for="payment-debit-card-form__form--label">Karta raqami</label>
                     <input 
@@ -138,9 +139,12 @@ export default {
             card_number: "",
             amount: "0"
         })
-        
+        const mustBeCool = (value) =>{
+            return value.length == 16
+        }
         const paymentFormValidationRules = {
             card_number: {
+                mustBeCool
             },
             amount: {
                 maxLength: maxLength(10),
