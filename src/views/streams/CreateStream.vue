@@ -103,6 +103,7 @@ export default {
         }
         onMounted(() => {
             showMainButton();
+            tg.BackButton.show();
             streamsStore.$patch({
                 streamForm: {
                     product_id: route.params.id
@@ -119,6 +120,7 @@ export default {
 
         onUnmounted(() => {
             hideMainButton();
+            tg.BackButton.hide();
             tg.offEvent('mainButtonClicked', addStream);
         })
         return {
