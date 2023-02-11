@@ -24,6 +24,7 @@ import SearchInput from '@/components/Form/inputs/SearchInput.vue'
 import { computed, defineComponent, onMounted, ref, watch } from 'vue-demi';
 import { useToastStore } from '@/store/useToastStore';
 import { useRoute } from 'vue-router';
+import { adminProducts } from '@/api/advertiserApi';
 export default defineComponent({
     setup() {
         const query = ref("")
@@ -55,7 +56,21 @@ export default defineComponent({
                 })
         }
         const searchFunction = () => {
-            getProducts(route.params.status, categoriesStore.query, categoriesStore.page)
+            let status = route.params.status == 'all' ? "" : route.params.status;
+            adminProducts(status, categoriesStore.query, 1)
+            .then((response) => {
+                categoriesStore.$patch({
+                    products: response.data.data,
+                    page: 2,
+                    last_page: response.data.meta.last_page
+                })
+            }).catch(error => {
+                toastStore.showToastAsAlert({
+                    message: error.response.data.message,
+                    type: 'error',
+                    delayTime: 3000
+                })
+            })
         }
 
         watch(route, (newValue) => {

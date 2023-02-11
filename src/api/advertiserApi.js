@@ -14,9 +14,8 @@ export function adminOrders({status}) {
 }
 
 export function adminProducts(categoryId, query, page) {
-    console.log(categoryId, query, page);
     let urlParams = ""
-    if(categoryId) {page
+    if(categoryId) {
         urlParams += `&category_id=${categoryId}`
     }
     if(query) {

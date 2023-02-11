@@ -52,6 +52,7 @@ import { useTransactionsStore } from '@/store/server/useTransactionsStore'
 import BarChart from '@/components/charts/BarChart.vue'
 import MessageNotFound from '@/components/MessageNotFound.vue'
 import { useLastRoute } from '@/composables/useLastRoute'
+import { adminTransactions } from '@/api/advertiserApi'
 export default defineComponent({
     setup() {
         const toastStore = useToastStore();
@@ -73,7 +74,20 @@ export default defineComponent({
         }
 
         const searchFunction = () => {
-            getTransactions(query.value)
+            adminTransactions(1, query.value)
+                .then(response => {
+                    transactionsStore.$patch({
+                        transactions: [ ...response.data.data ],
+                        page: 2,
+                        last_page: response.data.meta.last_page
+                    })
+                }).catch(error => {
+                    toastStore.showToastAsAlert({
+                        message: error.response.data.message,
+                        type: 'error',
+                        delayTime: 3000
+                    })
+                })
         }
         onBeforeMount(() => {
             getTransactions();
