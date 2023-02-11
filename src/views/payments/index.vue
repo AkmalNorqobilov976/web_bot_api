@@ -143,7 +143,7 @@ export default {
         }
         const paymentFormValidationRules = {
             card_number: {
-                maxLength: maxLength(16)
+                mustBeCool
             },
             amount: {
                 maxLength: maxLength(10),
