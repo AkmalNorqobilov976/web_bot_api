@@ -14,6 +14,7 @@
             <p class="donation-form__title">Summani yozing</p>
             <form @submit.prevent class="donation-form__form">
                 <input 
+                    readonly
                     class="donation-form__form--input" 
                     v-model="streamsStore.$state.stream.discount"
                     v-money3="numberFormatterConfig"
@@ -56,50 +57,50 @@ export default defineComponent ({
         useLastRoute().setLastRoute();
         const { numberFormatterConfig } = useVMoney()
         const route = useRoute();
-        const inputForm = (e, key) => {
-            streamsStore.$state.stream[key] = e.target.innerText
-        }
+        // const inputForm = (e, key) => {
+        //     streamsStore.$state.stream[key] = e.target.innerText
+        // }
 
-        tgSetParamsToMainButton({
-            disabled: false,
-            text: "Oqim yangilash",
-            textColor: "#fff",
-            color: "#55BE61"
-        })
+        // tgSetParamsToMainButton({
+        //     disabled: false,
+        //     text: "Oqim yangilash",
+        //     textColor: "#fff",
+        //     color: "#55BE61"
+        // })
 
-        const updateStream = () => {
-            streamsStore.updateStream(streamsStore.stream)
-                .then(() => {
-                    toastStore.showToastAsAlert({
-                        message: "Yangilandi!",
-                        type: "success",
-                        delayTime: 3000
-                    })
-                })
-                .catch(error => {
-                    toastStore.showToastAsAlert({
-                        message: error.response.data.message,
-                        type: 'error',
-                        delayTime: 3000
-                    })
-                })
-        }
-        onMounted(() => {
-            showMainButton();
-            tg.onEvent('mainButtonClicked', updateStream)
-            streamsStore.$patch({
-                streamForm: {
-                    product_id: route.params.id
-                }
-            })
-        })
+        // const updateStream = () => {
+        //     streamsStore.updateStream(streamsStore.stream)
+        //         .then(() => {
+        //             toastStore.showToastAsAlert({
+        //                 message: "Yangilandi!",
+        //                 type: "success",
+        //                 delayTime: 3000
+        //             })
+        //         })
+        //         .catch(error => {
+        //             toastStore.showToastAsAlert({
+        //                 message: error.response.data.message,
+        //                 type: 'error',
+        //                 delayTime: 3000
+        //             })
+        //         })
+        // }
+        // onMounted(() => {
+        //     showMainButton();
+        //     tg.onEvent('mainButtonClicked', updateStream)
+        //     streamsStore.$patch({
+        //         streamForm: {
+        //             product_id: route.params.id
+        //         }
+        //     })
+        // })
         backButton(`/streams/create-stream/${streamsStore.$state.streamForm.product_id}`)
-        onUnmounted(() => {
-            hideMainButton();
-            tg.offEvent('mainButtonClicked', updateStream)
-        })
+        // onUnmounted(() => {
+        //     hideMainButton();
+        //     tg.offEvent('mainButtonClicked', updateStream)
+        // })
         return {
-            inputForm,
+            // inputForm,
             streamsStore,
             numberFormatterConfig
         }
@@ -159,7 +160,7 @@ export default defineComponent ({
             &--input {
                 font-weight: 600;
                 flex: 1 1 auto;
-                color: $red;
+                color: $black;
                 font-size: inherit;
                 padding: .3rem;
                 // width: 16.5rem;
@@ -168,7 +169,7 @@ export default defineComponent ({
                 background: inherit;
             }
             & span:last-child {
-                color: rgba($red, .5);
+                color: rgba($black, .5);
             }
 
 

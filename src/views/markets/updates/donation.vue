@@ -14,6 +14,7 @@
             <form @submit.prevent class="donation-form__form">
                 <input 
                     class="donation-form__form--input" 
+                    readonly
                     v-model="streamsStore.$state.stream.charity"
                     v-money3="numberFormatterConfig"
                     v-resizable
@@ -66,42 +67,42 @@ export default defineComponent ({
             textColor: "#fff",
             color: "#55BE61"
         })
-        const updateStream = () => {
-            streamsStore.updateStream(streamsStore.stream)
-                .then(() => {
-                    toastStore.showToastAsAlert({
-                        message: "Yangilandi!",
-                        type: "success",
-                        delayTime: 3000
-                    })
-                })
-                .catch(error => {
-                    toastStore.showToastAsAlert({
-                        message: error.response.data.message,
-                        type: 'error',
-                        delayTime: 3000
-                    })
-                })
-        }
-        onMounted(() => {
-            tg.onEvent('mainButtonClicked', updateStream)
-            showMainButton();
-            streamsStore.$patch({
-                streamForm: {
-                    product_id: route.params.id
-                }
-            })
-        })
+        // const updateStream = () => {
+        //     streamsStore.updateStream(streamsStore.stream)
+        //         .then(() => {
+        //             toastStore.showToastAsAlert({
+        //                 message: "Yangilandi!",
+        //                 type: "success",
+        //                 delayTime: 3000
+        //             })
+        //         })
+        //         .catch(error => {
+        //             toastStore.showToastAsAlert({
+        //                 message: error.response.data.message,
+        //                 type: 'error',
+        //                 delayTime: 3000
+        //             })
+        //         })
+        // }
+        // onMounted(() => {
+        //     tg.onEvent('mainButtonClicked', updateStream)
+        //     showMainButton();
+        //     streamsStore.$patch({
+        //         streamForm: {
+        //             product_id: route.params.id
+        //         }
+        //     })
+        // })
       
-        const inputForm = (e, key) => {
-            streamsStore.$state.stream[key] = e.target.innerText
-        }
-        onUnmounted(() => {
-            tg.offEvent('mainButtonClicked', updateStream)
-            hideMainButton();
-        })
+        // const inputForm = (e, key) => {
+        //     streamsStore.$state.stream[key] = e.target.innerText
+        // }
+        // onUnmounted(() => {
+        //     tg.offEvent('mainButtonClicked', updateStream)
+        //     hideMainButton();
+        // })
         return {
-            inputForm,
+            // inputForm,
             streamsStore,
             numberFormatterConfig
         }

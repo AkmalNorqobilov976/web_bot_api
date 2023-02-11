@@ -15,6 +15,7 @@
             <form @submit.prevent class="donation-form__form">
                 <input 
                     class="donation-form__form--input"
+                    readonly
                     v-model="donationForm.sum"
                     v-resizable
                     v-money3="numberFormatterConfig"
@@ -52,33 +53,33 @@ export default defineComponent ({
         const toastStore = useToastStore();
         backButton()
 
-        const updateStream = () => {
-            streamsStore.updateStream(streamsStore.stream)
-                .then(() => {
-                    toastStore.showToastAsAlert({
-                        message: "Yangilandi!",
-                        type: "success",
-                        delayTime: 3000
-                    })
-                })
-                .catch(error => {
-                    toastStore.showToastAsAlert({
-                        message: error.response.data.message,
-                        type: 'error',
-                        delayTime: 3000
-                    })
-                })
-        }
+        // const updateStream = () => {
+        //     streamsStore.updateStream(streamsStore.stream)
+        //         .then(() => {
+        //             toastStore.showToastAsAlert({
+        //                 message: "Yangilandi!",
+        //                 type: "success",
+        //                 delayTime: 3000
+        //             })
+        //         })
+        //         .catch(error => {
+        //             toastStore.showToastAsAlert({
+        //                 message: error.response.data.message,
+        //                 type: 'error',
+        //                 delayTime: 3000
+        //             })
+        //         })
+        // }
 
-        onMounted(() => {
-            showMainButton();
-            tg.onEvent('mainButtonClicked', updateStream)
-        })
+        // onMounted(() => {
+        //     showMainButton();
+        //     tg.onEvent('mainButtonClicked', updateStream)
+        // })
 
-        onUnmounted(() => {
-            tg.offEvent('mainButtonClicked', updateStream)
-            hideMainButton();
-        })
+        // onUnmounted(() => {
+        //     tg.offEvent('mainButtonClicked', updateStream)
+        //     hideMainButton();
+        // })
         return {
             donationForm,
             streamsStore,
