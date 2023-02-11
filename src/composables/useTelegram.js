@@ -29,6 +29,7 @@ export function useTelegram() {
             color: color,
             // is_active: is_active ? is_active : tg 
         });
+        tg.MainButton.color = color;
         // tg.MainButton.show();
     }
 
