@@ -55,14 +55,13 @@ import { useLastRoute } from '@/composables/useLastRoute'
 export default defineComponent({
     setup() {
         const toastStore = useToastStore();
-        const withdrawsStore = useWithdrawsStore()
         const transactionsStore = useTransactionsStore();
         const scrollComponent = ref(null);
         const query = ref("");
         const { backButton } = useBackButton();
         useLastRoute().setLastRoute();
         backButton('/')
-        const getWithDraws = (query) => {
+        const getTransactions = (query) => {
             transactionsStore.getTransactions(query)
                 .catch(error => {
                     toastStore.showToastAsAlert({
@@ -74,10 +73,10 @@ export default defineComponent({
         }
 
         const searchFunction = () => {
-            getWithDraws(query.value)
+            getTransactions(query.value)
         }
         onBeforeMount(() => {
-            getWithDraws();
+            getTransactions();
         })
         onMounted(() => {
             window.addEventListener('scroll', handleScroll)
@@ -90,8 +89,8 @@ export default defineComponent({
         const handleScroll = (e) => {
 
             let element = scrollComponent.value;
-            if(element?.getBoundingClientRect()?.bottom % window.innerHeight < 20 && oldScrollY.value < window.scrollY) {
-                getWithDraws();
+            if(element?.getBoundingClientRect()?.bottom % window.innerHeight < 2 && oldScrollY.value < window.scrollY) {
+                getTransactions();
             }
             oldScrollY.value = window.scrollY
         }
