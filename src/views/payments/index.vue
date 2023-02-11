@@ -47,9 +47,9 @@
                 <form @submit.prevent class="payment-form__form">
                     <input 
                         class="payment-form__form--input" 
+                        v-money3="config"
                         v-model="paymentForm.amount"
                         v-resizable
-                        v-money3="config"
                         :class="{ 'shake error-text': $v.amount.$errors.length }"
                     />
                     <span> uzs</span>
