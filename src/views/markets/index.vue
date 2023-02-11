@@ -9,8 +9,8 @@
                 />
             </div>
         </form>
-        <div v-if="tabs.length">
-            <tabs class="position-sticky top-0" :tabs="[ {to: '/markets/preview/all', text: 'Barchasi'} ,...tabs]"/>
+        <div v-if="tabs.length" class="position-sticky top-0">
+            <tabs  :tabs="[ {to: '/markets/preview/all', text: 'Barchasi'} ,...tabs]"/>
         </div>
         <router-view/>
    </div>

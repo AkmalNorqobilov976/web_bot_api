@@ -37,6 +37,9 @@ export default defineComponent({
                 })
         }
         watch(route, () => {
+            statisticsStore.$patch({
+                page: 1
+            })
             getStatistics();
         }, {
             immediate: true,

@@ -32,6 +32,9 @@ export default {
                 })
         }
         watch(route, (newValue) => {
+            ordersStore.$patch({
+                page: 1
+            })
             getOrders();
         }, {
             immediate: true,
