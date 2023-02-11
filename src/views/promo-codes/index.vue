@@ -118,12 +118,13 @@ export default {
         onUnmounted(() => {
             window.removeEventListener('scroll', handleScroll);
         })
-
+        const oldScrollY = ref(window.scrollY);
         const handleScroll = (e) => {
             let element = scrollComponent.value;
-            if(element?.getBoundingClientRect()?.bottom % window.innerHeight < 20) {
+            if(element?.getBoundingClientRect()?.bottom % window.innerHeight < 20 && oldScrollY.value < window.scrollY) {
                 getPromocodes();
             }
+            oldScrollY.value = window.scrollY
         }
         return {
             navbarButtons,

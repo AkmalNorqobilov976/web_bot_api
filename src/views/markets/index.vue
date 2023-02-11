@@ -38,7 +38,7 @@ export default defineComponent({
                 .then(() => {
                     tabs.value = categoriesStore.getCategoriesForTab; 
                 })
-            // getProducts()
+            getProducts()
                 
         })
         backButton('/')

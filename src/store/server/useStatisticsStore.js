@@ -13,9 +13,9 @@ export const useStatisticsStore = defineStore('statistic', {
                 adminStatistics(params, this.page)
                     .then(response => {
                         if(this.page == 1) {
-                            this.statistics = [ ...this.statistics, ...response.data.data];
-                        } else {
                             this.statistics = [ ...response.data.data ];
+                        } else {
+                            this.statistics = [ ...this.statistics, ...response.data.data];
                         }
 
                         this.page++;

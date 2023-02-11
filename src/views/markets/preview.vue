@@ -46,11 +46,16 @@ export default defineComponent({
         onUnmounted(() => {
             window.removeEventListener('scroll', handleScroll);
         })
+        const oldScrollY = ref(window.scrollY);
         const handleScroll = (e) => {
+
             let element = scrollComponent.value;
-            if(element?.getBoundingClientRect()?.bottom % window.innerHeight < 20) {
+            console.log(oldScrollY.value, window.scrollY);
+            if(element?.getBoundingClientRect()?.bottom % window.innerHeight < 20 && oldScrollY.value < window.scrollY) {
+                console.log("hihihihi");
                 load();
             }
+            oldScrollY.value = window.scrollY;
         }
         return {
             categoriesStore,
