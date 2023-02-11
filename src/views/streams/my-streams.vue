@@ -12,7 +12,9 @@
                 </div>
                 <div class="streams-list__info">
                     <div class="streams-list__info--header">
-                        {{ item.name }} 
+                        <div>
+                            {{ item.name }}
+                        </div>
                         <span>
                             <i class="ri-eye-line"></i>
                             {{ item.visits }}
@@ -61,7 +63,7 @@ export default defineComponent({
         const oldScrollY = ref(window.scrollY);
         const handleScroll = (e) => {
             let element = scrollComponent.value;
-            if(element?.getBoundingClientRect()?.bottom % window.innerHeight < 20 && oldScrollY.value < window.scrollY) {
+            if(element?.getBoundingClientRect()?.bottom % window.innerHeight < 2 && oldScrollY.value < window.scrollY) {
                 getStreams();
             }
             oldScrollY.value = window.scrollY;
@@ -145,6 +147,16 @@ export default defineComponent({
                     font-size: 1.7rem;
                     font-weight: 500;
                     margin-bottom: 1.3rem;
+                    div {
+                        line-height: 1.6rem;
+                        width: 15rem;
+                        overflow: hidden;
+                        white-space: nowrap;
+                        text-overflow: ellipsis;
+                        display: -webkit-box; 
+                        -webkit-line-clamp: 1;
+                        -webkit-box-orient: vertical;
+                    }
                     span {
                         display: flex;
                         gap: .269rem;

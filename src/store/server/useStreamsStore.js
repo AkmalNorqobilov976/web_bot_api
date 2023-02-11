@@ -26,6 +26,8 @@ export const useStreamsStore = defineStore('streams', {
         }
         return {
             page: 1,
+            last_page: 2,
+            loading: false,
             streams: [],
             stream: null,
             streamForm: streamForm,
@@ -44,16 +46,21 @@ export const useStreamsStore = defineStore('streams', {
         },
         getStreams() {
             return new Promise((resolve, reject) => {
-                adminStreams(this.page)
-                .then(response => {
-                    
-                    this.streams = [ ...this.streams, ...response.data.data ];
-                    this.page++;
-                    resolve(true);
-                })
-                .catch(error => {
-                    reject(error);
-                })
+                if(this.page <= this.last_page && !this.loading) {
+                    this.loading = true;
+                    adminStreams(this.page)
+                    .then(response => {
+                        this.last_page = response.data.meta.last_page;
+                        this.streams = [ ...this.streams, ...response.data.data ];
+                        this.loading = false;
+                        this.page++;
+                        resolve(true);
+                    })
+                    .catch(error => {
+                        this.loading = false;
+                        reject(error);
+                    })
+                }
             })
         },
         updateStream(data) {
@@ -64,7 +71,6 @@ export const useStreamsStore = defineStore('streams', {
                     resolve(true)
                     })
                     .catch(error => {
-                        console.log(error, "server errror");
                         reject(error)
                     })
             })
