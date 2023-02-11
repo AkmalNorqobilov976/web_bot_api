@@ -26,7 +26,7 @@ export function useTelegram() {
         tg.MainButton.setParams({
             text: text ? text: tg.MainButton.text,
             text_color: textColor ? textColor : tg.MainButton.textColor,
-            color: color ? color : tg.MainButton.color,
+            color: color,
             // is_active: is_active ? is_active : tg 
         });
         // tg.MainButton.show();
