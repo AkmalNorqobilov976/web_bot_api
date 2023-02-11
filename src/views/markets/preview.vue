@@ -16,6 +16,7 @@ import MarketCard from '@/components/markets/MarketCard.vue'
 import MessageNotFound from '@/components/MessageNotFound.vue';
 import { useLastRoute } from '@/composables/useLastRoute';
 import { useCategoriesStore } from '@/store/server/useCategoriesStore'
+import { useStreamsStore } from '@/store/server/useStreamsStore';
 import { defineComponent, onMounted, onUnmounted, ref } from 'vue-demi'
 import { useRoute } from 'vue-router';
 export default defineComponent({
@@ -25,6 +26,7 @@ export default defineComponent({
         useLastRoute().setLastRoute();
         const route = useRoute();
         const scrollComponent = ref(null);
+        const streamsStore = useStreamsStore();
         const getProductsByPagination = () => {
             categoriesStore.getProducts(route.params.status, 
                 categoriesStore.query, 
@@ -40,6 +42,12 @@ export default defineComponent({
             )
         };
         onMounted(() => {
+            streamsStore.streamForm = {
+                charity: 1000,
+                discount: 1000,
+                product_id: "",
+                name: ""
+            }
             window.addEventListener('scroll', handleScroll)
         })
 

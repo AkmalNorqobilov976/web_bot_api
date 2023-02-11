@@ -91,23 +91,6 @@ export default defineComponent ({
         const isDonationError = ref(false)
         const $validation = useVuelidate(donationFormValidationRule, donationForm);
         backButton(`/streams/create-stream/${streamsStore.$state.streamForm.product_id}`)
-        const updateStream = () => {
-            streamsStore.updateStream(streamsStore.stream)
-                .then(() => {
-                    toastStore.showToastAsAlert({
-                        message: "Yangilandi!",
-                        type: "success",
-                        delayTime: 3000
-                    })
-                })
-                .catch(error => {
-                    toastStore.showToastAsAlert({
-                        message: error.response.data.message,
-                        type: 'error',
-                        delayTime: 3000
-                    })
-                })
-        }
         const setParams = () => {
             if(streamsStore.streamForm.name) {
                 tgSetParamsToMainButton({

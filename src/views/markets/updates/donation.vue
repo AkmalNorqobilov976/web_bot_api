@@ -60,7 +60,7 @@ export default defineComponent ({
         const toastStore = useToastStore();
         useLastRoute().setLastRoute();
         const { numberFormatterConfig } = useVMoney();
-        backButton(`/streams/create-stream/${streamsStore.$state.streamForm.product_id}`)
+        backButton(`/streams/preview/${streamsStore.$state.streamForm.product_id}`)
        tgSetParamsToMainButton({
             disabled: false,
             text: "Oqim yangilash",
