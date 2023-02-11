@@ -51,7 +51,7 @@ export default defineComponent ({
         const { backButton } = useBackButton()
         const { numberFormatterConfig } = useVMoney()
         const toastStore = useToastStore();
-        backButton(`/streams/preview/${streamsStore.$state.streamForm.product_id}`)
+        backButton(`/streams/preview/${streamsStore.$state.stream.product_id}`)
 
         // const updateStream = () => {
         //     streamsStore.updateStream(streamsStore.stream)

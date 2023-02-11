@@ -94,7 +94,7 @@ export default defineComponent ({
         //         }
         //     })
         // })
-        backButton(`/streams/preview/${streamsStore.$state.streamForm.product_id}`)
+        backButton(`/streams/preview/${streamsStore.$state.stream.product_id}`)
         // onUnmounted(() => {
         //     hideMainButton();
         //     tg.offEvent('mainButtonClicked', updateStream)
