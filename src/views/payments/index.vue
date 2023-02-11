@@ -47,6 +47,7 @@
                 <form @submit.prevent class="payment-form__form">
                     <input 
                         class="payment-form__form--input" 
+                        :readonly="paymentForm.amount == 0"
                         v-model="paymentForm.amount"
                         v-resizable
                         v-money3="config"
