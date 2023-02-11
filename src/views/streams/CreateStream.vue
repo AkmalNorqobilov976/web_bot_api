@@ -51,9 +51,10 @@ import { postAdminStream } from '@/api/advertiserApi'
 import { useToastStore } from '@/store/useToastStore'
 import { useLastRoute } from '@/composables/useLastRoute'
 export default {
-  components: { MarketCard, Tooltip },
+    components: { MarketCard, Tooltip },
     setup() {
         const { backButton } = useBackButton()
+        backButton('/markets/preview/all')
         const categoriesStore = useCategoriesStore();
         const streamsStore = useStreamsStore();
         const { tg, showMainButton, hideMainButton, tgSetParamsToMainButton} = useTelegram();
@@ -115,7 +116,6 @@ export default {
             setParams()
         })
 
-        backButton('/markets/preview/all')
 
         onUnmounted(() => {
             hideMainButton();
