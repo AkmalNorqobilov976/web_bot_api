@@ -16,7 +16,7 @@
             <div class="stream-name__input">
                 <input 
                     readonly
-                    v-model="streamsStore.$state.stream.name" 
+                    v-model="streamsStore.$state.stream.link" 
                     @input="onShowMainButton"
                     placeholder="Misol uchun: 1-oqim linki" 
                 />
@@ -34,7 +34,7 @@
             </div>
             <tooltip style="bottom: -2.2rem;" label="Bu nomdagi Oqim linki mavjud"/>
             <div class="stream-name__button-grp">
-                <button @click="copyToClipboard($event, streamsStore.$state.stream.name)"  class="stream-name__button-grp--btn">
+                <button @click="copyToClipboard($event, streamsStore.$state.stream.link)"  class="stream-name__button-grp--btn">
                     <copyIcon class="stream-name__button-grp--btn--icon"/> Nusxalash
                 </button>
                 <button class="stream-name__button-grp--btn" @click="openPost">

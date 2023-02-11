@@ -10,7 +10,12 @@
             <form @submit.prevent="">
                 <!-- error-input class -->
                 <div class="stream-name__input">
-                    <input class="" readonly placeholder="Misol uchun: 1-oqim linki" />
+                    <input 
+                        class="" 
+                        readonly 
+                        :value="promoCode.url"
+                        placeholder="Misol uchun: 1-oqim linki" 
+                    />
                 </div>
             </form>
         </section>
@@ -18,7 +23,7 @@
         <p class="createdStream__address">
             Sizning yangi “Promo-kod” manzilingiz
         </p>
-        <div class="createdStream__button" @click="copyToClipboard($event, promoCode.code)">
+        <div class="createdStream__button" @click="copyToClipboard($event, promoCode.url)">
             <copy-icon/>
             Manzilni nusxalash
         </div>
@@ -47,7 +52,6 @@ export default {
             getAdminPromocode(route.params.id)
                 .then(response => {
                     promoCode.value = response.data.data;
-                    console.log(response.data.data);
                 })
                 .catch(error => {
                     toastStore.showToastAsAlert({
