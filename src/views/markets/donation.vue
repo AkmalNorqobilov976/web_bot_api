@@ -69,7 +69,7 @@ export default defineComponent ({
             precision: 0,
             disableNegative: false,
             disabled: false,
-            min: 0,
+            min: 100,
             max: 5000,
             allowBlank: false,
             minimumNumberOfCharacters: 0  

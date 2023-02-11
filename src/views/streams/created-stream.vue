@@ -44,7 +44,7 @@
             </p>
         </header>
         <main class="addition-stream-info__main">
-            <div class="addition-stream-info__main--list" @click="$router.push({name: 'donation'})">
+            <div class="addition-stream-info__main--list">
                 <div>
                     {{ streamInfo.charity }} so‘m
                     <p>
@@ -53,7 +53,7 @@
                 </div>
                 <i class="ri-arrow-right-s-line"></i>
             </div>
-            <div class="addition-stream-info__main--list" @click="$router.push({name: 'donation'})">
+            <div class="addition-stream-info__main--list">
                 <div>
                    {{ streamInfo.discount }} so‘m
                     <p>

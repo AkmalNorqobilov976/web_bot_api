@@ -52,7 +52,7 @@
             </p>
         </header>
         <main class="addition-stream-info__main">
-            <div class="addition-stream-info__main--list" @click="$router.push({name: 'donation-update', params: { id: $route.params.id }})">
+            <div class="addition-stream-info__main--list">
                 <div>
                     {{ $filter.numberFormat(streamsStore.$state.stream.charity) }} so‘m
                     <p>
@@ -63,7 +63,6 @@
             </div>
             <div 
                 class="addition-stream-info__main--list" 
-                @click="$router.push({name: 'define-amount-update', params: {id: $route.params.id}})"
             >
                 <div>
                    {{ $filter.numberFormat(streamsStore.$state.stream.discount) }} so‘m
@@ -73,7 +72,7 @@
                 </div>
                 <i class="ri-arrow-right-s-line"></i>
             </div>
-            <div class="addition-stream-info__main--list" @click="$router.push({name: 'advertesiment-update', params: { id: $route.params.id }})">
+            <div class="addition-stream-info__main--list">
                 <div>
                    0 so‘m
                     <p>
