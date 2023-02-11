@@ -69,7 +69,7 @@
                     </span>
                 </div>
             </section>
-            <section class="payment-expected" v-if="withdrawsStore.getNewWithdraws.length">
+            <section ref="scrollComponent" class="payment-expected" v-if="withdrawsStore.getNewWithdraws.length">
                 <p class="payment-expected__title">Kutilayotgan to‘lo‘vlar</p>
                 <div
                     v-for="(withdraw, i) in withdrawsStore.$state.withdraws"
@@ -117,6 +117,7 @@ export default {
     
     setup() {
         const toastStore = useToastStore();
+        const scrollComponent = ref();
         const authStore = useAuthStore();
         const showConfirm = ref(false);
         const cardMask = ref('{{9999}} {{9999}} {{9999}} {{9999}}');
@@ -200,14 +201,24 @@ export default {
             immediate: true
         })
         
-        
+        const getWithdraws = () => {
+            withdrawsStore.getWithdraws()
+                .then()
+                .catch(error => {
+                    toastStore.showToastAsAlert({
+                        message: error.response.data.message,
+                        type: 'error', 
+                        delayTime: 3000
+                    })
+                })
+        }
         onMounted(() => {
             showMainButton()
             authStore.getUserInfo()
                 .then(() => {
                     paymentForm.amount = authStore.$state.userInfo.balance;
                 })
-            withdrawsStore.getWithdraws()
+            getWithdraws();
             tg.onEvent('mainButtonClicked', onPostAdminWithdraw)
         })
 
@@ -230,6 +241,23 @@ export default {
             });
         }
 
+        onMounted(() => {
+            window.addEventListener('scroll', handleScroll)
+        })
+
+        onUnmounted(() => {
+            window.removeEventListener('scroll', handleScroll);
+        })
+        const oldScrollY = ref(window.scrollY);
+        const handleScroll = (e) => {
+
+            let element = scrollComponent.value;
+            if(element?.getBoundingClientRect()?.bottom % window.innerHeight < 2 && oldScrollY.value < window.scrollY) {
+                getWithdraws();
+            }
+            oldScrollY.value = window.scrollY
+        }
+
         return {
             onConfirm,
             showConfirm,
@@ -240,7 +268,8 @@ export default {
             onPostAdminWithdraw,
             cardMask,
             $v,
-            config
+            config,
+            scrollComponent
         }
 
         
