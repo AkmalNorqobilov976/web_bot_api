@@ -93,7 +93,7 @@ export default defineComponent({
         const oldScrollY = ref(window.scrollY);
         const handleScroll = (e) => {
             let element = scrollComponent.value;
-            if(element?.getBoundingClientRect()?.bottom % window.innerHeight < 20 && oldScrollY.value < window.scrollY) {
+            if(element?.getBoundingClientRect()?.bottom % window.innerHeight < 2 && oldScrollY.value < window.scrollY) {
                 getStatistics();
             }
             oldScrollY.value = window.scrollY
