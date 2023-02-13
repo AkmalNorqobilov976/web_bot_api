@@ -77,13 +77,15 @@ export default defineComponent ({
         }
         
         const router = useRouter();
-        const { tg, tgSetParamsToMainButton, notificationOccurred } = useTelegram()
+        const { tg, tgSetParamsToMainButton, showCloseMainButton, notificationOccurred } = useTelegram()
         const { backButton } = useBackButton()
         const route = useRoute();
      
         const donationForm = reactive({
             charity: 0
         });
+
+        showCloseMainButton();
         const donationFormValidationRule = {
             charity: {
                 maxValue: maxValue(5000)

@@ -68,12 +68,12 @@ export default {
             },
         };
         useLastRoute().setLastRoute();
-        const { tg, tgSetParamsToMainButton } = useTelegram()
+        const { tg, tgSetParamsToMainButton, showCloseMainButton } = useTelegram()
         const { backButton } = useBackButton()
         const toastStore = useToastStore();
         const promoCodesStore = usePromoCodesStore()
         backButton('/');
-
+        showCloseMainButton();
         const routerToGeneratePromocode = () => {
             router.push({name: 'generate-promocode'});
         }

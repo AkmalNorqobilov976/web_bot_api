@@ -86,11 +86,11 @@ export default defineComponent ({
         const $v = useVuelidate(defineAmountFormValidationRule, defineAmountForm);
         const router = useRouter()
         useLastRoute().setLastRoute();
-        const { tg, tgSetParamsToMainButton, notificationOccurred } = useTelegram();
+        const { tg, tgSetParamsToMainButton, showCloseMainButton, notificationOccurred } = useTelegram();
         const { backButton } = useBackButton()
         const { numberFormatterConfig } = useVMoney();
         const route = useRoute();
-        
+        showCloseMainButton();
         const addStream = () => {
             postAdminStream(streamsStore.streamForm)
                 .then((response) => {

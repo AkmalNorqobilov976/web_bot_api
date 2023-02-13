@@ -57,12 +57,13 @@ export default {
         backButton('/markets/preview/all')
         const categoriesStore = useCategoriesStore();
         const streamsStore = useStreamsStore();
-        const { tg, tgSetParamsToMainButton} = useTelegram();
+        const { tg, tgSetParamsToMainButton, showCloseMainButton } = useTelegram();
         const route = useRoute();
         const router = useRouter();
         const labelMessage = ref('')
         const toastStore = useToastStore();
         useLastRoute().setLastRoute();
+        showCloseMainButton();
         const setParams = () => {
             if(streamsStore.streamForm.name) {
                 tgSetParamsToMainButton({

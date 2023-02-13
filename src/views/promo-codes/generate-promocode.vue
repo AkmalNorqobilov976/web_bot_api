@@ -27,11 +27,11 @@ export default defineComponent({
     setup() {
         const { backButton } = useBackButton()
         const router = useRouter();
-        const { tg, tgMainButtonOffClick, tgSetParamsToMainButton } = useTelegram();
+        const { tg, tgMainButtonOffClick, tgSetParamsToMainButton, showCloseMainButton } = useTelegram();
         const toastStore = useToastStore()
         backButton('/promo-codes/main')
         useLastRoute().setLastRoute();
-
+        showCloseMainButton();
         const promocodeForm = reactive({
             code: ""
         });
