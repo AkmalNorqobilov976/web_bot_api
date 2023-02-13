@@ -20,7 +20,7 @@ const app = createApp(App);
 window.addEventListener('DOMContentLoaded', () => {
     let lastRoute = localStorage.getItem('last-route');
     if(lastRoute) {
-        // router.push(`${lastRoute}`)
+        router.push(`${lastRoute}`)
     }
 })
 app.component("infinite-loading", InfiniteLoading);
