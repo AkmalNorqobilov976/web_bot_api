@@ -23,7 +23,7 @@ export function useBackButton() {
         onUnmounted(() => {
             customRoute = "";
             tg.offEvent('backButtonClicked', backButtonRouter)
-            tg.BackButton.hide();
+            // tg.BackButton.hide();
         })
     }
 
