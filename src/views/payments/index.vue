@@ -111,7 +111,6 @@ import { useWithdrawsStore } from '@/store/server/useWithdrawsStore'
 import { postAdminWithdraw } from '@/api/advertiserApi'
 import { useToastStore } from '@/store/useToastStore'
 import { useAuthStore } from '@/store/authStore'
-import { useLastRoute } from '@/composables/useLastRoute'
 import MessageNotFound from '@/components/MessageNotFound.vue'
 import { useVuelidate } from '@vuelidate/core'
 import { maxLength, maxValue, required } from '@vuelidate/validators'
@@ -136,7 +135,6 @@ export default {
             allowBlank: false,
             minimumNumberOfCharacters: 0,
         })
-        useLastRoute().setLastRoute();
         const paymentForm = reactive({
             card_number: "",
             amount: "0"

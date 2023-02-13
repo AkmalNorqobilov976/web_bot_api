@@ -45,7 +45,6 @@
 <script>
 import { postAdminStream } from '@/api/advertiserApi';
 import { useBackButton } from '@/composables/useBackButton'
-import { useLastRoute } from '@/composables/useLastRoute';
 import { useTelegram } from '@/composables/useTelegram';
 import { useCategoriesStore } from '@/store/server/useCategoriesStore';
 import { useStreamsStore } from '@/store/server/useStreamsStore';
@@ -61,7 +60,6 @@ export default defineComponent ({
     setup() {
         const streamsStore = useStreamsStore();
         const toastStore = useToastStore();
-        useLastRoute().setLastRoute();
         const categoriesStore = useCategoriesStore();
         const donationConfig = {
             masked: false,

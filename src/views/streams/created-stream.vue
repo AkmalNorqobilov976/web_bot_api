@@ -142,7 +142,6 @@ import { useCategoriesStore } from '@/store/server/useCategoriesStore';
 import { getAdminStream } from '@/api/advertiserApi';
 import { useRoute } from 'vue-router';
 import { useToastStore } from '@/store/useToastStore';
-import { useLastRoute } from '@/composables/useLastRoute';
 import { useCopyToClipboard } from '@/composables/useCopyToClipboard';
 export default defineComponent({
     setup() {
@@ -152,7 +151,6 @@ export default defineComponent({
         const toastStore = useToastStore();
         const { copyToClipboard } = useCopyToClipboard();
         backButton('/markets/preview/all')
-        useLastRoute().setLastRoute();
         const streamInfo = ref({
         })
 

@@ -44,7 +44,6 @@
 <script>
 import { postAdminStream } from '@/api/advertiserApi';
 import { useBackButton } from '@/composables/useBackButton'
-import { useLastRoute } from '@/composables/useLastRoute';
 import { useTelegram } from '@/composables/useTelegram';
 import { useVMoney } from '@/composables/useVMoney';
 import { useCategoriesStore } from '@/store/server/useCategoriesStore';
@@ -85,7 +84,6 @@ export default defineComponent ({
         const isDefineAmountError = ref(false);
         const $v = useVuelidate(defineAmountFormValidationRule, defineAmountForm);
         const router = useRouter()
-        useLastRoute().setLastRoute();
         const { tg, tgSetParamsToMainButton, showCloseMainButton, notificationOccurred } = useTelegram();
         const { backButton } = useBackButton()
         const { numberFormatterConfig } = useVMoney();

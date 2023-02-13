@@ -49,7 +49,6 @@ import { useRoute, useRouter } from 'vue-router'
 import { useStreamsStore } from '@/store/server/useStreamsStore'
 import { postAdminStream } from '@/api/advertiserApi'
 import { useToastStore } from '@/store/useToastStore'
-import { useLastRoute } from '@/composables/useLastRoute'
 export default {
     components: { MarketCard, Tooltip },
     setup() {
@@ -62,7 +61,6 @@ export default {
         const router = useRouter();
         const labelMessage = ref('')
         const toastStore = useToastStore();
-        useLastRoute().setLastRoute();
         showCloseMainButton();
         const setParams = () => {
             if(streamsStore.streamForm.name) {
