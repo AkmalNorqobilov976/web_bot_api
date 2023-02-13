@@ -164,8 +164,11 @@ export default {
         const { 
             tg, 
             tgSetParamsToMainButton, 
-            notificationOccurred 
+            notificationOccurred,
+            showCloseMainButton
         } = useTelegram();
+        
+        showCloseMainButton();
         backButton()
         const inputForm = (e, key) => {
             paymentForm[key] = e.target.innerText

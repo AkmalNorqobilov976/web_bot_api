@@ -19,9 +19,6 @@ export function useTelegram() {
     }
 
     const tgSetParamsToMainButton = ({text, textColor, color,  disabled}) => {
-        onMounted(() => {
-            tg.MainButton.show();
-        })
         if(disabled) {
             tg.MainButton.disable()
         } else {
@@ -33,11 +30,16 @@ export function useTelegram() {
             color: color,
             is_active: !disabled,
         });
+    }
+    
+    const showCloseMainButton = () => {
+        onMounted(() => {
+            tg.MainButton.show();
+        })
         onUnmounted(() => {
             tg.MainButton.hide();
         })
     }
-
     const tgMainButtonDisable = () => {
         tg.MainButton.disable();
     }
@@ -73,6 +75,7 @@ export function useTelegram() {
         tgButtonOnClick,
         showMainButton,
         hideMainButton,
+        showCloseMainButton,
         tgMainButtonEnable,
         tgMainButtonDisable,
         notificationOccurred
