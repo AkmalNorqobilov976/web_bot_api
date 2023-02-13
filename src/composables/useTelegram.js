@@ -27,6 +27,7 @@ export function useTelegram() {
             text: text,
             text_color: textColor,
             color: color,
+            is_active: disabled
         });
         // tg.MainButton.color = color;
         // tg.MainButton.show();
