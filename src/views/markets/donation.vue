@@ -20,7 +20,8 @@
                     placeholder="10,000"
                     v-money3="donationConfig"
                     :class="{'shake error-text': isDonationError}"
-                    />
+                    inputmode="decimal"
+                />
                 <span>uzs</span>
             </form>
             <div class="donation-form__suggestions">

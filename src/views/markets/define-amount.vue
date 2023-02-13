@@ -20,6 +20,7 @@
                     placeholder="10,000"
                     :class="{'shake error-text': isDefineAmountError}"
                     v-resizable
+                    inputmode="decimal"
                 />
                 <span> uzs</span>
             </form>
