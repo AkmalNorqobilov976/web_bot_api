@@ -333,6 +333,7 @@ export default defineComponent({
             input {
                 flex: 1 1 auto;
                 background: inherit;
+                font-size: 1.5rem;
                 border: none;
                 outline: none;
             }

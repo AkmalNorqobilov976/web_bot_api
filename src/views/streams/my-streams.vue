@@ -53,6 +53,9 @@ export default defineComponent({
         useLastRoute().setLastRoute();
 
         onMounted(() => {
+            streamsStore.$patch({
+                page: 1
+            })
             getStreams();
             window.addEventListener('scroll', handleScroll)
         })
