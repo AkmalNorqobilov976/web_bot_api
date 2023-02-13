@@ -93,6 +93,7 @@ export default {
         const helperStore = useHelperStore();
         const toastStore = useToastStore();
         onMounted(() => {
+                tg.BackButton.hide();
                helperStore.getRegions()
                 .catch(error => {
                     toastStore.showToastAsAlert({
