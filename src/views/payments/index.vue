@@ -181,14 +181,14 @@ export default {
                         notificationOccurred('error')
                         tgSetParamsToMainButton({
                             text: "Hisobni to‘ldirish",
-                            color: "#E4E6E4",
+                            color: "gray",
                             textColor: "#8C8C8C",
                             disabled: true
                         });
                     } else {
                             tgSetParamsToMainButton({
                                 text: "Hisobni to‘ldirish 2",
-                                color: "#55BE61",
+                                color: "green",
                                 textColor: "#ffffff",
                                 disabled: false
                             })           
