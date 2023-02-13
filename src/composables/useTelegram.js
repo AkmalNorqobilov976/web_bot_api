@@ -22,7 +22,6 @@ export function useTelegram() {
             text_color: textColor,
             color: color,
             is_active: !disabled,
-            is_visible: !disabled
         });
     }
 
