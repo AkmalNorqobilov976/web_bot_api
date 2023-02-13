@@ -187,6 +187,7 @@ export default {
                         });
                     } else {
                             tgSetParamsToMainButton({
+                                text: "Hisobni to‘ldirish 2",
                                 color: "#55BE61",
                                 textColor: "#ffffff",
                                 disabled: false
