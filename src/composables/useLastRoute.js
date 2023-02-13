@@ -1,4 +1,4 @@
-import { onMounted } from "vue"
+import { onMounted, onUnmounted } from "vue"
 import { useRoute } from "vue-router";
 
 export function useLastRoute() {
@@ -8,7 +8,7 @@ export function useLastRoute() {
             localStorage.setItem('last-route', route.fullPath);
         })
 
-         onMounted(() => {
+         onUnmounted(() => {
             localStorage.removeItem('last-route');
         })
     };
