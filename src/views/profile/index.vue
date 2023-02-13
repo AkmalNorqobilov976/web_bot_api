@@ -1,9 +1,6 @@
 <template>
     <main class="my-profile">
         <header class="my-profile__header">
-            <div class="my-profile__header--setting">
-                <profile-setting-menu :left="'3rem'"/>
-            </div>
             <div class="my-profile__header--photo" @click="this.$refs.profileImage.click()">
                 <input 
                     type="file" 
@@ -111,7 +108,6 @@ import InfoCard from '@/components/cards/InfoCard.vue'
 import { useTelegram } from '@/composables/useTelegram'
 import { useBackButton } from '@/composables/useBackButton'
 import { usePhoneNumberPatternMatch } from '@/composables/usePhoneNumberPatternMatch'
-import ProfileSettingMenu from '@/components/menu/ProfileSettingMenu.vue'
 import { useHelperStore } from '@/store/server/useHelperStore'
 import { useToastStore } from '@/store/useToastStore'
 import { useAuthStore } from '@/store/authStore'
@@ -124,7 +120,6 @@ export default defineComponent({
     components: { 
         UnderLineInput, 
         InfoCard, 
-        ProfileSettingMenu,
         UnderLineSelect 
     },
     setup() {
