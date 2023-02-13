@@ -16,20 +16,19 @@ export function useTelegram() {
         })
     }
 
-    const tgSetParamsToMainButton = ({text, textColor, color, is_active, disabled}) => {
-        if(disabled) {
-            tg.MainButton.disable()
-        } else {
-            tg.MainButton.enable()
-        }
+    const tgSetParamsToMainButton = ({text, textColor, color,  disabled}) => {
+        // if(disabled) {
+        //     tg.MainButton.disable()
+        // } else {
+        //     tg.MainButton.enable()
+        // }
         // tg.MainButton.hide();
         tg.MainButton.setParams({
-            text: text ? text: tg.MainButton.text,
-            text_color: textColor ? textColor : tg.MainButton.textColor,
+            text: (text ? text: tg.MainButton.text),
+            text_color: (textColor ? textColor : tg.MainButton.textColor),
             color: color,
-            // is_active: is_active ? is_active : tg 
         });
-        tg.MainButton.color = color;
+        // tg.MainButton.color = color;
         // tg.MainButton.show();
     }
 
