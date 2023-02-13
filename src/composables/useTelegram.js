@@ -17,12 +17,6 @@ export function useTelegram() {
     }
 
     const tgSetParamsToMainButton = ({text, textColor, color,  disabled}) => {
-        // if(disabled) {
-        //     tg.MainButton.disable()
-        // } else {
-        //     tg.MainButton.enable()
-        // }
-        // tg.MainButton.hide();
         tg.MainButton.setParams({
             text: text,
             text_color: textColor,
@@ -30,8 +24,6 @@ export function useTelegram() {
             is_active: !disabled,
             is_visible: !disabled
         });
-        // tg.MainButton.color = color;
-        // tg.MainButton.show();
     }
 
     const tgMainButtonDisable = () => {

@@ -94,6 +94,12 @@
                 </form>
             </template>
         </info-card>
+        <div class="profile-setting-menu__lists">
+            <div @click="logout" class="profile-setting-menu__lists--item">
+                <i class="ri-logout-box-r-line"></i>
+                <p>Hisobdan chiqish</p>
+            </div>
+        </div>
     </main>
 </template>
 
@@ -111,8 +117,9 @@ import { useToastStore } from '@/store/useToastStore'
 import { useAuthStore } from '@/store/authStore'
 import UnderLineSelect from '@/components/Form/inputs/UnderLineSelect.vue'
 import { adminProfile } from '@/api/advertiserApi'
-import { updateMyProfile } from '@/api/authApi'
+import { logoutUser, updateMyProfile } from '@/api/authApi'
 import { useLastRoute } from '@/composables/useLastRoute'
+import { useRouter } from 'vue-router'
 export default defineComponent({
     components: { 
         UnderLineInput, 
@@ -123,6 +130,7 @@ export default defineComponent({
     setup() {
         const isImage = ref(false)
         const profileImage = ref(null)
+        const router = useRouter();
         useLastRoute().setLastRoute();
         const helperStore = useHelperStore();
         const toastStore = useToastStore();
@@ -138,6 +146,22 @@ export default defineComponent({
             avatar: null
         })
 
+        const logout = () => {
+            logoutUser()
+                .then(() => {
+                    localStorage.removeItem('token')
+                    useToastStore().showToastAsAlert({
+                        message: "Hisobdan chiqdingiz!!!",
+                        delayTime: 3000,
+                        type: 'success'
+                    })
+                    router.push('/login')
+                }).catch(() => {
+                    localStorage.removeItem('token')
+                    router.push('/login')
+                })
+        }
+        
         const computedRegions = computed({
             get() {
                 return helperStore.$state.regions
@@ -377,4 +401,19 @@ export default defineComponent({
             }
         }
     }
+
+    .profile-setting-menu__lists {
+            @include card-mixin;
+            margin-top: .8rem;
+            top: v-bind('top');
+            left: v-bind('left');
+            padding: 1.5rem 2rem;
+            &--item {
+                font-size: 1.5rem;
+                color: $red;
+                display: flex;
+                align-items: center;
+                gap: 2rem;
+            }
+        }
 </style>

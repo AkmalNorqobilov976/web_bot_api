@@ -1,12 +1,12 @@
 <template>
-    <div class="under-line-input position-relative" ref="clickOutsideOfInput">
+    <div v-click-outside="onClickOutsideOfSelect" class="under-line-input position-relative" ref="clickOutsideOfInput">
         <label class="under-line-input--label" for="">{{ label }}</label>
         <div>
             <!-- {{options}} -->
            <div class="position-relative">
                 <input 
                     class="under-line-input--field" 
-                    @focus="isToggle = true" 
+                    @click.capture="isToggle = !isToggle" 
                     type="text" 
                     readonly
                     v-bind="$attrs" 
@@ -14,9 +14,9 @@
                 >
                 <i class="icon ri-arrow-drop-down-line" :class="{ 'rotate': isToggle }"></i>
            </div>
-            <div v-if="isToggle" v-click-outside="onClickOutsideOfSelect" class="under-line-input__select-field position-absolute top-5 right-0 left-0 z-index-10">
+            <div v-if="isToggle" class="under-line-input__select-field position-absolute top-5 right-0 left-0 z-index-10">
                 <div class="under-line-input__select-field--options">
-                    <input class="under-line-input--field" @focus="isToggle = true" 
+                    <input class="under-line-input--field"
                         type="text" 
                         v-model="search"
                         placeholder="Qidiruv"
