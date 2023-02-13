@@ -180,15 +180,15 @@ export default {
                     if(!res) {
                         notificationOccurred('error')
                         tgSetParamsToMainButton({
-                            text: "Hisobni to‘ldirish",
-                            color: "gray",
+                            text: "Bonusni naqdlashtirish",
+                            color: "#e4e6e4",
                             textColor: "#8C8C8C",
                             disabled: true
                         });
                     } else {
                             tgSetParamsToMainButton({
-                                text: "Hisobni to‘ldirish 2",
-                                color: "green",
+                                text: "Bonusni naqdlashtirish",
+                                color: "#55be61",
                                 textColor: "#ffffff",
                                 disabled: false
                             })           
