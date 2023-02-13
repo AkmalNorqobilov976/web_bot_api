@@ -8,7 +8,12 @@
                 @click="$router.push({name: 'stream-preview', params: {id: item.id}})"
             >
                 <div class="streams-list__image">
-                    <img :src="item.product.image ? item.product.image : $noImage" alt="none">
+                    <img 
+                        v-if="item.product.image" 
+                        :src="item.product.image || item.product.image" 
+                        alt="none"
+                    >
+                    <i v-else class="ri-image-line"></i>
                 </div>
                 <div class="streams-list__info">
                     <div class="streams-list__info--header">
@@ -114,6 +119,11 @@ export default defineComponent({
                     width: 4.8rem;
                     object-fit: contain;
 
+                }
+                i {
+                    color: $blue;
+                    font-size: 4.8rem;
+                    font-weight: 400;
                 }
                 &--front-icon {
                     position: absolute;

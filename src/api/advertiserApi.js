@@ -59,7 +59,7 @@ export function postPromoCode({ code }) {
 
 export function adminStreams(page) {
     return request({
-        url: `${URI}/streams?page=${page}`,
+        url: `${URI}/streams?page=${page}&sortByDesc=id`,
         method: "get"
     });
 }
