@@ -19,10 +19,10 @@ export function useTelegram() {
     }
 
     const tgSetParamsToMainButton = ({text, textColor, color,  disabled}) => {
+        tg.MainButton.color = color;
         tg.MainButton.setParams({
             text: text,
             text_color: textColor,
-            color: color,
             is_active: !disabled,
         });
 
