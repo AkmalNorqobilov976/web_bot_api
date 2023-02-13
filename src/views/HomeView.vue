@@ -101,7 +101,6 @@ export default {
                         type: 'error'
                     })
                 })
-            tg.BackButton.hide();
         })
 
 
