@@ -7,14 +7,13 @@ export function useLastRoute() {
         onMounted(() => {
             localStorage.setItem('last-route', route.fullPath);
         })
-        
+
          onMounted(() => {
             localStorage.removeItem('last-route');
         })
     };
 
     return {
-        setLastRoute,
-        removeLastRoute
+        setLastRoute
     }
 }
