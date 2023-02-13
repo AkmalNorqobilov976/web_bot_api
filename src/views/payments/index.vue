@@ -177,7 +177,6 @@ export default {
         watch(paymentForm, (newValue) => {
             $v.value.$validate()
                 .then(res => {
-                    console.log(res);
                     if(!res) {
                         notificationOccurred('error')
                         tgSetParamsToMainButton({
@@ -187,17 +186,13 @@ export default {
                             disabled: true
                         });
                     } else {
-                        if(mustBeCool(newValue.card_number)) {
                             tgSetParamsToMainButton({
                                 color: "#55BE61",
                                 textColor: "#ffffff",
                                 disabled: false
                             })           
-                        }
                     }
                 })
-        }, {
-            immediate: true
         })
         
         const getWithdraws = () => {
