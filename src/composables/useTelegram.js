@@ -24,8 +24,6 @@ export function useTelegram() {
             text_color: textColor,
             is_active: !disabled,
         });
-
-        console.log("hello world");
     }
     
     const showCloseMainButton = () => {
