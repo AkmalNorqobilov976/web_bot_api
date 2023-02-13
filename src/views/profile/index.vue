@@ -269,7 +269,8 @@ export default defineComponent({
             getDistricts,
             updateProfile,
             computedRegions,
-            profilePicture
+            profilePicture,
+            logout
         }
     },
 })
