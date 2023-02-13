@@ -27,7 +27,7 @@ export default defineComponent({
     setup() {
         const { backButton } = useBackButton()
         const router = useRouter();
-        const { tg, tgMainButtonOffClick, hideMainButton, showMainButton, tgSetParamsToMainButton } = useTelegram();
+        const { tg, tgMainButtonOffClick, tgSetParamsToMainButton } = useTelegram();
         const toastStore = useToastStore()
         backButton('/promo-codes/main')
         useLastRoute().setLastRoute();
@@ -71,16 +71,13 @@ export default defineComponent({
                     color: "#E4E6E4"
                 });
             }
-            showMainButton()
         }, {
             immediate: true
         })
         onMounted(() => {
-            showMainButton();
             tg.onEvent('mainButtonClicked', onPostPromoCode)
         })
         onUnmounted(() => {
-            hideMainButton();
             promocodeFormWatcher()
              tg.offEvent('mainButtonClicked', onPostPromoCode)
         })

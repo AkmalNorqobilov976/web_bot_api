@@ -194,7 +194,7 @@ export default defineComponent({
                 });
         }
 
-        const { tg, showMainButton, hideMainButton } = useTelegram()
+        const { tg } = useTelegram()
         const { backButton } = useBackButton()
         backButton();
         onBeforeMount(() => {
@@ -214,12 +214,10 @@ export default defineComponent({
         })
         onMounted(() => {
             tg.onEvent('mainButtonClicked', updateProfile);
-            showMainButton();
 
         })
 
         onUnmounted(() => {
-            hideMainButton();
             tg.offEvent('mainButtonClicked', updateProfile);
         })
         watch(userInfo, (currentValue, oldValue) => {

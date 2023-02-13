@@ -57,7 +57,7 @@ export default {
         backButton('/markets/preview/all')
         const categoriesStore = useCategoriesStore();
         const streamsStore = useStreamsStore();
-        const { tg, showMainButton, hideMainButton, tgSetParamsToMainButton} = useTelegram();
+        const { tg, tgSetParamsToMainButton} = useTelegram();
         const route = useRoute();
         const router = useRouter();
         const labelMessage = ref('')
@@ -102,7 +102,6 @@ export default {
                 })
         }
         onMounted(() => {
-            showMainButton();
             streamsStore.$patch({
                 streamForm: {
                     product_id: route.params.id
@@ -118,7 +117,6 @@ export default {
 
 
         onUnmounted(() => {
-            hideMainButton();
             tg.offEvent('mainButtonClicked', addStream);
         })
         return {

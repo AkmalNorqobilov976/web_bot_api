@@ -86,7 +86,7 @@ export default defineComponent ({
         const $v = useVuelidate(defineAmountFormValidationRule, defineAmountForm);
         const router = useRouter()
         useLastRoute().setLastRoute();
-        const { tg, tgSetParamsToMainButton, showMainButton, hideMainButton, notificationOccurred } = useTelegram();
+        const { tg, tgSetParamsToMainButton, notificationOccurred } = useTelegram();
         const { backButton } = useBackButton()
         const { numberFormatterConfig } = useVMoney();
         const route = useRoute();
@@ -130,7 +130,6 @@ export default defineComponent ({
         }
 
         onMounted(() => {
-            showMainButton();
             streamsStore.$patch({
                 streamForm: {
                     product_id: route.params.id
@@ -169,7 +168,6 @@ export default defineComponent ({
         })
         backButton(`/streams/create-stream/${streamsStore.$state.streamForm.product_id}`)
         onUnmounted(() => {
-            hideMainButton();
             tg.offEvent('mainButtonClicked', addStream)
         })
         return {

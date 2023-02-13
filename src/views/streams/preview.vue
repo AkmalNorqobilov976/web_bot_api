@@ -173,7 +173,7 @@ export default defineComponent({
     setup() {
         useLastRoute().setLastRoute();
         const { backButton } = useBackButton();
-        const { tg, showMainButton, hideMainButton, tgSetParamsToMainButton } = useTelegram();
+        const { tg, tgSetParamsToMainButton } = useTelegram();
         const toastStore = useToastStore();
         const streamsStore = useStreamsStore();
         const route = useRoute();
@@ -275,16 +275,7 @@ export default defineComponent({
             getStream();
         })
 
-        // onMounted(() => {
-        //     showMainButton();
-        //     // setParams();
-        //     tg.onEvent('mainButtonClicked', updateStream)
-        // })
-
-        // onUnmounted(() => {
-        //     hideMainButton();
-        //     tg.offEvent('mainButtonClicked', updateStream)
-        // })
+       
         return {
             streamForm,
             copyToClipboard,

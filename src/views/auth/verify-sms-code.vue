@@ -30,7 +30,7 @@ export default defineComponent( {
     setup() {
         const auth = useAuthStore();
         const router = useRouter();
-        const { tg, tgSetParamsToMainButton, showMainButton, hideMainButton } = useTelegram();
+        const { tg, tgSetParamsToMainButton } = useTelegram();
         const toastStore = useToastStore();
         const userInfo = reactive({
             phone: "",
@@ -84,7 +84,6 @@ export default defineComponent( {
 
         
           onMounted(() => {
-            showMainButton();
             tgSetParamsToMainButton({
                 disabled: false,
                 textColor: '#ffffff',
@@ -95,7 +94,6 @@ export default defineComponent( {
         });
 
         onUnmounted(() => {
-            hideMainButton()
             tg.offEvent('mainButtonClicked', sendCode)
         })
         

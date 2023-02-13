@@ -68,7 +68,7 @@ export default {
             },
         };
         useLastRoute().setLastRoute();
-        const { tg, tgSetParamsToMainButton,  hideMainButton, showMainButton } = useTelegram()
+        const { tg, tgSetParamsToMainButton } = useTelegram()
         const { backButton } = useBackButton()
         const toastStore = useToastStore();
         const promoCodesStore = usePromoCodesStore()
@@ -102,13 +102,11 @@ export default {
 
         onMounted(() => {
             tg.onEvent('mainButtonClicked', routerToGeneratePromocode)
-            showMainButton();
         })
         
         onUnmounted(() => {
             watcher();
             tg.offEvent('mainButtonClicked', routerToGeneratePromocode)
-            hideMainButton();
         })
 
         onMounted(() => {

@@ -77,7 +77,7 @@ export default defineComponent ({
         }
         
         const router = useRouter();
-        const { tg, showMainButton, hideMainButton, tgSetParamsToMainButton, notificationOccurred } = useTelegram()
+        const { tg, tgSetParamsToMainButton, notificationOccurred } = useTelegram()
         const { backButton } = useBackButton()
         const route = useRoute();
      
@@ -129,7 +129,6 @@ export default defineComponent ({
                 })
         }
         onMounted(() => {
-            showMainButton();
             streamsStore.$patch({
                 streamForm: {
                     product_id: route.params.id
@@ -170,7 +169,6 @@ export default defineComponent ({
             streamsStore.$state.streamForm[key] = e.target.innerText
         }
         onUnmounted(() => {
-            hideMainButton();
             tg.offEvent('mainButtonClicked', addStream)
         })
         return {

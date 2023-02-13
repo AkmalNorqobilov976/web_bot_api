@@ -164,10 +164,6 @@ export default {
         const { 
             tg, 
             tgSetParamsToMainButton, 
-            tgMainButtonDisable, 
-            tgMainButtonEnable, 
-            showMainButton, 
-            hideMainButton, 
             notificationOccurred 
         } = useTelegram();
         backButton()
@@ -181,7 +177,6 @@ export default {
                     console.log(res);
                     if(!res) {
                         notificationOccurred('error')
-                        tgMainButtonDisable()                
                         tgSetParamsToMainButton({
                             text: "Hisobni to‘ldirish",
                             color: "#E4E6E4",
@@ -189,7 +184,6 @@ export default {
                             disabled: true
                         });
                     } else {
-                        tgMainButtonEnable()     
                         if(mustBeCool(newValue.card_number)) {
                             tgSetParamsToMainButton({
                                 color: "#55BE61",
@@ -215,7 +209,6 @@ export default {
                 })
         }
         onMounted(() => {
-            showMainButton()
             authStore.getUserInfo()
                 .then(() => {
                     paymentForm.amount = authStore.$state.userInfo.balance;
@@ -226,7 +219,6 @@ export default {
 
         onUnmounted(() => {
             tg.offEvent('mainButtonClicked', onPostAdminWithdraw)
-            hideMainButton();
         })
         
     
