@@ -40,6 +40,7 @@
                         v-model="paymentForm.card_number"
                         placeholder="0000 1111 2222 3333" 
                         :class="{ 'shake error-text': $v.card_number.$errors.length }"
+                        inputmode="decimal"
                     />
                 </form>
             </section>
@@ -51,6 +52,7 @@
                         v-model="paymentForm.amount"
                         v-resizable
                         :class="{ 'shake error-text': $v.amount.$errors.length }"
+                        inputmode="decimal"
                     />
                     <span> uzs</span>
                 </form>
