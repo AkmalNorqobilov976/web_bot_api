@@ -24,8 +24,8 @@ export function useTelegram() {
         // }
         // tg.MainButton.hide();
         tg.MainButton.setParams({
-            text: (text ? text: tg.MainButton.text),
-            text_color: (textColor ? textColor : tg.MainButton.textColor),
+            text: text,
+            text_color: textColor,
             color: color,
         });
         // tg.MainButton.color = color;
