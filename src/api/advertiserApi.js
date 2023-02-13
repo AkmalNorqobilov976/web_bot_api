@@ -146,7 +146,7 @@ export function getProfile() {
 export function adminStatistics(params, page) {
     const query = queryMaker(params)
     return request({
-        url: `${URI}/streams/statistics?page=${page}${query}`,
+        url: `${URI}/streams/statistics?page=${page}&${query}`,
         method: 'get'
     })
 }

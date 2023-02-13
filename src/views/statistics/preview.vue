@@ -57,6 +57,10 @@ export default defineComponent({
         })
         useLastRoute().setLastRoute();
         const filterFunction = (keyName) => {
+            statisticsStore.$patch({
+                page: 1
+            });
+            
             if(statisticsFilterAttributes.sortBy && statisticsFilterAttributes.sortBy == keyName) {
                 statisticsFilterAttributes.sortByDesc = keyName
                 statisticsFilterAttributes.sortBy = "";
