@@ -81,10 +81,12 @@
 
 <script>
 import { useTelegram } from '@/composables/useTelegram'
-import { onMounted, watchEffect } from '@vue/runtime-core';
+import { onMounted } from '@vue/runtime-core';
 import { useAuthStore } from '@/store/authStore';
 import { useHelperStore } from '@/store/server/useHelperStore';
 import { useToastStore } from '@/store/useToastStore';
+import { useLastRoute } from '@/composables/useLastRoute';
+
 export default {
     
     setup() {
@@ -92,6 +94,7 @@ export default {
         const authStore = useAuthStore();
         const helperStore = useHelperStore();
         const toastStore = useToastStore();
+        useLastRoute().removeLastRoute();
         onMounted(() => {
                 tg.BackButton.hide();
                helperStore.getRegions()
