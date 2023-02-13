@@ -13,7 +13,7 @@
                         :src="item.product.image || item.product.image" 
                         alt="none"
                     >
-                    <i v-else class="ri-image-line"></i>
+                    <i v-else class="ri-link-m"></i>
                 </div>
                 <div class="streams-list__info">
                     <div class="streams-list__info--header">
@@ -113,16 +113,25 @@ export default defineComponent({
                 // border: 1px solid #E9EBEA;
                 background: transparent;
                 position: relative;
+                border: .1rem solid #E9EBEA;
+                height: 4.8rem;
+                width: 4.8rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
                 img {
 
+                    height: 4.8rem;
+                    width: 4.8rem;
                     height: 4.8rem;
                     width: 4.8rem;
                     object-fit: contain;
 
                 }
                 i {
+                    
                     color: $blue;
-                    font-size: 4.8rem;
+                    font-size: 3.2rem;
                     font-weight: 400;
                 }
                 &--front-icon {
@@ -162,20 +171,18 @@ export default defineComponent({
                     margin-bottom: 1.3rem;
                     div {
                         line-height: 1.6rem;
-                        width: 15rem;
-                        overflow: hidden;
+                        display: inline-block;
+                        width: 180px;
                         white-space: nowrap;
+                        overflow: hidden !important;
                         text-overflow: ellipsis;
-                        display: -webkit-box; 
-                        -webkit-line-clamp: 1;
-                        -webkit-box-orient: vertical;
                     }
                     span {
                         display: flex;
                         gap: .269rem;
                         align-items: center;
                         font-weight: 400;
-                        font-size: 1.3rem;
+                        font-size: 1.8rem;
                         color: $blue;
                     }
                 }
@@ -188,10 +195,12 @@ export default defineComponent({
                     font-size: 1.5rem;
                     &--context {
                         flex: 1 1 auto;
+                        width: 15rem;
                         overflow: hidden;
                         display: -webkit-box;
-                        -webkit-line-clamp: 1;
+                        -webkit-line-clamp: 2;
                         -webkit-box-orient: vertical;
+                        text-overflow: ellipsis;
                     }
                 }
             }

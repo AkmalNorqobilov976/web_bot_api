@@ -3,8 +3,7 @@ import { useToastStore } from "@/store/useToastStore"
 export const useCopyToClipboard = () => {
     const toastStore = useToastStore();
     const copyToClipboard = (e, text, inputE) => {
-        console.log(inputE);
-        console.log(inputE.select());
+        inputE.select();
         document.execCommand('copy')
         toastStore.showToastAsAlert({
             message: "Nusxalandi",
