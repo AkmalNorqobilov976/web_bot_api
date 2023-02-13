@@ -14,6 +14,7 @@
                         class="" 
                         readonly 
                         :value="promoCode.url"
+                        ref="generatePromoCodeRef"
                         placeholder="Misol uchun: 1-oqim linki" 
                     />
                 </div>
@@ -23,7 +24,7 @@
         <p class="createdStream__address">
             Sizning yangi “Promo-kod” manzilingiz
         </p>
-        <div class="createdStream__button" @click="copyToClipboard($event, promoCode.url)">
+        <div class="createdStream__button" @click="copyToClipboard($event, promoCode.url, $refs.generatePromoCodeRef)">
             <copy-icon/>
             Manzilni nusxalash
         </div>
