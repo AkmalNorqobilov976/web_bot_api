@@ -1,3 +1,5 @@
+import { onMounted, onUnmounted } from "vue";
+
 const tg = window.Telegram.WebApp
 
 export function useTelegram() {
@@ -17,18 +19,23 @@ export function useTelegram() {
     }
 
     const tgSetParamsToMainButton = ({text, textColor, color,  disabled}) => {
+        onMounted(() => {
+            tg.MainButton.show();
+        })
         if(disabled) {
             tg.MainButton.disable()
         } else {
             tg.MainButton.enable()
         }
-        tg.MainButton.hide();
         tg.MainButton.setParams({
             text: text,
             text_color: textColor,
             color: color,
             is_active: !disabled,
         });
+        onUnmounted(() => {
+            tg.MainButton.hide();
+        })
     }
 
     const tgMainButtonDisable = () => {
