@@ -38,7 +38,11 @@
                 <button @click="copyToClipboard($event, streamsStore.$state.stream.link, $refs.streamInputRef)"  class="stream-name__button-grp--btn">
                     <copyIcon class="stream-name__button-grp--btn--icon"/> Nusxalash
                 </button>
-                <button class="stream-name__button-grp--btn" @click="openPost">
+                <button 
+                    :disabled="!streamInfo.product.advert_post" 
+                    class="stream-name__button-grp--btn" 
+                    @click="openPost(streamInfo.product.advert_post)"
+                >
                     <i class="ri-external-link-line stream-name__button-grp--btn--icon"></i>
                     Reklama posti
                 </button>
@@ -190,8 +194,8 @@ export default defineComponent({
         }
         const streamInfo = ref(streamsStore.stream);
         const { copyToClipboard } = useCopyToClipboard();
-        const openPost = () => {
-            window.open('https://t.me/Indonesia_Javascript')
+        const openPost = (advertPost) => {
+            window.open(advertPost)
         }
 
         const onConfirm = (e) => {

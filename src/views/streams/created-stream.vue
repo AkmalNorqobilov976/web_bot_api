@@ -27,7 +27,8 @@
                     Nusxalash 
                 </button>
                 <button 
-                    @click="openPost"
+                    :disabled="!streamInfo.product.advert_post"
+                    @click="openPost(streamInfo.product.advert_post)"
                     class="stream-name__button-grp--btn"
                 >
                     <i class="ri-external-link-line stream-name__button-grp--btn--icon"></i>
@@ -172,8 +173,8 @@ export default defineComponent({
                 })
         }
 
-        const openPost = () => {
-            window.open('https://t.me/Indonesia_Javascript')
+        const openPost = (advertPost) => {
+            window.open(advertPost)
         }
         
         return {
