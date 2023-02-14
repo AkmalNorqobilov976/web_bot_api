@@ -93,9 +93,9 @@ export default defineComponent( {
                 router.push('/verify-sms-code');
             }).catch((error) => {
                 toastStore.showToastAsAlert({
-                    message: error.response.data.message,
+                    message: error.response.data.message || error.message,
                         type: 'error',
-                        delayTime: 1000
+                        delayTime: 3000
                     })
             })
         }
