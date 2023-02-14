@@ -12,7 +12,6 @@
                     placeholder="00 000 00 00"
                     v-mask="`{{99}} {{999}}-{{99}}-{{99}}`"
                     v-model="userInfo.phone"
-                    @input="onPhoneInput($event)"
                 />
             </div>
 
@@ -35,7 +34,7 @@
 import { reactive } from '@vue/reactivity'
 import { useAuthStore } from '@/store/authStore';
 import { useRouter } from 'vue-router';
-import { defineComponent, onMounted, onUnmounted, watchEffect } from 'vue';
+import { defineComponent, onMounted, onUnmounted, watch } from 'vue';
 import { useTelegram } from '@/composables/useTelegram';
 import { sendPhone } from '@/api/authApi'
 import { getToken } from '@/utils/localStorage';
@@ -60,9 +59,8 @@ export default defineComponent( {
             });
         }
         showCloseMainButton();
-        const onPhoneInput = ($event) => {
-            if(!$event.target.value && userInfo.isAgree) {
-                userInfo.phone = $event.target.value;
+        watch(userInfo, (newValue) => {
+            if(newValue.isAgree && newValue.phone) {
                 tgSetParamsToMainButton({
                     text: "SMS kodni olish",
                     textColor: "#8C8C8C",
@@ -77,8 +75,7 @@ export default defineComponent( {
                     disabled: false
                 })
             }
-        }
-
+        })
 
         const sendPhoneNumber = () => {
             sendPhone({ phone: `+998${userInfo.phone.split(' ').join('').split('-').join('')}` })
@@ -100,18 +97,6 @@ export default defineComponent( {
             })
         }
         
-        watchEffect(() => {
-            if (!auth.$state.smsIsSent) {
-                tgSetParamsToMainButton({
-                        text: "SMS kodni olish",
-                    color: "#E4E6E4",
-                    textColor: "#8C8C8C",
-                    disabled: true
-                })
-            }
-        })
-
-
           onMounted(() => {
               if(getToken()) {
                   router.push('/');
@@ -127,7 +112,6 @@ export default defineComponent( {
             // login,
             auth,
             backPhoneNumber,
-            onPhoneInput,
             sendPhoneNumber
         }
     }
