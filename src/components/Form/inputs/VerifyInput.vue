@@ -101,6 +101,7 @@ export default defineComponent({
         justify-content: center;
         gap: .8rem;
         &__code-input {
+            appearance: none;
             display: inline;
             text-align: center;
             color: $black;
