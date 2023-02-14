@@ -64,7 +64,7 @@ export default defineComponent({
                     inputModels.value = inputElements.map(({ value }) => value).join("");
                     authStore.$patch({
                         code: inputModels.value
-                    })
+                    }) 
                 // take the first character of the input
                 // this actually breaks if you input an emoji like 👨‍👩‍👧‍👦....
                 // but I'm willing to overlook insane security code practices.
