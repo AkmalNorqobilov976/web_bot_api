@@ -65,16 +65,18 @@ export default defineComponent( {
                     text: "SMS kodni olish",
                     textColor: "#8C8C8C",
                     color: "#E4E6E4",
-                    disabled: true
+                    disabled: false
                 })
             } else {
                 tgSetParamsToMainButton({
                     text: "SMS kodni olish",
                     textColor: "#fff",
                     color: "#51AEE7",
-                    disabled: false
+                    disabled: true
                 })
             }
+        }, {
+            immediate: true
         })
 
         const sendPhoneNumber = () => {
