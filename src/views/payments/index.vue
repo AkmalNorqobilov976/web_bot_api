@@ -271,7 +271,8 @@ export default {
             })
             .then(() => {
                 withdrawsStore.$patch({
-                    page: 1
+                    page: 1,
+                    last_page: 2
                 })
                 paymentForm.amount = "0";
                 paymentForm.card_number = "";
