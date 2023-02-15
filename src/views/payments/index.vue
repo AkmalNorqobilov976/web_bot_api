@@ -180,7 +180,7 @@ export default {
                 title: "Operatsiyani tasdiqlang!",
                 message: "Hisobingizga pul 10 daqiqa ichida qayta tushirib beriladi. Ushbu to'lovni bekor qilishga ishonchingiz komilmi?",
                 buttons: [
-                    { id: 'back',type: 'ok', text: "Yo'q"},
+                    { id: 'back',type: 'default', text: "Yo'q"},
                     { id: "delete", type: 'destructive', text: "Ha"}
                 ]
             }, (buttonId) => {
