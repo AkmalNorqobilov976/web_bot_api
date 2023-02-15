@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, watch } from 'vue'
 
 export default defineComponent({
     props: {
@@ -21,7 +21,11 @@ export default defineComponent({
         const isCardError = ref(false);
         const lengthLessThan16 = ref(true);
         const cardMask = ref('{{9999}} {{9999}} {{9999}} {{9999}}');
-
+        watch(props, (newValue) => {
+            mustBeCool(newValue.modelValue);
+        }, {
+            immediate: true
+        })
         const mustBeCool = (value) =>{
             if(value.replace(/\D/g, '').length == 16) {
                 lengthLessThan16.value = false;
