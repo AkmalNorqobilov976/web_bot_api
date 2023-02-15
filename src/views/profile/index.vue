@@ -1,5 +1,6 @@
 <template>
     <main class="my-profile">
+        <!-- <button @click="updateProfile">Send</button> -->
         <header class="my-profile__header">
             <div class="my-profile__header--photo" @click="this.$refs.profileImage.click()">
                 <input 
@@ -74,7 +75,7 @@
                     <div class="my-profile__form--field">
                             <under-line-select 
                                 label="Tuman" 
-                                :options="getDistricts(userInfo.region_id)"
+                                :options="computedDistricts"
                                 :text="'name'"
                                 :value="'id'"
                                 placeholder="Kiritilmagan"
@@ -114,7 +115,6 @@ import { useAuthStore } from '@/store/authStore'
 import UnderLineSelect from '@/components/Form/inputs/UnderLineSelect.vue'
 import { adminProfile } from '@/api/advertiserApi'
 import { logoutUser, updateMyProfile } from '@/api/authApi'
-import { useLastRoute } from '@/composables/useLastRoute'
 import { useRouter } from 'vue-router'
 export default defineComponent({
     components: { 
@@ -126,7 +126,6 @@ export default defineComponent({
         const isImage = ref(false)
         const profileImage = ref(null)
         const router = useRouter();
-        useLastRoute().setLastRoute();
         const helperStore = useHelperStore();
         const toastStore = useToastStore();
         const authStore = useAuthStore();
@@ -165,6 +164,14 @@ export default defineComponent({
             
             }
         })
+        const computedDistricts = computed({
+            get() {
+                let districts = helperStore.regions.find(
+                (region) => region.id == userInfo.value.region_id
+                );
+                return districts?.districts;
+            }
+        })
         const onPhotoChange = (e) => {
             if(e.target.files[0]) {
                 userInfo.value.avatar = e.target.files[0]
@@ -176,8 +183,8 @@ export default defineComponent({
             updateMyProfile(userInfo.value)
                 .then(() => {
                     toastStore.showToastAsAlert({
-                        message: "Yangilandi!",
-                        type: "succes",
+                        message: "Profilingiz yangilandi!",
+                        type: "success",
                         delayTime: 3000
                     })
                 }).catch(error => {
@@ -263,7 +270,8 @@ export default defineComponent({
             updateProfile,
             computedRegions,
             profilePicture,
-            logout
+            logout,
+            computedDistricts
         }
     },
 })

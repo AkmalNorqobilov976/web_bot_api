@@ -20,7 +20,6 @@
                         type="text" 
                         v-model="search"
                         placeholder="Qidiruv"
-                        @input="onSearchOptions(search)"
                     >
                     <div 
                         v-for="(option, i) in searchOptions"
@@ -40,7 +39,7 @@
 </template>
 
 <script>
-    import { ref, defineComponent,  toRaw, onMounted, computed, watch } from "vue";
+    import { ref, defineComponent,  toRaw, onMounted, computed } from "vue";
 
     export default defineComponent({
         emits: ['update:modelValue'],
@@ -58,10 +57,19 @@
         },
         setup(props, context) {
             const isToggle = ref(false);
-            const inputValue = ref("");
+            const inputValue = computed(() => {
+                let result = props.options.find(opt => opt.id == props.modelValue);
+                return result?.[props.text];
+            });
             const search = ref("");
-            const rawOptions = ref(toRaw(props.options));
-            const searchOptions = ref(rawOptions);
+            
+            const searchOptions = computed(() => {
+                return toRaw(props.options).filter(option => {
+                                                if(option[props.text].includes(search.value)) {
+                                                    return option;
+                                                }
+                                            });
+            });
             const updateModel = (e) => {
                 inputValue.value = e[props.text];
                 isToggle.value = false;
@@ -69,21 +77,6 @@
             }
             const onClickOutsideOfSelect = () => {
                 isToggle.value = false;
-            }
-            
-            const onSearchOptions = (text) => {
-                if(!text) {
-                    searchOptions.value = props.options;
-                } else {
-                    searchOptions.value = rawOptions
-                                            .value
-                                            .filter(option => {
-                                                if(option[props.text].includes(text)) {
-                                                    return option;
-                                                }
-                                            })
-
-                }
             }
 
             const searchById = () => {
@@ -107,7 +100,6 @@
                 search,
                 updateModel,
                 searchOptions,
-                onSearchOptions,
                 inputValue,
                 onClickOutsideOfSelect,
                 resultValue

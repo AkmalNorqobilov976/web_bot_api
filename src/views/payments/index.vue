@@ -1,6 +1,6 @@
 <template>
     <custom-confirm :showConfirm="showConfirm" @onConfirm="onConfirm($event)"/>
-
+    <button @click="onPostAdminWithdraw">Send money</button>
     <div class="d-grid-max-content">
         <p style="font-size: 3rem;">
         </p>
@@ -44,11 +44,11 @@
                     />
                 </form>
             </section>
+            {{ paymentForm.amount }}
             <section class="payment-form">
                 <form @submit.prevent class="payment-form__form">
                     <input 
                         class="payment-form__form--input" 
-                        v-money3="config"
                         v-model="paymentForm.amount"
                         v-resizable
                         :class="{ 'shake error-text': $v.amount.$errors.length }"
@@ -60,13 +60,13 @@
                     <span @click="paymentForm.amount = authStore.$state.userInfo.balance * 0.1" class="payment-form__suggestions-item">
                         10%
                     </span>
-                    <span @click="paymentForm.amount = authStore.$state.userInfo.balance * 0.2" class="payment-form__suggestions-item">
+                    <span @click="paymentForm.amount = authStore.$state.userInfo.balance * 0.25" class="payment-form__suggestions-item">
                         25%
                     </span>
                     <span @click="paymentForm.amount = authStore.$state.userInfo.balance * 0.5" class="payment-form__suggestions-item">
                         50%
                     </span>
-                    <span @click="paymentForm.amount = authStore.$state.userInfo.balance * 0.75" class="payment-form__suggestions-item">
+                    <span @click="paymentForm.amount = authStore.$state.userInfo.balance" class="payment-form__suggestions-item">
                         100%
                     </span>
                 </div>
@@ -113,7 +113,7 @@ import { useToastStore } from '@/store/useToastStore'
 import { useAuthStore } from '@/store/authStore'
 import MessageNotFound from '@/components/MessageNotFound.vue'
 import { useVuelidate } from '@vuelidate/core'
-import { maxLength, maxValue, required } from '@vuelidate/validators'
+import { maxValue } from '@vuelidate/validators'
 export default {
     
     setup() {
@@ -127,7 +127,7 @@ export default {
             suffix: '',
             thousands: '',
             decimal: '.',
-            precision: 0,
+            precision: -1,
             disableNegative: false,
             disabled: false,
             min: null,
@@ -147,7 +147,6 @@ export default {
                 mustBeCool
             },
             amount: {
-                maxLength: maxLength(10),
                 maxValue: maxValue(authStore.$state.userInfo.balance)
 
             }
@@ -223,7 +222,20 @@ export default {
             postAdminWithdraw({ 
                 card_number: paymentForm.card_number.split(' ').join(''), 
                 amount: paymentForm.amount 
-            }).catch(error => {
+            })
+            .then(() => {
+                withdrawsStore.$patch({
+                    page: 1
+                })
+                getWithdraws();
+                authStore.getUserInfo();
+                toastStore.showToastAsAlert({
+                    message: 'Bonusingiz naqdlashtirildi!',
+                    delayTime: 3000,
+                    type: 'success'
+                });
+            })
+            .catch(error => {
                 toastStore.showToastAsAlert({
                     message: error.response.data.message,
                     delayTime: 3000,
