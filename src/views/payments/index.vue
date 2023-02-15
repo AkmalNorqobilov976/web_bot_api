@@ -209,7 +209,7 @@ export default {
                     page: 1,
                     last_page: 2
                 });
-                console.log(withdrawsStore.page);
+                // console.log(withdrawsStore.page);
                 getWithdraws()
                 authStore.getUserInfo().then(() => {
                     paymentForm.amount = authStore.userInfo.balance
@@ -228,9 +228,10 @@ export default {
             })
         }
         watch(paymentForm, (newValue) => {
+            // console.log(cardInputRef.value?.lengthLessThan16, "lasdkflksjf");
             $v.value.$validate()
                 .then(res => {
-                    if(!res && !cardInputRef.value?.lengthLessThan16) {
+                    if(!res && cardInputRef.value?.lengthLessThan16) {
                         notificationOccurred('error')
                         tgSetParamsToMainButton({
                             text: "Bonusni naqdlashtirish",
@@ -255,7 +256,7 @@ export default {
             withdrawsStore.getWithdraws()
                 .then(() => {
                     paymentForm.card_number = withdrawsStore.withdraws[0].account
-                    console.log("faslkdfjsaldfk", paymentForm.card_number);
+                    // console.log("faslkdfjsaldfk", paymentForm.card_number);
                     // alert("dslakfsj")
                 })
                 .catch(error => {

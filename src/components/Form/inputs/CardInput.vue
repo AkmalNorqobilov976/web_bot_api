@@ -25,7 +25,9 @@ export default defineComponent({
         const mustBeCool = (value) =>{
             if(value.replace(/\D/g, '').length == 16) {
                 lengthLessThan16.value = false;
-            } 
+            } else {
+                lengthLessThan16.value = true;
+            }
             return value.replace(/\D/g, '').length <= 16
         }
 
