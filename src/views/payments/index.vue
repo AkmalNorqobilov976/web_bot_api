@@ -116,7 +116,7 @@
 <script>
 import PaymentListComponent from '@/components/payments/PaymentListComponent.vue'
 import CustomConfirm from '@/components/CustomConfirm.vue'
-import { onMounted, onUnmounted, reactive, ref, watch, watchEffect } from 'vue'
+import { computed, onMounted, onUnmounted, reactive, ref, watch, watchEffect } from 'vue'
 import { useBackButton } from '@/composables/useBackButton'
 import { useTelegram } from '@/composables/useTelegram'
 import { useWithdrawsStore } from '@/store/server/useWithdrawsStore'
@@ -152,6 +152,11 @@ export default {
             card_number: "",
             amount: "0"
         })
+
+        const maxBalance = computed(() => {
+            return authStore.$state.userInfo.balance;
+        })
+        
         const mustBeCool = (value) =>{
             return value.replace(/\D/g, '').length == 16
         }
@@ -161,7 +166,7 @@ export default {
             },
             amount: {
                 minValue: 1,
-                maxValue: maxValue(authStore.$state.userInfo.balance)
+                maxValue: maxValue(maxBalance.value)
 
             }
         }
