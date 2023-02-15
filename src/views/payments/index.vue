@@ -125,7 +125,7 @@ import { useToastStore } from '@/store/useToastStore'
 import { useAuthStore } from '@/store/authStore'
 import MessageNotFound from '@/components/MessageNotFound.vue'
 import { useVuelidate } from '@vuelidate/core'
-import { maxValue } from '@vuelidate/validators'
+import { maxValue, minValue } from '@vuelidate/validators'
 export default {
     
     setup() {
@@ -165,7 +165,7 @@ export default {
                 mustBeCool
             },
             amount: {
-                minValue: 1,
+                minValue: minValue(1),
                 maxValue: maxValue(maxBalance.value)
 
             }
