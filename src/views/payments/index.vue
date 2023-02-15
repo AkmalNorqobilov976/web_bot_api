@@ -119,7 +119,7 @@ import { useToastStore } from '@/store/useToastStore'
 import { useAuthStore } from '@/store/authStore'
 import MessageNotFound from '@/components/MessageNotFound.vue'
 import { useVuelidate } from '@vuelidate/core'
-import { maxValue, minValue } from '@vuelidate/validators'
+import { maxValue, minValue, required } from '@vuelidate/validators'
 import CardInput from '@/components/Form/inputs/CardInput.vue'
 export default {
     
@@ -158,6 +158,7 @@ export default {
         }
         const paymentFormValidationRules = {
             amount: {
+                required,
                 minValue: minValue(1),
                 maxValue: maxValue(maxBalance.value)
 
