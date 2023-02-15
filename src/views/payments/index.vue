@@ -1,6 +1,7 @@
 <template>
     <custom-confirm :showConfirm="showConfirm" @onConfirm="onConfirm($event)"/>
-    <!-- <button @click="onPostAdminWithdraw">send money</button> -->
+    <!-- {{ paymentForm }} {{ paymentForm.card_number.length }}
+    <button @click="onPostAdminWithdraw">send money</button> -->
     <div class="d-grid-max-content">
         <p style="font-size: 3rem;">
         </p>
@@ -175,6 +176,16 @@ export default {
 
         const onShowConfirm = (withdraw_id) => {
             showConfirm.value = true;
+            tg.showPopup({
+                title: "To‘lo‘v uchun so‘rovingiz bekor qilinmoqda",
+                message: "Hisobingizga pul 10 daqiqa ichida qayta tushirib beriladi",
+                buttons: [
+                    { id: 'delete',type: 'destructive', text: "O'chirilsin"},
+                    { id: "back", type: 'cancel', text: "O'chirilmasin"}
+                ]
+            }, (buttonId) => {
+                console.log(buttonId);
+            })
             selectedWithdrawId.value = withdraw_id
         } 
 
@@ -200,6 +211,9 @@ export default {
                 });
                 console.log(withdrawsStore.page);
                 getWithdraws()
+                authStore.getUserInfo().then(() => {
+                    paymentForm.amount = authStore.userInfo.balance
+                })
                 toastStore.showToastAsAlert({
                     message: "Bekor qilindi!",
                     type: 'success',
@@ -240,7 +254,7 @@ export default {
         const getWithdraws = () => {
             withdrawsStore.getWithdraws()
                 .then(() => {
-                    paymentForm.card_number = withdrawsStore.withdraws[withdrawsStore.withdraws.length -1].account
+                    paymentForm.card_number = withdrawsStore.withdraws[0].account
                     console.log("faslkdfjsaldfk", paymentForm.card_number);
                     // alert("dslakfsj")
                 })
@@ -253,10 +267,7 @@ export default {
                 })
         }
         onMounted(() => {
-            authStore.getUserInfo()
-                .then(() => {
-                    paymentForm.amount = authStore.$state.userInfo.balance;
-                })
+            paymentForm.amount = authStore.$state.userInfo.balance;
             withdrawsStore.$patch({
                 last_page: withdrawsStore.page + 1
             })

@@ -200,15 +200,6 @@ export default defineComponent({
         const { backButton } = useBackButton()
         backButton();
         onBeforeMount(() => {
-            authStore.getUserInfo()
-                .catch(error => {
-                    toastStore.showToastAsAlert({
-                        message: error.response.data.message,
-                        delayTime: 3000,
-                        type: 'error'
-                    })
-                })
-
             adminProfile()
                 .then(response => {
                     userInfo.value = response.data.data;
