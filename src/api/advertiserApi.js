@@ -108,6 +108,13 @@ export function adminWithdraws() {
     });
 }
 
+export function adminCancelWithdraw(withdraw_id) {
+    return request({
+        url: `${URI}/withdraw/${withdraw_id}/cancel`,
+        method: 'post'
+    })
+}
+
 export function adminTransactions(page, query) {
     let urlParams = `?page=${page}`;
     if(query) {

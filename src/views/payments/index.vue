@@ -1,6 +1,6 @@
 <template>
     <custom-confirm :showConfirm="showConfirm" @onConfirm="onConfirm($event)"/>
-    <button @click="onPostAdminWithdraw">Send money</button>
+    <!-- <button @click="onPostAdminWithdraw">send money</button> -->
     <div class="d-grid-max-content">
         <p style="font-size: 3rem;">
         </p>
@@ -44,7 +44,6 @@
                     />
                 </form>
             </section>
-            {{ paymentForm.amount }}
             <section class="payment-form">
                 <form @submit.prevent class="payment-form__form">
                     <input 
@@ -57,16 +56,28 @@
                     <span> uzs</span>
                 </form>
                 <div class="payment-form__suggestions">
-                    <span @click="paymentForm.amount = authStore.$state.userInfo.balance * 0.1" class="payment-form__suggestions-item">
+                    <span 
+                        @click="paymentForm.amount = Math.floor(authStore.$state.userInfo.balance * 0.1)" 
+                        class="payment-form__suggestions-item"
+                    >
                         10%
                     </span>
-                    <span @click="paymentForm.amount = authStore.$state.userInfo.balance * 0.25" class="payment-form__suggestions-item">
+                    <span 
+                        @click="paymentForm.amount = Math.floor(authStore.$state.userInfo.balance * 0.25)" 
+                        class="payment-form__suggestions-item"
+                    >
                         25%
                     </span>
-                    <span @click="paymentForm.amount = authStore.$state.userInfo.balance * 0.5" class="payment-form__suggestions-item">
+                    <span 
+                        @click="paymentForm.amount = Math.floor(authStore.$state.userInfo.balance * 0.5)" 
+                        class="payment-form__suggestions-item"
+                    >
                         50%
                     </span>
-                    <span @click="paymentForm.amount = authStore.$state.userInfo.balance" class="payment-form__suggestions-item">
+                    <span 
+                        @click="paymentForm.amount = authStore.$state.userInfo.balance" 
+                        class="payment-form__suggestions-item"
+                    >
                         100%
                     </span>
                 </div>
@@ -79,7 +90,7 @@
                 >
                     <PaymentListComponent v-if="withdraw.status == 'new'" :cardData="withdraw"> 
                         <template #cancel-btn>
-                            <div class="cancel-btn" @click="showConfirm = true">
+                            <div class="cancel-btn" @click="onShowConfirm(withdraw.id)">
                                 <i class="ri-close-line"></i>
                                 Bekor qilish
                             </div>
@@ -108,7 +119,7 @@ import { onMounted, onUnmounted, reactive, ref, watch, watchEffect } from 'vue'
 import { useBackButton } from '@/composables/useBackButton'
 import { useTelegram } from '@/composables/useTelegram'
 import { useWithdrawsStore } from '@/store/server/useWithdrawsStore'
-import { postAdminWithdraw } from '@/api/advertiserApi'
+import { adminCancelWithdraw, postAdminWithdraw } from '@/api/advertiserApi'
 import { useToastStore } from '@/store/useToastStore'
 import { useAuthStore } from '@/store/authStore'
 import MessageNotFound from '@/components/MessageNotFound.vue'
@@ -119,6 +130,7 @@ export default {
     setup() {
         const toastStore = useToastStore();
         const scrollComponent = ref();
+        const selectedWithdrawId = ref(null);
         const authStore = useAuthStore();
         const showConfirm = ref(false);
         const cardMask = ref('{{9999}} {{9999}} {{9999}} {{9999}}');
@@ -154,8 +166,18 @@ export default {
         const $v = useVuelidate(paymentFormValidationRules, paymentForm)
         const onConfirm = (e) => {
             showConfirm.value = false;
+            if(e) {
+                cancelwithDraw(selectedWithdrawId.value);
+            } 
+            showConfirm.value = false;
         }
 
+        const onShowConfirm = (withdraw_id) => {
+            showConfirm.value = true;
+            selectedWithdrawId.value = withdraw_id
+        } 
+
+        
         const withdrawsStore = useWithdrawsStore();
         const { backButton } = useBackButton()
         const { 
@@ -171,6 +193,28 @@ export default {
             paymentForm[key] = e.target.innerText
         }
 
+        const cancelwithDraw = (withdraw_id) => {
+            adminCancelWithdraw(withdraw_id)
+            .then(() => {
+                withdrawsStore.$patch({
+                    page: 1,
+                    last_page: 2
+                });
+                console.log(withdrawsStore.page);
+                getWithdraws()
+                toastStore.showToastAsAlert({
+                    message: "Bekor qilindi!",
+                    type: 'success',
+                    delayTime: 3000
+                })
+            }).catch(error => {
+                toastStore.showToastAsAlert({
+                    message: error.response.data.message,
+                    type: 'error',
+                    delayTime: 3000
+                })
+            })
+        }
         watch(paymentForm, (newValue) => {
             $v.value.$validate()
                 .then(res => {
@@ -227,6 +271,8 @@ export default {
                 withdrawsStore.$patch({
                     page: 1
                 })
+                paymentForm.amount = "0";
+                paymentForm.card_number = "";
                 getWithdraws();
                 authStore.getUserInfo();
                 toastStore.showToastAsAlert({
@@ -272,7 +318,8 @@ export default {
             cardMask,
             $v,
             config,
-            scrollComponent
+            scrollComponent,
+            onShowConfirm
         }
 
         
