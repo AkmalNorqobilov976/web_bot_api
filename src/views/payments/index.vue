@@ -174,19 +174,20 @@ export default {
             showConfirm.value = false;
         }
 
+        selectedWithdrawId.value = withdraw_id
         const onShowConfirm = (withdraw_id) => {
-            showConfirm.value = true;
             tg.showPopup({
-                title: "To‘lo‘v uchun so‘rovingiz bekor qilinmoqda",
-                message: "Hisobingizga pul 10 daqiqa ichida qayta tushirib beriladi",
+                title: "Operatsiyani tasdiqlang!",
+                message: "Hisobingizga pul 10 daqiqa ichida qayta tushirib beriladi. Ushbu to'lovni bekor qilishga ishonchingiz komilmi?",
                 buttons: [
-                    { id: 'delete',type: 'destructive', text: "O'chirilsin"},
-                    { id: "back", type: 'cancel', text: "O'chirilmasin"}
+                    { id: 'back',type: 'ok', text: "Yo'q"},
+                    { id: "delete", type: 'destructive', text: "Ha"}
                 ]
             }, (buttonId) => {
-                console.log(buttonId);
+                if(buttonId == 'delete') {
+                    cancelwithDraw(withdraw_id);
+                }
             })
-            selectedWithdrawId.value = withdraw_id
         } 
 
         
