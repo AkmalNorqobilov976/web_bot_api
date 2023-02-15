@@ -231,7 +231,7 @@ export default {
             // console.log(cardInputRef.value?.lengthLessThan16, "lasdkflksjf");
             $v.value.$validate()
                 .then(res => {
-                    if(!res && cardInputRef.value?.lengthLessThan16) {
+                    if(!res || cardInputRef.value?.lengthLessThan16) {
                         notificationOccurred('error')
                         tgSetParamsToMainButton({
                             text: "Bonusni naqdlashtirish",
