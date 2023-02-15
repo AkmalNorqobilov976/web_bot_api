@@ -1,7 +1,7 @@
 <template>
     <custom-confirm :showConfirm="showConfirm" @onConfirm="onConfirm($event)"/>
-    {{ paymentForm }} {{ paymentForm.card_number.length }}
-    <button @click="onPostAdminWithdraw">send money</button>
+    <!-- {{ paymentForm }} {{ paymentForm.card_number.length }}
+    <button @click="onPostAdminWithdraw">send money</button> -->
     <div class="d-grid-max-content">
         <p style="font-size: 3rem;">
         </p>
