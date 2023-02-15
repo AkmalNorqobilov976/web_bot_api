@@ -1,7 +1,7 @@
 <template>
     <custom-confirm :showConfirm="showConfirm" @onConfirm="onConfirm($event)"/>
-    <!-- {{ paymentForm }} {{ paymentForm.card_number.length }}
-    <button @click="onPostAdminWithdraw">send money</button> -->
+    {{ paymentForm }} {{ paymentForm.card_number.length }}
+    <button @click="onPostAdminWithdraw">send money</button>
     <div class="d-grid-max-content">
         <p style="font-size: 3rem;">
         </p>
@@ -36,13 +36,7 @@
                 <p class="payment-debit-card-form__title">Hisobdan pul yechish</p>
                 <form @submit.prevent class="payment-debit-card-form__form">
                     <label for="payment-debit-card-form__form--label">Karta raqami</label>
-                    <input 
-                        v-mask="cardMask" 
-                        v-model="paymentForm.card_number"
-                        placeholder="0000 1111 2222 3333" 
-                        :class="{ 'shake error-text': $v.card_number.$errors.length }"
-                        inputmode="decimal"
-                    />
+                    <card-input ref="cardInputRef" v-model="paymentForm.card_number"/>
                 </form>
             </section>
             <section class="payment-form">
@@ -126,9 +120,11 @@ import { useAuthStore } from '@/store/authStore'
 import MessageNotFound from '@/components/MessageNotFound.vue'
 import { useVuelidate } from '@vuelidate/core'
 import { maxValue, minValue } from '@vuelidate/validators'
+import CardInput from '@/components/Form/inputs/CardInput.vue'
 export default {
     
     setup() {
+        const cardInputRef = ref(null);
         const toastStore = useToastStore();
         const scrollComponent = ref();
         const selectedWithdrawId = ref(null);
@@ -140,7 +136,7 @@ export default {
             suffix: '',
             thousands: '',
             decimal: '.',
-            precision: -1,
+            precision: 0,
             disableNegative: false,
             disabled: false,
             min: null,
@@ -161,9 +157,6 @@ export default {
             return value.replace(/\D/g, '').length == 16
         }
         const paymentFormValidationRules = {
-            card_number: {
-                mustBeCool
-            },
             amount: {
                 minValue: minValue(1),
                 maxValue: maxValue(maxBalance.value)
@@ -236,7 +229,7 @@ export default {
         watch(paymentForm, (newValue) => {
             $v.value.$validate()
                 .then(res => {
-                    if(!res) {
+                    if(!res && !cardInputRef.value?.lengthLessThan16) {
                         notificationOccurred('error')
                         tgSetParamsToMainButton({
                             text: "Bonusni naqdlashtirish",
@@ -343,8 +336,9 @@ export default {
             cardMask,
             $v,
             config,
+            cardInputRef,
             scrollComponent,
-            onShowConfirm
+            onShowConfirm,
         }
 
         
@@ -352,7 +346,8 @@ export default {
     components: {
         PaymentListComponent,
         CustomConfirm,
-        MessageNotFound
+        MessageNotFound,
+        CardInput
     }
 }
 </script>
