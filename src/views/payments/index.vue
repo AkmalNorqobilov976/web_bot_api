@@ -159,6 +159,7 @@ export default {
                 mustBeCool
             },
             amount: {
+                minValue: 1,
                 maxValue: maxValue(authStore.$state.userInfo.balance)
 
             }
@@ -278,9 +279,11 @@ export default {
                     page: 1,
                     last_page: 2
                 })
-                paymentForm.amount = "0";
                 getWithdraws();
-                authStore.getUserInfo();
+                authStore.getUserInfo()
+                .then(() => {
+                    paymentForm.amount = authStore.userInfo.balance;
+                });
                 toastStore.showToastAsAlert({
                     message: 'Bonusingiz naqdlashtirildi!',
                     delayTime: 3000,
