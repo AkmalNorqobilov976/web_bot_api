@@ -189,9 +189,6 @@ export default {
         
         showCloseMainButton();
         backButton('/')
-        const inputForm = (e, key) => {
-            paymentForm[key] = e.target.innerText
-        }
 
         const cancelwithDraw = (withdraw_id) => {
             adminCancelWithdraw(withdraw_id)
@@ -241,7 +238,11 @@ export default {
         
         const getWithdraws = () => {
             withdrawsStore.getWithdraws()
-                .then()
+                .then(() => {
+                    paymentForm.card_number = withdrawsStore.withdraws[withdrawsStore.withdraws.length -1].account
+                    console.log("faslkdfjsaldfk", paymentForm.card_number);
+                    // alert("dslakfsj")
+                })
                 .catch(error => {
                     toastStore.showToastAsAlert({
                         message: error.response.data.message,
@@ -255,6 +256,9 @@ export default {
                 .then(() => {
                     paymentForm.amount = authStore.$state.userInfo.balance;
                 })
+            withdrawsStore.$patch({
+                last_page: withdrawsStore.page + 1
+            })
             getWithdraws();
             tg.onEvent('mainButtonClicked', onPostAdminWithdraw)
         })
@@ -275,7 +279,6 @@ export default {
                     last_page: 2
                 })
                 paymentForm.amount = "0";
-                paymentForm.card_number = "";
                 getWithdraws();
                 authStore.getUserInfo();
                 toastStore.showToastAsAlert({
@@ -313,7 +316,6 @@ export default {
         return {
             onConfirm,
             showConfirm,
-            inputForm,
             paymentForm,
             authStore,
             withdrawsStore,
