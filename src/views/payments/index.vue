@@ -235,6 +235,8 @@ export default {
                             })           
                     }
                 })
+        }, {
+            immediate: true
         })
         
         const getWithdraws = () => {
