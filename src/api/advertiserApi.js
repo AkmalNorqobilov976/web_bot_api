@@ -103,7 +103,7 @@ export function postAdminStream(data) {
 
 export function adminWithdraws() {
     return request({
-        url: `${URI}/withdraws`,
+        url: `${URI}/withdraws?sortByDesc=id`,
         method: "get"
     });
 }
