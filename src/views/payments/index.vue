@@ -166,7 +166,7 @@ export default {
         } = useTelegram();
         
         showCloseMainButton();
-        backButton()
+        backButton('/')
         const inputForm = (e, key) => {
             paymentForm[key] = e.target.innerText
         }
