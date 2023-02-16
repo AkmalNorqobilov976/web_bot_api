@@ -2,35 +2,35 @@
   <article
     class="query-link"
   >
-    <main class="query-link__lists" v-if="listData">
+    <main class="query-link__lists">
       <section class="query-link__lists--i1">
         <div class="query-link__lists--i1--text">
           <i class="ri-file-list-line"></i>
           <div>
-            #{{ listData.operator_id }} / {{ listData.id }}
+            #{{ $lodashGet(listData, 'operator_id') }} / {{ $lodashGet(listData, 'id') }}
            <p class="query-link__lists--i1--text--subtitle">1 hafta oldin</p>
           </div>
         </div>
         <div class="query-link__lists--i1--btn">
-          <button :class="`${listData.status}-btn`">{{ statusTypes[listData.status] }}</button>
+          <button :class="`${$lodashGet(listData, status)}-btn`">{{ statusTypes[listData.status] }}</button>
         </div>
       </section>
       <section class="query-link__lists--i1 border-.2">
         <div class="query-link__lists--i1--text">
           <i class="ri-message-line"></i>
-          {{ listData.note ? listData.note : "Izoh mavjud emas!!!" }}
+          {{ $lodashGet(listData, 'note') ? $lodashGet(listData, 'note') : "Izoh mavjud emas!!!" }}
         </div>
       </section>
       <section class="query-link__lists--i1">
         <div class="query-link__lists--i1--text">
           <i class="ri-contacts-line"></i>
-          {{listData.client_full_name}} {{ listData.customer_phone }}
+          {{$lodashGet(listData, 'client_full_name')}} {{ $lodashGet(listData, 'customer_phone') }}
         </div>
       </section>
       <section class="query-link__lists--i1">
         <div class="query-link__lists--i1--text">
           <i class="ri-pin-distance-line"></i>
-          {{ listData.full_address }}
+          {{ $lodashGet(listData, 'full_address') }}
         </div>
       </section>
 
@@ -47,7 +47,7 @@
       <section class="query-link__lists--i1" @click="$router.push({ name: 'created-stream', params: {id: listData.stream_id} })">
         <div class="query-link__lists--i1--text">
           <i class="ri-link-m"></i>
-          {{listData.stream_name}}
+          {{$lodashGet(listData, 'stream_name')}}
         </div>
         <div class="query-link__lists--i1--btn">
             <i class="ri-arrow-right-s-line"></i>

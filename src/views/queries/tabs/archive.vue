@@ -1,9 +1,9 @@
 <template>
     <div class="d-grid-max-content">
        <div ref="scrollComponent">
-           <query-list-card v-for="(order, i) in ordersStore.$state.orders" :key="i" :listData="order"/>
+           <query-list-card v-for="(order, i) in $lodashGet(ordersStore, '$state.orders')" :key="i" :listData="order"/>
        </div>
-       <message-not-found v-if="!ordersStore.$state.orders.length"/>
+       <message-not-found v-if="!$lodashGet(ordersStore, '$state.orders', '').length"/>
   </div>
 
 </template>
