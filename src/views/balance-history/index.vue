@@ -22,10 +22,10 @@
                             xarid qilingan va bekor qilingan mahsulotlar statistikasi
                         </p>
                         <div class="balance-history__info-card--body">
-                            <bar-chart  
+                            <!-- <bar-chart  
                                 key="aldskjfaoriweriwqjowjre"
                                 :chartData="transactionsStore.$state.transactions" 
-                                :xKey="`created_at_label`" :yKey="`amount`"/>
+                                :xKey="`created_at_label`" :yKey="`amount`"/> -->
                         
                             <balance-history-list-component
                                 v-for="(transaction, i) in transactionsStore.$state.transactions"
@@ -51,7 +51,7 @@ import { useToastStore } from '@/store/useToastStore'
 import { useWithdrawsStore } from '@/store/server/useWithdrawsStore'
 import { useBackButton } from '@/composables/useBackButton'
 import { useTransactionsStore } from '@/store/server/useTransactionsStore'
-import BarChart from '@/components/charts/BarChart.vue'
+// import BarChart from '@/components/charts/BarChart.vue'
 import MessageNotFound from '@/components/MessageNotFound.vue'
 import { useLastRoute } from '@/composables/useLastRoute'
 import { adminTransactions } from '@/api/advertiserApi'
@@ -106,7 +106,7 @@ export default defineComponent({
 
             let element = scrollComponent.value;
             if(element?.getBoundingClientRect()?.bottom % window.innerHeight < 2 && oldScrollY.value < window.scrollY) {
-                getTransactions();
+                getTransactions(query.value);
             }
             oldScrollY.value = window.scrollY
         }
@@ -141,7 +141,7 @@ export default defineComponent({
     components: {
         SearchInput,
         InfoCard,
-        BarChart,
+        // BarChart,
         MessageNotFound,
         BalanceHistoryListComponent
         // ResponsiveLineChart,
