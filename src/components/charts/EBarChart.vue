@@ -1,17 +1,62 @@
 <template>
-    <VueEcharts :option="chart_options" style="height: 290px" ref="chart" />
+    {{ transactionsStaticsStore }}
+    <br>
+    {{ dayComputed }}
+    <br>
+    {{ plusComputed }}
+    <br>
+    {{ minusComputed }}
+    {{ option.yAxis }}
+    <VueEcharts id="vue-echarts-id" :option="option" style="height: 290px;" ref="chart" />
   </template>
   
   <script>
-  import { VueEcharts } from "vue3-echarts";
-  
-  export default {
+  import { computed, defineComponent, onMounted, ref } from "vue";
+import { VueEcharts } from "vue3-echarts";
+  import { useTransactionStaticsStore } from '@/store/server/useTransactionStaticsStore'
+import { useToastStore } from "@/store/useToastStore";
+  export default defineComponent({
     components: {
       VueEcharts,
     },
-    data() {
-      return {
-        chart_options: {
+    setup() {
+        const transactionsStaticsStore = useTransactionStaticsStore();
+
+        const toastStore = useToastStore();
+        const formatterForMillion = () => {
+          return Intl.NumberFormat('en', { notation: 'compact' });
+        }
+        const getTransactionStatics = () => {
+            transactionsStaticsStore.getTransactionStatics()
+            .catch(error => {
+                toastStore.showToastAsAlert({
+                    message: error.response.data.message,
+                    delayTime: 3000,
+                    type: 'error'
+                })
+            })
+        }
+
+        const plusComputed = computed(() => {
+            Object.keys(transactionsStaticsStore.transactionStatics || {})
+            return transactionsStaticsStore.transactionStatics.reduce((prev,curr) => {
+                return [...prev, curr.plus]
+            }, []);
+        })
+        
+        const minusComputed = computed(() => {
+            return transactionsStaticsStore.transactionStatics.reduce((prev,curr) => {
+                return [...prev, curr.minus]
+            }, []);
+        })
+        
+        const dayComputed = computed(() => {
+            return transactionsStaticsStore.transactionStatics.reduce((prev,curr) => {
+                console.log(new Date(Date.parse(curr.date)).getDate());
+                return [...prev, new Date(Date.parse(curr.date)).getDate()]
+            }, []);
+        })
+        const option = ref({
           color: ["#ED5974", "#51AEE7", "#EE6666"],
           tooltip: {
             trigger: "axis",
@@ -44,7 +89,7 @@
                 },
               },
               // prettier-ignore
-              data: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+              data: dayComputed,
             },
           ],
           yAxis: [
@@ -57,6 +102,7 @@
                 show: true,
                 lineStyle: {
                   color: "#5470C6",
+                  marginLeft: '20px'
                 },
               },
               splitLine: {
@@ -68,7 +114,9 @@
                 },
               },
               axisLabel: {
-                formatter: "{value}",
+                formatter (value) {
+                  return Intl.NumberFormat('en', { notation: 'compact' }).format(value)
+                },
               },
             },
           ],
@@ -89,49 +137,32 @@
               itemStyle: {
                 normal: { areaStyle: { type: "default" } },
               },
-              data: [
-                2.0,
-                4.9,
-                7.0,
-                23.2,
-                25.6,
-                76.7,
-                135.6,
-                162.2,
-                32.6,
-                20.0,
-                6.4,
-                3.3,
-              ],
+              data: minusComputed,
             },
             {
               name: "Plus",
               type: "bar",
               stack: "ad",
               //yAxisIndex: 1,
-              data: [
-                2.6,
-                5.9,
-                9.0,
-                26.4,
-                28.7,
-                70.7,
-                175.6,
-                182.2,
-                48.7,
-                18.8,
-                6.0,
-                2.3,
-              ],
+              data:plusComputed,
             },
           ],
-        },
-      };
-    },
-  };
+        })
+        
+        return {
+            option,
+            transactionsStaticsStore,
+            minusComputed,
+            plusComputed,
+            dayComputed
+        }
+    }
+  })
   </script>
   
-  <!-- Add "scoped" attribute to limit CSS to this component only -->
-  <style scoped>
+
+  <style lang="scss" scoped>
+    .vue-echarts-id {
+      padding-left: 2rem;
+    }
   </style>
-  

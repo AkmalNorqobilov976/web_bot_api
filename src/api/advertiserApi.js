@@ -110,7 +110,7 @@ export function adminWithdraws() {
 
 export function adminCancelWithdraw(withdraw_id) {
     return request({
-        url: `${URI}/withdraw/${withdraw_id}/cancel`,
+        url: `${URI}/withdraws/${withdraw_id}/cancel`,
         method: 'post'
     })
 }
@@ -129,7 +129,7 @@ export function adminTransactions(page, query) {
 export function postAdminWithdraw({ card_number, amount }) {
     amount = numberReformatter(amount);
     return request({
-        url: `${URI}/withdraw`,
+        url: `${URI}/withdraws`,
         method: "post",
         data: {
             card_number,
@@ -170,4 +170,11 @@ export function adminProfile() {
         url: `${URI}/profile`,
         method: 'get'
     });
+}
+
+export function adminTransactionStatics() {
+    return request({
+        url: `${URI}/transactions/stats`,
+        method: 'get'
+    })
 }

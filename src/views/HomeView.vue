@@ -85,13 +85,32 @@ import { onMounted } from '@vue/runtime-core';
 import { useAuthStore } from '@/store/authStore';
 import { useHelperStore } from '@/store/server/useHelperStore';
 import { useToastStore } from '@/store/useToastStore';
+import { useTransactionStaticsStore } from '@/store/server/useTransactionStaticsStore';
 export default {
     
     setup() {
         const { tg } = useTelegram();
         const authStore = useAuthStore();
         const helperStore = useHelperStore();
+        const transactionsStaticsStore = useTransactionStaticsStore();
+
         const toastStore = useToastStore();
+
+        const getTransactionStatics = () => {
+            transactionsStaticsStore.getTransactionStatics()
+            .catch(error => {
+                toastStore.showToastAsAlert({
+                    message: error.response.data.message,
+                    delayTime: 3000,
+                    type: 'error'
+                })
+            })
+        }
+
+        onMounted(() => {
+            getTransactionStatics();
+        })
+        
         onMounted(() => {
                 tg.BackButton.hide();
                helperStore.getRegions()
