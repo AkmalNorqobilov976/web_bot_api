@@ -1,9 +1,9 @@
 <template>
-    <div class="createdStream" v-if="promoCode">
+    <div class="createdStream">
         <p class="createdStream__title">Promo-kod yaratildi</p>
         <p class="createdStream__subtitle">Quyidagi Promo-kod orqali ilovadan ro‘yhatdan o‘tgan foydalanuvchilar chegirmalarga ega bo‘lishadi va sizga bonuslar tushishni boshlaydi</p>
         <div class="createdStream__card">
-            {{ promoCode.code }}
+            {{ $lodashGet(promoCode, 'code') }}
         </div>
 
         <section class="stream-name">
@@ -13,7 +13,7 @@
                     <input 
                         class="" 
                         readonly 
-                        :value="promoCode.url"
+                        :value="$lodashGet(promoCode, 'url')"
                         ref="generatePromoCodeRef"
                         placeholder="Misol uchun: 1-oqim linki" 
                     />
@@ -24,7 +24,7 @@
         <p class="createdStream__address">
             Sizning yangi “Promo-kod” manzilingiz
         </p>
-        <div class="createdStream__button" @click="copyToClipboard($event, promoCode.url, $refs.generatePromoCodeRef)">
+        <div class="createdStream__button" @click="copyToClipboard($event, $lodashGet(promoCode, 'url'), $refs.generatePromoCodeRef)">
             <copy-icon/>
             Manzilni nusxalash
         </div>
