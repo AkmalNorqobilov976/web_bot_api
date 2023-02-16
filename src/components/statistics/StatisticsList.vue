@@ -1,16 +1,16 @@
 <template>
-    <div class="statistic-list" v-if="listData">
+    <div class="statistic-list">
         <div class="statistic-list__product">
-            <p class="statistic-list__product--title">{{ listData.name }}</p>
-            <p class="statistic-list__product--subtitle">{{ listData.product_title }}</p>
+            <p class="statistic-list__product--title">{{ $lodashGet(listData, 'name') }}</p>
+            <p class="statistic-list__product--subtitle">{{ $lodashGet(listData, 'product_title') }}</p>
         </div>
 
         <div class="statistic-list__amount">
             <div class="statistic-list__amount--rating">
-                <p class="statistic-list__amount--rating--i1">{{ listData.orders_count }}</p>
-                <p class="statistic-list__amount--rating--i2">{{ listData.orders_all_count }}</p>
+                <p class="statistic-list__amount--rating--i1">{{ $lodashGet(listData, 'orders_count') }}</p>
+                <p class="statistic-list__amount--rating--i2">{{ $lodashGet(listData, 'orders_all_count') }}</p>
             </div>
-            <div class="statistic-list__amount--btn-text">{{ listData.visits }}</div>
+            <div class="statistic-list__amount--btn-text">{{ $lodashGet(listData, 'visits') }}</div>
         </div>
     </div>
 </template>

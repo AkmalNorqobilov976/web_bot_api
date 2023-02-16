@@ -9,7 +9,7 @@
 <script>
 import Tabs from '@/components/Layout/Tabs.vue'
 import { useBackButton } from '@/composables/useBackButton';
-import { defineComponent, reactive, ref, watch } from 'vue';
+import { defineComponent, ref, watch } from 'vue';
 import { useRoute } from 'vue-router';
 import { useStatisticsStore } from '@/store/server/useStatisticsStore'
 import Preview from './preview.vue'
