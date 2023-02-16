@@ -6,9 +6,9 @@
                     v-for="(tab, i) in tabs"  
                     :key="i" 
                     class="queries-header__navbar--tab" 
-                    :class="{active: ($route.path == tab.to)}"
+                    :class="{active: ($route.path == $lodashGet(tab, 'to'))}"
                 >
-                    <router-link :to="tab.to">{{ tab.text }}</router-link>
+                    <router-link :to="$lodashGet(tab, 'to')">{{ $lodashGet(tab, 'text') }}</router-link>
                 </div>
             </nav>
         </header>

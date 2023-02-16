@@ -2,12 +2,12 @@
     <main class="market-preview d-grid-max-content">
         <div class="market-preview__cards" ref="scrollComponent" v-infinite-scroll="load">
             <market-card 
-                v-for="(product, i) in categoriesStore.$state.products" 
+                v-for="(product, i) in $lodashGet(categoriesStore, '$state.products')" 
                 :key="i" 
                 :cardData="product"
             />
         </div>
-        <message-not-found v-if="!categoriesStore.$state.products.length"/>
+        <message-not-found v-if="!$lodashGet(categoriesStore, '$state.products', '').length"/>
     </main>
 </template>
 

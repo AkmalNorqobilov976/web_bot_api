@@ -155,7 +155,7 @@
                 title: 'Arxivlandi',
                 value: $lodashGet(streamsStore, '$state.stream.orders_stats.archived', 0)
             }
-        ]"    
+        ]"    $state.stream.orders_stats.archived
     />
     </div>
 </template>
