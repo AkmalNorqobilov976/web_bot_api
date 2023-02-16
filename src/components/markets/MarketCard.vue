@@ -1,39 +1,39 @@
 <template>
-    <article class="market-card" v-if="cardData">
+    <article class="market-card">
         <div class="market-card__header">
             <div>
                 <img 
-                    v-if="cardData?.image"
-                    :src="cardData?.image" 
+                    v-if="$lodashGet(cardData, 'image', '')"
+                    :src="$lodashGet(cardData, 'image')" 
                     class="market-card__header--img"
                 />
                 <i v-else class="ri-image-line"></i>
             </div>
             <div class="market-card__header--list">
-                {{ cardData.title }}
+                {{ $lodashGet(cardData, 'title') }}
                 <p>
                     <i><TriangleInCircle/></i> 
-                    {{ cardData.admin_fee }} UZS
+                    {{ $lodashGet(cardData, 'admin_fee') }} UZS
                 </p>
             </div>
         </div>
         <section class="market-card__list">
             <div class="market-card__list--item">
                 <div class="market-card__list--item--title">Maxsulot narxi</div>
-                <div class="market-card__list--item--value">{{ cardData.price }} so‘m</div>
+                <div class="market-card__list--item--value">{{ $lodashGet(cardData, 'price') }} so‘m</div>
             </div>
             <div class="market-card__list--item">
                 <div class="market-card__list--item--title">Yetkazish xizmati</div>
                 <div class="market-card__list--item--btn">
-                    <button :class="{'green-btn': cardData.is_free_delivery}">
+                    <button :class="{'green-btn': $lodashGet(cardData, 'is_free_delivery')}">
                         <i class="ri-truck-line"></i>
-                        {{ cardData.is_free_delivery ? 'Bepul' : 'Pullik'}}
+                        {{ $lodashGet(cardData, 'is_free_delivery') ? 'Bepul' : 'Pullik'}}
                     </button>
                 </div>
             </div>
             <div class="market-card__list--item">
                 <div class="market-card__list--item--title">Zaxirada</div>
-                <div class="market-card__list--item--in-store">{{ cardData.quantity }}</div>
+                <div class="market-card__list--item--in-store">{{ $lodashGet(cardData, 'quantity') }}</div>
             </div>
             <div v-if="isShowBtn" @click="categoriesStore.$patch({selectedProduct: cardData}); $router.push({name: 'create-stream', params: {id: cardData.id}})" class="market-card__list--stream-btn">
                 <i class="ri-link-m"></i>

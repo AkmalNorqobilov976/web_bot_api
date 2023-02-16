@@ -8,7 +8,7 @@
         :showConfirm="openDeleteStreamConfirmDialog" 
         @onConfirm="onConfirm($event)"
     />
-    <market-card :isShowBtn="false" :cardData="streamsStore.$state.stream.product"/>
+    <market-card :isShowBtn="false" :cardData="$lodashGet(streamsStore, '$state.stream.product')"/>
     <section class="stream-name">
         <form @submit.prevent="">
             <label class="stream-name__title">Oqim nomi</label>
@@ -35,13 +35,16 @@
             </div>
             <tooltip style="bottom: -2.2rem;" label="Bu nomdagi Oqim linki mavjud"/>
             <div class="stream-name__button-grp">
-                <button @click="copyToClipboard($event, streamsStore.$state.stream.link, $refs.streamInputRef)"  class="stream-name__button-grp--btn">
+                <button 
+                    @click="copyToClipboard($event, $lodashGet(streamsStore, '$state.stream.link'), $refs.streamInputRef)"  
+                    class="stream-name__button-grp--btn"
+                >
                     <copyIcon class="stream-name__button-grp--btn--icon"/> Nusxalash
                 </button>
                 <button 
-                    :disabled="!streamInfo.product.advert_post" 
+                    :disabled="!$lodashGet(streamInfo, 'product.advert_post', true)" 
                     class="stream-name__button-grp--btn" 
-                    @click="openPost(streamInfo.product.advert_post)"
+                    @click="openPost($lodashGet(streamInfo, 'product.advert_post'))"
                 >
                     <i class="ri-external-link-line stream-name__button-grp--btn--icon"></i>
                     Reklama posti
@@ -59,7 +62,7 @@
         <main class="addition-stream-info__main">
             <div class="addition-stream-info__main--list">
                 <div>
-                    {{ $filter.numberFormat(streamsStore.$state.stream.charity) }} so‘m
+                    {{ $filter.numberFormat($lodashGet(streamsStore, '$state.stream.charity')) }} so‘m
                     <p>
                         Xayriyaga pul ajratish
                     </p>
@@ -70,7 +73,7 @@
                 class="addition-stream-info__main--list" 
             >
                 <div>
-                   {{ $filter.numberFormat(streamsStore.$state.stream.discount) }} so‘m
+                   {{ $filter.numberFormat($lodashGet(streamsStore, '$state.stream.discount')) }} so‘m
                     <p>
                         Chegirma qo‘yilgan
                     </p>
@@ -97,22 +100,22 @@
             Tashriflar
         </p>
         <p class="stream-visit__number">
-            {{ streamsStore.$state.stream.visits }}
+            {{ $lodashGet(streamsStore, '$state.stream.visits') }}
         </p>
     </section>
 
     <created-stream-card 
-        v-if="streamsStore.$state.stream"
+        v-if="$lodashGet(streamsStore, '$state.stream', null)"
         title="Aktiv"
         :isTwoItem="true"
         :items="[
             {
                 title: 'Yangi',
-                value: streamsStore.$state.stream.orders_stats.new ? streamsStore.$state.stream.orders_stats.new: 0
+                value: $lodashGet(streamsStore, '$state.stream.orders_stats.new', 0)
             },
             {
                 title: 'Qayta qo‘ng’iroq',
-                value: streamsStore.$state.stream.orders_stats.pending
+                value: $lodashGet(streamsStore, '$state.stream.orders_stats.pending', 0)
             },
             {
             }
@@ -124,15 +127,15 @@
         :items="[
             {
                 title: 'Yo‘lda',
-                value: streamsStore.$state.stream.orders_stats.sent
+                value: $lodashGet(streamsStore, '$state.stream.orders_stats.sent', 0)
             },
             {
                 title: 'Yetkazib berildi',
-                value: streamsStore.$state.stream.orders_stats.delivered
+                value: $lodashGet(streamsStore, '$state.stream.orders_stats.delivered', 0)
             },
             {
                 title: 'Qabul qilingan',
-                value: streamsStore.$state.stream.orders_stats.accepted
+                value: $lodashGet(streamsStore, '$state.stream.orders_stats.accepted', 0)
             }
         ]"    
     />
@@ -142,15 +145,15 @@
         :items="[
             {
                 title: 'Spam',
-                value: streamsStore.$state.stream.orders_stats.spam
+                value: $lodashGet(streamsStore, '$state.stream.orders_stats.spam', 0)
             },
             {
                 title: 'Qaytib keldi',
-                value: streamsStore.$state.stream.orders_stats.canceled
+                value: $lodashGet(streamsStore, '$state.stream.orders_stats.canceled', 0)
             },
             {
                 title: 'Arxivlandi',
-                value: streamsStore.$state.stream.orders_stats.archived
+                value: $lodashGet(streamsStore, '$state.stream.orders_stats.archived', 0)
             }
         ]"    
     />

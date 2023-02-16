@@ -2,18 +2,18 @@
     <main class="streams">
         <div ref="scrollComponent">
             <div 
-                v-for="(item, i) in streamsStore.$state.streams" 
+                v-for="(item, i) in $lodashGet(streamsStore, '$state.streams')" 
                 :key="i"
             >
                 <article 
                     class="streams-list" 
                     v-if="item.product"
-                    @click="$router.push({name: 'stream-preview', params: {id: item.id}})"
+                    @click="$router.push({name: 'stream-preview', params: {id: $lodashGet(item, 'id')}})"
                 >
                     <div class="streams-list__image">
                         <img 
-                            v-if="item.product.image" 
-                            :src="item.product.image || item.product.image" 
+                            v-if="$lodashGet(item, 'product.image')" 
+                            :src="$lodashGet(item, 'product.image')" 
                             alt="none"
                         >
                         <i v-else class="ri-link-m"></i>
@@ -21,16 +21,16 @@
                     <div class="streams-list__info">
                         <div class="streams-list__info--header">
                             <div>
-                                {{ item.name }}
+                                {{ $lodashGet(item, 'name') }}
                             </div>
                             <span>
                                 <i class="ri-eye-line"></i>
-                                {{ item.visits }}
+                                {{ $lodashGet(item, 'visits') }}
                             </span>
                         </div>
                         <div class="streams-list__info--text">
-                            <div class="streams-list__info--text--context">
-                                {{ item.product.title }}
+                            <div class="streams-list__info-$state.streams-text--context">
+                                {{ $lodashGet(item, 'product.title') }}
                             </div>
                             <i class="ri-arrow-right-s-line"></i>
                         </div>
@@ -38,7 +38,7 @@
                 </article>
             </div>
         </div>
-        <message-not-found v-if="!streamsStore.$state.streams.length"/>
+        <message-not-found v-if="!$lodashGet(streamsStore, '$state.streams', '').length"/>
     </main>
 </template>
 
