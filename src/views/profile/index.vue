@@ -54,12 +54,10 @@
                             />
                     </div>
                     <div class="my-profile__form--field">
-                            <under-line-input 
+                            <under-line-phone-input
                                 placeholder="Kiritilmagan"
                                 label="Telefon raqam" 
-                                phone="+998 "
                                 v-model="userInfo.username"
-                                @input="onPhoneInput($event)"
                             />
                     </div>
                     <div class="my-profile__form--field">
@@ -116,11 +114,13 @@ import UnderLineSelect from '@/components/Form/inputs/UnderLineSelect.vue'
 import { adminProfile } from '@/api/advertiserApi'
 import { logoutUser, updateMyProfile } from '@/api/authApi'
 import { useRouter } from 'vue-router'
+import UnderLinePhoneInput from '@/components/Form/inputs/UnderLinePhoneInput.vue'
 export default defineComponent({
     components: { 
         UnderLineInput, 
         InfoCard, 
-        UnderLineSelect 
+        UnderLineSelect ,
+        UnderLinePhoneInput
     },
     setup() {
         const isImage = ref(false)

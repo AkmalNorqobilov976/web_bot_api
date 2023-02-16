@@ -4,31 +4,27 @@
             <form @submit.prevent="">
                 <div>
                     <search-input 
-                        placeholder="Qidirish"
-                        :searchFunction="searchFunction"
-                        v-model="query"
+                    placeholder="Qidirish"
+                    :searchFunction="searchFunction"
+                    v-model="query"
                     />
                 </div>
             </form>
             <div
-                v-if="$lodashGet(transactionsStore, '$state.transactions').length"
+            v-if="$lodashGet(transactionsStore, '$state.transactions').length"
             >
-                <info-card 
-                    class="balance-history__info-card" 
-                    title="To‘lovlar monitoringi"
-                >
-                    <template #body>
-                        <p class="balance-history__info-card--barchart-title">
-                            xarid qilingan va bekor qilingan mahsulotlar statistikasi
-                        </p>
-                        <div class="balance-history__info-card--body">
-                            <!-- <bar-chart  
-                                key="aldskjfaoriweriwqjowjre"
-                                :chartData="transactionsStore.$state.transactions" 
-                                :xKey="`created_at_label`" :yKey="`amount`"/> -->
-                        
-                            <balance-history-list-component
-                                v-for="(transaction, i) in transactionsStore.$state.transactions"
+            <info-card 
+            class="balance-history__info-card" 
+            title="To‘lovlar monitoringi"
+            >
+            <template #body>
+                <p class="balance-history__info-card--barchart-title">
+                    xarid qilingan va bekor qilingan mahsulotlar statistikasi
+                </p>
+                <div class="balance-history__info-card--body">                        
+                        <e-bar-chart/>
+                        <balance-history-list-component
+                        v-for="(transaction, i) in transactionsStore.$state.transactions"
                                 :key="i" 
                                 :cardData="transaction"
                             />       
@@ -55,6 +51,7 @@ import { useTransactionsStore } from '@/store/server/useTransactionsStore'
 import MessageNotFound from '@/components/MessageNotFound.vue'
 import { useLastRoute } from '@/composables/useLastRoute'
 import { adminTransactions } from '@/api/advertiserApi'
+import EBarChart from '@/components/charts/EBarChart.vue'
 export default defineComponent({
     setup() {
         const toastStore = useToastStore();
@@ -143,7 +140,8 @@ export default defineComponent({
         InfoCard,
         // BarChart,
         MessageNotFound,
-        BalanceHistoryListComponent
+        BalanceHistoryListComponent,
+        EBarChart
         // ResponsiveLineChart,
         // BarChart,
     }

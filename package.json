@@ -18,6 +18,7 @@
     "core-js": "^3.8.3",
     "credit-card-input-mask": "^3.0.0",
     "d3": "^7.8.1",
+    "echarts": "^5.4.1",
     "lodash": "^4.17.21",
     "nprogress": "^0.2.0",
     "pinia": "^2.0.29",
@@ -28,6 +29,7 @@
     "vue-input-autowidth": "^2.2.0",
     "vue-restricted-input": "^1.0.2",
     "vue-router": "^4.0.13",
+    "vue3-echarts": "^1.1.0",
     "vue3-lottie": "^2.4.0",
     "vue3-touch-events": "^4.1.0"
   },
