@@ -130,15 +130,7 @@ export default defineComponent({
         const toastStore = useToastStore();
         const authStore = useAuthStore();
         const profilePicture =ref("");
-        const userInfo = ref({
-            name: "hammaga salom",
-            surname: "Ganiyev",
-            phone: "+998 90 000-23-12",
-            region_id: "",
-            district_id: "",
-            address: "",
-            avatar: null
-        })
+        const userInfo = ref(authStore.userInfo)
 
         const logout = () => {
             logoutUser()
