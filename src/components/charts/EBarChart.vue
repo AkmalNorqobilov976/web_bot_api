@@ -82,7 +82,7 @@
         //   ],
           series: [
             {
-              name: "Evaporation",
+              name: "minus",
               type: "bar",
               stack: "ad",
               backgroundColor: "#4D86FF",
@@ -105,7 +105,7 @@
               ],
             },
             {
-              name: "Precipitation",
+              name: "Plus",
               type: "bar",
               stack: "ad",
               //yAxisIndex: 1,
