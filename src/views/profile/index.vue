@@ -172,7 +172,7 @@ export default defineComponent({
         }
 
         const updateProfile = () => {
-            updateMyProfile(userInfo.value)
+            updateMyProfile({ ...userInfo.value })
                 .then(() => {
                     toastStore.showToastAsAlert({
                         message: "Profilingiz yangilandi!",

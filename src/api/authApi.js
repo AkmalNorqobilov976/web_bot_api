@@ -33,8 +33,8 @@ export function myProfile() {
 
 
 export function updateMyProfile(data) {
-    if(data.avatar) {
-        data.avatar = null;
+    if(typeof data.avatar !== 'object') {
+        delete data.avatar;
     }
     const form = formerSingleFile(data);
     return request({
