@@ -1,15 +1,24 @@
 <template>
-    <div class="payment-list" v-if="cardData">
-        <div class="payment-list__icon" :class="cardData.type == 'minus' ? 'balance-minus' : 'balance-plus'">
-            <i :class="cardData.type =='minus' ? 'ri-arrow-left-down-line' : 'ri-arrow-right-up-line'"></i>
+    <div class="payment-list">
+        <div class="payment-list__icon" :class="$lodashGet(cardData, 'amount') < 0 ? 'balance-minus' : 'balance-plus'">
+            <i 
+                :class="$lodashGet(cardData, 'amount') < 0 
+                    ? 'ri-arrow-left-down-line' 
+                    : 'ri-arrow-right-up-line'"
+                ></i>
         </div>
         <div class="payment-list__body">
             <p class="payment-list__body--debit-card">
-                #{{ cardData.target_id }} {{ cardData.comment }}
+                #{{ $lodashGet(cardData, 'target_id') }} 
+                {{ $lodashGet(cardData, 'comment') }}
             </p>
             <div class="payment-list__body--income">
-                <p>{{ cardData.amount }} so‘m</p>
-                <span class="payment-list__body--income-time">{{ cardData.created_at_label }}</span>
+                <p>{{ $filter.numberFormat($lodashGet(cardData, 'amount')) }} so‘m</p>
+                <span 
+                    class="payment-list__body--income-time"
+                >
+                    {{ $lodashGet(cardData, 'created_at_label') }}
+                </span>
             </div>
         </div>
     </div>

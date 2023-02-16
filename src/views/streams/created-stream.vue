@@ -1,137 +1,144 @@
 <template>
-    <market-card 
-        :isShowBtn="false"
-        :cardData="streamInfo.product" 
-    />
-    <section class="stream-name">
-        <form @submit.prevent="">
-            <label class="stream-name__title">Oqim nomi</label>
-            <!-- error-input class -->
-            <div class="stream-name__input">
-                <input 
-                    readonly 
-                    type="text" 
-                    ref="inputRef" 
-                    v-model="streamInfo.link" 
-                    placeholder="Misol uchun: 1-oqim linki" />
-            </div>
-            <tooltip style="bottom: -2.2rem;" label="Bu nomdagi Oqim linki mavjud"/>
-            <div class="stream-name__button-grp">
-                <button 
-                    class="stream-name__button-grp--btn"
-                    @click="copyToClipboard($event, streamInfo.link, $refs.inputRef)"
-                >
-                    <copyIcon 
-                        class="stream-name__button-grp--btn--icon"
-                    /> 
-                    Nusxalash 
-                </button>
-                <button 
-                    :disabled="!streamInfo.product.advert_post"
-                    @click="openPost(streamInfo.product.advert_post)"
-                    class="stream-name__button-grp--btn"
-                >
-                    <i class="ri-external-link-line stream-name__button-grp--btn--icon"></i>
-                    Reklama posti
-                </button>
-            </div>
-        </form>
-    </section>
-
-    <section class="addition-stream-info">
-        <header class="addition-stream-info__header">
-            <p class="addition-stream-info__header--title">
-                Qo‘shimcha
-            </p>
-        </header>
-        <main class="addition-stream-info__main">
-            <div class="addition-stream-info__main--list">
-                <div>
-                    {{ streamInfo.charity }} so‘m
-                    <p>
-                        Xayriyaga pul ajratish
+    <div class="d-grid-max-content">
+        <div>
+            <div v-if="streamInfo.length">
+                <market-card 
+                    :isShowBtn="false"
+                    :cardData="$lodashGet(streamInfo, 'product')" 
+                />
+                <section class="stream-name">
+                    <form @submit.prevent="">
+                        <label class="stream-name__title">Oqim nomi</label>
+                        <!-- error-input class -->
+                        <div class="stream-name__input">
+                            <input 
+                                readonly 
+                                type="text" 
+                                ref="inputRef" 
+                                v-model="streamInfo.link" 
+                                placeholder="Misol uchun: 1-oqim linki" />
+                        </div>
+                        <tooltip style="bottom: -2.2rem;" label="Bu nomdagi Oqim linki mavjud"/>
+                        <div class="stream-name__button-grp">
+                            <button 
+                                class="stream-name__button-grp--btn"
+                                @click="copyToClipboard($event, $lodashGet(streamInfo, 'link'), $refs.inputRef)"
+                            >
+                                <copyIcon 
+                                    class="stream-name__button-grp--btn--icon"
+                                /> 
+                                Nusxalash 
+                            </button>
+                            <button 
+                                :disabled="!$lodashGet(streamInfo, 'product.advert_post')"
+                                @click="openPost($lodashGet(streamInfo, 'product.advert_post'))"
+                                class="stream-name__button-grp--btn"
+                            >
+                                <i class="ri-external-link-line stream-name__button-grp--btn--icon"></i>
+                                Reklama posti
+                            </button>
+                        </div>
+                    </form>
+                </section>
+            
+                <section class="addition-stream-info">
+                    <header class="addition-stream-info__header">
+                        <p class="addition-stream-info__header--title">
+                            Qo‘shimcha
+                        </p>
+                    </header>
+                    <main class="addition-stream-info__main">
+                        <div class="addition-stream-info__main--list">
+                            <div>
+                                {{ $lodashGet(streamInfo, 'charity') }} so‘m
+                                <p>
+                                    Xayriyaga pul ajratish
+                                </p>
+                            </div>
+                            <i class="ri-arrow-right-s-line"></i>
+                        </div>
+                        <div class="addition-stream-info__main--list">
+                            <div>
+                               {{ $lodashGet(streamInfo, 'discount') }} so‘m
+                                <p>
+                                    Chegirma qo‘yilgan
+                                </p>
+                            </div>
+                            <i class="ri-arrow-right-s-line"></i>
+                        </div>
+                    </main>
+                </section>
+            
+                <section class="stream-visit">
+                    <p class="stream-visit__statistic">
+                        Statistika
                     </p>
-                </div>
-                <i class="ri-arrow-right-s-line"></i>
-            </div>
-            <div class="addition-stream-info__main--list">
-                <div>
-                   {{ streamInfo.discount }} so‘m
-                    <p>
-                        Chegirma qo‘yilgan
+                    <p class="stream-visit__title">
+                        Tashriflar
                     </p>
-                </div>
-                <i class="ri-arrow-right-s-line"></i>
+                    <p class="stream-visit__number">
+                        {{ $lodashGet(streamInfo, 'visits') }}
+                    </p>
+                </section>
+            
+                <created-stream-card 
+                    v-if="streamInfo"
+                    title="Aktiv"
+                    :isTwoItem="true"
+                    :items="[
+                        {
+                            title: 'Yangi',
+                            value: $lodashGet(streamInfo, 'orders_stats.new')
+                        },
+                        {
+                            title: 'Qayta qo‘ng’iroq',
+                            value: $lodashGet(streamInfo, 'orders_stats.pending')
+                        },
+                        {
+                        }
+                    ]"    
+                />
+                <created-stream-card 
+                    :title="'Buyurtma'" 
+                    :bgCircleColor="'#23B60B'"
+                    :items="[
+                        {
+                            title: 'Yo‘lda',
+                            value: $lodashGet(streamInfo, 'orders_stats.sent')
+                        },
+                        {
+                            title: 'Yetkazib berildi',
+                            value: $lodashGet(streamInfo, 'orders_stats.delivered')
+                        },
+                        {
+                            title: 'Qabul qilingan',
+                            value: $lodashGet(streamInfo, 'orders_stats.accepted')
+                        }
+                    ]"    
+                />
+                <created-stream-card
+                    :title="'Arxiv'"
+                    :bgCircleColor="'#F84F57'"
+                    :items="[
+                        {
+                            title: 'Spam',
+                            value: $lodashGet(streamInfo, 'orders_stats.spam')
+                        },
+                        {
+                            title: 'Qaytib keldi',
+                            value: $lodashGet(streamInfo, 'orders_stats.canceled')
+                        },
+                        {
+                            title: 'Arxivlandi',
+                            value: $lodashGet(streamInfo, 'orders_stats.archived')
+                        }
+                    ]"    
+                />
             </div>
-        </main>
-    </section>
-
-    <section class="stream-visit">
-        <p class="stream-visit__statistic">
-            Statistika
-        </p>
-        <p class="stream-visit__title">
-            Tashriflar
-        </p>
-        <p class="stream-visit__number">
-            {{ streamInfo.visits }}
-        </p>
-    </section>
-
-    <created-stream-card 
-        v-if="streamInfo"
-        title="Aktiv"
-        :isTwoItem="true"
-        :items="[
-            {
-                title: 'Yangi',
-                value: streamInfo.orders_stats.new
-            },
-            {
-                title: 'Qayta qo‘ng’iroq',
-                value: streamInfo.orders_stats.pending
-            },
-            {
-            }
-        ]"    
-    />
-    <created-stream-card 
-        :title="'Buyurtma'" 
-        :bgCircleColor="'#23B60B'"
-        :items="[
-            {
-                title: 'Yo‘lda',
-                value: streamInfo.orders_stats.sent
-            },
-            {
-                title: 'Yetkazib berildi',
-                value: streamInfo.orders_stats.delivered
-            },
-            {
-                title: 'Qabul qilingan',
-                value: streamInfo.orders_stats.accepted
-            }
-        ]"    
-    />
-    <created-stream-card
-        :title="'Arxiv'"
-        :bgCircleColor="'#F84F57'"
-        :items="[
-            {
-                title: 'Spam',
-                value: streamInfo.orders_stats.spam
-            },
-            {
-                title: 'Qaytib keldi',
-                value: streamInfo.orders_stats.canceled
-            },
-            {
-                title: 'Arxivlandi',
-                value: streamInfo.orders_stats.archived
-            }
-        ]"    
-    />
-</template>
+        </div>
+        <message-not-found v-if="!streamInfo.length"/>
+    </div>
+</template>$lodashGet(streamsStore, '$state.stream')
 
 <script>
 import MarketCard from '@/components/markets/MarketCard.vue'
@@ -144,6 +151,7 @@ import { getAdminStream } from '@/api/advertiserApi';
 import { useRoute } from 'vue-router';
 import { useToastStore } from '@/store/useToastStore';
 import { useCopyToClipboard } from '@/composables/useCopyToClipboard';
+import MessageNotFound from '@/components/MessageNotFound.vue';
 export default defineComponent({
     setup() {
         const { backButton } = useBackButton()
@@ -187,7 +195,8 @@ export default defineComponent({
     components: {
         copyIcon,
         MarketCard,
-        CreatedStreamCard
+        CreatedStreamCard,
+        MessageNotFound
         
     }
 })

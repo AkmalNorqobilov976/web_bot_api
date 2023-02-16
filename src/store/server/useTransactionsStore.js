@@ -19,6 +19,7 @@ export const useTransactionsStore = defineStore('transaction', {
                             this.last_page = response.data.meta.last_page;
                             this.transactions = [ ...this.transactions, ...response.data.data ];
                             this.loading = false;
+                            this.page++;
                             resolve(true);
                         })
                         .catch(error => {

@@ -22,7 +22,10 @@ export default {
         backButton('/')
         useLastRoute().setLastRoute();
         const getOrders = () => {
-            ordersStore.getOrders({ status: "" })
+            let routeParams = route.path.split('/')
+            let status = routeParams[2] ? routeParams[routeParams.length-1] : ''
+            console.log(route.path.split('/'), "path");
+            ordersStore.getOrders({ status: status })
                 .catch(error => {
                     toastStore.showToastAsAlert({
                         message: error.response.data.message,
@@ -68,7 +71,7 @@ export default {
                 text: "Yetkazib berildi"
             },
             {
-                to: "/orders/cancelled",
+                to: "/orders/canceled",
                 text: "Qaytib keldi"
             },
             {

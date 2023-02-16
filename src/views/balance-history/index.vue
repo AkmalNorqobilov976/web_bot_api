@@ -10,30 +10,32 @@
                     />
                 </div>
             </form>
-            <info-card 
-                v-if="transactionsStore.$state.transactions.length"
-                class="balance-history__info-card" 
-                title="To‘lovlar monitoringi"
+            <div
+                v-if="$lodashGet(transactionsStore, '$state.transactions').length"
             >
-                <template #body>
-                    <p class="balance-history__info-card--barchart-title">
-                        xarid qilingan va bekor qilingan mahsulotlar statistikasi
-                    </p>
-                    <div class="balance-history__info-card--body">
-                        <bar-chart :chartData="transactionsStore.$state.transactions" :xKey="day" :yKey="amount"/>
-                    
-                        <balance-history-list-component
-                            v-for="(transaction, i) in transactionsStore.$state.transactions"
-                            :key="i" 
-                            :cardData="transaction"
-                        />       
-                        <balance-history-list-component 
-                            icon="ri-arrow-right-up-line"
-                            iconColor="#F1A30C"
-                        />     
-                    </div> 
-                </template>
-            </info-card>
+                <info-card 
+                    class="balance-history__info-card" 
+                    title="To‘lovlar monitoringi"
+                >
+                    <template #body>
+                        <p class="balance-history__info-card--barchart-title">
+                            xarid qilingan va bekor qilingan mahsulotlar statistikasi
+                        </p>
+                        <div class="balance-history__info-card--body">
+                            <bar-chart  
+                                key="aldskjfaoriweriwqjowjre"
+                                :chartData="transactionsStore.$state.transactions" 
+                                :xKey="`created_at_label`" :yKey="`amount`"/>
+                        
+                            <balance-history-list-component
+                                v-for="(transaction, i) in transactionsStore.$state.transactions"
+                                :key="i" 
+                                :cardData="transaction"
+                            />       
+                        </div> 
+                    </template>
+                </info-card>
+            </div>
         </div>
         <message-not-found v-if="!transactionsStore.$state.transactions.length"/>
     </div>
@@ -89,8 +91,8 @@ export default defineComponent({
                     })
                 })
         }
-        onBeforeMount(() => {
-            getTransactions();
+        onMounted(() => {
+            getTransactions(query.value);
         })
         onMounted(() => {
             window.addEventListener('scroll', handleScroll)
@@ -140,7 +142,8 @@ export default defineComponent({
         SearchInput,
         InfoCard,
         BarChart,
-        MessageNotFound
+        MessageNotFound,
+        BalanceHistoryListComponent
         // ResponsiveLineChart,
         // BarChart,
     }

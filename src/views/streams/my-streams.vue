@@ -29,7 +29,7 @@
                             </span>
                         </div>
                         <div class="streams-list__info--text">
-                            <div class="streams-list__info-$state.streams-text--context">
+                            <div class="streams-list__info--text--context">
                                 {{ $lodashGet(item, 'product.title') }}
                             </div>
                             <i class="ri-arrow-right-s-line"></i>

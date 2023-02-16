@@ -8,11 +8,11 @@
           <i class="ri-file-list-line"></i>
           <div>
             #{{ $lodashGet(listData, 'operator_id') }} / {{ $lodashGet(listData, 'id') }}
-           <p class="query-link__lists--i1--text--subtitle">1 hafta oldin</p>
+           <p class="query-link__lists--i1--text--subtitle">{{ $lodashGet(listData, 'created_at_label', 0)}}</p>
           </div>
         </div>
         <div class="query-link__lists--i1--btn">
-          <button :class="`${$lodashGet(listData, status)}-btn`">{{ statusTypes[listData.status] }}</button>
+          <button :class="`${listData.status}-btn`">{{ statusTypes[listData.status] }}</button>
         </div>
       </section>
       <section class="query-link__lists--i1 border-.2">
@@ -38,8 +38,8 @@
         <div class="query-link__lists--i1--text">
           <i class="ri-survey-fill"></i>
           <div>
-            Avtomabil uchun vertalyot suviner
-            <div class="query-link__lists--i1--subtext">#59492</div>
+            {{ $lodashGet(listData, 'product_title') || 'Mahsulot mavjud emas'}}
+            <!-- <div class="query-link__lists--i1--subtext">#59492</div> -->
           </div>
         </div>
       </section>
@@ -78,7 +78,14 @@ export default defineComponent({
     },
     data: () => ({
         statusTypes: {
-            new: "Yangi"
+            new: "Yangi",
+            accepted: "Yetkazishga tayyor",
+            sent: "Yetkazilmoqda",
+            delivered: "Yetkazib berildi",
+            canceled: "Qaytib keldi",
+            hold: "Keyin oladi",
+            archived: "Arxiv",
+            spam: "Spam"
         }
     })
 })

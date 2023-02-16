@@ -3,8 +3,9 @@
 </template>
 
 <script>
-import { defineComponent, onMounted, watchEffect } from "vue";
+import { computed, defineComponent, onMounted, watchEffect } from "vue";
 import * as d3 from 'd3'
+import { useTransactionsStore } from "@/store/server/useTransactionsStore";
 export default defineComponent({
     props: {
         xKey: {
@@ -29,10 +30,15 @@ export default defineComponent({
         }
     },
   setup(props) {
+    const transactionsStore = useTransactionsStore()
+    const chartData = computed(() => {
+      return transactionsStore.transactions
+    })
+  
     onMounted(() => {
       watchEffect(() => {
 
-        const margin = { top: 20, right: 10, bottom: 40, left: 35 };
+        const margin = { top: 20, right: 20, bottom: 40, left: 85 };
         const svgWidth = 360;
         const svgHeight = 290;
         const width = svgWidth - margin.left - margin.right;
@@ -51,15 +57,15 @@ export default defineComponent({
         const x = d3
           .scaleBand()
           .rangeRound([0, width])
-          .domain(props.chartData.map((d) => d[props.xKey]))
+          .domain(chartData.value.map((d) => d[props.xKey]))
           .padding(0.2);
 
         const y = d3
           .scaleLinear()
           .range([height, 0])
           .domain([
-            d3.min(props.chartData, (d) => d[props.yKey]) - 5,
-            d3.max(props.chartData, (d) => d[props.yKey]) + 5,
+            d3.min(chartData.value, (d) => d[props.yKey]) - 5,
+            d3.max(chartData.value, (d) => d[props.yKey]) + 5,
           ])
           .nice();
 
@@ -79,7 +85,7 @@ export default defineComponent({
 
         graphArea
           .selectAll("bar")
-          .data(props.chartData)
+          .data(chartData.value)
           .enter()
           .append("path")
           .style("fill", (d, i) => {

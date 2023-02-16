@@ -80,12 +80,12 @@ const routes = [
             component: () => import('@/views/queries/tabs/deliveried.vue')
         },
         {
-            path: "cancelled",
+            path: "canceled",
             name: "",
             meta: {
                 requiresAuth: true
             },
-            component: () => import('@/views/queries/tabs/cancelled.vue')
+            component: () => import('@/views/queries/tabs/canceled.vue')
         },
         {
             path: "hold",

@@ -1,5 +1,7 @@
 import { createApp } from 'vue'
 import lodash from 'lodash'
+import * as Sentry from "@sentry/vue";
+import { BrowserTracing } from "@sentry/tracing";
 import App from './App.vue'
 import router from './router'
 import Vue3TouchEvents  from 'vue3-touch-events'
@@ -18,7 +20,22 @@ import 'nprogress/nprogress.css'
 import { useCardNumberPatternMatch } from './composables/useCardNumberPatternMatch'
 const pinia = createPinia()
 const app = createApp(App);
-
+Sentry.init({
+    app,
+    dsn: "https://12ec6ac3753946f9acf99e031def9e99@o4504311893000192.ingest.sentry.io/4504689684250625",
+    integrations: [
+      new BrowserTracing({
+        routingInstrumentation: Sentry.vueRouterInstrumentation(router),
+        tracePropagationTargets: ["localhost", "tgwebappbot.100k.uz", /^\//],
+      }),
+    ],
+    // Set tracesSampleRate to 1.0 to capture 100%
+    // of transactions for performance monitoring.
+    // We recommend adjusting this value in production
+    tracesSampleRate: 1.0,
+    trackComponents: ["Header", "Navigation", "Footer"],
+    hooks: ["create", "mount"],
+  });
 app.config.globalProperties.$lodashGet = lodash.get
 window.addEventListener('DOMContentLoaded', () => {
     let lastRoute = localStorage.getItem('last-route');
