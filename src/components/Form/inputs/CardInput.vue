@@ -21,11 +21,6 @@ export default defineComponent({
         const isCardError = ref(false);
         const lengthLessThan16 = ref(true);
         const cardMask = ref('{{9999}} {{9999}} {{9999}} {{9999}}');
-        watch(props, (newValue) => {
-            mustBeCool(newValue.modelValue);
-        }, {
-            immediate: true
-        })
         const mustBeCool = (value) =>{
             if(value.replace(/\D/g, '').length == 16) {
                 lengthLessThan16.value = false;
@@ -34,6 +29,11 @@ export default defineComponent({
             }
             return value.replace(/\D/g, '').length <= 16
         }
+        watch(props, (newValue) => {
+            mustBeCool(newValue.modelValue);
+        }, {
+            immediate: true
+        })
 
         const onUpdateModel = (e) => {
             console.log(e.target.value);

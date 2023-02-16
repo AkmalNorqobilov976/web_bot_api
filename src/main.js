@@ -1,4 +1,5 @@
 import { createApp } from 'vue'
+import lodash from 'lodash'
 import App from './App.vue'
 import router from './router'
 import Vue3TouchEvents  from 'vue3-touch-events'
@@ -17,6 +18,8 @@ import 'nprogress/nprogress.css'
 import { useCardNumberPatternMatch } from './composables/useCardNumberPatternMatch'
 const pinia = createPinia()
 const app = createApp(App);
+
+app.config.globalProperties.$lodashGet = lodash.get
 window.addEventListener('DOMContentLoaded', () => {
     let lastRoute = localStorage.getItem('last-route');
     if(lastRoute) {
@@ -52,5 +55,6 @@ app.directive('resizable', (el, binding)=> {
     for (var i in e) el.addEventListener(e[i],resize,false);
     resize();
 })
+
 app.use(Vue3TouchEvents)
 app.use(router).mount('#app')

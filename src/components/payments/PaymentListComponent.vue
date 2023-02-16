@@ -1,20 +1,20 @@
 <template>
-    <div v-if="cardData" class="payment-list">
-        <div class="payment-list__icon" :class="`payment-${cardData.status}`">
+    <div class="payment-list">
+        <div class="payment-list__icon" :class="`payment-${$lodashGet(cardData, 'status')}`">
             <i 
                 :class="[
-                    {'ri-checkbox-circle-fill': cardData.status == 'paid'}, 
-                    {'ri-spam-3-fill': cardData.status == 'cancelled'},
-                    {'ri-time-fill': cardData.status == 'new'}]"
+                    {'ri-checkbox-circle-fill': $lodashGet(cardData, 'status') == 'paid'}, 
+                    {'ri-spam-3-fill': $lodashGet(cardData, 'status') == 'cancelled'},
+                    {'ri-time-fill': $lodashGet(cardData, 'status') == 'new'}]"
                 ></i>
         </div>
         <div class="payment-list__body">
             <p class="payment-list__body--debit-card">
-                {{ $filter.debitCardFormat(cardData.account) }}
+                {{ $filter.debitCardFormat($lodashGet(cardData, 'account')) }}
             </p>
             <div class="payment-list__body--income">
-                <p>{{ $filter.numberFormat(cardData.amount) }} so‘m</p>
-                <span class="payment-list__body--income-time">{{ cardData.created_at_label }}</span>
+                <p>{{ $filter.numberFormat($lodashGet(cardData, 'amount')) }} so‘m</p>
+                <span class="payment-list__body--income-time">{{ $lodashGet(cardData, 'created_at_label') }}</span>
             </div>
         </div>
     </div>

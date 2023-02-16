@@ -3,9 +3,9 @@
         <div class="home__card-info">
             <div>
                 <p class="home__card-info--title">Hisobingizda</p>
-                <p class="home__card-info--balance">{{authStore.userInfo.balance}} uzs</p>
+                <p class="home__card-info--balance">{{ $filter.numberFormat($lodashGet(authStore, 'userInfo.balance', 0)) }} uzs</p>
                 <p class="home__card-info--guess-balance">
-                    Taxminiy balans: <span>{{authStore.userInfo.hold_balance}} uzs</span>
+                    Taxminiy balans: <span>{{ $lodashGet(authStore, 'userInfo.hold_balance', 0) }} uzs</span>
                 </p>
             </div>
             <div class="home-button-tab">

@@ -9,9 +9,9 @@
             <div class="payment__card-info">
                 <div>
                     <p class="payment__card-info--title">Hisobingizda</p>
-                    <p class="payment__card-info--balance">{{ authStore.$state.userInfo.balance }} uzs</p>
+                    <p class="payment__card-info--balance">{{ $filter.numberFormat($lodashGet(authStore, 'userInfo.balance', 0)) }} uzs</p>
                     <p class="payment__card-info--guess-balance">
-                        Taxminiy balans: <span>{{ authStore.$state.userInfo.hold_balance }} uzs</span>
+                        Taxminiy balans: <span>{{ $lodashGet(authStore, 'userInfo.hold_balance', 0) }} uzs</span>
                     </p>
                 </div>
                 
@@ -19,13 +19,13 @@
                     <div class="payment__btn-grp--btn">
                         <div class="payment__btn-grp--btn--1">
                             <i class="ri-copper-diamond-fill"></i>
-                            {{ authStore.$state.userInfo.coins }}
+                            {{ $lodashGet(authStore, 'userInfo.coins', 0) }}
                         </div>
                     </div>
                     <div class="payment__btn-grp--btn">
                         <div class="payment__btn-grp--btn--2">
                             <i class="ri-file-list-fill"></i>
-                            {{ authStore.$state.userInfo.id }}
+                            {{ $lodashGet(authStore, '$state.userInfo.id', 1) }}
                         </div>
                     </div>
                 </div>
@@ -80,10 +80,10 @@
             <section ref="scrollComponent" class="payment-expected" v-if="withdrawsStore.getNewWithdraws.length">
                 <p class="payment-expected__title">Kutilayotgan to‘lo‘vlar</p>
                 <div
-                    v-for="(withdraw, i) in withdrawsStore.$state.withdraws"
+                    v-for="(withdraw, i) in $lodashGet(withdrawsStore, '$state.withdraws')"
                     :key="i"
                 >
-                    <PaymentListComponent v-if="withdraw.status == 'new'" :cardData="withdraw"> 
+                    <PaymentListComponent v-if="$lodashGet(withdraw, 'status') == 'new'" :cardData="withdraw"> 
                         <template #cancel-btn>
                             <div class="cancel-btn" @click="onShowConfirm(withdraw.id)">
                                 <i class="ri-close-line"></i>
@@ -103,7 +103,7 @@
                 /> 
             </section>
         </div>
-        <message-not-found v-if="!withdrawsStore.$state.withdraws.length"/>
+        <message-not-found v-if="!$lodashGet(withdrawsStore, '$state.withdraws', '').length"/>
     </div>
 </template>
 
