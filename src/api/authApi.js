@@ -33,6 +33,9 @@ export function myProfile() {
 
 
 export function updateMyProfile(data) {
+    if(data.avatar) {
+        data.avatar = null;
+    }
     const form = formerSingleFile(data);
     return request({
         url: 'profile/update',
