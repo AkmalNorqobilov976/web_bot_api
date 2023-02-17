@@ -11,7 +11,7 @@
                     style="display: none;"
                 />
                 <img v-if="profilePicture" class=""   :src="profilePicture" alt="">
-                <img v-else-if="userInfo.avatar" class=""   :src="userInfo.avatar" alt="">
+                <!-- <img v-else-if="userInfo.avatar" class=""   :src="userInfo.avatar" alt=""> -->
                 <i v-else class="ri-user-6-fill"></i>
                 <!-- <i class="ri-camera-fill my-profile__header--photo--image-uploader"></i> -->
             </div>
