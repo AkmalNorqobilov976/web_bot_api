@@ -2,6 +2,7 @@
     <div class="d-grid-max-content">
        <div ref="scrollComponent">
            <query-list-card v-for="(order, i) in $lodashGet(ordersStore, '$state.orders')" :key="i" :listData="order"/>
+           <div ref="intersectionTrigger" style="height: 10px; background: transparent;"> </div>
        </div>
        <message-not-found v-if="!$lodashGet(ordersStore, '$state.orders', '').length"/>
   </div>
@@ -9,12 +10,14 @@
 </template>
 
 <script>
-import { defineComponent,ref, onMounted, onUnmounted } from "vue";
+import { defineComponent,ref, onMounted, onUnmounted, watch } from "vue";
 import QueryListCard from '@/components/cards/QueryListCard.vue'
 import { useOrdersStore } from "@/store/server/useOrdersStore";
 import MessageNotFound from "@/components/MessageNotFound.vue";
 import { useRoute } from "vue-router";
 import { useToastStore } from "@/store/useToastStore";
+import { makeUseInfiniteScroll } from "vue-use-infinite-scroll";
+
 export default defineComponent({
    components: {
        QueryListCard,
@@ -25,6 +28,9 @@ export default defineComponent({
        const scrollComponent = ref(null);
        const route = useRoute();
        const toastStore = useToastStore();
+       const intersectionTrigger = ref(null)
+        const useInfiniteScroll = makeUseInfiniteScroll({});
+        const pageRef = useInfiniteScroll(intersectionTrigger);
        const getOrders = () => {
             let routeParams = route.path.split('/')
             let status = routeParams[2] ? routeParams[routeParams.length-1] : ''
@@ -37,6 +43,10 @@ export default defineComponent({
                     });
                 })
         }
+
+        watch(pageRef, () => {
+            getOrders();
+        })
        onMounted(() => {
            window.addEventListener('scroll', handleScroll)
        })
@@ -54,7 +64,8 @@ export default defineComponent({
        }
        return {
            ordersStore,
-           scrollComponent
+           scrollComponent,
+           intersectionTrigger
        }
    }
 })

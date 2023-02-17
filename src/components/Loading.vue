@@ -1,70 +1,16 @@
 <template>
-    <teleport to="body">
-        <div class="center">
-            <Vue3Lottie :animationData="require('@/assets/images/loading.json')" :height="200" :width="200" />
-        </div>
-    </teleport>
+    <div class="center">
+        <Vue3Lottie :animationData="require('@/assets/images/loading.json')" :height="50" :width="50" />
+    </div>
 </template>
 
 <style lang="scss" scoped>
     .center {
-    height: 100vh;
     display: flex;
-    position: sticky;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
     justify-content: center;
     align-items: center;
     background: #fff;
     }
-    .wave {
-    width: 5px;
-    height: 100px;
-    background: linear-gradient(45deg, cyan, #fff);
-    margin: 10px;
-    animation: wave 1s linear infinite;
-    border-radius: 20px;
-    }
-    .wave:nth-child(2) {
-    animation-delay: 0.1s;
-    }
-    .wave:nth-child(3) {
-    animation-delay: 0.2s;
-    }
-    .wave:nth-child(4) {
-    animation-delay: 0.3s;
-    }
-    .wave:nth-child(5) {
-    animation-delay: 0.4s;
-    }
-    .wave:nth-child(6) {
-    animation-delay: 0.5s;
-    }
-    .wave:nth-child(7) {
-    animation-delay: 0.6s;
-    }
-    .wave:nth-child(8) {
-    animation-delay: 0.7s;
-    }
-    .wave:nth-child(9) {
-    animation-delay: 0.8s;
-    }
-    .wave:nth-child(10) {
-    animation-delay: 0.9s;
-    }
-
-    @keyframes wave {
-    0% {
-        transform: scale(0);
-    }
-    50% {
-        transform: scale(1);
-    }
-    100% {
-        transform: scale(0);
-    }
-    }
+   
 
 </style>

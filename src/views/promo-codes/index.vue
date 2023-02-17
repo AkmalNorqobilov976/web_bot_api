@@ -34,6 +34,7 @@
                     </div>
                 </main>
             </article>
+            <div ref="intersectionTrigger" style="height: 10px; background: transparent;"> </div>
        </div>
        <message-not-found v-if="!$lodashGet(promoCodesStore, '$state.promoCodes', '').length"/>
     </div>
@@ -41,13 +42,14 @@
 
 <script>
 import { useBackButton } from '@/composables/useBackButton'
-import { onMounted, onUnmounted, watchEffect, ref  } from '@vue/runtime-core';
+import { onMounted, onUnmounted, watchEffect, ref, watch  } from '@vue/runtime-core';
 import { useTelegram } from '@/composables/useTelegram';
 import { useRouter } from 'vue-router';
 import { usePromoCodesStore } from '@/store/server/usePromoCodesStore';
 import { useToastStore } from '@/store/useToastStore';
 import MessageNotFound from '@/components/MessageNotFound.vue';
 import { useLastRoute } from '@/composables/useLastRoute';
+import { makeUseInfiniteScroll } from 'vue-use-infinite-scroll';
 export default {
   components: { MessageNotFound },
     setup() {
@@ -72,6 +74,10 @@ export default {
         const { backButton } = useBackButton()
         const toastStore = useToastStore();
         const promoCodesStore = usePromoCodesStore()
+        const intersectionTrigger = ref(null)
+        const useInfiniteScroll = makeUseInfiniteScroll({});
+        const pageRef = useInfiniteScroll(intersectionTrigger);
+     
         backButton('/');
         showCloseMainButton();
         const routerToGeneratePromocode = () => {
@@ -88,9 +94,11 @@ export default {
                     })
                 })
         }
-        onMounted(() => {
-           getPromocodes();
+
+        watch(pageRef, () => {
+            getPromocodes();
         })
+        
         const watcher = watchEffect(() => {
             tgSetParamsToMainButton({
                 text: "Promo-kod yaratish",
@@ -109,25 +117,11 @@ export default {
             tg.offEvent('mainButtonClicked', routerToGeneratePromocode)
         })
 
-        onMounted(() => {
-            window.addEventListener('scroll', handleScroll)
-        })
-
-        onUnmounted(() => {
-            window.removeEventListener('scroll', handleScroll);
-        })
-        const oldScrollY = ref(window.scrollY);
-        const handleScroll = (e) => {
-            let element = scrollComponent.value;
-            if(element?.getBoundingClientRect()?.bottom % window.innerHeight < 20 && oldScrollY.value < window.scrollY) {
-                getPromocodes();
-            }
-            oldScrollY.value = window.scrollY
-        }
         return {
             navbarButtons,
             promoCodesStore,
-            scrollComponent
+            scrollComponent,
+            intersectionTrigger
         }
     },
 }

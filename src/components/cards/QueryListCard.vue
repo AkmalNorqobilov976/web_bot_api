@@ -12,7 +12,7 @@
           </div>
         </div>
         <div class="query-link__lists--i1--btn">
-          <button :class="`${listData.status}-btn`">{{ statusTypes[listData.status] }}</button>
+          <button :class="`${listData.status}-btn`">{{ statusTypes[listData.status] || listData.status }}</button>
         </div>
       </section>
       <section class="query-link__lists--i1 border-.2">
@@ -85,7 +85,8 @@ export default defineComponent({
             canceled: "Qaytib keldi",
             hold: "Keyin oladi",
             archived: "Arxiv",
-            spam: "Spam"
+            spam: "Spam",
+            pending: "Qayta bog'lanish"
         }
     })
 })
