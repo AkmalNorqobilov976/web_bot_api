@@ -100,7 +100,9 @@
                     :cardData="withdraw"
                 /> 
             </section>
-            <div ref="intersectionTrigger" style="height: 10px; background: transparent;"> </div>
+            <div ref="intersectionTrigger" style="height: 10px; background: transparent;"> 
+                <Loading v-if="withdrawsStore.page !=1 && withdrawsStore.loading"/>
+            </div>
         </div>
         <message-not-found v-if="!$lodashGet(withdrawsStore, '$state.withdraws', '').length"/>
     </div>
@@ -121,6 +123,7 @@ import { useVuelidate } from '@vuelidate/core'
 import { maxValue, minValue, required } from '@vuelidate/validators'
 import CardInput from '@/components/Form/inputs/CardInput.vue'
 import { makeUseInfiniteScroll } from "vue-use-infinite-scroll";
+import Loading from '@/components/Loading.vue'
 
 
 export default {
@@ -335,11 +338,12 @@ export default {
         
     },
     components: {
-        PaymentListComponent,
-        CustomConfirm,
-        MessageNotFound,
-        CardInput
-    }
+    PaymentListComponent,
+    CustomConfirm,
+    MessageNotFound,
+    CardInput,
+    Loading
+}
 }
 </script>
 <style lang="scss" scoped>

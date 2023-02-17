@@ -7,13 +7,16 @@
                 :cardData="product"
             />
 
-            <div ref="intersectionTrigger" style="height: 10px; background: transparent;"> </div>
+            <div ref="intersectionTrigger" style="height: 10px; background: transparent;"> 
+                <Loading v-if="categoriesStore.page !=1 && categoriesStore.loading"/>
+            </div>
         </div>
         <message-not-found v-if="!$lodashGet(categoriesStore, '$state.products', '').length"/>
     </main>
 </template>
 
 <script>
+import Loading from '@/components/Loading.vue';
 import MarketCard from '@/components/markets/MarketCard.vue'
 import MessageNotFound from '@/components/MessageNotFound.vue';
 import { useLastRoute } from '@/composables/useLastRoute';
@@ -58,21 +61,8 @@ export default defineComponent({
                 product_id: "",
                 name: ""
             }
-            // window.addEventListener('scroll', handleScroll)
         })
 
-        // onUnmounted(() => {
-        //     window.removeEventListener('scroll', handleScroll);
-        // })
-        // const oldScrollY = ref(window.scrollY);
-        // const handleScroll = (e) => {
-
-        //     let element = scrollComponent.value;
-        //     if(element?.getBoundingClientRect()?.bottom % window.innerHeight < 10 && oldScrollY.value < window.scrollY) {
-        //         load();
-        //     }
-        //     oldScrollY.value = window.scrollY;
-        // }
         return {
             categoriesStore,
             getProductsByPagination,
@@ -81,7 +71,7 @@ export default defineComponent({
             intersectionTrigger
         }
     },
-    components: { MarketCard, MessageNotFound },
+    components: { MarketCard, MessageNotFound, Loading },
 })
 </script>
 

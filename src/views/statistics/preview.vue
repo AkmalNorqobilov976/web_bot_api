@@ -23,7 +23,9 @@
                     :key="i" 
                     :listData="item"
                 />
-                <div ref="intersectionTrigger" style="height: 10px; background: transparent;"> </div>
+                <div ref="intersectionTrigger" style="height: 10px; background: transparent;"> 
+                    <Loading v-if="statisticsStore.page !=1 && statisticsStore.loading"/>
+                </div>
                 <!-- <statistics-list
                     btnText = "-500K"
                     btnTextBgColor="#ED5974"
@@ -39,6 +41,7 @@
 
 <script>
 
+import Loading from '@/components/Loading.vue';
 import MessageNotFound from '@/components/MessageNotFound.vue';
 import StatisticsList from '@/components/statistics/StatisticsList.vue';
 import { useLastRoute } from '@/composables/useLastRoute';
@@ -109,9 +112,10 @@ export default defineComponent({
         }
     },
     components: {
-        StatisticsList,
-        MessageNotFound
-    }
+    StatisticsList,
+    MessageNotFound,
+    Loading
+}
 })
 </script>
 

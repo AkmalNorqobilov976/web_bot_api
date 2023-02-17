@@ -37,25 +37,34 @@
                     </div>
                 </article>
             </div>
+            <div ref="intersectionTrigger" style="height: 10px; background: transparent;"> 
+                <Loading v-if="streamsStore.page !=1 && streamsStore.loading"/>
+            </div>
         </div>
         <message-not-found v-if="!$lodashGet(streamsStore, '$state.streams', '').length"/>
     </main>
 </template>
 
 <script>
+import Loading from '@/components/Loading.vue';
 import MessageNotFound from '@/components/MessageNotFound.vue';
 import { useBackButton } from '@/composables/useBackButton'
 import { useLastRoute } from '@/composables/useLastRoute';
 import { useStreamsStore } from '@/store/server/useStreamsStore'
 import { useToastStore } from '@/store/useToastStore';
-import { defineComponent, ref, onMounted, onUnmounted } from 'vue'
+import { defineComponent, ref, onMounted, onUnmounted, watch } from 'vue'
+import { makeUseInfiniteScroll } from 'vue-use-infinite-scroll';
 export default defineComponent({
-  components: { MessageNotFound },
+  components: { MessageNotFound, Loading },
     setup() {
         const { backButton } = useBackButton();
         const streamsStore = useStreamsStore();
         const scrollComponent = ref(null);
         const toastStore = useToastStore();
+        const intersectionTrigger = ref(null)
+        const useInfiniteScroll = makeUseInfiniteScroll({});
+        const pageRef = useInfiniteScroll(intersectionTrigger);
+       
         const { setLastRoute } = useLastRoute();
         setLastRoute();
         backButton();
@@ -65,21 +74,8 @@ export default defineComponent({
             streamsStore.$patch({
                 page: 1
             })
-            getStreams();
-            window.addEventListener('scroll', handleScroll)
         })
 
-        onUnmounted(() => {
-            window.removeEventListener('scroll', handleScroll);
-        })
-        const oldScrollY = ref(window.scrollY);
-        const handleScroll = (e) => {
-            let element = scrollComponent.value;
-            if(element?.getBoundingClientRect()?.bottom % window.innerHeight < 2 && oldScrollY.value < window.scrollY) {
-                getStreams();
-            }
-            oldScrollY.value = window.scrollY;
-        }
         const getStreams = () => {
             streamsStore.getStreams()
                 .catch(error => {
@@ -91,10 +87,13 @@ export default defineComponent({
                 })
         }
         
-    
+        watch(pageRef, () => {
+            getStreams()
+        })
         return {
             streamsStore,
-            scrollComponent
+            scrollComponent,
+            intersectionTrigger
         }
     },
 })

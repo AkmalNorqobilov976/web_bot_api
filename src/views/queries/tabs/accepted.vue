@@ -51,21 +51,7 @@ export default defineComponent({
         watch(pageRef, () => {
             getOrders();
         })
-       onMounted(() => {
-           window.addEventListener('scroll', handleScroll)
-       })
-
-       onUnmounted(() => {
-           window.removeEventListener('scroll', handleScroll);
-       })
-       const oldScrollY = ref(window.scrollY);
-       const handleScroll = (e) => {
-           let element = scrollComponent.value;
-           if(element?.getBoundingClientRect()?.bottom % window.innerHeight < 2 && oldScrollY.value < window.scrollY) {
-              getOrders()
-           }
-           oldScrollY.value = window.scrollY
-       }
+      
        return {
            ordersStore,
            scrollComponent,
