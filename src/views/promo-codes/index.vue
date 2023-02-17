@@ -12,7 +12,7 @@
                         <i class="ri-coupon-3-fill"></i> {{ $lodashGet(item, 'code') }}
                     </div>
                     <div class="promo-cod__navbar--button">
-                        <button :style="{background: $lodashGet(navbarButtons[item.type], 'color') }">{{ $lodashGet(navbarButtons[item.type], 'text') }}</button>
+                        <button :style="{background: $lodashGet(navbarButtons[item.type], 'color') || navbarButtons.others.color }">{{ $lodashGet(navbarButtons[item.type], 'text') || 'Admin tomonidan qo\'shilgan' }}</button>
                     </div>
                 </nav>
                 <main class="promo-cod__main">
@@ -34,7 +34,9 @@
                     </div>
                 </main>
             </article>
-            <div ref="intersectionTrigger" style="height: 10px; background: transparent;"> </div>
+            <div ref="intersectionTrigger" style="height: 10px; background: transparent;"> 
+                <Loading v-if="promoCodesStore.page !=1 && promoCodesStore.loading"/>
+            </div>
        </div>
        <message-not-found v-if="!$lodashGet(promoCodesStore, '$state.promoCodes', '').length"/>
     </div>
@@ -50,8 +52,9 @@ import { useToastStore } from '@/store/useToastStore';
 import MessageNotFound from '@/components/MessageNotFound.vue';
 import { useLastRoute } from '@/composables/useLastRoute';
 import { makeUseInfiniteScroll } from 'vue-use-infinite-scroll';
+import Loading from '@/components/Loading.vue';
 export default {
-  components: { MessageNotFound },
+  components: { MessageNotFound, Loading },
     setup() {
         const router = useRouter()
         const scrollComponent = ref(null);
