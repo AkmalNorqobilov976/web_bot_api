@@ -181,12 +181,12 @@ export default defineComponent({
                         delayTime: 3000
                     })
                 }).catch(error => {
-                    throw error;
                     toastStore.showToastAsAlert({
                         message: get(error, 'response.data.message', "Xatolik yuz berdi"),
                         type: 'error',
                         delayTime: 3000
                     })
+                    throw error;
                 });
         }
 
