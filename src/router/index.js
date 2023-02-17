@@ -259,7 +259,7 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
     console.log(to.fullPath);
     if(!getToken() && to.meta.requiresAuth) {
-        console.log(getToken(), "tokencha");
+        console.log(getToken(), "");
         
         
         if(to.path !== '/login') {

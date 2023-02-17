@@ -55,13 +55,14 @@ export default defineComponent({
             window.removeEventListener('scroll', handleScroll);
         })
         const oldScrollY = ref(window.scrollY);
-        const handleScroll = () => {
-            const endOfPage = window.innerHeight + window.pageYOffset >= document.body.offsetHeight;
-            if (endOfPage) {
+        const handleScroll = (e) => {
+
+            let element = scrollComponent.value;
+            if(element?.getBoundingClientRect()?.bottom % window.innerHeight < 2 && oldScrollY.value < window.scrollY) {
                 load();
             }
-        };
-        
+            oldScrollY.value = window.scrollY;
+        }
         return {
             categoriesStore,
             getProductsByPagination,
