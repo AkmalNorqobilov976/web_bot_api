@@ -152,6 +152,7 @@ export default {
             allowBlank: false,
             minimumNumberOfCharacters: 0,
         })
+        
         const paymentForm = reactive({
             card_number: "",
             amount: "0"
