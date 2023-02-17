@@ -72,7 +72,8 @@ export default defineComponent({
 
         onMounted(() => {
             streamsStore.$patch({
-                page: 1
+                page: 1,
+                last_page: 2
             })
         })
 
