@@ -188,7 +188,7 @@ export default defineComponent({
                 });
         }
 
-        const { tg } = useTelegram()
+        const { tg, tgSetParamsToMainButton } = useTelegram()
         const { backButton } = useBackButton()
         backButton();
         onBeforeMount(() => {
@@ -206,9 +206,9 @@ export default defineComponent({
             tg.offEvent('mainButtonClicked', updateProfile);
         })
         watch(userInfo, (currentValue, oldValue) => {
-            tg.MainButton.setParams({
-                textColor: '#fff',
-                color: "#55BE61"
+            tgSetParamsToMainButton({
+                text: "O‘zgarishlarni saqlash",
+                disabled: false
             })
         })
         const watchEffective = watchEffect(() => {
