@@ -1,14 +1,6 @@
 <template>
-    {{ transactionsStaticsStore }}
-    <br>
-    {{ dayComputed }}
-    <br>
-    {{ plusComputed }}
-    <br>
-    {{ minusComputed }}
-    {{ option.yAxis }}
-    <VueEcharts id="vue-echarts-id" :option="option" style="height: 290px;" ref="chart" />
-  </template>
+  <VueEcharts id="vue-echarts-id" :option="option" style="height: 290px;" ref="chart" />
+ </template>
   
   <script>
   import { computed, defineComponent, onMounted, ref } from "vue";

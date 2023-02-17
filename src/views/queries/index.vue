@@ -1,4 +1,5 @@
 <template>
+    <search-input v-model="ordersStore.query" :search-function="onSearchFunction" placeholder="Qidirish"/>
     <tabs :tabs="tabs"/>
     <main>
         <router-view/>
@@ -7,6 +8,7 @@
 
 <script>
 import Tabs from '@/components/Layout/Tabs.vue'
+import SearchInput from '@/components/Form/inputs/SearchInput.vue';
 import { useBackButton } from '@/composables/useBackButton'
 import { useOrdersStore } from '@/store/server/useOrdersStore'
 import { useRoute } from 'vue-router';
@@ -24,15 +26,23 @@ export default {
         const getOrders = () => {
             let routeParams = route.path.split('/')
             let status = routeParams[2] ? routeParams[routeParams.length-1] : ''
-            console.log(route.path.split('/'), "path");
             ordersStore.getOrders({ status: status })
                 .catch(error => {
                     toastStore.showToastAsAlert({
                         message: error.response.data.message,
                         type: 'error',
-                        delayTime: 1000
+                        delayTime: 3000
                     });
                 })
+        }
+
+        const onSearchFunction = () => {
+            ordersStore.$patch({
+                page: 1,
+                last_page: 2
+            });
+
+            getOrders()
         }
         watch(route, (newValue) => {
             ordersStore.$patch({
@@ -45,7 +55,8 @@ export default {
         })
 
         return {
-            ordersStore
+            ordersStore,
+            onSearchFunction
         }
     },
     data: () => ({
@@ -101,7 +112,8 @@ Spam
         ]
     }),
     components: {
-        Tabs
+        Tabs,
+        SearchInput
     } 
 }
 </script>

@@ -7,7 +7,7 @@
         <div class="query-link__lists--i1--text">
           <i class="ri-file-list-line"></i>
           <div>
-            #{{ $lodashGet(listData, 'operator_id') }} / {{ $lodashGet(listData, 'id') }}
+            #{{ $lodashGet(listData, 'operator_id', 0) }} / {{ $lodashGet(listData, 'id', 0) }}
            <p class="query-link__lists--i1--text--subtitle">{{ $lodashGet(listData, 'created_at_label', 0)}}</p>
           </div>
         </div>
@@ -24,13 +24,13 @@
       <section class="query-link__lists--i1">
         <div class="query-link__lists--i1--text">
           <i class="ri-contacts-line"></i>
-          {{$lodashGet(listData, 'client_full_name')}} {{ $lodashGet(listData, 'customer_phone') }}
+          {{$lodashGet(listData, 'client_full_name') || 'Ism mavjud emas!'}} {{ $lodashGet(listData, 'customer_phone') || 'Nomer mavjud emas!' }}
         </div>
       </section>
       <section class="query-link__lists--i1">
         <div class="query-link__lists--i1--text">
           <i class="ri-pin-distance-line"></i>
-          {{ $lodashGet(listData, 'full_address') }}
+          {{ $lodashGet(listData, 'full_address') || 'Manzil kiritilmagan!' }}
         </div>
       </section>
 
@@ -44,10 +44,10 @@
         </div>
       </section>
 
-      <section class="query-link__lists--i1" @click="$router.push({ name: 'created-stream', params: {id: listData.stream_id} })">
+      <section class="query-link__lists--i1" @click="$lodashGet(listData, 'stream_name') && $router.push({ name: 'created-stream', params: {id: listData.stream_id} })">
         <div class="query-link__lists--i1--text">
           <i class="ri-link-m"></i>
-          {{$lodashGet(listData, 'stream_name')}}
+          {{$lodashGet(listData, 'stream_name') || "Oqim mavjud emas!"}} 
         </div>
         <div class="query-link__lists--i1--btn">
             <i class="ri-arrow-right-s-line"></i>

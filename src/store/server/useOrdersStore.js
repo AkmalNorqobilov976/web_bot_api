@@ -5,6 +5,7 @@ export const useOrdersStore = defineStore('orders', {
     state: () => ({
         page: 1,
         last_page: 2,
+        query: "", 
         loading: false,
         orders: []
     }),
@@ -13,7 +14,7 @@ export const useOrdersStore = defineStore('orders', {
             return new Promise((resolve, reject) => {
                 if(this.page <= this.last_page && !this.loading) {
                     this.loading = true;
-                    adminOrders({ status })
+                    adminOrders({ status, query: this.query })
                         .then(response => {
                             this.last_page = response.data.meta.last_page;
                             if(this.page == 1) {

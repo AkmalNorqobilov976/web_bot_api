@@ -13,6 +13,8 @@ import { defineComponent,ref, onMounted, onUnmounted } from "vue";
 import QueryListCard from '@/components/cards/QueryListCard.vue'
 import { useOrdersStore } from "@/store/server/useOrdersStore";
 import MessageNotFound from "@/components/MessageNotFound.vue";
+import { useRoute } from "vue-router";
+import { useToastStore } from "@/store/useToastStore";
 export default defineComponent({
    components: {
        QueryListCard,
@@ -21,6 +23,21 @@ export default defineComponent({
    setup() {
        const ordersStore = useOrdersStore();
        const scrollComponent = ref(null);
+       const route = useRoute();
+       const toastStore = useToastStore();
+       const getOrders = () => {
+            let routeParams = route.path.split('/')
+            let status = routeParams[2] ? routeParams[routeParams.length-1] : ''
+            console.log(route.path.split('/'), "path");
+            ordersStore.getOrders({ status: status })
+                .catch(error => {
+                    toastStore.showToastAsAlert({
+                        message: error.response.data.message,
+                        type: 'error',
+                        delayTime: 1000
+                    });
+                })
+        }
        onMounted(() => {
            window.addEventListener('scroll', handleScroll)
        })
@@ -31,8 +48,8 @@ export default defineComponent({
        const oldScrollY = ref(window.scrollY);
        const handleScroll = (e) => {
            let element = scrollComponent.value;
-           if(element?.getBoundingClientRect()?.bottom % window.innerHeight < 20 && oldScrollY.value < window.scrollY) {
-               // getPromocodes();
+           if(element?.getBoundingClientRect()?.bottom % window.innerHeight < 2 && oldScrollY.value < window.scrollY) {
+              getOrders()
            }
            oldScrollY.value = window.scrollY
        }

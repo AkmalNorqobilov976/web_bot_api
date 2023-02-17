@@ -5,10 +5,12 @@ import { request } from "@/utils/request";
 const { numberReformatter } = useNumberFormatter();
 
 const URI = 'advertiser'
-export function adminOrders({status}) {
-    let query = status ? `?status=${status}`: ""
+export function adminOrders({status, query}) {
+    let params = "?";
+    params += status ? `status=${status}&`: ""
+    params += query ? `query=${query}` : ''
     return request({
-        url: `${URI}/orders${query}`,
+        url: `${URI}/orders${params}`,
         method: "get"
     });
 }
