@@ -7,7 +7,7 @@
                     type="file" 
                     ref="profileImage" 
                     @change="onPhotoChange($event)"
-                    accept="image/png, image/jpeg" 
+                    accept="image/*" 
                     style="display: none;"
                 />
                 <img v-if="profilePicture" class=""   :src="profilePicture" alt="">
