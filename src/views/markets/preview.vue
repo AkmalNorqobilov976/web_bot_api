@@ -6,6 +6,8 @@
                 :key="i" 
                 :cardData="product"
             />
+
+            <div ref="intersectionTrigger" style="height: 10px; background: transparent;"> </div>
         </div>
         <message-not-found v-if="!$lodashGet(categoriesStore, '$state.products', '').length"/>
     </main>
@@ -17,14 +19,11 @@ import MessageNotFound from '@/components/MessageNotFound.vue';
 import { useLastRoute } from '@/composables/useLastRoute';
 import { useCategoriesStore } from '@/store/server/useCategoriesStore'
 import { useStreamsStore } from '@/store/server/useStreamsStore';
-import { defineComponent, onMounted, onUnmounted, ref } from 'vue'
+import { defineComponent, onMounted, onUnmounted, ref, watch } from 'vue'
 import { useRoute } from 'vue-router';
-import { vInfiniteScroll } from '@vueuse/components'
-import { useInfiniteScroll } from '@vueuse/core';
+import { makeUseInfiniteScroll } from "vue-use-infinite-scroll";
+
 export default defineComponent({
-    directives: {
-        'infinite-scroll': vInfiniteScroll
-    },
     setup() {
         const categoriesStore = useCategoriesStore();
         const marketPreviewRef = ref(null)
@@ -39,6 +38,9 @@ export default defineComponent({
             )
             categoriesStore.page++;
         }
+        const intersectionTrigger = ref(null)
+        const useInfiniteScroll = makeUseInfiniteScroll({});
+        const pageRef = useInfiniteScroll(intersectionTrigger);
         const load = () => {
             categoriesStore.getProducts(
                 route.params.status == 'all' ? "" : route.params.status, 
@@ -46,6 +48,9 @@ export default defineComponent({
                 categoriesStore.page
             )
         };
+        watch(pageRef, () => {
+            load()
+        })
         onMounted(() => {
             streamsStore.streamForm = {
                 charity: 1000,
@@ -55,15 +60,6 @@ export default defineComponent({
             }
             // window.addEventListener('scroll', handleScroll)
         })
-
-        const re = useInfiniteScroll(scrollComponent, () => {
-            load();
-            console.log("falksdjfldsf");
-        }, {
-            distance: 200
-        })
-
-        console.log(re, "flsdfjsldkfj", scrollComponent);
 
         // onUnmounted(() => {
         //     window.removeEventListener('scroll', handleScroll);
@@ -81,7 +77,8 @@ export default defineComponent({
             categoriesStore,
             getProductsByPagination,
             scrollComponent,
-            load
+            load,
+            intersectionTrigger
         }
     },
     components: { MarketCard, MessageNotFound },
