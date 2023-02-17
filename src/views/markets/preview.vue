@@ -1,6 +1,6 @@
 <template>
     <main class="market-preview d-grid-max-content">
-        <div class="market-preview__cards" ref="scrollComponent" v-infinite-scroll="load">
+        <div class="market-preview__cards" ref="scrollComponent">
             <market-card 
                 v-for="(product, i) in $lodashGet(categoriesStore, '$state.products')" 
                 :key="i" 
@@ -19,7 +19,12 @@ import { useCategoriesStore } from '@/store/server/useCategoriesStore'
 import { useStreamsStore } from '@/store/server/useStreamsStore';
 import { defineComponent, onMounted, onUnmounted, ref } from 'vue'
 import { useRoute } from 'vue-router';
+import { vInfiniteScroll } from '@vueuse/components'
+import { useInfiniteScroll } from '@vueuse/core';
 export default defineComponent({
+    directives: {
+        'infinite-scroll': vInfiniteScroll
+    },
     setup() {
         const categoriesStore = useCategoriesStore();
         const marketPreviewRef = ref(null)
@@ -48,25 +53,35 @@ export default defineComponent({
                 product_id: "",
                 name: ""
             }
-            window.addEventListener('scroll', handleScroll)
+            // window.addEventListener('scroll', handleScroll)
         })
 
-        onUnmounted(() => {
-            window.removeEventListener('scroll', handleScroll);
+        const re = useInfiniteScroll(scrollComponent, () => {
+            load();
+            console.log("falksdjfldsf");
+        }, {
+            distance: 200
         })
-        const oldScrollY = ref(window.scrollY);
-        const handleScroll = (e) => {
 
-            let element = scrollComponent.value;
-            if(element?.getBoundingClientRect()?.bottom % window.innerHeight < 10 && oldScrollY.value < window.scrollY) {
-                load();
-            }
-            oldScrollY.value = window.scrollY;
-        }
+        console.log(re, "flsdfjsldkfj", scrollComponent);
+
+        // onUnmounted(() => {
+        //     window.removeEventListener('scroll', handleScroll);
+        // })
+        // const oldScrollY = ref(window.scrollY);
+        // const handleScroll = (e) => {
+
+        //     let element = scrollComponent.value;
+        //     if(element?.getBoundingClientRect()?.bottom % window.innerHeight < 10 && oldScrollY.value < window.scrollY) {
+        //         load();
+        //     }
+        //     oldScrollY.value = window.scrollY;
+        // }
         return {
             categoriesStore,
             getProductsByPagination,
-            scrollComponent
+            scrollComponent,
+            load
         }
     },
     components: { MarketCard, MessageNotFound },
