@@ -22,7 +22,7 @@ const pinia = createPinia()
 const app = createApp(App);
 Sentry.init({
     app,
-    dsn: "https://12ec6ac3753946f9acf99e031def9e99@o4504311893000192.ingest.sentry.io/4504689684250625",
+    dsn: "https://fc92d4c0b8064c64916d64b326aad7c7@o4504694913368064.ingest.sentry.io/4504694914875392",
     integrations: [
       new BrowserTracing({
         routingInstrumentation: Sentry.vueRouterInstrumentation(router),
