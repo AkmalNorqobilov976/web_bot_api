@@ -114,6 +114,7 @@ import UnderLineSelect from '@/components/Form/inputs/UnderLineSelect.vue'
 import { adminProfile } from '@/api/advertiserApi'
 import { logoutUser, updateMyProfile } from '@/api/authApi'
 import { useRouter } from 'vue-router'
+import { get } from 'lodash'
 import UnderLinePhoneInput from '@/components/Form/inputs/UnderLinePhoneInput.vue'
 export default defineComponent({
     components: { 
@@ -181,7 +182,7 @@ export default defineComponent({
                     })
                 }).catch(error => {
                     toastStore.showToastAsAlert({
-                        message: error.response.data.message,
+                        message: get(error, 'response.data.message', "Xatolik yuz berdi"),
                         type: 'error',
                         delayTime: 3000
                     })
