@@ -212,10 +212,9 @@ export default defineComponent({
             })
         })
         const watchEffective = watchEffect(() => {
-            tg.MainButton.setParams({
+            tgSetParamsToMainButton({
                 text: "O‘zgarishlarni saqlash",
-                textColor: "#8C8C8C",
-                color: "#E4E6E4"
+                disabled: false
             })
 
             tg.MainButton.show()
