@@ -1,4 +1,5 @@
 import { useTelegram } from "@/composables/useTelegram";
+import { get } from 'lodash'
 import { useMessageNotFoundStore } from '@/store/useMessageNotFoundStore'
 import axios from "axios";
 import { getToken } from "./localStorage";
@@ -39,7 +40,7 @@ service.interceptors.response.use(response => {
     const messageNotFoundStore = useMessageNotFoundStore();
     messageNotFoundStore.setIsError(false);
     messageNotFoundStore.setIsLoading(false);
-    if(error.response.status == 401) {
+    if(get(error, 'response.status') == 401) {
         localStorage.removeItem('token');
         location.reload();
     }
