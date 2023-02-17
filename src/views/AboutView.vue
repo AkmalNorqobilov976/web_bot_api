@@ -50,21 +50,6 @@ export default {
             }
         })
 
-        // onBeforeMount(() => {
-        //     console.log(window.Telegram.WebApp);
-        //     console.log("here");
-        //     tg.MainButton.onClick(() => {
-        //         alert("hi")
-        //         tg.onEvent('mainButtonClicked', sendData);
-        //         tg.sendData({
-        //             hi: "kimbor",
-        //             bye: "nimabor"
-        //         })
-        //     })
-        //     tg.MainButton.onEvent('mainButtonClicked', sendDataCallback)
-        // })
-
-
         const sendDatas = () => {
             // tg.sendData(JSON.stringify({
             //     hi: "kimbor",

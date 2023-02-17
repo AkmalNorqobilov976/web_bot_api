@@ -10,6 +10,7 @@
                     type="text" 
                     ref="phoneInput"
                     placeholder="00 000 00 00"
+                    inputmode="decimal"
                     v-mask="`{{99}} {{999}}-{{99}}-{{99}}`"
                     v-model="userInfo.phone"
                 />
@@ -169,6 +170,7 @@ export default defineComponent( {
                     font-size: 1.5rem;
                     background: transparent;
                     padding-left: .6rem;
+                    border-radius: 0;
                     border-left: .1rem rgba($color: $blue, $alpha: .6) solid !important;
                     
                     &::placeholder {

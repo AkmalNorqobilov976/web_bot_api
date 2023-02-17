@@ -44,7 +44,6 @@ import { useToastStore } from "@/store/useToastStore";
         
         const dayComputed = computed(() => {
             return transactionsStaticsStore.transactionStatics.reduce((prev,curr) => {
-                console.log(new Date(Date.parse(curr.date)).getDate());
                 return [...prev, new Date(Date.parse(curr.date)).getDate()]
             }, []);
         })

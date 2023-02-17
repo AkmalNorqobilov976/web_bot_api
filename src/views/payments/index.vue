@@ -152,10 +152,7 @@ export default {
         const maxBalance = computed(() => {
             return authStore.$state.userInfo.balance;
         })
-        
-        const mustBeCool = (value) =>{
-            return value.replace(/\D/g, '').length == 16
-        }
+
         const paymentFormValidationRules = {
             amount: {
                 required,
@@ -209,10 +206,10 @@ export default {
                     page: 1,
                     last_page: 2
                 });
-                // console.log(withdrawsStore.page);
                 getWithdraws()
                 authStore.getUserInfo().then(() => {
-                    paymentForm.amount = authStore.userInfo.balance
+                    paymentForm.amount = authStore.userInfo.balance;
+                    config.value.max = authStore.userInfo.balance;
                 })
                 toastStore.showToastAsAlert({
                     message: "Bekor qilindi!",
@@ -228,7 +225,6 @@ export default {
             })
         }
         watch(paymentForm, (newValue) => {
-            // console.log(cardInputRef.value?.lengthLessThan16, "lasdkflksjf");
             $v.value.$validate()
                 .then(res => {
                     if(!res || cardInputRef.value?.lengthLessThan16) {
@@ -256,7 +252,7 @@ export default {
             withdrawsStore.getWithdraws()
                 .then(() => {
                     paymentForm.card_number = withdrawsStore.withdraws[0].account
-                    // console.log("faslkdfjsaldfk", paymentForm.card_number);
+                    // ("faslkdfjsaldfk", paymentForm.card_number);
                     // alert("dslakfsj")
                 })
                 .catch(error => {

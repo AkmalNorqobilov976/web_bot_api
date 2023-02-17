@@ -36,7 +36,6 @@ export default defineComponent({
         })
 
         const onUpdateModel = (e) => {
-            console.log(e.target.value);
             if(mustBeCool(e.target.value)) {
                 isCardError.value = false;
                 context.emit('update:modelValue', e.target.value)

@@ -232,42 +232,7 @@ export default defineComponent({
                     })
                 })
         }
-        // const setParams = () => {
-        //     if(streamsStore.streamForm.name) {
-        //         tgSetParamsToMainButton({
-        //             disabled: false,
-        //             text: "Oqimni yangilash",
-        //             textColor: "#fff",
-        //             color: "#55BE61"
-        //         })
-        //     } else {
-        //         tgSetParamsToMainButton({
-        //             disabled: true,
-        //             text: "Oqimni yangilash",
-        //             textColor: "#8C8C8C",
-        //             color: "#E4E6E4"
-        //         })
-        //     }
-        // }
-        // const updateStream = () => {
-        //     streamsStore.updateStream(streamsStore.stream)
-        //         .then(() => {
-        //             toastStore.showToastAsAlert({
-        //                 message: "Yangilandi!",
-        //                 type: "success",
-        //                 delayTime: 3000
-        //             })
-        //         })
-        //         .catch(error => {
-        //             console.log(error);
-        //             toastStore.showToastAsAlert({
-        //                 message: error.response.data.message,
-        //                 type: 'error',
-        //                 delayTime: 3000
-        //             })
-        //         })
-        // }
-
+        
         const getStream = () => {
             getAdminStream({ id: route.params.id })
                 .then(response => {

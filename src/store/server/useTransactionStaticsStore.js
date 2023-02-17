@@ -10,7 +10,6 @@ export const useTransactionStaticsStore = defineStore('transactions-statics', {
             return new Promise((resolve, reject) => {
                 adminTransactionStatics()
                 .then(response => {
-                    console.log(response.data);
                     this.transactionStatics = response.data;
                     resolve(true)
                 })

@@ -28,7 +28,6 @@ export default defineComponent({
        const getOrders = () => {
             let routeParams = route.path.split('/')
             let status = routeParams[2] ? routeParams[routeParams.length-1] : ''
-            console.log(route.path.split('/'), "path");
             ordersStore.getOrders({ status: status })
                 .catch(error => {
                     toastStore.showToastAsAlert({
