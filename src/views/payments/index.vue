@@ -3,8 +3,6 @@
     <!-- {{ paymentForm }} {{ paymentForm.card_number.length }}
     <button @click="onPostAdminWithdraw">send money</button> -->
     <div class="d-grid-max-content">
-        <p style="font-size: 3rem;">
-        </p>
         <div class="payment">
             <div class="payment__card-info">
                 <div>
@@ -102,6 +100,7 @@
                     :cardData="withdraw"
                 /> 
             </section>
+            <div ref="intersectionTrigger" style="height: 10px; background: transparent;"> </div>
         </div>
         <message-not-found v-if="!$lodashGet(withdrawsStore, '$state.withdraws', '').length"/>
     </div>
@@ -121,6 +120,8 @@ import MessageNotFound from '@/components/MessageNotFound.vue'
 import { useVuelidate } from '@vuelidate/core'
 import { maxValue, minValue, required } from '@vuelidate/validators'
 import CardInput from '@/components/Form/inputs/CardInput.vue'
+import { makeUseInfiniteScroll } from "vue-use-infinite-scroll";
+
 
 export default {
     
@@ -131,6 +132,9 @@ export default {
         const selectedWithdrawId = ref(null);
         const authStore = useAuthStore();
         const showConfirm = ref(false);
+        const intersectionTrigger = ref(null)
+        const useInfiniteScroll = makeUseInfiniteScroll({});
+        const pageRef = useInfiniteScroll(intersectionTrigger);
         const cardMask = ref('{{9999}} {{9999}} {{9999}} {{9999}}');
         const config = ref({
             prefix: '',
@@ -264,12 +268,16 @@ export default {
                     })
                 })
         }
+
+        watch(pageRef, () => {
+            getWithdraws()
+        })
         onMounted(() => {
             paymentForm.amount = authStore.$state.userInfo.balance;
             withdrawsStore.$patch({
                 last_page: withdrawsStore.page + 1
             })
-            getWithdraws();
+            // getWithdraws();
             tg.onEvent('mainButtonClicked', onPostAdminWithdraw)
         })
 
@@ -308,23 +316,6 @@ export default {
             });
         }
 
-        onMounted(() => {
-            window.addEventListener('scroll', handleScroll)
-        })
-
-        onUnmounted(() => {
-            window.removeEventListener('scroll', handleScroll);
-        })
-        const oldScrollY = ref(window.scrollY);
-        const handleScroll = (e) => {
-
-            let element = scrollComponent.value;
-            if(element?.getBoundingClientRect()?.bottom % window.innerHeight < 2 && oldScrollY.value < window.scrollY) {
-                getWithdraws();
-            }
-            oldScrollY.value = window.scrollY
-        }
-
         return {
             onConfirm,
             showConfirm,
@@ -338,6 +329,7 @@ export default {
             cardInputRef,
             scrollComponent,
             onShowConfirm,
+            intersectionTrigger
         }
 
         

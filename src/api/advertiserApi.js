@@ -101,9 +101,9 @@ export function postAdminStream(data) {
     })
 }
 
-export function adminWithdraws() {
+export function adminWithdraws({ page }) {
     return request({
-        url: `${URI}/withdraws?sortByDesc=id`,
+        url: `${URI}/withdraws?page=${page}&sortByDesc=id`,
         method: "get"
     });
 }

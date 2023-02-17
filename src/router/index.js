@@ -119,10 +119,6 @@ const routes = [
     component: () => import('@/views/markets/index.vue'),
     children: [
         {
-            path: 'hahaha',
-            component: () => import('@/views/markets/hahaha.vue')
-        },
-        {
             path: 'preview/:status',
             meta: {
                 requiresAuth: true

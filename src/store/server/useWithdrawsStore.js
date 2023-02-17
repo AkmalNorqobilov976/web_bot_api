@@ -20,10 +20,14 @@ export const useWithdrawsStore = defineStore('withdraws', {
             return new Promise((resolve, reject) => {
                 if(this.page < this.last_page && !this.loading) {
                     this.loading = true;
-                    adminWithdraws()
+                    adminWithdraws({page: this.page})
                         .then(response => {
                             this.last_page = response.data.meta.last_page;
-                            this.withdraws = response.data.data;
+                            if(this.page == 1) {
+                                this.withdraws = response.data.data;
+                            } else {
+                                this.withdraws = [ ...this.withdraws, ...response.data.data]
+                            }
                             this.page++;
                             this.loading = false;
                             resolve(true)
