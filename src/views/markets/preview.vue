@@ -58,7 +58,7 @@ export default defineComponent({
         const handleScroll = (e) => {
 
             let element = scrollComponent.value;
-            if(element?.getBoundingClientRect()?.bottom % window.innerHeight < 20 && oldScrollY.value < window.scrollY) {
+            if(element?.getBoundingClientRect()?.bottom % window.innerHeight < 10 && oldScrollY.value < window.scrollY) {
                 load();
             }
             oldScrollY.value = window.scrollY;

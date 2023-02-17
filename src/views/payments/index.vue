@@ -121,6 +121,7 @@ import MessageNotFound from '@/components/MessageNotFound.vue'
 import { useVuelidate } from '@vuelidate/core'
 import { maxValue, minValue, required } from '@vuelidate/validators'
 import CardInput from '@/components/Form/inputs/CardInput.vue'
+
 export default {
     
     setup() {

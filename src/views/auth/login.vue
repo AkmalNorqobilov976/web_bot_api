@@ -40,6 +40,7 @@ import { useTelegram } from '@/composables/useTelegram';
 import { sendPhone } from '@/api/authApi'
 import { getToken } from '@/utils/localStorage';
 import { useToastStore } from '@/store/useToastStore';
+
 export default defineComponent( {
     mounted() {
         this.$refs.phoneInput.focus();
@@ -205,17 +206,24 @@ export default defineComponent( {
                 }
 
                 input[type="checkbox"]:checked {
-                    background: $blue !important;
+                    background: $blue;
                     position: relative;
+                    &::before {
+                        content: '';
+                        position: absolute;
+                        z-index: 10;
+                        background-image: url(@/assets/svgs/checkIcon.svg);
+                        background-position: 5px 26px;
+
+                    }
                     &::after {
-                        height: 100%;
-                        width: 100%;
                         line-height: 50%;
                         padding: .5rem 0;
                         text-align: center;
                         color: white;
-                        content: "\2714";
+                        content: "";
                         position: absolute;
+                        z-index: 2;
                     }
                 }
                 label {
