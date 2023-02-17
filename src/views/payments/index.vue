@@ -165,7 +165,7 @@ export default {
         const paymentFormValidationRules = {
             amount: {
                 required,
-                minValue: minValue(1),
+                minValue: minValue(50000),
                 maxValue: maxValue(maxBalance.value)
 
             }
@@ -217,7 +217,6 @@ export default {
                 });
                 getWithdraws()
                 authStore.getUserInfo().then(() => {
-                    paymentForm.amount = authStore.userInfo.balance;
                     config.value.max = authStore.userInfo.balance;
                 })
                 toastStore.showToastAsAlert({
@@ -277,7 +276,6 @@ export default {
             getWithdraws()
         })
         onMounted(() => {
-            paymentForm.amount = authStore.$state.userInfo.balance;
             withdrawsStore.$patch({
                 last_page: withdrawsStore.page + 1
             })
@@ -302,9 +300,6 @@ export default {
                 })
                 getWithdraws();
                 authStore.getUserInfo()
-                .then(() => {
-                    paymentForm.amount = authStore.userInfo.balance;
-                });
                 toastStore.showToastAsAlert({
                     message: 'Bonusingiz naqdlashtirildi!',
                     delayTime: 3000,
