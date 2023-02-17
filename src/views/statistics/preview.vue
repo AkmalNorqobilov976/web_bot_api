@@ -24,16 +24,10 @@
                     :listData="item"
                 />
                 <div ref="intersectionTrigger" style="height: 10px; background: transparent;"> 
-                    <Loading v-if="statisticsStore.page !=1 && statisticsStore.loading"/>
+                    <Loading 
+                        v-if="statisticsStore.page != 1 && statisticsStore.loading"
+                    />
                 </div>
-                <!-- <statistics-list
-                    btnText = "-500K"
-                    btnTextBgColor="#ED5974"
-                />
-                <statistics-list
-                    btnText = "0.00"
-                    btnTextBgColor="#9EB2BD"
-                /> -->
             </div>
             <message-not-found v-if="!$lodashGet(statisticsStore, '$state.statistics', '').length"/>
         </div>
@@ -47,7 +41,7 @@ import StatisticsList from '@/components/statistics/StatisticsList.vue';
 import { useLastRoute } from '@/composables/useLastRoute';
 import { useStatisticsStore } from '@/store/server/useStatisticsStore';
 import { useToastStore } from '@/store/useToastStore';
-import { defineComponent, reactive, watch, ref, onMounted, onUnmounted } from 'vue';
+import { defineComponent, reactive, watch, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { makeUseInfiniteScroll } from 'vue-use-infinite-scroll';
 export default defineComponent({

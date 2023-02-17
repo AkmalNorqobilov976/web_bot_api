@@ -13,6 +13,7 @@ export const useStatisticsStore = defineStore('statistic', {
         getStatistics(params) {
             return new Promise((resolve, reject) => {
                 if(this.page <= this.last_page && !this.loading) {
+                    this.loading = true;
                     adminStatistics(params, this.page)
                         .then(response => {
                             this.last_page = response.data.meta.last_page;

@@ -42,7 +42,6 @@ export default defineComponent({
             })
             getStatistics();
         }, {
-            immediate: true,
             deep: true
         })
         return {
