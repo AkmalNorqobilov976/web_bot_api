@@ -6,10 +6,11 @@
 
 <style lang="scss" scoped>
     .center {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #fff;
+        padding: .5rem 0;
     }
    
 

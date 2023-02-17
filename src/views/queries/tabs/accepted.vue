@@ -2,7 +2,9 @@
     <div class="d-grid-max-content">
        <div ref="scrollComponent">
            <query-list-card v-for="(order, i) in $lodashGet(ordersStore, '$state.orders')" :key="i" :listData="order"/>
-           <div ref="intersectionTrigger" style="height: 10px; background: transparent;"> </div>
+           <div ref="intersectionTrigger" style="height: 10px; background: transparent;"> 
+                <Loading v-if="ordersStore.page !=1 && ordersStore.loading"/>
+            </div>
        </div>
        <message-not-found v-if="!$lodashGet(ordersStore, '$state.orders', '').length"/>
   </div>
@@ -17,12 +19,14 @@ import MessageNotFound from "@/components/MessageNotFound.vue";
 import { useRoute } from "vue-router";
 import { useToastStore } from "@/store/useToastStore";
 import { makeUseInfiniteScroll } from "vue-use-infinite-scroll";
+import Loading from "@/components/Loading.vue";
 
 export default defineComponent({
    components: {
-       QueryListCard,
-       MessageNotFound
-   },
+    QueryListCard,
+    MessageNotFound,
+    Loading
+},
    setup() {
        const ordersStore = useOrdersStore();
        const scrollComponent = ref(null);
