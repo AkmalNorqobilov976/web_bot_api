@@ -23,6 +23,7 @@
                     :key="i" 
                     :listData="item"
                 />
+                <div ref="intersectionTrigger" style="height: 10px; background: transparent;"> </div>
                 <!-- <statistics-list
                     btnText = "-500K"
                     btnTextBgColor="#ED5974"
@@ -45,6 +46,7 @@ import { useStatisticsStore } from '@/store/server/useStatisticsStore';
 import { useToastStore } from '@/store/useToastStore';
 import { defineComponent, reactive, watch, ref, onMounted, onUnmounted } from 'vue';
 import { useRoute } from 'vue-router';
+import { makeUseInfiniteScroll } from 'vue-use-infinite-scroll';
 export default defineComponent({
     setup() {
         const statisticsStore = useStatisticsStore();
@@ -55,6 +57,11 @@ export default defineComponent({
             sortBy: "",
             sortByDesc: ""
         })
+
+        const intersectionTrigger = ref(null)
+        const useInfiniteScroll = makeUseInfiniteScroll({});
+        const pageRef = useInfiniteScroll(intersectionTrigger);
+        
         useLastRoute().setLastRoute();
         const filterFunction = (keyName) => {
             statisticsStore.$patch({
@@ -86,22 +93,9 @@ export default defineComponent({
                 })
         }
 
-        onMounted(() => {
-            window.addEventListener('scroll', handleScroll)
+        watch(pageRef, () => {
+            getStatistics()
         })
-
-        onUnmounted(() => {
-            window.removeEventListener('scroll', handleScroll);
-        })
-        
-        const oldScrollY = ref(window.scrollY);
-        const handleScroll = (e) => {
-            let element = scrollComponent.value;
-            if(element?.getBoundingClientRect()?.bottom % window.innerHeight < 2 && oldScrollY.value < window.scrollY) {
-                getStatistics();
-            }
-            oldScrollY.value = window.scrollY
-        }
 
         watch(statisticsFilterAttributes, () => {
             getStatistics();
@@ -110,7 +104,8 @@ export default defineComponent({
             statisticsStore,
             statisticsFilterAttributes,
             filterFunction,
-            scrollComponent
+            scrollComponent,
+            intersectionTrigger
         }
     },
     components: {
