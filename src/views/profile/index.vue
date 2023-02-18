@@ -1,5 +1,6 @@
 <template>
     <main class="my-profile">
+        {{ userInfo.avatar }}
         <!-- <button @click="updateProfile">Send</button> -->
         <header class="my-profile__header">
             <div class="my-profile__header--photo" @click="this.$refs.profileImage.click()">
