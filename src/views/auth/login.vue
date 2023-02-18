@@ -15,17 +15,8 @@
                     v-model="userInfo.phone"
                 />
             </div>
-
             <div class="login__form--is-agree">
-                <input 
-                    class="login__form--is-agree--input" 
-                    type="checkbox" 
-                    id="isAgree"
-                    v-model="userInfo.isAgree"
-                />
-                <label 
-                    for="isAgree"
-                >Men foydalanish shartlari bilan tanishdim</label>
+                <Checkbox v-model="userInfo.isAgree" idKey="isAgree" label="Men foydalanish shartlari bilan tanishdim"/>
             </div>
         </form>
     </div>
@@ -40,6 +31,7 @@ import { useTelegram } from '@/composables/useTelegram';
 import { sendPhone } from '@/api/authApi'
 import { getToken } from '@/utils/localStorage';
 import { useToastStore } from '@/store/useToastStore';
+import Checkbox from '@/components/Form/checkbox/Checkbox.vue';
 export default defineComponent( {
     mounted() {
         this.$refs.phoneInput.focus();
@@ -58,66 +50,65 @@ export default defineComponent( {
             auth.$patch({
                 smsIsSent: false
             });
-        }
+        };
         showCloseMainButton();
         watch(userInfo, (newValue) => {
-            if(newValue.isAgree && newValue.phone) {
+            if (newValue.isAgree && newValue.phone) {
                 tgSetParamsToMainButton({
                     text: "SMS kodni olish",
                     textColor: "#8C8C8C",
                     color: "#E4E6E4",
                     disabled: false
-                })
-            } else {
+                });
+            }
+            else {
                 tgSetParamsToMainButton({
                     text: "SMS kodni olish",
                     textColor: "#fff",
                     color: "#51AEE7",
                     disabled: true
-                })
+                });
             }
         }, {
             immediate: true
-        })
-
+        });
         const sendPhoneNumber = () => {
-            sendPhone({ phone: `+998${userInfo.phone.split(' ').join('').split('-').join('')}` })
-            .then(() => {
+            sendPhone({ phone: `+998${userInfo.phone.split(" ").join("").split("-").join("")}` })
+                .then(() => {
                 auth.$patch({
                     smsIsSent: true,
                     userInfo: {
                         ...auth.$state,
-                        phone: `${userInfo.phone.split(' ').join('').split('-').join('')}`   
+                        phone: `${userInfo.phone.split(" ").join("").split("-").join("")}`
                     }
                 });
-                router.push('/verify-sms-code');
+                router.push("/verify-sms-code");
             }).catch((error) => {
                 toastStore.showToastAsAlert({
                     message: error.response.data.message || error.message,
-                        type: 'error',
-                        delayTime: 3000
-                    })
-            })
-        }
-        
-          onMounted(() => {
-              if(getToken()) {
-                  router.push('/');
+                    type: "error",
+                    delayTime: 3000
+                });
+            });
+        };
+        onMounted(() => {
+            if (getToken()) {
+                router.push("/");
             }
-
-            tg.onEvent('mainButtonClicked', sendPhoneNumber)
+            tg.onEvent("mainButtonClicked", sendPhoneNumber);
         });
         onUnmounted(() => {
-            tg.offEvent('mainButtonClicked', sendPhoneNumber)
-        })
+            tg.offEvent("mainButtonClicked", sendPhoneNumber);
+        });
         return {
             userInfo,
             // login,
             auth,
             backPhoneNumber,
             sendPhoneNumber
-        }
-    }
+        };
+    },
+    components: { Checkbox }
 })
 </script>
 
@@ -192,6 +183,7 @@ export default defineComponent( {
 
             &--is-agree {
                 display: flex;
+                margin-top: 1.6rem;
                 justify-content: space-between;
                 align-items: center;
                 gap: .9rem;
