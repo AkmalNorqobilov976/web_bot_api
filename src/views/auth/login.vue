@@ -11,7 +11,7 @@
                     ref="phoneInput"
                     placeholder="00 000 00 00"
                     inputmode="decimal"
-                    v-mask="`{{99}} {{999}}-{{99}}-{{99}}`"
+                    v-mask="maskRef"
                     v-model="userInfo.phone"
                 />
             </div>
@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import { reactive } from '@vue/reactivity'
+import { reactive, ref } from '@vue/reactivity'
 import { useAuthStore } from '@/store/authStore';
 import { useRouter } from 'vue-router';
 import { defineComponent, onMounted, onUnmounted, watch } from 'vue';
@@ -38,6 +38,7 @@ export default defineComponent( {
     },
     setup() {
         const auth = useAuthStore();
+        const maskRef = ref('{{99}} {{999}}-{{99}}-{{99}}');
         const router = useRouter();
         const { tg, tgSetParamsToMainButton, showCloseMainButton } = useTelegram();
         const toastStore = useToastStore();
@@ -103,6 +104,7 @@ export default defineComponent( {
         return {
             userInfo,
             // login,
+            maskRef,
             auth,
             backPhoneNumber,
             sendPhoneNumber
