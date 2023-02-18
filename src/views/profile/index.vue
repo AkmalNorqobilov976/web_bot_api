@@ -1,6 +1,5 @@
 <template>
     <main class="my-profile">
-        {{ userInfo.avatar }}
         <!-- <button @click="updateProfile">Send</button> -->
         <header class="my-profile__header">
             <div class="my-profile__header--photo" @click="this.$refs.profileImage.click()">
@@ -35,7 +34,7 @@
                 </div>
             </div>
         </div>
-        <button @click="updateProfile">Send</button>
+        <!-- <button @click="updateProfile">Send</button> -->
         <info-card> 
             <template #body>
                 <form @submit.prevent>
