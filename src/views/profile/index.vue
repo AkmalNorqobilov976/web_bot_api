@@ -34,7 +34,7 @@
                 </div>
             </div>
         </div>
-        <!-- <button @click="updateProfile">Send</button> -->
+        <button @click="updateProfile">Send</button>
         <info-card> 
             <template #body>
                 <form @submit.prevent>
