@@ -168,7 +168,6 @@ export default defineComponent({
         const onPhotoChange = (e) => {
             if(e.target.files[0]) {
                 userInfo.value.avatar = e.target.files[0]
-                alert(JSON.stringify(userInfo.value.avatar))
                 profilePicture.value = URL.createObjectURL(e.target.files[0])
             }
         }
