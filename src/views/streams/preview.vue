@@ -44,9 +44,9 @@
                             <copyIcon class="stream-name__button-grp--btn--icon"/> Nusxalash
                         </button>
                         <button 
-                            :disabled="$lodashGet(streamInfo, 'product.advert_post', true)" 
+                            :disabled="!$lodashGet(streamInfo, 'advert_post')" 
                             class="stream-name__button-grp--btn" 
-                            @click="openPost($lodashGet(streamInfo, 'product.advert_post'))"
+                            @click="openPost($lodashGet(streamInfo, 'advert_post'))"
                         >
                             <i class="ri-external-link-line stream-name__button-grp--btn--icon"></i>
                             Reklama posti

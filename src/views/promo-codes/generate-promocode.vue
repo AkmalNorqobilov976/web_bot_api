@@ -60,13 +60,15 @@ export default defineComponent({
                 tgSetParamsToMainButton({
                     text: "Promo-kod yaratish",
                     textColor: "#ffffff",
-                    color: "#55BE61"
+                    color: "#55BE61",
+                    disabled: true
                 })
             }else {
                 tgSetParamsToMainButton({
                     text: "Promo-kod yaratish",
                     textColor: "#8C8C8C",
-                    color: "#E4E6E4"
+                    color: "#E4E6E4",
+                    disabled: false
                 });
             }
         }, {
