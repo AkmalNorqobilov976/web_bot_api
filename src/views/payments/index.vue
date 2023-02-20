@@ -121,6 +121,7 @@ import { useAuthStore } from '@/store/authStore'
 import MessageNotFound from '@/components/MessageNotFound.vue'
 import { useVuelidate } from '@vuelidate/core'
 import { maxValue, minValue, required } from '@vuelidate/validators'
+import { get } from 'lodash'
 import CardInput from '@/components/Form/inputs/CardInput.vue'
 import { makeUseInfiniteScroll } from "vue-use-infinite-scroll";
 import Loading from '@/components/Loading.vue'
@@ -226,7 +227,7 @@ export default {
                 })
             }).catch(error => {
                 toastStore.showToastAsAlert({
-                    message: error.response.data.message,
+                    message: get(error, 'response.data.message') || get(error, 'message', "Tarmoqda nosozlik!"),
                     type: 'error',
                     delayTime: 3000
                 })

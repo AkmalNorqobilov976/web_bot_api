@@ -17,6 +17,8 @@
                 </template>
 
             </tooltip>
+
+            <!-- <button @click="addStream">asdfasdf</button> -->
         </form>
     </section>
 
@@ -88,8 +90,8 @@ export default {
                         delayTime: 1000,
                         type: "success"
                     })
-
-                    router.push({name: "created-stream", params: { id: response.data.data.id }})
+                    console.log(response);
+                    router.push({name: "stream-preview", params: { id: response.data.data.id }})
                 })
                 .catch(error => {
                     labelMessage.value = error.response.data.message; 
@@ -121,7 +123,8 @@ export default {
         return {
             categoriesStore,
             labelMessage,
-            streamsStore
+            streamsStore,
+            addStream
         }
     },
 }
