@@ -44,7 +44,7 @@
                             <copyIcon class="stream-name__button-grp--btn--icon"/> Nusxalash
                         </button>
                         <button 
-                            :disabled="!$lodashGet(streamInfo, 'product.advert_post', true)" 
+                            :disabled="$lodashGet(streamInfo, 'product.advert_post', true)" 
                             class="stream-name__button-grp--btn" 
                             @click="openPost($lodashGet(streamInfo, 'product.advert_post'))"
                         >
