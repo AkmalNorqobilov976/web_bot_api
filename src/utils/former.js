@@ -11,7 +11,6 @@ export const queryMaker = (object) => {
 
 export const formerSingleFile = (object) => {
     const formData = new FormData();
-    // console.log(object);
     for (const key in object) {
         if (typeof object[key] === "boolean") {
             let bool = object[key] ? 1 : 0;
@@ -20,8 +19,6 @@ export const formerSingleFile = (object) => {
         }
         formData.append(`${key}`, object[key]);
     }
-    for (var pair of formData.entries()) {
-        // console.log(pair[0]+ ', ' + pair[1]); 
-    }
+    
     return formData;
 }

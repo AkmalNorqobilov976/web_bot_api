@@ -2,7 +2,6 @@
     <div class="verify-input">
         <input 
             type="number" 
-            max="1" 
             maxlength="1" 
             name='code' 
             class='verify-input__code-input' 
@@ -10,31 +9,27 @@
         />
         <input 
             type="number" 
-            max="1" 
             maxlength="1" 
             name='code' 
             class='verify-input__code-input' 
             required
         />
         <input 
-            type="number" 
-            max="1" 
+            type="number"  
             maxlength="1" 
             name='code' 
             class='verify-input__code-input' 
             required
         />
         <input 
-            type="number" 
-            max="1" 
+            type="number"  
             maxlength="1" 
             name='code' 
             class='verify-input__code-input' 
             required
         />
         <input 
-            type="number" 
-            max="1" 
+            type="number"  
             maxlength="1" 
             name='code' 
             class='verify-input__code-input' 

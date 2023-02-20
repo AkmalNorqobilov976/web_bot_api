@@ -44,6 +44,7 @@ service.interceptors.response.use(response => {
         localStorage.removeItem('token');
         location.reload();
     }
+
     return Promise.reject(error)
 })
 export {

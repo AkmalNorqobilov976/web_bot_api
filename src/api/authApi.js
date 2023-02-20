@@ -37,19 +37,19 @@ export function updateMyProfile(data) {
         delete data.avatar;
     }
     const form = formerSingleFile(data);
-    return fetch(`${process.env.VUE_APP_SERVICE_URI}/profile/update`, {
-        headers: {
-            'Authorization': `Bearer ${localStorage.getItem('token')}`,
-            'Accept': 'application/json'
-        },
-        body: form,
-        method: 'post'
-    })
-    // return request({
-    //     url: 'profile/update',
-    //     method: 'post',
-    //     data: form
+    // return fetch(`${process.env.VUE_APP_SERVICE_URI}/profile/update`, {
+    //     headers: {
+    //         'Authorization': `Bearer ${localStorage.getItem('token')}`,
+    //         'Accept': 'application/json'
+    //     },
+    //     body: form,
+    //     method: 'post'
     // })
+    return request({
+        url: 'profile/update',
+        method: 'post',
+        data: form
+    })
 }
 
 export function logoutUser() {

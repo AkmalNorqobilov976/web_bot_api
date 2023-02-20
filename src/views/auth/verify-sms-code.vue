@@ -10,6 +10,7 @@
                 <verify-input/>
                 <p @click="$router.push('/login')" class="login__form--verification--btn">Nomerni o'zgartirish</p>
             </div>
+            <button type="submit">Send data</button>
         </form>
     </div>
 </template>
