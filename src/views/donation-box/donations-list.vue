@@ -39,15 +39,17 @@ import { useDonationsStore } from '@/store/server/useDonationsStore'
 import { useToastStore } from "@/store/useToastStore";
 import Loading from "@/components/Loading.vue";
 import { makeUseInfiniteScroll } from "vue-use-infinite-scroll";
+import { useBackButton } from "@/composables/useBackButton";
 export default defineComponent({
   components: { MessageNotFound, Loading },
     setup() {
+        const { backButton } = useBackButton();
         const donationsStore = useDonationsStore();
         const toastStore = useToastStore();
          const intersectionTrigger = ref(null)
         const useInfiniteScroll = makeUseInfiniteScroll({});
         const pageRef = useInfiniteScroll(intersectionTrigger);
-
+        backButton();
         const getCharities = () => {
             donationsStore.getDonations()
             .catch(error => {
