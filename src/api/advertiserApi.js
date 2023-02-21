@@ -178,3 +178,10 @@ export function adminTransactionStatics() {
         method: 'get'
     })
 }
+
+export function adminCharity () {
+    return request({
+        url: `${URI}/streams/charity`,
+        method: 'get'
+    })
+}

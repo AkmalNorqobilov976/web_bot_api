@@ -100,7 +100,7 @@ export default defineComponent({
        
         watch(pageRef, () => {
             getTransactions();
-            pageRef    })
+        })
         return {
             transactionsStore,
             searchFunction,

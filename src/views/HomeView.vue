@@ -60,7 +60,7 @@
                     </router-link>
                 </li>
                 <li>
-                    <router-link to="#">
+                    <router-link to="/donation-box">
                         <i class="ri-hand-heart-fill"></i>  Xayriya qutisi
                     </router-link>
                 </li>

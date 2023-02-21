@@ -232,6 +232,16 @@ const routes = [
   },
 
   {
+    path: "/donation-box",
+    component: () => import('@/views/donation-box/index.vue'),
+    children: [
+        {
+            path: '',
+            component: () => import('@/views/donation-box/donations-list.vue')
+        }
+    ]
+  },
+  {
     path: "/login",
     name: "login",
     meta: {
