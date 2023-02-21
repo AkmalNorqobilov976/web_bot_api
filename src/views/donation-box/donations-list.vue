@@ -22,6 +22,47 @@
                         </p>
                     </div>
                 </div>
+                <div class="donation__info">
+                     <div>
+                        Assalomu aleykum, hurmatli jamoamiz adminlari.
+                        Ushbu sahifada siz yani 100k.uz sayti
+                        adminlari yordamida hayriya ishlari
+                        uchun toplangan mablaglarni kuzatishingiz mumkin.
+                    </div>
+                    <div>
+                        Sahifada hozircha umumiy toplangan mablagni
+                        va hayriya funksiyasi yoqilgan oqimlar
+                        royhatini korishingiz mumkin.
+                    </div>
+                    <div>
+                        Yigilgan mablag bolalar yoki qariyalar uylari
+                        hisob raqamiga yoki ogir kasalga uchragan
+                        lekin davolanishga sharoiti yoq vatandoshlarimiz
+                        karta raqamlariga yonaltiriladi.
+                    </div>
+                    <div>
+                        Mablagni topshirish vaqtida 100k.uz saytida
+                        ishlovchi istalgan admin ishtirok etishi mumkin.
+
+                        Ushbu sahifa keyinchalik yangiliklar ko'rinishida
+                        barcha hayriyalar haqida malumotlar chop etiladi.
+                    </div>
+                    <div>
+                        Eslatma: Hayriya qutisiga mablag ajratish
+                        uchun Market bolimiga tashrif buyuring va oqim yaratish
+                        oynasida hayriya summasini kiriting va tizim aynan osha
+                        oqim har bir sotilgan buyurtmasidan kiritilgan
+                        hayriya summasi ushlab qoladi.
+                    </div>
+                    <div>
+                    Hayriya dasturida ishtirok etmagan bo'lsangiz
+                    albatta siz ham ishtirok etib hissangizni qoshing,
+                    hattoki 500 so'm ham kopchilik yordami kimnidir
+                    hayotini saqlab qolishi yoki yahshilikka ozgartirishi mumkin.
+
+                    Birgalikda biz katta kuchmiz!
+                    </div>
+                </div>
                  <div ref="intersectionTrigger" style="height: 10px; background: transparent;"> 
                     <loading v-if="donationsStore.page !=1 && donationsStore.loading"/>
                 </div>
@@ -132,5 +173,12 @@ export default defineComponent({
             // grid-template-rows: max-content 1fr;
            }
         }
+    }
+
+    .donation__info {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        
     }
 </style>
