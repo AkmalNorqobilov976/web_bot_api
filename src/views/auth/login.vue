@@ -18,7 +18,6 @@
             <div class="login__form--is-agree">
                 <Checkbox v-model="userInfo.isAgree" idKey="isAgree" label="Men foydalanish shartlari bilan tanishdim"/>
             </div>
-            <button type="submit">Send data</button>
         </form>
     </div>
 </template>
